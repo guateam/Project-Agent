@@ -14,7 +14,6 @@ Virtual Environment:
 Packages:
     Flask==1.0.2
     PyMySQL==0.9.2
-    pyquery==1.4.0
     Flask-Cors==3.0.6
 ```
 

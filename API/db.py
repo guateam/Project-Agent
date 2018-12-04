@@ -1,14 +1,6 @@
 import hashlib
-
+from config import *
 import pymysql
-
-"""                      MYSQL信息                      """
-MYSQL_HOST = 'localhost'
-MYSQL_PORT = 3306
-MYSQL_USER = 'root'
-MYSQL_PASSWORD = 'zhangyuk'
-MYSQL_DB = 'Project-agent'
-""" 以上为变量为演示所用，正式开发时请统一写入config文件后引入 """
 
 
 def generate_password(original_password):
@@ -25,7 +17,7 @@ def generate_password(original_password):
 
 class Database(object):
     MYSQL_NULL = ' is null'
-    MYSQL_INSERT_NULL='null'
+    MYSQL_INSERT_NULL = 'null'
 
     # __init__方法将在类实例创建时执行，可用于完成数据库的初始化操作
     def __init__(self, host=MYSQL_HOST, port=MYSQL_PORT, user=MYSQL_USER, password=MYSQL_PASSWORD, db=MYSQL_DB):
@@ -57,12 +49,12 @@ class Database(object):
         """
         # 构造键值成分
         keys = '`' + '`, `'.join(data.keys()) + '`'
-        list2=[]
+        list2 = []
         for key, values in data.items():
-            if values==self.MYSQL_INSERT_NULL:
+            if values == self.MYSQL_INSERT_NULL:
                 list2.append(values)
             else:
-                list2.append('"'+str(values) + '"')
+                list2.append('"' + str(values) + '"')
         values = ', '.join(list2)
         # 插入数据
         try:
