@@ -2,5 +2,5 @@
 MYSQL_HOST = 'localhost'
 MYSQL_PORT = 3306
 MYSQL_USER = 'root'
-MYSQL_PASSWORD = 'zhangyuk'
+MYSQL_PASSWORD = '1455140909'
 MYSQL_DB = 'Project-agent'
