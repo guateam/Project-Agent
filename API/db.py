@@ -1,5 +1,5 @@
 import hashlib
-from API.config import *
+from config import *
 import pymysql
 
 
