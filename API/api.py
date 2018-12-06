@@ -4,7 +4,7 @@ import string
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 
-from API.db import Database, generate_password
+from db import Database, generate_password
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
@@ -42,7 +42,7 @@ def login():
     """
         用户登录
         :return: code(0=未知用户，-1=token初始化失败，1=成功)
-    """
+        """
     username = request.form['username']
     password = request.form['password']
     db = Database()
@@ -73,39 +73,6 @@ def register():
         if flag:
             return jsonify({'code': 1, 'msg': 'success'})  # 成功返回
     return jsonify({'code': -1, 'msg': 'user has already exist'})  # 未知错误
-
-
-@app.route('/api/account/get_user')
-def get_user():
-    pass
-
-
-"""
-    话题接口
-"""
-
-
-@app.route('/api/topic/get_answer')
-def get_answer():
-    """
-    获取特定id的回答
-    :return:code(0=未知回答，1=成功)
-    """
-    answer_id = request.form['answer_id']
-    db = Database()
-    answer = db.get({'answerID': answer_id}, 'answers')
-    if answer:
-        data = {
-            'id': answer['answerID'],
-            'user_id': answer['userID'],
-            'content': answer['content'],
-            'edit_time': answer['edittime'],
-            'agree': answer['agree'],
-            'disagree': answer['disagree'],
-            'answer_type': answer['answertype']
-        }
-        return jsonify({'code': 1, 'msg': 'success', 'data': data})
-    return jsonify({'code': 0, 'msg': 'unknown answer'})
 
 
 if __name__ == '__main__':
