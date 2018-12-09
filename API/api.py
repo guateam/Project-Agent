@@ -4,7 +4,7 @@ import string
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 
-from db import Database, generate_password
+from API.db import Database, generate_password
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
@@ -73,6 +73,56 @@ def register():
         if flag:
             return jsonify({'code': 1, 'msg': 'success'})  # 成功返回
     return jsonify({'code': -1, 'msg': 'user has already exist'})  # 未知错误
+
+
+@app.route('/api/account/get_user')
+def get_user():
+    pass
+
+
+"""
+    话题接口
+"""
+
+
+@app.route('/api/topic/get_answer')
+def get_answer():
+    """
+    获取特定id的回答
+    :return:code(0=未知回答，1=成功)
+    """
+    answer_id = request.form['answer_id']
+    db = Database()
+    answer = db.get({'answerID': answer_id}, 'answers')
+    if answer:
+        data = {
+            'id': answer['answerID'],
+            'user_id': answer['userID'],
+            'content': answer['content'],
+            'edit_time': answer['edittime'],
+            'agree': answer['agree'],
+            'disagree': answer['disagree'],
+            'answer_type': answer['answertype']
+        }
+        return jsonify({'code': 1, 'msg': 'success', 'data': data})
+    return jsonify({'code': 0, 'msg': 'unknown answer'})
+
+
+@app.route('/api/topic/add_comment')
+def add_answer_comment():
+    """
+    添加评论
+    :return:code(0=未知用户，-1=未知回答，1=成功)
+    """
+    answer_id = request.form['answer_id']
+    content = request.form['content']
+    token = request.form['token']
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        answer = db.get({'answerID': answer_id}, 'answers')
+        if answer:
+            pass
 
 
 if __name__ == '__main__':

@@ -77,7 +77,7 @@
 
     ```shell
     # 评论了哪个答案，评论内容是什么，是谁评论的
-    params: answer_id, content, user_id
+    params: answer_id, content, token
     {
         code: 1,
         msg: 'success',
