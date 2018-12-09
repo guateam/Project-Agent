@@ -16,6 +16,33 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `answercomments`
+--
+
+DROP TABLE IF EXISTS `answercomments`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `answercomments` (
+  `acommentID` int(11) NOT NULL AUTO_INCREMENT,
+  `userID` int(11) NOT NULL COMMENT '创建者ID',
+  `content` text NOT NULL COMMENT '内容',
+  `agree` int(11) NOT NULL COMMENT '赞同数',
+  `createtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+  `answerID` int(11) NOT NULL COMMENT '对应答案ID',
+  PRIMARY KEY (`acommentID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='回答评论表';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `answercomments`
+--
+
+LOCK TABLES `answercomments` WRITE;
+/*!40000 ALTER TABLE `answercomments` DISABLE KEYS */;
+/*!40000 ALTER TABLE `answercomments` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `answers`
 --
 
@@ -93,34 +120,6 @@ LOCK TABLES `collectarticle` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `comments`
---
-
-DROP TABLE IF EXISTS `comments`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `comments` (
-  `commentID` int(11) NOT NULL AUTO_INCREMENT,
-  `userID` int(11) NOT NULL COMMENT '评论人\n',
-  `content` text NOT NULL COMMENT '内容',
-  `agree` int(11) NOT NULL COMMENT '赞同数\n',
-  `createtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
-  `questionID` int(11) DEFAULT NULL COMMENT '对应问题ID\n',
-  `answerID` int(11) DEFAULT NULL COMMENT '对应回答ID',
-  PRIMARY KEY (`commentID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='评论';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `comments`
---
-
-LOCK TABLES `comments` WRITE;
-/*!40000 ALTER TABLE `comments` DISABLE KEYS */;
-/*!40000 ALTER TABLE `comments` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `followcolumn`
 --
 
@@ -193,6 +192,33 @@ LOCK TABLES `followuser` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `questioncomments`
+--
+
+DROP TABLE IF EXISTS `questioncomments`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `questioncomments` (
+  `qcommentID` int(11) NOT NULL AUTO_INCREMENT,
+  `userID` int(11) NOT NULL COMMENT '评论人\n',
+  `content` text NOT NULL COMMENT '内容',
+  `agree` int(11) NOT NULL COMMENT '赞同数\n',
+  `createtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+  `questionID` int(11) DEFAULT NULL COMMENT '对应问题ID\n',
+  PRIMARY KEY (`qcommentID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='问题评论';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `questioncomments`
+--
+
+LOCK TABLES `questioncomments` WRITE;
+/*!40000 ALTER TABLE `questioncomments` DISABLE KEYS */;
+/*!40000 ALTER TABLE `questioncomments` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `questionlog`
 --
 
@@ -255,12 +281,12 @@ DROP TABLE IF EXISTS `useraction`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `useraction` (
-  `iduseraction` int(11) NOT NULL AUTO_INCREMENT,
+  `actionID` int(11) NOT NULL AUTO_INCREMENT,
   `userID` int(11) NOT NULL COMMENT '用户ID',
   `targetID` int(11) NOT NULL COMMENT '行为对应ID\n',
   `targettype` int(11) NOT NULL COMMENT '行为类型',
-  `actiontime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '行为发生时间',
-  PRIMARY KEY (`iduseraction`)
+  `actiontime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '行为发生时间',
+  PRIMARY KEY (`actionID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户行为表\n';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -315,4 +341,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-12-09 15:07:56
+-- Dump completed on 2018-12-09 15:17:37
