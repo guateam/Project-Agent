@@ -61,6 +61,10 @@ def login():
 
 @app.route('/api/account/register', methods=['POST'])
 def register():
+    """
+    注册
+    :return: code(-1=用户已存在，1=成功)
+    """
     email = request.form['email']
     password = request.form['password']
     db = Database()
@@ -86,7 +90,7 @@ def get_user():
     user = db.get({'userID': user_id}, 'users')
     if user:
         data = {
-            'userID': user_id,
+            'user_id': user_id,
             'head_portrait': user['headportrait'],
             'user_group': user['usergroup'],
             'exp': user['exp'],
@@ -230,7 +234,7 @@ def get_answer_comment_list():
 def add_answer_comment():
     """
     添加评论
-    :return:code(0=未知用户，-1=未知回答，-2=未知回答，1=成功)
+    :return:code(0=未知用户，-1=未知回答，-2=无法添加评论，1=成功)
     """
     answer_id = request.form['answer_id']
     content = request.form['content']
@@ -279,7 +283,7 @@ def agree_answer_comment():
     对特定评论点赞
     :return: code(0=未知用户，-1=未知评论，-2=不能记录用户行为，-3=不能更新点赞数，1=成功)
     """
-    comment_id = request.form['answer_id']
+    comment_id = request.form['comment_id']
     token = request.form['token']
     db = Database()
     user = db.get({'token': token}, 'users')

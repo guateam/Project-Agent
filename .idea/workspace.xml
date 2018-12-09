@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9ad5a150-d112-4ec6-874a-c0c7ded204b4" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/API/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/API/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/API/api.py" beforeDir="false" afterPath="$PROJECT_DIR$/API/api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -54,7 +52,7 @@
           <entry key="gitignore" value="11" />
           <entry key="js" value="2" />
           <entry key="md" value="5" />
-          <entry key="py" value="4458" />
+          <entry key="py" value="4481" />
           <entry key="vue" value="91" />
         </counts>
       </usages-collector>
@@ -63,7 +61,7 @@
           <entry key="JavaScript" value="2" />
           <entry key="Markdown" value="5" />
           <entry key="PLAIN_TEXT" value="11" />
-          <entry key="Python" value="4458" />
+          <entry key="Python" value="4481" />
           <entry key="Vue.js" value="91" />
         </counts>
       </usages-collector>
@@ -74,16 +72,16 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/API/api.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="646">
-              <caret line="92" column="38" selection-start-line="92" selection-start-column="38" selection-end-line="92" selection-end-column="38" />
+            <state relative-caret-position="187">
+              <caret line="236" column="41" selection-start-line="236" selection-start-column="41" selection-end-line="236" selection-end-column="41" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
-                <marker date="1544343977091" expanded="true" signature="2810:3321" ph="..." />
-                <marker date="1544343977091" expanded="true" signature="3456:4328" ph="..." />
-                <marker date="1544343977091" expanded="true" signature="4401:5265" ph="..." />
-                <marker date="1544343977091" expanded="true" signature="6146:6819" ph="..." />
-                <marker date="1544343977091" expanded="true" signature="7779:10730" ph="..." />
-                <marker date="1544343977091" expanded="true" signature="9758:10730" ph="..." />
+                <marker date="1544345860334" expanded="true" signature="2867:3378" ph="..." />
+                <marker date="1544345860334" expanded="true" signature="3513:4385" ph="..." />
+                <marker date="1544345860334" expanded="true" signature="4458:5322" ph="..." />
+                <marker date="1544345860334" expanded="true" signature="6203:6876" ph="..." />
+                <marker date="1544345860334" expanded="true" signature="7838:10789" ph="..." />
+                <marker date="1544345860334" expanded="true" signature="9817:10789" ph="..." />
               </folding>
             </state>
           </provider>
@@ -151,7 +149,7 @@
         <entry file="file://$PROJECT_DIR$/API/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="34">
+              <first_editor relative-caret-position="-935">
                 <caret line="2" selection-start-line="2" selection-end-line="2" />
               </first_editor>
               <second_editor />
@@ -331,12 +329,12 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2553305" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2553305" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32899022" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.32899022" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3995657" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -404,16 +402,6 @@
     <entry file="file://$PROJECT_DIR$/Application/src/components/HelloWorld.vue">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/API/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="34">
-            <caret line="2" selection-start-line="2" selection-end-line="2" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Application/src/components/Login.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="476">
@@ -452,18 +440,28 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/API/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="-935">
+            <caret line="2" selection-start-line="2" selection-end-line="2" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/API/api.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="646">
-          <caret line="92" column="38" selection-start-line="92" selection-start-column="38" selection-end-line="92" selection-end-column="38" />
+        <state relative-caret-position="187">
+          <caret line="236" column="41" selection-start-line="236" selection-start-column="41" selection-end-line="236" selection-end-column="41" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
-            <marker date="1544343977091" expanded="true" signature="2810:3321" ph="..." />
-            <marker date="1544343977091" expanded="true" signature="3456:4328" ph="..." />
-            <marker date="1544343977091" expanded="true" signature="4401:5265" ph="..." />
-            <marker date="1544343977091" expanded="true" signature="6146:6819" ph="..." />
-            <marker date="1544343977091" expanded="true" signature="7779:10730" ph="..." />
-            <marker date="1544343977091" expanded="true" signature="9758:10730" ph="..." />
+            <marker date="1544345860334" expanded="true" signature="2867:3378" ph="..." />
+            <marker date="1544345860334" expanded="true" signature="3513:4385" ph="..." />
+            <marker date="1544345860334" expanded="true" signature="4458:5322" ph="..." />
+            <marker date="1544345860334" expanded="true" signature="6203:6876" ph="..." />
+            <marker date="1544345860334" expanded="true" signature="7838:10789" ph="..." />
+            <marker date="1544345860334" expanded="true" signature="9817:10789" ph="..." />
           </folding>
         </state>
       </provider>
