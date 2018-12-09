@@ -42,7 +42,7 @@ Format:
 
 #### Account 账户
 
-1. 用户登录
+1. 用户登录 login
 
    - 接口 `/api/account/login()`
 
@@ -61,4 +61,33 @@ Format:
      }
      ```
 
-2. 
+2. 用户注册 register
+
+3. 获取用户信息 get_user
+
+#### Question 问题
+
+1. 添加问题 add_answer
+2. 获取回答列表 get_answer_list
+
+#### Answer 回答
+
+1. 添加回答 add_answer
+2. 获取回答信息 get_answer
+3. 获取回答评论列表 get_answer_comment_list
+4. 添加回答评论 add_answer_comment
+5. 点赞回答 agree_answer
+6. 点赞回答评论 agree_answer_comment
+7. 点踩回答 disagree_answer
+
+
+## 数据库 DataBase
+
+### 用户行为类型约定 TypeFormat
+
+| 代码 | 释义             | 备注 |
+| ---- | ---------------- | ---- |
+| 1    | 对答案点赞       |      |
+| 2    | 对答案点踩       |      |
+| 3    | 对答案的评论点赞 |      |
+
