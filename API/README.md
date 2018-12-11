@@ -115,7 +115,7 @@ Format:
      ```
 
 2. 获取回答列表 get_answer_list
-   - 接口 `/api/account/get_answer_list()`
+   - 接口 `/api/question/get_answer_list()`
 
    - 参数 `question_id`-问题id 
 

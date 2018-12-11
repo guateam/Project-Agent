@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Topic from '../components/topic/topic'
+import Home from '../components/home/home'
 import Login from '../components/login/login'
 import Register from '../components/register/register'
 import AnswerDetail from '../components/answer-detail/answer-detail'
@@ -13,7 +14,7 @@ export default new Router({
     routes: [
         {
             path: '/',
-            redirect: '/topic'
+            redirect: '/home'
         },
         // {
         //     path: 'main',
@@ -36,6 +37,11 @@ export default new Router({
                     component: Comment
                 }
             ]
+        },
+        {
+            path: '/home',
+            name: 'home',
+            component: Home,
         },
         {
             path: '/login',
