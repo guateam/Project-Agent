@@ -4,7 +4,7 @@ import string
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 
-from API.db import Database, generate_password
+from db import Database, generate_password
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
@@ -124,31 +124,45 @@ def add_question():
     return jsonify({'code': 0, 'msg': 'unexpected user'})
 
 
+@app.route('/api/questions/get_question')
+def get_question():
+    """
+    获取问题
+    :return:code(0=未知用户，-1=无法添加问题，1=成功)
+    """
+    db = Database()
+    data = db.get({}, 'questions')
+    return jsonify({'code': 0, 'msg': '', 'data': data})
+
+
 @app.route('/api/questions/get_answer_list')
 def get_answer_list():
     """
     根据问题id获取回答列表（倒序）
     :return: code(0=未知问题，1=成功)
     """
-    question_id = request.form['question_id']
+    question_id = request.args.get('question_id', type=str)
     db = Database()
     question = db.get({'questionID': question_id}, 'questions')
     if question:
-        answer_list = db.get({'questionID': question_id}, 'answers', 0)
-        data = []
-        for value in answer_list:
-            data.append({
-                'id': value['answerID'],
-                'user_id': value['userID'],
-                'content': value['content'],
-                'edit_time': value['edittime'],
-                'agree': value['agree'],
-                'disagree': value['disagree'],
-                'answer_type': value['answertype'],
-                'question_id': value['questionID']
-            })
-        sorted(data, key=lambda a: a['agree'], reverse=True)
-        return jsonify({'code': 1, 'msg': 'success', 'data': data})
+        # answer_list = db.get({'questionID': question_id}, 'answers', 0)
+        answer_list = db.get({'questionID': question_id}, 'answersinfo', 0)
+        # print(answer_list)
+        # data = []
+        # for value in answer_list:
+        #     data.append({
+        #         'id': value['answerID'],
+        #         'user_id': value['userID'],
+        #         'content': value['content'],
+        #         'edit_time': value['edittime'],
+        #         'agree': value['agree'],
+        #         'disagree': value['disagree'],
+        #         'answer_type': value['answertype'],
+        #         'question_id': value['questionID']
+        #     })
+        # sorted(data, key=lambda a: a['agree'], reverse=True)
+        # return jsonify({'code': 1, 'msg': 'success', 'data': data})
+        return jsonify({'code': 1, 'msg': 'success', 'data': answer_list})
     return jsonify({'code': 0, 'msg': 'unknown question'})
 
 
