@@ -1,10 +1,14 @@
 <template>
-    
+    <div>zhelishi</div>
 </template>
 
 <script>
+    import Login from '../login/login'
     export default {
-        name: "main"
+        name: "main",
+        components:{
+            Login
+        }
     }
 </script>
 
