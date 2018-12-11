@@ -50,6 +50,53 @@
             <p v-html="intro"></p>
         </div>
 
+        <!--评论这部分,是有组件的，但是这里不用，仅获取前三个类似热评一样的东西，不然样式不好写-->
+        <div class="comment" style="padding-left: 1em; padding-right: 1em;">
+            <h2>评论</h2>
+            <router-link to="comment">
+                <div class="comment-item">
+                    <div class="comment-user">
+                        <img src="./head.png" alt="">
+                        <span class="comment-user-name">李一半</span>
+                        <span class="comment-user-tag">从业者</span>
+                        <div class="comment-like">一个icon</div>
+                    </div>
+                    <div>
+                        <p>不知道我的理解对不对。激发表面等离子激源要光源波长和材料表面自由电子相耦合。以后要突破更小...</p>
+                    </div>
+                </div>
+            </router-link>
+
+            <!--下面这俩div没有router-link，纯粹为了看起来舒服点加的，可以直接删-->
+
+            <div class="comment-item">
+                <div class="comment-user">
+                    <img src="./head.png" alt="">
+                    <span class="comment-user-name">李一半</span>
+                    <span class="comment-user-tag">从业者</span>
+                    <div class="comment-like">一个icon</div>
+                </div>
+                <div>
+                    <p>不知道我的理解对不对。激发表面等离子激源要光源波长和材料表面自由电子相耦合。以后要突破更小...</p>
+                </div>
+            </div>
+            <div class="comment-item">
+                <div class="comment-user">
+                    <img src="./head.png" alt="">
+                    <span class="comment-user-name">李一半</span>
+                    <span class="comment-user-tag">从业者</span>
+                    <div class="comment-like">一个icon</div>
+                </div>
+                <div>
+                    <p>不知道我的理解对不对。激发表面等离子激源要光源波长和材料表面自由电子相耦合。以后要突破更小...</p>
+                </div>
+            </div>
+        </div>
+
+        <!--占位的div，用来把下面的foot所遮住的空间挤出来-->
+
+        <div style="width: 100%;height: 50px;"></div>
+
         <!--固定在底部的input等-->
 
         <div class="foot">
@@ -64,8 +111,13 @@
 </template>
 
 <script>
+    import Comment from '../comment/comment'
+
     export default {
         name: "answer-detail",
+        components: {
+            Comment
+        },
         data() {
             return {
                 topicTitle: '刚刚研制成功的世界首台分辨力最高紫外超分辨光刻装备意味着什么？对国内芯片行业有何影响？',  // 话题标题
@@ -92,6 +144,10 @@
 
 <style scoped>
 
+    * {
+        line-height: 1.5;
+    }
+
     a {
         text-decoration: none;
         outline: none;
@@ -106,7 +162,40 @@
     .intro {
         margin-top: 1em;
         line-height: 1.5;
-        margin-bottom: 50px;
+        /*margin-bottom: 50px;*/
+    }
+
+    .comment-item {
+        width: 100%;
+        border-bottom: 1px #eee solid;
+        color: black;
+    }
+
+    .comment-user {
+        display: flex;
+        align-items: center;
+    }
+
+    .comment-user img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin: 1em 1em 1em 0;
+    }
+
+    .comment-user-name {
+        font-size: 1.2em;
+    }
+
+    .comment-user-tag {
+        color: #ffcc00;
+        font-size: 1.0em;
+        margin-left: 0.5em;
+    }
+
+    .comment-like {
+        position: absolute;
+        right: 2em;
     }
 
     .foot {
