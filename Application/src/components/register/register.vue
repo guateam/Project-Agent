@@ -3,7 +3,7 @@
         <div class="title">
             <div style="margin-left: 2em">X</div>
             <span style="margin-right: 2em">
-                <router-link to="register">注册</router-link></span>
+                <router-link to="login">登录</router-link></span>
         </div>
         <div class="main">
             <div>
@@ -18,16 +18,9 @@
                             label="请输入邮件"
                             required
                     ></v-text-field>
-                    <v-text-field
-                            v-model="psw"
-                            :rules="pswRules"
-                            label="请输入密码"
-                            required
-                    ></v-text-field>
                 </v-form>
-                <span style="position: absolute;right: 3em">忘记密码？</span>
                 <div style="margin-top: 4em">
-                    <v-btn block color="#ffcc00">登录</v-btn>
+                    <v-btn block color="#ffcc00">下一步</v-btn>
                 </div>
             </div>
         </div>
@@ -36,7 +29,7 @@
 
 <script>
     export default {
-        name: "login"
+        name: "register"
     }
 </script>
 
