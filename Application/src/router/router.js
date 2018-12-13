@@ -6,9 +6,8 @@ import Login from '../components/login/login'
 import Register from '../components/register/register'
 import AnswerDetail from '../components/answer-detail/answer-detail'
 import Comment from '../components/comment/comment'
-import Main from '../components/main/main'
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
     routes: [
@@ -16,11 +15,6 @@ export default new Router({
             path: '/',
             redirect: '/home'
         },
-        // {
-        //     path: 'main',
-        //     name: 'main',
-        //     component: Main
-        // },
         {
             path: '/topic',
             name: 'topic',
