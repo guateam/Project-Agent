@@ -105,14 +105,14 @@ def get_user():
 """
 
 
-@app.route('/api/questions/add_question')
+@app.route('/api/questions/add_question',methods=['POST'])
 def add_question():
     """
     添加问题
     :return:code(0=未知用户，-1=无法添加问题，1=成功)
     """
-    token = request.values.get('token')
-    title = request.values.get('title')
+    token = request.form['token']
+    title = request.form['title']
     description = request.form['description']
     db = Database()
     user = db.get({'token': token}, 'users')
@@ -171,16 +171,16 @@ def get_answer_list():
 """
 
 
-@app.route('/api/answer/add_answer')
+@app.route('/api/answer/add_answer',methods=['POST'])
 def add_answer():
     """
     添加新的回答
     :return:code(0=未知用户，-1=未知问题，-2=无法添加回答，1=成功)
     """
-    question_id = request.values.get('question_id')
-    token = request.values.get('token')
-    content = request.values.get('content')
-    answer_type = request.values.get('answer_type')
+    question_id = request.form['question_id']
+    token = request.form['token']
+    content = request.form['content']
+    answer_type = request.form['answer_type']
     db = Database()
     user = db.get({'token': token}, 'users')
     if user:
