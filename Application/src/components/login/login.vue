@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="title">
-            <div style="margin-left: 2em">X</div>
+            <div style="margin-left: 2em" @click="$router.push('/home')">X</div>
             <span style="margin-right: 2em">
                 <router-link to="register">注册</router-link></span>
         </div>
@@ -27,7 +27,7 @@
                 </v-form>
                 <span style="position: absolute;right: 3em">忘记密码？</span>
                 <div style="margin-top: 4em">
-                    <v-btn block color="#ffcc00">登录</v-btn>
+                    <v-btn block color="#ffcc00" @click="submit()">登录</v-btn>
                 </div>
             </div>
         </div>
@@ -35,12 +35,29 @@
 </template>
 
 <script>
+    import axios from 'axios'
+
     export default {
         name: "login",
         data() {
             return {
                 email: '',
                 psw: '',
+            }
+        },
+        methods: {
+            submit() {
+                console.log(this.email, this.psw);
+                axios.get('http://localhost:5000/api/account/login', {
+                    responseType: 'json',
+                    params: {
+                        username: this.email,  // 用户名
+                        password: this.psw,  // 密码
+                    }
+                }).then((response) => {
+                    console.log(response);
+                    // 把token写入cookies，需要写一个修改cookies的方法 @wh
+                })
             }
         }
     }

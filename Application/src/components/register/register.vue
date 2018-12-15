@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="title">
-            <div style="margin-left: 2em">X</div>
+            <div style="margin-left: 2em" @click="$router.push('/home')">X</div>
             <span style="margin-right: 2em">
                 <router-link to="login">登录</router-link></span>
         </div>
@@ -29,7 +29,12 @@
 
 <script>
     export default {
-        name: "register"
+        name: "register",
+        data() {
+            return {
+                email: '',  // 邮箱地址
+            }
+        },
     }
 </script>
 
