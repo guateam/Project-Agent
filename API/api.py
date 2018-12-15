@@ -374,7 +374,7 @@ def complain():
     """
     comment_id = request.values.get('comment_id')
     db = Database()
-    #由于页面未定，举报形式未定，暂时无法继续往下写
+    # 由于页面未定，举报形式未定，暂时无法继续往下写
 
 
 @app.route('/api/answer/disagree_answer')
@@ -409,6 +409,16 @@ def disagree_answer():
 
 @app.route('/api/homepage/get_recommend')
 def get_recommend():
+    pass
+
+
+@app.route('/api/homepage/get_category')
+def get_category():
+    pass
+
+
+@app.route('/api/homepage/get_hot_search')
+def get_hot_search():
     pass
 
 

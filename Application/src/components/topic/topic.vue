@@ -110,9 +110,24 @@
                     this.answersDataList = response.data.data;
                 });
             },
+            getQuestion(questionID){
+                axios.get('http://127.0.0.1:5000/api/questions/get_question', {
+                    responseType: 'json',
+                    params: {
+                        question_id: questionID,
+                    },
+                }).then((response) => {
+                    // console.log(response.data.data);
+                    var data = response.data.data;
+                    this.questionData.title=data.title;
+                    this.questionData.content=data.description;
+                    //this.questionData.tags=data.tags;
+                });
+            }
         },
         mounted() {
             this.getAnswers('1');
+            this.getQuestion('1');
         },
     }
 </script>

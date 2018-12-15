@@ -14,7 +14,7 @@
                     <v-text-field
                             v-model="email"
                             :rules="emailRules"
-                            :counter="10"
+                            :counter="30"
                             label="请输入邮件"
                             required
                     ></v-text-field>
