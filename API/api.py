@@ -294,7 +294,7 @@ def get_answer_comment_list():
     return jsonify({'code': 0, 'msg': 'unknown answer'})
 
 
-@app.route('/api/answer/add_answer_comment',methods=['POST'])
+@app.route('/api/answer/add_answer_comment', methods=['POST'])
 def add_answer_comment():
     """
     添加评论
@@ -419,6 +419,54 @@ def get_category():
 
 @app.route('/api/homepage/get_hot_search')
 def get_hot_search():
+    pass
+
+
+"""
+    信息接口
+"""
+
+
+@app.route('/api/message/get_message_list')
+def get_message_list():
+    """
+    获取聊天列表
+    :return: code(0=未知用户，-1=空聊天列表，1=成功)
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        message_list = db.get({'receiver': user['userID']}, 'chat_box', 0)
+        if message_list:
+            return jsonify({'code': 1, 'msg': 'success', 'data': message_list})
+        return jsonify({'code': -1, 'msg': 'empty list'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/message/add_message', methods=['POST'])
+def add_message():
+    """
+    添加信息
+    :return: code(0=未知用户，-1=无法录入，1=成功)
+    """
+    token = request.form['token']
+    receiver = request.form['receiver']
+    content = request.form['content']
+    message_type = request.form['message_type']
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        flag = db.insert({'receiver': receiver, 'content': content, 'type': message_type, 'poster': user['userID']},
+                         'messages')
+        if flag:
+            return jsonify({'code': 1, 'msg': 'success'})
+        return jsonify({'code': -1, 'msg': 'unable to insert'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/message/get_message')
+def get_message():
     pass
 
 

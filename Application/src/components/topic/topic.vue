@@ -108,6 +108,7 @@
                 }).then((response) => {
                     // console.log(response.data.data);
                     this.answersDataList = response.data.data;
+                    this.answerNum=response.data.data.length;
                 });
             },
             getQuestion(questionID){
