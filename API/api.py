@@ -339,6 +339,17 @@ def agree_answer_comment():
     return jsonify({'code': 0, 'msg': 'unexpected user'})
 
 
+@app.route('/api/answer/complain')
+def complain():
+    """
+    举报某一条评论
+    :return:code(0=未知评论，1=举报成功)
+    """
+    comment_id = request.values.get('comment_id')
+    db = Database()
+    #由于页面未定，举报形式未定，暂时无法继续往下写
+
+
 @app.route('/api/answer/disagree_answer')
 def disagree_answer():
     """
