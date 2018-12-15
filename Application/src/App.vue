@@ -1,52 +1,34 @@
 <template>
   <div id="app">
     <Myheader></Myheader>
-    <router-view></router-view>
-    <v-bottom-nav
-            :active.sync="bottomNav"
-            :value="true"
-            absolute
-            color="transparent"
-    >
-      <v-btn
-              color="teal"
-              flat
-              value="home"
-              @click="$router.push('/home')"
-      >
-        <span>首页</span>
-        <v-icon>web</v-icon>
-      </v-btn>
+    <!--<router-view></router-view>-->
 
-      <v-btn
-              color="teal"
-              flat
-              value="message"
-      >
-        <span>消息</span>
-        <v-icon>question_answer</v-icon>
-      </v-btn>
+    <v-app>
+      <!--<v-navigation-drawer app></v-navigation-drawer>-->
+      <!--<v-toolbar app></v-toolbar>-->
 
-      <v-btn
-              color="teal"
-              flat
-              value="mine"
-              @click="$router.push('/login')"
-      >
-        <span>我的</span>
-        <v-icon>account_circle</v-icon>
-      </v-btn>
-    </v-bottom-nav>
+      <v-content>
+        <!--<v-container fill-width>-->
+          <router-view></router-view>
+        <!--</v-container>-->
+      </v-content>
+
+      <v-footer app>
+        <BottomNav></BottomNav>
+      </v-footer>
+    </v-app>
   </div>
 </template>
 
 <script>
     // @ is an alias to /src
     import Myheader from './components/my-header/my-header'
+    import BottomNav from './components/bottom-nav/bottom-nav'
 
     export default {
         components: {
-            Myheader
+            Myheader,
+            BottomNav,
         }
     }
 </script>
