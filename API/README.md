@@ -172,6 +172,8 @@ Format:
          data:{
              id:id, # 回答id 
              user_id:user_id, # 用户id 
+             user_nickname:user_nickname, # 用户昵称
+             user_headportrait:user_headportrait, # 用户头像
              content:content, # 回答内容
              edit_time:edit_time, # 编辑时间
              agree:agree, # 点赞数
@@ -195,6 +197,8 @@ Format:
          msg: msg,        	# 信息
          data:[{
              user_id:user_id, # 用户id
+             user_nickname:user_nickname, # 用户昵称
+             user_headportrait:user_headportrait, # 用户头像
              content:content, # 内容
              create_time:create_time, # 发表时间
              agree:agree # 赞同数
