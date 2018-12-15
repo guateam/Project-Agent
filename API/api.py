@@ -276,7 +276,7 @@ def get_answer_comment_list():
     db = Database()
     answer = db.get({'answerID': answer_id}, 'answers')
     if answer:
-        comment_list = db.get({'answerID', answer_id}, 'answercomments', 0)
+        comment_list = db.get({'answerID': answer_id}, 'answercomments', 0)
         data = []
         for value in comment_list:
             user = db.get({'userID': value['userID']}, 'users')
@@ -294,21 +294,21 @@ def get_answer_comment_list():
     return jsonify({'code': 0, 'msg': 'unknown answer'})
 
 
-@app.route('/api/answer/add_answer_comment')
+@app.route('/api/answer/add_answer_comment',methods=['POST'])
 def add_answer_comment():
     """
     添加评论
     :return:code(0=未知用户，-1=未知回答，-2=无法添加评论，1=成功)
     """
-    answer_id = request.values.get('answer_id')
-    content = request.values.get('content')
-    token = request.values.get('token')
+    answer_id = request.form['answer_id']
+    content = request.form['content']
+    token = request.form['token']
     db = Database()
     user = db.get({'token': token}, 'users')
     if user:
         answer = db.get({'answerID': answer_id}, 'answers')
         if answer:
-            flag = db.insert({'userID': user['userID'], 'content': content, 'answerID': answer_id}, 'answers')
+            flag = db.insert({'userID': user['userID'], 'content': content, 'answerID': answer_id}, 'answercomments')
             if flag:
                 return jsonify({'code': 1, 'msg': 'success'})
             return jsonify({'code': -2, 'msg': 'unable to insert comment'})
