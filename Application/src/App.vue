@@ -1,38 +1,29 @@
 <template>
-    <div id="app">
-        <v-app>
-            <v-navigation-drawer app></v-navigation-drawer>
-            <v-toolbar app></v-toolbar>
-            <v-content>
-                <v-container fluid>
-                    <login></login>
-                </v-container>
-            </v-content>
-            <v-footer app></v-footer>
-        </v-app>
-    </div>
+  <div id="app">
+    <Myheader></Myheader>
+    <router-view></router-view>
+  </div>
 </template>
 
 <script>
-    import HelloWorld from './components/HelloWorld.vue'
-    import Login from "./components/Login";
+    // @ is an alias to /src
+    import Myheader from './components/my-header/my-header'
 
     export default {
-        name: 'app',
         components: {
-            Login,
-            HelloWorld
+            Myheader
         }
     }
 </script>
 
 <style>
-    #app {
-        font-family: 'Avenir', Helvetica, Arial, sans-serif;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        text-align: center;
-        color: #2c3e50;
-        margin-top: 60px;
-    }
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  width: 100%;
+}
 </style>
