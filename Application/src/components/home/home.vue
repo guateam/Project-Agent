@@ -4,7 +4,7 @@
             <v-layout row>
                 <v-flex xs12 sm6 offset-sm3>
                     <v-card>
-                        <v-toolbar color="light-blue" dark>
+                        <v-toolbar color="yellow lighten-1">
                             <!--<v-toolbar-side-icon></v-toolbar-side-icon>-->
 
                             <v-toolbar-title>首页</v-toolbar-title>
@@ -22,17 +22,17 @@
                                     grid-list-lg
                             >
                                 <v-layout row wrap>
-                                    <v-flex xs12 v-for="question in questionList">
-                                        <v-card color="blue-grey darken-2" class="white--text">
+                                    <v-flex xs12 v-for="question in questionList" @click="turnToTopic()">
+                                        <v-card color="yellow lighten-5" class="">
                                             <v-card-title primary-title>
                                                 <div>
                                                     <div class="headline">{{question.title}}</div>
                                                     <span>{{question.description}}</span>
                                                 </div>
                                             </v-card-title>
-                                            <v-card-actions>
-                                                <v-btn flat dark @click="Topic()">查看</v-btn>
-                                            </v-card-actions>
+                                            <!--<v-card-actions>-->
+                                                <!--<v-btn flat dark @click="Topic()">查看</v-btn>-->
+                                            <!--</v-card-actions>-->
                                         </v-card>
                                     </v-flex>
                                 </v-layout>
@@ -52,7 +52,7 @@
             return {
                 questionList: [
                     {
-                        title: '如何评价。。。',
+                        title: '如何评价……',
                         description: '就熬ID骄傲 i 到的就爱上',
                     }
                 ]
@@ -61,16 +61,16 @@
         methods: {
             getQuestionList() {
                 // 获取问题列表
-                axios.get('http://127.0.0.1:5000/api/questions/get_question', {
+                axios.get('http://127.0.0.1:5000/api/questions/get_questions', {
                     responseType: 'json',
                 }).then((response) => {
                     // console.log(response.data.data);
                     this.questionList = response.data.data;
                 })
             },
-            Topic() {
+            turnToTopic() {
                 this.$router.push('/topic');
-            }
+            },
         },
         mounted() {
             this.getQuestionList();

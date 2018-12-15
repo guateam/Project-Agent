@@ -4,7 +4,7 @@ import string
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 
-from db import Database, generate_password
+from API.db import Database, generate_password
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
@@ -79,13 +79,28 @@ def register():
     return jsonify({'code': -1, 'msg': 'user has already exist'})  # 未知错误
 
 
+@app.route('/api/account/check_email')
+def check_email():
+    """
+    检测邮箱是否被注册
+    :return: code(0=已经被注册，1=还未被注册)
+    """
+    email = request.values.get('email')
+    db = Database()
+    user = db.get({'email': email}, 'users')
+    if user:
+        return jsonify({'code': 0, 'msg': "the email had been registered"})
+    else:
+        return jsonify({'code': 1, 'msg': "the email can be registered"})
+
+
 @app.route('/api/account/get_user')
 def get_user():
     """
     根据user_id获取用户信息
     :return: code(0=未知用户，1=成功)
     """
-    user_id = request.form['user_id']
+    user_id = request.values.get('user_id')
     db = Database()
     user = db.get({'userID': user_id}, 'users')
     if user:
@@ -105,7 +120,7 @@ def get_user():
 """
 
 
-@app.route('/api/questions/add_question')
+@app.route('/api/questions/add_question', methods=['POST'])
 def add_question():
     """
     添加问题
@@ -124,8 +139,8 @@ def add_question():
     return jsonify({'code': 0, 'msg': 'unexpected user'})
 
 
-@app.route('/api/questions/get_question')
-def get_question():
+@app.route('/api/questions/get_questions')
+def get_questions():
     """
     获取问题
     :return:code(0=未知用户，-1=无法添加问题，1=成功)
@@ -133,6 +148,32 @@ def get_question():
     db = Database()
     data = db.get({}, 'questions')
     return jsonify({'code': 0, 'msg': '', 'data': data})
+
+
+@app.route('/api/questions/get_question')
+def get_question():
+    """
+    通过id获取问题
+    :return: code(0=未知问题，-1=未知提问人，1=成功)
+    """
+    question_id = request.values.get('question_id')
+    db = Database()
+    question = db.get({'questionID': question_id}, 'questions')
+    if question:
+        user = db.get({'userID': question['userID']}, 'users')
+        if user:
+            data = {
+                'question_id': question_id,
+                'user_id': question['userID'],
+                'user_nickname': user['nickname'],
+                'user_headportrait': user['headportrait'],
+                'title': question['title'],
+                'description': question['description'],
+                'tags': question['tags']
+            }
+            return jsonify({'code': 1, 'msg': 'success', 'data': data})
+        return jsonify({'code': -1, 'msg': 'unknown user'})
+    return jsonify({'code': 0, 'msg': 'unknown question'})
 
 
 @app.route('/api/questions/get_answer_list')
@@ -171,7 +212,7 @@ def get_answer_list():
 """
 
 
-@app.route('/api/answer/add_answer')
+@app.route('/api/answer/add_answer', methods=['POST'])
 def add_answer():
     """
     添加新的回答
@@ -202,21 +243,26 @@ def get_answer():
     获取特定id的回答
     :return:code(0=未知回答，1=成功)
     """
-    answer_id = request.form['answer_id']
+    answer_id = request.values.get('answer_id')
     db = Database()
     answer = db.get({'answerID': answer_id}, 'answers')
     if answer:
-        data = {
-            'id': answer['answerID'],
-            'user_id': answer['userID'],
-            'content': answer['content'],
-            'edit_time': answer['edittime'],
-            'agree': answer['agree'],
-            'disagree': answer['disagree'],
-            'answer_type': answer['answertype'],
-            'question_id': answer['questionID']
-        }
-        return jsonify({'code': 1, 'msg': 'success', 'data': data})
+        user = db.get({'userID': answer['userID']}, 'users')
+        if user:
+            data = {
+                'id': answer['answerID'],
+                'user_id': answer['userID'],
+                'user_nickname': user['nickname'],
+                'user_headportrait': user['headportrait'],
+                'content': answer['content'],
+                'edit_time': answer['edittime'],
+                'agree': answer['agree'],
+                'disagree': answer['disagree'],
+                'answer_type': answer['answertype'],
+                'question_id': answer['questionID']
+            }
+            return jsonify({'code': 1, 'msg': 'success', 'data': data})
+        return jsonify({'code': -1, 'msg': 'unknown user'})
     return jsonify({'code': 0, 'msg': 'unknown answer'})
 
 
@@ -226,19 +272,23 @@ def get_answer_comment_list():
     获取评论列表（倒序）
     :return:code(0=未知回答，1=成功)
     """
-    answer_id = request.form['answer_id']
+    answer_id = request.values.get('answer_id')
     db = Database()
     answer = db.get({'answerID': answer_id}, 'answers')
     if answer:
         comment_list = db.get({'answerID', answer_id}, 'answercomments', 0)
         data = []
         for value in comment_list:
-            data.append({
-                'user_id': value['userID'],
-                'content': value['content'],
-                'create_time': value['createtime'],
-                'agree': value['agree']
-            })
+            user = db.get({'userID': value['userID']}, 'users')
+            if user:
+                data.append({
+                    'user_id': value['userID'],
+                    'user_nickname': user['nickname'],
+                    'user_headportrait': user['headportrait'],
+                    'content': value['content'],
+                    'create_time': value['createtime'],
+                    'agree': value['agree']
+                })
         sorted(data, key=lambda a: a['agree'], reverse=True)
         return jsonify({'code': 1, 'msg': 'success', 'data': data})
     return jsonify({'code': 0, 'msg': 'unknown answer'})
@@ -250,9 +300,9 @@ def add_answer_comment():
     添加评论
     :return:code(0=未知用户，-1=未知回答，-2=无法添加评论，1=成功)
     """
-    answer_id = request.form['answer_id']
-    content = request.form['content']
-    token = request.form['token']
+    answer_id = request.values.get('answer_id')
+    content = request.values.get('content')
+    token = request.values.get('token')
     db = Database()
     user = db.get({'token': token}, 'users')
     if user:
@@ -272,8 +322,8 @@ def agree_answer():
     对特定答案点赞
     :return: code(0=未知用户，-1=未知答案，-2=不能记录用户行为，-3=不能更新点赞数，1=成功)
     """
-    answer_id = request.form['answer_id']
-    token = request.form['token']
+    answer_id = request.values.get('answer_id')
+    token = request.values.get('token')
     db = Database()
     user = db.get({'token': token}, 'users')
     if user:
@@ -297,8 +347,8 @@ def agree_answer_comment():
     对特定评论点赞
     :return: code(0=未知用户，-1=未知评论，-2=不能记录用户行为，-3=不能更新点赞数，1=成功)
     """
-    comment_id = request.form['comment_id']
-    token = request.form['token']
+    comment_id = request.values.get('comment_id')
+    token = request.values.get('token')
     db = Database()
     user = db.get({'token': token}, 'users')
     if user:
@@ -316,14 +366,25 @@ def agree_answer_comment():
     return jsonify({'code': 0, 'msg': 'unexpected user'})
 
 
+@app.route('/api/answer/complain')
+def complain():
+    """
+    举报某一条评论
+    :return:code(0=未知评论，1=举报成功)
+    """
+    comment_id = request.values.get('comment_id')
+    db = Database()
+    #由于页面未定，举报形式未定，暂时无法继续往下写
+
+
 @app.route('/api/answer/disagree_answer')
 def disagree_answer():
     """
         对特定答案点踩
         :return: code(0=未知用户，-1=未知答案，-2=不能记录用户行为，-3=不能更新点踩数，1=成功)
-        """
-    answer_id = request.form['answer_id']
-    token = request.form['token']
+    """
+    answer_id = request.values.get('answer_id')
+    token = request.values.get('token')
     db = Database()
     user = db.get({'token': token}, 'users')
     if user:
@@ -339,6 +400,16 @@ def disagree_answer():
                 return jsonify({'code': -3, 'msg': 'unable to update agree number'})
         return jsonify({'code': -1, 'msg': 'unknown answer'})
     return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+"""
+    首页接口
+"""
+
+
+@app.route('/api/homepage/get_recommend')
+def get_recommend():
+    pass
 
 
 if __name__ == '__main__':
