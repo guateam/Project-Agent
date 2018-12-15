@@ -6,6 +6,7 @@ import Login from '../components/login/login'
 import Register from '../components/register/register'
 import AnswerDetail from '../components/answer-detail/answer-detail'
 import Comment from '../components/comment/comment'
+import Message from '../components/message/message'
 
 Vue.use(Router);
 
@@ -56,6 +57,11 @@ export default new Router({
             path: '/comment',
             name: 'comment',
             component: Comment
+        },
+        {
+            path: '/message',
+            name: 'message',
+            component: Message,
         }
     ]
 })

@@ -276,7 +276,7 @@ def get_answer_comment_list():
     db = Database()
     answer = db.get({'answerID': answer_id}, 'answers')
     if answer:
-        comment_list = db.get({'answerID', answer_id}, 'answercomments', 0)
+        comment_list = db.get({'answerID': answer_id}, 'answercomments', 0)
         data = []
         for value in comment_list:
             user = db.get({'userID': value['userID']}, 'users')
@@ -294,21 +294,21 @@ def get_answer_comment_list():
     return jsonify({'code': 0, 'msg': 'unknown answer'})
 
 
-@app.route('/api/answer/add_answer_comment')
+@app.route('/api/answer/add_answer_comment', methods=['POST'])
 def add_answer_comment():
     """
     添加评论
     :return:code(0=未知用户，-1=未知回答，-2=无法添加评论，1=成功)
     """
-    answer_id = request.values.get('answer_id')
-    content = request.values.get('content')
-    token = request.values.get('token')
+    answer_id = request.form['answer_id']
+    content = request.form['content']
+    token = request.form['token']
     db = Database()
     user = db.get({'token': token}, 'users')
     if user:
         answer = db.get({'answerID': answer_id}, 'answers')
         if answer:
-            flag = db.insert({'userID': user['userID'], 'content': content, 'answerID': answer_id}, 'answers')
+            flag = db.insert({'userID': user['userID'], 'content': content, 'answerID': answer_id}, 'answercomments')
             if flag:
                 return jsonify({'code': 1, 'msg': 'success'})
             return jsonify({'code': -2, 'msg': 'unable to insert comment'})
@@ -374,7 +374,7 @@ def complain():
     """
     comment_id = request.values.get('comment_id')
     db = Database()
-    #由于页面未定，举报形式未定，暂时无法继续往下写
+    # 由于页面未定，举报形式未定，暂时无法继续往下写
 
 
 @app.route('/api/answer/disagree_answer')
@@ -409,6 +409,64 @@ def disagree_answer():
 
 @app.route('/api/homepage/get_recommend')
 def get_recommend():
+    pass
+
+
+@app.route('/api/homepage/get_category')
+def get_category():
+    pass
+
+
+@app.route('/api/homepage/get_hot_search')
+def get_hot_search():
+    pass
+
+
+"""
+    信息接口
+"""
+
+
+@app.route('/api/message/get_message_list')
+def get_message_list():
+    """
+    获取聊天列表
+    :return: code(0=未知用户，-1=空聊天列表，1=成功)
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        message_list = db.get({'receiver': user['userID']}, 'chat_box', 0)
+        if message_list:
+            return jsonify({'code': 1, 'msg': 'success', 'data': message_list})
+        return jsonify({'code': -1, 'msg': 'empty list'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/message/add_message', methods=['POST'])
+def add_message():
+    """
+    添加信息
+    :return: code(0=未知用户，-1=无法录入，1=成功)
+    """
+    token = request.form['token']
+    receiver = request.form['receiver']
+    content = request.form['content']
+    message_type = request.form['message_type']
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        flag = db.insert({'receiver': receiver, 'content': content, 'type': message_type, 'poster': user['userID']},
+                         'messages')
+        if flag:
+            return jsonify({'code': 1, 'msg': 'success'})
+        return jsonify({'code': -1, 'msg': 'unable to insert'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/message/get_message')
+def get_message():
     pass
 
 
