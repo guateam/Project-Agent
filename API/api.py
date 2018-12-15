@@ -4,7 +4,7 @@ import string
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 
-from db import Database, generate_password
+from API.db import Database, generate_password
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
@@ -77,6 +77,20 @@ def register():
         if flag:
             return jsonify({'code': 1, 'msg': 'success'})  # 成功返回
     return jsonify({'code': -1, 'msg': 'user has already exist'})  # 未知错误
+
+@app.route('/api/account/check_email')
+def check_email():
+    """
+    检测邮箱是否被注册
+    :return: code(0=已经被注册，1=还未被注册)
+    """
+    email = request.values.get('email')
+    db = Database()
+    user = db.get({'email': email}, 'users')
+    if user:
+        return jsonify({'code': 0, 'msg': "the email had been registered"})
+    else:
+        return jsonify({'code': 1, 'msg': "the email can be registered"})
 
 
 @app.route('/api/account/get_user')
