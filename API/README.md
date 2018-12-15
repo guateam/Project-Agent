@@ -2,7 +2,49 @@
 
 [TOC]
 
-## 环境 Environment
+## 任务列表 Task
+
+1. 首页搜索框
+
+   - 需求
+     - 在搜索框中显示随机热门搜索内容
+     - 问题与设想
+       - 从item-cf算法获取感兴趣的内容还是使用热搜
+       - 设想：采用热搜，提供完善用户模型的地方
+   - 预览
+
+   ![api_task_1](..\img\api_task_1.png)
+
+2. 首页分类获取
+
+   - 需求
+
+     - 分发首页领域分类
+     - 问题与设想
+       - 分类是由后台指定分类还是由用户制定
+       - 需不需要小分类来细化分类
+       - 设想：采用大分类后台制定，小分类用户添加的操作
+
+   - 预览
+
+     ![api_task_2](..\img\api_task_2.png)
+
+     ![](..\img\api_task_4.png)
+
+3. 首页推荐算法与接口
+
+   - 需求
+
+     - 获取用户模型推荐感兴趣信息
+     - 问题与设想
+       - 采用item-cf 算法解决
+       - 需要对专业领域进行分析
+
+   - 预览
+
+     ![](..\img\api_task_3.png)
+
+4. 
 
 ```shell
 Language:
@@ -140,7 +182,53 @@ Format:
      }
      ```
 
-3. 
+3. 获取问题列表 get_questions
+   - 接口 `/api/question/get_questions()`
+
+   - 返回值
+
+     ```python
+     {
+         code: code,       	# 0=失败 1=成功
+         msg: msg,        	# 信息
+         data:[{
+             questionID:id, # 回答id 
+             userID:user_id, # 用户id 
+             title:tile, # 标题
+             description:description, # 描述
+             edittime:edittime, # 编辑时间
+             tags:tags, # 标签
+         },
+             # ...
+         ]
+     }
+     ```
+
+4. 通过id获取问题 get_question
+   - 接口 `/api/question/get_question()`
+
+   - 参数 `question_id`-问题id 
+
+   - 返回值
+
+     ```python
+     {
+         code: code,       	# 0=未知问题 -1=未知提问人 1=成功
+         msg: msg,        	# 信息
+         data:{
+             question_id:id, # 回答id 
+             user_id:user_id, # 用户id 
+             user_nickname:user_nickname, # 用户昵称
+             user_headportrait:user_headportrait, # 用户头像
+             title:tile, # 标题
+             description:description, # 描述
+             edittime:edittime, # 编辑时间
+             tags:tags, # 标签
+         }
+     }
+     ```
+
+5. 
 
 #### Answer 回答
 
