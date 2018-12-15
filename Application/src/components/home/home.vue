@@ -61,7 +61,7 @@
         methods: {
             getQuestionList() {
                 // 获取问题列表
-                axios.get('http://127.0.0.1:5000/api/questions/get_question', {
+                axios.get('http://127.0.0.1:5000/api/questions/get_questions', {
                     responseType: 'json',
                 }).then((response) => {
                     // console.log(response.data.data);
