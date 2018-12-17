@@ -1,3 +1,16 @@
+
+
+
+
+
+
+<!-----------------这个组件基本被废弃了，勿修改，底部导航组件见bottom-nav------Wh/12/17--------------->
+
+
+
+
+
+
 <template>
     <div>
         <v-bottom-nav
@@ -9,8 +22,8 @@
             <v-btn
                     color="teal"
                     flat
-                    value="home"
-                    @click="$router.push('/home')"
+                    value="topic"
+                    @click="$router.push('/topic')"
             >
                 <span>首页</span>
                 <v-icon>web</v-icon>
@@ -20,6 +33,7 @@
                     color="teal"
                     flat
                     value="message"
+                    @click="$router.push('/message')"
             >
                 <span>消息</span>
                 <v-icon>question_answer</v-icon>
