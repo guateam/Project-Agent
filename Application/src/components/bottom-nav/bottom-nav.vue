@@ -29,6 +29,7 @@
                     color="yellow lighten-1"
                     flat
                     value="message"
+                    @click="$router.push('/message')"
             >
                 <span>消息</span>
                 <v-icon>speaker_notes</v-icon>
