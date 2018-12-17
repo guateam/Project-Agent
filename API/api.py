@@ -446,12 +446,25 @@ def get_recommend():
 
 @app.route('/api/homepage/get_category')
 def get_category():
-    pass
+    """
+    获取分类(假的)
+    :return:code(0=未知问题，1=成功)
+    """
+    return jsonify({'code': 1, 'msg': 'success',
+                    'data': [{'name': '材料学', 'id': 1},
+                             {'name': '计算机图形学', 'id': 2},
+                             {'name': '机械学', 'id': 3},
+                             {'name': '热力学', 'id': 4}, ]})
 
 
 @app.route('/api/homepage/get_hot_search')
 def get_hot_search():
-    pass
+    """
+    获取热搜推荐(假的)
+    :return:code(0=未知问题，1=成功)
+    """
+    
+    return jsonify({'code': 1, 'msg': 'success', 'data': ''})
 
 
 """
