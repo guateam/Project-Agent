@@ -416,7 +416,7 @@ def test():
     print(cm)
 
 
-base_dir = os.path.abspath('../API/')
+base_dir = os.path.abspath('../WSG/')
 train_dir = os.path.join(base_dir, 'dataset/train.txt')
 test_dir = os.path.join(base_dir, 'dataset/cnews.test.txt')
 val_dir = os.path.join(base_dir, 'dataset/cnews.val.txt')
