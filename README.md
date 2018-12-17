@@ -127,7 +127,7 @@
 
 1. 加个广告的card 美工x
 2. 分类问题 算法
-3. 首页推荐加type 接口
+3. 首页推荐加type 接口√
 4. vue-cookie 前端
 5. login get方法改成post
 6. 学院页面
