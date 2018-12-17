@@ -1,4 +1,5 @@
 import random
+import re
 import string
 
 from flask import Flask, jsonify, request
@@ -78,6 +79,7 @@ def register():
             return jsonify({'code': 1, 'msg': 'success'})  # 成功返回
     return jsonify({'code': -1, 'msg': 'user has already exist'})  # 未知错误
 
+
 @app.route('/api/account/check_email')
 def check_email():
     """
@@ -119,7 +121,7 @@ def get_user():
 """
 
 
-@app.route('/api/questions/add_question',methods=['POST'])
+@app.route('/api/questions/add_question', methods=['POST'])
 def add_question():
     """
     添加问题
@@ -138,8 +140,8 @@ def add_question():
     return jsonify({'code': 0, 'msg': 'unexpected user'})
 
 
-@app.route('/api/questions/get_question')
-def get_question():
+@app.route('/api/questions/get_questions')
+def get_questions():
     """
     获取问题
     :return:code(0=未知用户，-1=无法添加问题，1=成功)
@@ -147,6 +149,32 @@ def get_question():
     db = Database()
     data = db.get({}, 'questions')
     return jsonify({'code': 0, 'msg': '', 'data': data})
+
+
+@app.route('/api/questions/get_question')
+def get_question():
+    """
+    通过id获取问题
+    :return: code(0=未知问题，-1=未知提问人，1=成功)
+    """
+    question_id = request.values.get('question_id')
+    db = Database()
+    question = db.get({'questionID': question_id}, 'questions')
+    if question:
+        user = db.get({'userID': question['userID']}, 'users')
+        if user:
+            data = {
+                'question_id': question_id,
+                'user_id': question['userID'],
+                'user_nickname': user['nickname'],
+                'user_headportrait': user['headportrait'],
+                'title': question['title'],
+                'description': question['description'],
+                'tags': question['tags']
+            }
+            return jsonify({'code': 1, 'msg': 'success', 'data': data})
+        return jsonify({'code': -1, 'msg': 'unknown user'})
+    return jsonify({'code': 0, 'msg': 'unknown question'})
 
 
 @app.route('/api/questions/get_answer_list')
@@ -185,7 +213,7 @@ def get_answer_list():
 """
 
 
-@app.route('/api/answer/add_answer',methods=['POST'])
+@app.route('/api/answer/add_answer', methods=['POST'])
 def add_answer():
     """
     添加新的回答
@@ -249,7 +277,7 @@ def get_answer_comment_list():
     db = Database()
     answer = db.get({'answerID': answer_id}, 'answers')
     if answer:
-        comment_list = db.get({'answerID', answer_id}, 'answercomments', 0)
+        comment_list = db.get({'answerID': answer_id}, 'answercomments', 0)
         data = []
         for value in comment_list:
             user = db.get({'userID': value['userID']}, 'users')
@@ -267,21 +295,21 @@ def get_answer_comment_list():
     return jsonify({'code': 0, 'msg': 'unknown answer'})
 
 
-@app.route('/api/answer/add_answer_comment')
+@app.route('/api/answer/add_answer_comment', methods=['POST'])
 def add_answer_comment():
     """
     添加评论
     :return:code(0=未知用户，-1=未知回答，-2=无法添加评论，1=成功)
     """
-    answer_id = request.values.get('answer_id')
-    content = request.values.get('content')
-    token = request.values.get('token')
+    answer_id = request.form['answer_id']
+    content = request.form['content']
+    token = request.form['token']
     db = Database()
     user = db.get({'token': token}, 'users')
     if user:
         answer = db.get({'answerID': answer_id}, 'answers')
         if answer:
-            flag = db.insert({'userID': user['userID'], 'content': content, 'answerID': answer_id}, 'answers')
+            flag = db.insert({'userID': user['userID'], 'content': content, 'answerID': answer_id}, 'answercomments')
             if flag:
                 return jsonify({'code': 1, 'msg': 'success'})
             return jsonify({'code': -2, 'msg': 'unable to insert comment'})
@@ -347,7 +375,7 @@ def complain():
     """
     comment_id = request.values.get('comment_id')
     db = Database()
-    #由于页面未定，举报形式未定，暂时无法继续往下写
+    # 由于页面未定，举报形式未定，暂时无法继续往下写
 
 
 @app.route('/api/answer/disagree_answer')
@@ -355,7 +383,7 @@ def disagree_answer():
     """
         对特定答案点踩
         :return: code(0=未知用户，-1=未知答案，-2=不能记录用户行为，-3=不能更新点踩数，1=成功)
-        """
+    """
     answer_id = request.values.get('answer_id')
     token = request.values.get('token')
     db = Database()
@@ -372,6 +400,132 @@ def disagree_answer():
             if flag:
                 return jsonify({'code': -3, 'msg': 'unable to update agree number'})
         return jsonify({'code': -1, 'msg': 'unknown answer'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+"""
+    首页接口
+"""
+
+
+@app.route('/api/homepage/get_recommend', methods=['GET'])
+def get_recommend():
+    """
+    根据用户推荐首页内容
+    type=1 回答，0 提问，2 广告
+    当前没有cf算法以后要改
+    :return:code(0=未知用户，1=成功)
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        '''
+        这里是从数据库里拿东西
+        '''
+        questions = db.get({}, 'questionsinfo', 0)
+        answers = db.get({}, 'answersinfo', 0)
+        '''
+        到时候换成cf算法
+        '''
+        pattern = re.compile(r'<[Ii][Mm][Gg].+?/>')  # 正则表达匹配图片
+        for value1 in questions:
+            value1.update({'type': 0, 'image': pattern.findall(value1['description'])})
+        for value2 in answers:
+            value2.update({'type': 1, 'image': pattern.findall(value2['content'])})
+        data = [{'title': '震惊！这样可以测出你的血脂', 'type': 2}]  # 假装有广告
+        '''
+        这里是随机乱序假装这是推荐了
+        '''
+        for value in questions + answers:
+            position = int(random.random() * len(data))  # 随机插入位置
+            data.insert(position, value)
+        return jsonify({'code': 1, 'msg': 'success', 'data': data})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/homepage/get_category')
+def get_category():
+    """
+    获取分类(假的)
+    :return:code(0=未知问题，1=成功)
+    """
+    return jsonify({'code': 1, 'msg': 'success',
+                    'data': [{'name': '材料学', 'id': 1},
+                             {'name': '计算机图形学', 'id': 2},
+                             {'name': '机械学', 'id': 3},
+                             {'name': '热力学', 'id': 4}, ]})
+
+
+@app.route('/api/homepage/get_hot_search')
+def get_hot_search():
+    """
+    获取热搜推荐(假的)
+    :return:code(0=未知问题，1=成功)
+    """
+    
+    return jsonify({'code': 1, 'msg': 'success', 'data': ''})
+
+
+"""
+    信息接口
+"""
+
+
+@app.route('/api/message/get_message_list')
+def get_message_list():
+    """
+    获取聊天列表
+    :return: code(0=未知用户，-1=空聊天列表，1=成功)
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        message_list = db.get({'receiver': user['userID']}, 'chat_box', 0)
+        if message_list:
+            return jsonify({'code': 1, 'msg': 'success', 'data': message_list})
+        return jsonify({'code': -1, 'msg': 'empty list'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/message/add_message', methods=['POST'])
+def add_message():
+    """
+    添加信息
+    :return: code(0=未知用户，-1=无法录入，1=成功)
+    """
+    token = request.form['token']
+    receiver = request.form['receiver']
+    content = request.form['content']
+    message_type = request.form['message_type']
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        flag = db.insert({'receiver': receiver, 'content': content, 'type': message_type, 'poster': user['userID']},
+                         'messages')
+        if flag:
+            return jsonify({'code': 1, 'msg': 'success'})
+        return jsonify({'code': -1, 'msg': 'unable to insert'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/message/get_chat_box')
+def get_chat_box():
+    """
+    获取聊天室内容
+    :return:code(0=未知用户，1=成功)
+    """
+    token = request.values.get('token')
+    user_id = request.values.get('user_id')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        message1 = db.get({'poster': user['userID'], 'receiver': user_id}, 'messages', 0)
+        message2 = db.get({'receiver': user['userID'], 'poster': user_id}, 'messages', 0)
+        data = message1 + message2
+        sorted(data, key=lambda a: a['post_time'])
+        return jsonify({'code': 1, 'msg': 'success', 'data': data})
     return jsonify({'code': 0, 'msg': 'unexpected user'})
 
 

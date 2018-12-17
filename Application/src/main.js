@@ -5,11 +5,15 @@ import store from './store'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 
-Vue.use(Vuetify)
+Vue.use(Vuetify);
+
+Vue.use(Vuetify, {
+    iconfont: 'mdi' // 'md' || 'mdi' || 'fa' || 'fa4'
+});
 
 new Vue({
     el: '#app',
     router,
     store,
     render: h => h(App)
-})
+});
