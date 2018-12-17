@@ -1,87 +1,9 @@
 <template>
     <div class="home">
 
-        <div>
-            <v-toolbar
-                    color="white"
-                    tabs
-            >
-                <v-text-field
-                        append-icon="mic"
-                        class="mx-3"
-                        label="Search"
-                        flat
-                        prepend-inner-icon="search"
-                        solo-inverted
-                ></v-text-field>
-
-                <v-tabs
-                        slot="extension"
-                        color="white"
-                        slider-color="#FFCC00"
-                        centered
-                >
-                    <v-tab
-                            v-for="tab in tabs"
-                            :key="tab"
-                    >
-                        {{ tab }}
-                    </v-tab>
-                </v-tabs>
-            </v-toolbar>
-
-            <v-card>
-                <v-container
-                        fluid
-                        grid-list-lg
-                >
-                    <v-layout row wrap>
-                        <v-flex xs12 v-for="question in question_list" :key="question.questionID">
-                            <v-card color="white" class="black--text">
-                                <v-layout row>
-                                    <v-flex xs6 offset-xs1>
-                                        <div>
-                                            <h3 class="cardtitle">{{ question.title }}</h3>
-                                            <div>{{ question.description }}</div>
-                                        </div>
-                                    </v-flex>
-                                    <v-flex xs5>
-                                        <v-img
-                                                :src="question.image"
-                                                height="125px"
-                                                contain
-                                        ></v-img>
-                                    </v-flex>
-                                </v-layout>
-                                <v-divider light></v-divider>
-                                <v-card-actions class="pa-3">
-                                    {{ question.follow }}人关注 {{ question.comment }}人评论
-                                    <v-spacer></v-spacer>
-                                    {{ question.edittime }}
-                                </v-card-actions>
-                            </v-card>
-                        </v-flex>
-                    </v-layout>
-                </v-container>
-            </v-card>
-
-            <!--<v-tabs-items v-model="tabs">-->
-                <!--<v-tab-item-->
-                        <!--v-for="n in 3"-->
-                        <!--:key="n"-->
-                <!--&gt;-->
-                    <!--<v-card>-->
-                        <!--<v-card-text>-->
-                            <!--{{ text }}-->
-                        <!--</v-card-text>-->
-                    <!--</v-card>-->
-                <!--</v-tab-item>-->
-            <!--</v-tabs-items>-->
-        </div>
-
-        <v-toolbar color="#0065cc" dark tabs style="padding-top: 1em">
+        <v-toolbar color="white" tabs>
             <v-text-field append-icon="mic" class="mx-3" flat label="Search" prepend-inner-icon="search" solo-inverted></v-text-field>
-            <v-tabs slot="extension" v-model="tabs" centered color="transparent"slider-color="white">
+            <v-tabs slot="extension" v-model="tabs" centered color="white" slider-color="#FFCC00">
                 <v-tab :key="1">推荐</v-tab>
                 <v-tab :key="2">计算机</v-tab>
                 <v-tab :key="3">互联网</v-tab>
@@ -211,9 +133,7 @@
 
     export default {
         data: () => ({
-
-            active: '推荐',
-            tabs: ['推荐', '计算机', '互联网', '通信', '信息安全'],
+            tabs: 0,
             question_list: [
                 {
                     questionID: 1,
@@ -226,8 +146,6 @@
                     comment: 2,
                 }
             ],
-
-            tabs: null,
             title: '未来三十年内，哪些行业的工作人员可能被人工智能取代？',
 
         }),

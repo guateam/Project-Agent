@@ -4,40 +4,19 @@
         <v-layout row>
             <v-flex xs12 sm6 offset-sm3>
                 <v-card>
-                    <v-toolbar color="white" dense>
-                        <v-toolbar-title>我的消息</v-toolbar-title>
-
-                        <v-spacer></v-spacer>
-
-                        <v-btn icon>
-                            <v-icon>search</v-icon>
-                        </v-btn>
-
-                        <v-tabs
-                                slot="extension"
-                                color="white"
-                                slider-color="#FFCC00"
-                                centered
-                        >
-                            <v-tab
-                                    v-for="(tab, index) in tabs"
-                                    :key="index"
-                            >
-                                {{ tab }}
-                            </v-tab>
+                    <v-toolbar color="white" tabs>
+                        <v-toolbar-title style="width: 100%;text-align: center">我的消息</v-toolbar-title>
+                        <v-tabs slot="extension" v-model="tabs" centered color="white" slider-color="#FFCC00">
+                            <v-tab :key="1">私聊</v-tab>
+                            <v-tab :key="2">好友</v-tab>
+                            <v-tab :key="3">通知</v-tab>
+                            <v-tab :key="4">群组</v-tab>
                         </v-tabs>
-
                     </v-toolbar>
+                </v-card>
+            </v-flex>
+        </v-layout>
 
-        <v-toolbar color="#0065cc" dark tabs style="padding-top: 1em">
-            <v-toolbar-title style="width: 100%;text-align: center">我的消息</v-toolbar-title>
-            <v-tabs slot="extension" v-model="tabs" centered color="transparent" slider-color="white">
-                <v-tab :key="1">私聊</v-tab>
-                <v-tab :key="2">好友</v-tab>
-                <v-tab :key="3">通知</v-tab>
-                <v-tab :key="4">群组</v-tab>
-            </v-tabs>
-        </v-toolbar>
 
 
         <v-tabs-items v-model="tabs">
@@ -83,7 +62,7 @@
         name: "message",
         data () {
             return {
-                tabs: ['私信', '好友', '通知', '群组'],
+                tabs: 0,
                 items: [
                     { header: '今天' },
                     {
