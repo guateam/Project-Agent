@@ -376,7 +376,39 @@ Format:
      }
      ```
 
-2. 
+2. 获取分类 get_category
+   - 接口 `/api/homepage/get_category()` 
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # 0=未知问题 1=成功
+         msg: msg,      # 信息
+         data:[
+             {
+                 name:name, # 名称
+                 id:id, # 分类id
+             }
+             # ...
+         ]
+     }
+     ```
+
+3. 获取热搜 get_hot_search
+   - 接口 `/api/homepage/get_hot_search()`
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # 0=未知问题 1=成功
+         msg: msg,      # 信息
+         data:data      # 热搜内容
+     }
+     ```
+
+4. 
 
 #### Message 信息
 
