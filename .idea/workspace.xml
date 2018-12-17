@@ -1,12 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
+<<<<<<< Updated upstream
     <list default="true" id="9ad5a150-d112-4ec6-874a-c0c7ded204b4" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Application/src/components/chat/chat.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+<<<<<<< Updated upstream
+      <change afterPath="$PROJECT_DIR$/Word2Vec/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Word2Vec/get_wiki_text.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Word2Vec/jieba_dict/stopwords.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Word2Vec/jieba_text.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Word2Vec/opencc_to_text.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Word2Vec/word2graph.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Word2Vec/word2vec.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Word2Vec/word2vec_train.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Application/src/components/home/home.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Application/src/components/home/home.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Application/src/components/message/message.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Application/src/components/message/message.vue" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/API/README.md" afterDir="false" />
+>>>>>>> Stashed changes
     </list>
+=======
+    <list default="true" id="9ad5a150-d112-4ec6-874a-c0c7ded204b4" name="Default Changelist" comment="" />
+>>>>>>> Stashed changes
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,19 +37,21 @@
           <entry key="project.open.time.5" value="1" />
           <entry key="project.open.time.6" value="1" />
           <entry key="project.open.time.7" value="1" />
-          <entry key="project.open.time.8" value="3" />
-          <entry key="project.opened" value="8" />
+          <entry key="project.open.time.8" value="4" />
+          <entry key="project.opened" value="9" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
+          <entry key="checkpoint" value="1" />
           <entry key="gitignore" value="2" />
           <entry key="html" value="3" />
           <entry key="js" value="8" />
           <entry key="json" value="1" />
           <entry key="md" value="6" />
-          <entry key="py" value="9" />
+          <entry key="py" value="16" />
           <entry key="sql" value="1" />
+          <entry key="txt" value="1" />
           <entry key="vue" value="9" />
         </counts>
       </usages-collector>
@@ -44,8 +61,8 @@
           <entry key="JSON" value="1" />
           <entry key="JavaScript" value="8" />
           <entry key="Markdown" value="6" />
-          <entry key="PLAIN_TEXT" value="2" />
-          <entry key="Python" value="9" />
+          <entry key="PLAIN_TEXT" value="4" />
+          <entry key="Python" value="16" />
           <entry key="SQL" value="1" />
           <entry key="Vue.js" value="9" />
         </counts>
@@ -72,30 +89,34 @@
     <session id="1288964583">
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="py" value="4" />
+          <entry key="py" value="9" />
           <entry key="vue" value="3" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="PLAIN_TEXT" value="3" />
-          <entry key="Python" value="4" />
+          <entry key="Python" value="9" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.lifecycle.project">
         <counts>
+          <entry key="project.closed" value="1" />
+          <entry key="project.open.time.20" value="1" />
           <entry key="project.open.time.21" value="1" />
-          <entry key="project.opened" value="1" />
+          <entry key="project.opened" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="533" />
+          <entry key="md" value="90" />
+          <entry key="py" value="536" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="533" />
+          <entry key="Markdown" value="90" />
+          <entry key="Python" value="536" />
         </counts>
       </usages-collector>
     </session>
@@ -137,75 +158,178 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Application/src/components/chat/chat.vue">
+        <entry file="file://$PROJECT_DIR$/Word2Vec/__init__.py">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+<<<<<<< Updated upstream
+        <entry file="file://$PROJECT_DIR$/Application/src/router/router.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="19">
-              <caret line="1" column="13" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="13" />
+            <state relative-caret-position="770">
+              <caret line="73" selection-start-line="73" selection-end-line="73" />
+=======
+        <entry file="file://$PROJECT_DIR$/API/api.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="6498">
+              <caret line="361" column="34" selection-start-line="361" selection-start-column="34" selection-end-line="361" selection-end-column="34" />
+              <folding>
+                <element signature="e#0#13#0" expanded="true" />
+<<<<<<< Updated upstream
+                <marker date="1544857517423" expanded="true" signature="2184:2530" ph="..." />
+                <marker date="1544857517423" expanded="true" signature="11284:11446" ph="..." />
+=======
+                <marker date="1545050027964" expanded="true" signature="2184:2530" ph="..." />
+                <marker date="1545050027964" expanded="true" signature="11284:11446" ph="..." />
+>>>>>>> Stashed changes
+              </folding>
+>>>>>>> Stashed changes
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Application/src/components/home/home.vue">
+<<<<<<< Updated upstream
+        <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/flask/app.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="191">
-              <caret line="15" column="58" selection-start-line="15" selection-start-column="57" selection-end-line="15" selection-end-column="58" />
+<<<<<<< Updated upstream
+            <state relative-caret-position="30073">
+              <caret line="1798" selection-start-line="1798" selection-end-line="1798" />
+=======
+        <entry file="file://$PROJECT_DIR$/API/cf.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="144">
+              <caret line="8" column="26" selection-start-line="8" selection-start-column="26" selection-end-line="8" selection-end-column="26" />
               <folding>
-                <element signature="n#style#0;n#v-toolbar#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#v-card#0;n#v-tab-item#0;n#v-tabs-items#0;n#div#0;n#div#0;n#template#0;n#!!top" />
-                <element signature="n#style#0;n#v-flex#0;n#v-layout#0;n#v-container#0;n#v-card#0;n#v-tab-item#0;n#v-tabs-items#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#v-layout#0;n#v-container#0;n#v-card#0;n#v-tab-item#0;n#v-tabs-items#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#p#0;n#div#1;n#div#0;n#v-layout#0;n#v-container#0;n#v-card#0;n#v-tab-item#0;n#v-tabs-items#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#v-card#1;n#v-tab-item#0;n#v-tabs-items#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#v-card#1;n#v-tab-item#0;n#v-tabs-items#0;n#div#0;n#div#0;n#template#0;n#!!top" />
-                <element signature="n#style#0;n#v-card#2;n#v-tab-item#0;n#v-tabs-items#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#v-card#2;n#v-tab-item#0;n#v-tabs-items#0;n#div#0;n#div#0;n#template#0;n#!!top" />
-                <element signature="n#style#0;n#v-flex#0;n#v-layout#0;n#v-container#0;n#v-card#2;n#v-tab-item#0;n#v-tabs-items#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#img#0;n#v-flex#1;n#v-layout#0;n#v-container#0;n#v-card#2;n#v-tab-item#0;n#v-tabs-items#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#v-layout#0;n#v-container#0;n#v-card#2;n#v-tab-item#0;n#v-tabs-items#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="e#4206#4212#0" expanded="true" />
-                <element signature="e#4212#4218#0" expanded="true" />
-                <element signature="e#4219#4225#0" expanded="true" />
-                <element signature="e#4225#4231#0" expanded="true" />
-                <element signature="e#4319#4325#0" expanded="true" />
-                <element signature="e#4325#4331#0" expanded="true" />
-                <element signature="e#4331#4337#0" expanded="true" />
-                <element signature="e#4338#4344#0" expanded="true" />
-                <element signature="e#4344#4350#0" expanded="true" />
-                <element signature="e#4350#4356#0" expanded="true" />
-                <element signature="n#style#0;n#p#0;n#div#1;n#div#0;n#v-layout#0;n#v-container#0;n#v-card#2;n#v-tab-item#0;n#v-tabs-items#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#v-card#3;n#v-tab-item#0;n#v-tabs-items#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#v-card#3;n#v-tab-item#0;n#v-tabs-items#0;n#div#0;n#div#0;n#template#0;n#!!top" />
-                <element signature="n#style#0;n#v-flex#0;n#v-layout#0;n#v-container#0;n#v-card#3;n#v-tab-item#0;n#v-tabs-items#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#img#0;n#v-flex#1;n#v-layout#0;n#v-container#0;n#v-card#3;n#v-tab-item#0;n#v-tabs-items#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#v-layout#0;n#v-container#0;n#v-card#3;n#v-tab-item#0;n#v-tabs-items#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="e#5524#5530#0" expanded="true" />
-                <element signature="e#5530#5536#0" expanded="true" />
-                <element signature="e#5537#5543#0" expanded="true" />
-                <element signature="e#5543#5549#0" expanded="true" />
-                <element signature="e#5637#5643#0" expanded="true" />
-                <element signature="e#5643#5649#0" expanded="true" />
-                <element signature="e#5649#5655#0" expanded="true" />
-                <element signature="e#5656#5662#0" expanded="true" />
-                <element signature="e#5662#5668#0" expanded="true" />
-                <element signature="e#5668#5674#0" expanded="true" />
-                <element signature="n#style#0;n#p#0;n#div#1;n#div#0;n#v-layout#0;n#v-container#0;n#v-card#3;n#v-tab-item#0;n#v-tabs-items#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="e#0#55#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Application/src/components/message/message.vue">
+        <entry file="file://$PROJECT_DIR$/API/WordSegmentation.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="247">
-              <caret line="21" column="101" selection-start-line="21" selection-start-column="101" selection-end-line="21" selection-end-column="101" />
+            <state relative-caret-position="162">
+              <caret line="9" column="13" lean-forward="true" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+              <folding>
+                <element signature="e#0#12#0" expanded="true" />
+              </folding>
+>>>>>>> Stashed changes
+=======
+            <state relative-caret-position="108">
+              <caret line="6" selection-start-line="6" selection-end-line="6" />
+>>>>>>> Stashed changes
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+        <entry file="file://$PROJECT_DIR$/Application/src/components/answer-detail/answer-detail.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1173">
+              <caret line="69" column="58" selection-start-line="69" selection-start-column="58" selection-end-line="69" selection-end-column="58" />
+=======
+        <entry file="file://$PROJECT_DIR$/../Intelligent-annotation-system/TextFeatureExtraction/WordSegmentation.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-7265">
+              <folding>
+                <element signature="e#0#12#0" expanded="true" />
+              </folding>
+>>>>>>> Stashed changes
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+<<<<<<< Updated upstream
+        <entry file="file://$PROJECT_DIR$/Application/src/components/home/home.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1071">
+              <caret line="63" column="76" selection-start-line="63" selection-start-column="76" selection-end-line="63" selection-end-column="76" />
+=======
+        <entry file="file://$PROJECT_DIR$/API/config.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="108">
+              <caret line="6" selection-start-line="6" selection-end-line="6" />
+>>>>>>> Stashed changes
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Application/src/components/login/login.vue">
+          <provider selected="true" editor-type-id="text-editor">
+<<<<<<< Updated upstream
+            <state relative-caret-position="136">
+              <caret line="8" column="12" selection-start-line="8" selection-start-column="12" selection-end-line="10" selection-end-column="18" />
+=======
+            <state relative-caret-position="360">
+=======
+        <entry file="file://$PROJECT_DIR$/API/db.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="18">
+>>>>>>> Stashed changes
+              <caret line="22" column="38" selection-start-line="22" selection-start-column="28" selection-end-line="22" selection-end-column="38" />
+>>>>>>> Stashed changes
               <folding>
                 <element signature="n#style#0;n#v-toolbar#0;n#div#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#v-toolbar-title#0;n#v-toolbar#0;n#div#0;n#template#0;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+<<<<<<< Updated upstream
+        <entry file="file://$PROJECT_DIR$/Word2Vec/word2vec.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <folding>
+                <element signature="e#0#14#0" expanded="true" />
+              </folding>
+=======
+        <entry file="file://$PROJECT_DIR$/API/README.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+<<<<<<< Updated upstream
+              <first_editor relative-caret-position="324">
+                <caret line="18" column="17" selection-start-line="18" selection-start-column="17" selection-end-line="18" selection-end-column="17" />
+=======
+              <first_editor relative-caret-position="306">
+                <caret line="17" column="3" selection-start-line="17" selection-start-column="3" selection-end-line="17" selection-end-column="3" />
+>>>>>>> Stashed changes
+              </first_editor>
+              <second_editor />
+>>>>>>> Stashed changes
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Word2Vec/jieba_dict/stopwords.txt">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Word2Vec/word2vec_train.py">
+          <provider selected="true" editor-type-id="text-editor">
+<<<<<<< Updated upstream
+            <state relative-caret-position="34">
+              <caret line="2" column="11" selection-start-line="2" selection-start-column="11" selection-end-line="2" selection-end-column="11" />
+=======
+            <state relative-caret-position="720">
+              <caret line="40" column="11" selection-start-line="40" selection-start-column="11" selection-end-line="40" selection-end-column="11" />
+>>>>>>> Stashed changes
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Application/src/components/my-header/my-header.vue">
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
     </leaf>
@@ -220,7 +344,7 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>1</find>
+      <find>pred</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -235,6 +359,7 @@
         <option value="$PROJECT_DIR$/Application/src/components/Login.vue" />
         <option value="$PROJECT_DIR$/API/db.py" />
         <option value="$PROJECT_DIR$/API/config.py" />
+<<<<<<< Updated upstream
         <option value="$PROJECT_DIR$/Application/src/components/login/login.vue" />
         <option value="$PROJECT_DIR$/Application/src/components/topic/topic.vue" />
         <option value="$PROJECT_DIR$/Application/src/components/school/school.vue" />
@@ -245,7 +370,12 @@
         <option value="$PROJECT_DIR$/Application/src/components/bottom-nav/bottom-nav.vue" />
         <option value="$PROJECT_DIR$/Application/src/components/chat/chat.vue" />
         <option value="$PROJECT_DIR$/Application/src/components/home/home.vue" />
-        <option value="$PROJECT_DIR$/Application/src/components/message/message.vue" />
+=======
+        <option value="$PROJECT_DIR$/API/api.py" />
+        <option value="$PROJECT_DIR$/API/cf.py" />
+        <option value="$PROJECT_DIR$/API/README.md" />
+        <option value="$PROJECT_DIR$/API/WordSegmentation.py" />
+>>>>>>> Stashed changes
       </list>
     </option>
   </component>
@@ -266,8 +396,16 @@
   <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="315" />
     <option name="y" value="36" />
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
     <option name="width" value="1401" />
     <option name="height" value="1002" />
+=======
+=======
+>>>>>>> Stashed changes
+    <option name="width" value="1400" />
+    <option name="height" value="1000" />
+>>>>>>> Stashed changes
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -275,6 +413,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -290,101 +429,23 @@
             <path>
               <item name="Project-Agent" type="b2602c69:ProjectViewProjectNode" />
               <item name="Project-Agent" type="462c0819:PsiDirectoryNode" />
-              <item name="Application" type="462c0819:PsiDirectoryNode" />
+              <item name="Word2Vec" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Project-Agent" type="b2602c69:ProjectViewProjectNode" />
               <item name="Project-Agent" type="462c0819:PsiDirectoryNode" />
-              <item name="Application" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Project-Agent" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Project-Agent" type="462c0819:PsiDirectoryNode" />
-              <item name="Application" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Project-Agent" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Project-Agent" type="462c0819:PsiDirectoryNode" />
-              <item name="Application" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="answer-detail" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Project-Agent" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Project-Agent" type="462c0819:PsiDirectoryNode" />
-              <item name="Application" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="bottom-nav" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Project-Agent" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Project-Agent" type="462c0819:PsiDirectoryNode" />
-              <item name="Application" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="chat" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Project-Agent" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Project-Agent" type="462c0819:PsiDirectoryNode" />
-              <item name="Application" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="comment" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Project-Agent" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Project-Agent" type="462c0819:PsiDirectoryNode" />
-              <item name="Application" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="login" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Project-Agent" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Project-Agent" type="462c0819:PsiDirectoryNode" />
-              <item name="Application" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="message" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Project-Agent" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Project-Agent" type="462c0819:PsiDirectoryNode" />
-              <item name="Application" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="register" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Project-Agent" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Project-Agent" type="462c0819:PsiDirectoryNode" />
-              <item name="Application" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="topic" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Project-Agent" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Project-Agent" type="462c0819:PsiDirectoryNode" />
-              <item name="Application" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="router" type="462c0819:PsiDirectoryNode" />
+              <item name="Word2Vec" type="462c0819:PsiDirectoryNode" />
+              <item name="jieba_dict" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Intelligent-annotation-system/CollaborativeFiltering/cf.py" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -459,7 +520,8 @@
     <frame x="-7" y="-7" width="1295" height="695" extended-state="7" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.19698173" />
+<<<<<<< Updated upstream
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26226014" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Concurrent Activities Diagram" order="0" weight="0.32899022" />
@@ -476,6 +538,24 @@
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="bottom" id="Terminal" order="12" weight="0.43213898" />
       <window_info anchor="bottom" id="Python Console" order="13" />
+=======
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25231177" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.33617023" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.17446809" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.32907802" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
+      <window_info anchor="bottom" id="Terminal" order="11" weight="0.4326241" />
+      <window_info anchor="bottom" id="Python Console" order="12" />
+>>>>>>> Stashed changes
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -544,8 +624,45 @@
         </state>
       </provider>
     </entry>
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
     <entry file="file://$PROJECT_DIR$/Application/package.json">
       <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/src/components/topic/topic.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="51" selection-start-line="51" selection-end-line="51" />
+=======
+    <entry file="file://$PROJECT_DIR$/Application/src/components/HelloWorld.vue" />
+    <entry file="file://$PROJECT_DIR$/API/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="306">
+            <caret line="17" column="3" selection-start-line="17" selection-start-column="3" selection-end-line="17" selection-end-column="3" />
+          </first_editor>
+          <second_editor />
+>>>>>>> Stashed changes
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/api.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="582">
+          <caret line="465" column="4" selection-start-line="465" selection-start-column="4" selection-end-line="465" selection-end-column="4" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+<<<<<<< Updated upstream
+    <entry file="file://$PROJECT_DIR$/Application/src/router/router.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1088">
+          <caret line="73" selection-start-line="73" selection-end-line="73" />
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/flask/app.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -553,18 +670,114 @@
           <caret line="1798" selection-start-line="1798" selection-end-line="1798" />
         </state>
       </provider>
+=======
+    <entry file="file://$PROJECT_DIR$/Application/src/components/Login.vue" />
+    <entry file="file://$PROJECT_DIR$/API/__init__.py">
+      <provider selected="true" editor-type-id="text-editor" />
+>>>>>>> Stashed changes
     </entry>
-    <entry file="file://$PROJECT_DIR$/Application/src/components/school/school.vue">
+    <entry file="file://$PROJECT_DIR$/Application/src/store.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="57">
-          <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
+        <state relative-caret-position="1071">
+          <caret line="63" column="76" selection-start-line="63" selection-start-column="76" selection-end-line="63" selection-end-column="76" />
+=======
+    <entry file="file://$PROJECT_DIR$/Application/src/components/HelloWorld.vue" />
+    <entry file="file://$PROJECT_DIR$/Application/src/components/Login.vue" />
+    <entry file="file://$PROJECT_DIR$/Application/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor />
+          <second_editor />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Application/src/components/register/register.vue">
+<<<<<<< Updated upstream
+=======
+    <entry file="file://$PROJECT_DIR$/Application/public/index.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+>>>>>>> Stashed changes
+    <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/flask/app.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="303">
-          <caret line="45" column="58" selection-start-line="45" selection-start-column="58" selection-end-line="45" selection-end-column="58" />
+        <state relative-caret-position="2284">
+          <caret line="1815" selection-start-line="1815" selection-end-line="1815" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/__init__.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/db.py">
+      <provider selected="true" editor-type-id="text-editor">
+<<<<<<< Updated upstream
+        <state relative-caret-position="360">
+=======
+        <state relative-caret-position="18">
+>>>>>>> Stashed changes
+          <caret line="22" column="38" selection-start-line="22" selection-start-column="28" selection-end-line="22" selection-end-column="38" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+<<<<<<< Updated upstream
+    <entry file="file://$PROJECT_DIR$/Application/src/App.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="720">
+          <caret line="40" column="11" selection-start-line="40" selection-start-column="11" selection-end-line="40" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../Intelligent-annotation-system/CollaborativeFiltering/cf.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1998">
+          <caret line="12" column="16" lean-forward="true" selection-start-line="12" selection-start-column="16" selection-end-line="12" selection-end-column="16" />
+          <folding>
+            <element signature="e#0#55#0" expanded="true" />
+          </folding>
+=======
+    <entry file="file://$PROJECT_DIR$/API/config.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="6" selection-start-line="6" selection-end-line="6" />
+>>>>>>> Stashed changes
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/api.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6498">
+          <caret line="361" column="34" selection-start-line="361" selection-start-column="34" selection-end-line="361" selection-end-column="34" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+<<<<<<< Updated upstream
+            <marker date="1544857517423" expanded="true" signature="2184:2530" ph="..." />
+            <marker date="1544857517423" expanded="true" signature="11284:11446" ph="..." />
+          </folding>
+>>>>>>> Stashed changes
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/src/components/login/login.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="12" selection-start-line="8" selection-start-column="12" selection-end-line="10" selection-end-column="18" />
+          <folding>
+            <element signature="n#style#0;n#span#0;n#div#1;n#div#1;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#1;n#div#1;n#div#0;n#template#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/src/components/message/message.vue">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/src/App.vue">
+      <provider selected="true" editor-type-id="text-editor">
+<<<<<<< Updated upstream
+        <state relative-caret-position="272">
+          <caret line="16" selection-start-line="16" selection-end-line="16" />
           <folding>
             <element signature="n#style#0;n#v-stepper-header#0;n#v-stepper#0;n#div#1;n#div#1;n#div#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#v-btn#0;n#v-stepper-content#0;n#v-stepper-items#0;n#v-stepper#0;n#div#0;n#div#1;n#div#0;n#template#0;n#!!top" expanded="true" />
@@ -580,14 +793,27 @@
           <caret line="17" column="28" selection-start-line="17" selection-start-column="28" selection-end-line="17" selection-end-column="28" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
+=======
+        <state relative-caret-position="108">
+          <caret line="6" selection-start-line="6" selection-end-line="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../Intelligent-annotation-system/TextFeatureExtraction/WordSegmentation.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-7265">
+          <folding>
+            <element signature="e#0#12#0" expanded="true" />
+>>>>>>> Stashed changes
           </folding>
         </state>
       </provider>
     </entry>
+<<<<<<< Updated upstream
     <entry file="file://$PROJECT_DIR$/Application/src/components/answer-detail/answer-detail.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-475">
-          <caret line="5" column="76" selection-start-line="5" selection-start-column="76" selection-end-line="5" selection-end-column="76" />
+        <state relative-caret-position="51">
+          <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
         </state>
       </provider>
     </entry>
@@ -612,91 +838,45 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="156">
           <caret line="33" column="42" selection-start-line="33" selection-start-column="29" selection-end-line="33" selection-end-column="42" />
+=======
+    <entry file="file://$PROJECT_DIR$/API/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="324">
+            <caret line="18" column="17" selection-start-line="18" selection-start-column="17" selection-end-line="18" selection-end-column="17" />
+          </first_editor>
+          <second_editor />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Application/src/components/login/login.vue">
+    <entry file="file://$PROJECT_DIR$/API/cf.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="17" column="41" lean-forward="true" selection-start-line="17" selection-start-column="41" selection-end-line="17" selection-end-column="41" />
+        <state relative-caret-position="144">
+          <caret line="8" column="26" selection-start-line="8" selection-start-column="26" selection-end-line="8" selection-end-column="26" />
           <folding>
-            <element signature="n#style#0;n#span#0;n#div#1;n#div#1;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#1;n#div#1;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="e#0#55#0" expanded="true" />
           </folding>
+>>>>>>> Stashed changes
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Application/src/store.js">
+    <entry file="file://$PROJECT_DIR$/API/WordSegmentation.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="16" selection-start-line="16" selection-end-line="16" />
+<<<<<<< Updated upstream
+        <state relative-caret-position="582">
+          <caret line="465" column="4" selection-start-line="465" selection-start-column="4" selection-end-line="465" selection-end-column="4" />
           <folding>
-            <element signature="e#0#21#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/src/App.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/src/components/my-header/my-header.vue">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/src/components/chat/chat.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="19">
-          <caret line="1" column="13" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/src/components/home/home.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="191">
-          <caret line="15" column="58" selection-start-line="15" selection-start-column="57" selection-end-line="15" selection-end-column="58" />
+            <element signature="e#0#13#0" expanded="true" />
+=======
+        <state relative-caret-position="162">
+          <caret line="9" column="13" lean-forward="true" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
           <folding>
-            <element signature="n#style#0;n#v-toolbar#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#v-card#0;n#v-tab-item#0;n#v-tabs-items#0;n#div#0;n#div#0;n#template#0;n#!!top" />
-            <element signature="n#style#0;n#v-flex#0;n#v-layout#0;n#v-container#0;n#v-card#0;n#v-tab-item#0;n#v-tabs-items#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#v-layout#0;n#v-container#0;n#v-card#0;n#v-tab-item#0;n#v-tabs-items#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#p#0;n#div#1;n#div#0;n#v-layout#0;n#v-container#0;n#v-card#0;n#v-tab-item#0;n#v-tabs-items#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#v-card#1;n#v-tab-item#0;n#v-tabs-items#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#v-card#1;n#v-tab-item#0;n#v-tabs-items#0;n#div#0;n#div#0;n#template#0;n#!!top" />
-            <element signature="n#style#0;n#v-card#2;n#v-tab-item#0;n#v-tabs-items#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#v-card#2;n#v-tab-item#0;n#v-tabs-items#0;n#div#0;n#div#0;n#template#0;n#!!top" />
-            <element signature="n#style#0;n#v-flex#0;n#v-layout#0;n#v-container#0;n#v-card#2;n#v-tab-item#0;n#v-tabs-items#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#img#0;n#v-flex#1;n#v-layout#0;n#v-container#0;n#v-card#2;n#v-tab-item#0;n#v-tabs-items#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#v-layout#0;n#v-container#0;n#v-card#2;n#v-tab-item#0;n#v-tabs-items#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="e#4206#4212#0" expanded="true" />
-            <element signature="e#4212#4218#0" expanded="true" />
-            <element signature="e#4219#4225#0" expanded="true" />
-            <element signature="e#4225#4231#0" expanded="true" />
-            <element signature="e#4319#4325#0" expanded="true" />
-            <element signature="e#4325#4331#0" expanded="true" />
-            <element signature="e#4331#4337#0" expanded="true" />
-            <element signature="e#4338#4344#0" expanded="true" />
-            <element signature="e#4344#4350#0" expanded="true" />
-            <element signature="e#4350#4356#0" expanded="true" />
-            <element signature="n#style#0;n#p#0;n#div#1;n#div#0;n#v-layout#0;n#v-container#0;n#v-card#2;n#v-tab-item#0;n#v-tabs-items#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#v-card#3;n#v-tab-item#0;n#v-tabs-items#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#v-card#3;n#v-tab-item#0;n#v-tabs-items#0;n#div#0;n#div#0;n#template#0;n#!!top" />
-            <element signature="n#style#0;n#v-flex#0;n#v-layout#0;n#v-container#0;n#v-card#3;n#v-tab-item#0;n#v-tabs-items#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#img#0;n#v-flex#1;n#v-layout#0;n#v-container#0;n#v-card#3;n#v-tab-item#0;n#v-tabs-items#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#v-layout#0;n#v-container#0;n#v-card#3;n#v-tab-item#0;n#v-tabs-items#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="e#5524#5530#0" expanded="true" />
-            <element signature="e#5530#5536#0" expanded="true" />
-            <element signature="e#5537#5543#0" expanded="true" />
-            <element signature="e#5543#5549#0" expanded="true" />
-            <element signature="e#5637#5643#0" expanded="true" />
-            <element signature="e#5643#5649#0" expanded="true" />
-            <element signature="e#5649#5655#0" expanded="true" />
-            <element signature="e#5656#5662#0" expanded="true" />
-            <element signature="e#5662#5668#0" expanded="true" />
-            <element signature="e#5668#5674#0" expanded="true" />
-            <element signature="n#style#0;n#p#0;n#div#1;n#div#0;n#v-layout#0;n#v-container#0;n#v-card#3;n#v-tab-item#0;n#v-tabs-items#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="e#0#12#0" expanded="true" />
+>>>>>>> Stashed changes
+=======
+            <marker date="1545050027964" expanded="true" signature="2184:2530" ph="..." />
+            <marker date="1545050027964" expanded="true" signature="11284:11446" ph="..." />
+>>>>>>> Stashed changes
           </folding>
         </state>
       </provider>
