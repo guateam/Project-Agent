@@ -1,4 +1,5 @@
 import random
+import re
 import string
 
 from flask import Flask, jsonify, request
@@ -407,9 +408,40 @@ def disagree_answer():
 """
 
 
-@app.route('/api/homepage/get_recommend')
+@app.route('/api/homepage/get_recommend', methods=['GET'])
 def get_recommend():
-    pass
+    """
+    根据用户推荐首页内容
+    type=1 回答，0 提问，2 广告
+    当前没有cf算法以后要改
+    :return:code(0=未知用户，1=成功)
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        '''
+        这里是从数据库里拿东西
+        '''
+        questions = db.get({}, 'questionsinfo', 0)
+        answers = db.get({}, 'answersinfo', 0)
+        '''
+        到时候换成cf算法
+        '''
+        pattern = re.compile(r'<[Ii][Mm][Gg].+?/>')  # 正则表达匹配图片
+        for value1 in questions:
+            value1.update({'type': 0, 'image': pattern.findall(value1['description'])})
+        for value2 in answers:
+            value2.update({'type': 1, 'image': pattern.findall(value2['content'])})
+        data = [{'title': '震惊！这样可以测出你的血脂', 'type': 2}]  # 假装有广告
+        '''
+        这里是随机乱序假装这是推荐了
+        '''
+        for value in questions + answers:
+            position = int(random.random() * len(data))  # 随机插入位置
+            data.insert(position, value)
+        return jsonify({'code': 1, 'msg': 'success', 'data': data})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
 
 
 @app.route('/api/homepage/get_category')
@@ -465,9 +497,23 @@ def add_message():
     return jsonify({'code': 0, 'msg': 'unexpected user'})
 
 
-@app.route('/api/message/get_message')
-def get_message():
-    pass
+@app.route('/api/message/get_chat_box')
+def get_chat_box():
+    """
+    获取聊天室内容
+    :return:code(0=未知用户，1=成功)
+    """
+    token = request.values.get('token')
+    user_id = request.values.get('user_id')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        message1 = db.get({'poster': user['userID'], 'receiver': user_id}, 'messages', 0)
+        message2 = db.get({'receiver': user['userID'], 'poster': user_id}, 'messages', 0)
+        data = message1 + message2
+        sorted(data, key=lambda a: a['post_time'])
+        return jsonify({'code': 1, 'msg': 'success', 'data': data})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
 
 
 if __name__ == '__main__':

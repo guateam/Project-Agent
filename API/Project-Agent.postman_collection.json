@@ -1,8 +1,7 @@
 {
 	"info": {
+		"_postman_id": "76c5a165-e1bc-496b-a3b1-402be063251b",
 		"name": "Project-Agent",
-		"_postman_id": "9fd89691-d1f8-183c-469c-c1cad56133cb",
-		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -204,29 +203,32 @@
 			"response": []
 		},
 		{
-			"name": "检测邮箱是否被注册",
+			"name": "添加回答评论",
 			"request": {
-				"method": "GET",
+				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "formdata",
 					"formdata": [
 						{
-							"key": "job_number",
-							"value": "AKB48",
-							"description": "工号",
+							"key": "answer_id",
+							"value": "1",
 							"type": "text"
 						},
 						{
-							"key": "date",
-							"value": "2018-8-2",
-							"description": "日期",
+							"key": "content",
+							"value": "这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论",
+							"type": "text"
+						},
+						{
+							"key": "token",
+							"value": "23zK0V1dIgLU5PEQ6vcmxMwSp",
 							"type": "text"
 						}
 					]
 				},
 				"url": {
-					"raw": "http://127.0.0.1:5000/api/account/check_email?email=zhangyu199946@126.com",
+					"raw": "http://127.0.0.1:5000/api/answer/add_answer_comment",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -237,18 +239,229 @@
 					"port": "5000",
 					"path": [
 						"api",
-						"account",
-						"check_email"
+						"answer",
+						"add_answer_comment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "获取评论",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/api/answer/get_answer_comment_list?answer_id=1",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"answer",
+						"get_answer_comment_list"
 					],
 					"query": [
 						{
-							"key": "email",
-							"value": "zhangyu199946@126.com",
-							"equals": true
+							"key": "answer_id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "获取问题",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/api/questions/get_question?question_id=1",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"questions",
+						"get_question"
+					],
+					"query": [
+						{
+							"key": "question_id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "发送消息",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "token",
+							"value": "23zK0V1dIgLU5PEQ6vcmxMwSp",
+							"type": "text"
+						},
+						{
+							"key": "receiver",
+							"value": "2",
+							"type": "text"
+						},
+						{
+							"key": "content",
+							"value": "still crying",
+							"type": "text"
+						},
+						{
+							"key": "message_type",
+							"value": "0",
+							"type": "text"
 						}
 					]
 				},
-				"description": ""
+				"url": {
+					"raw": "http://127.0.0.1:5000/api/message/add_message",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"message",
+						"add_message"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "获取回答列表",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/api/questions/get_answer_list?question_id=1",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"questions",
+						"get_answer_list"
+					],
+					"query": [
+						{
+							"key": "question_id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "获取信息列表",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://127.0.0.1:5000/api/message/get_message_list?token=TNp6hR7ElkJK4Z5Xfte0VyqG3",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"message",
+						"get_message_list"
+					],
+					"query": [
+						{
+							"key": "token",
+							"value": "TNp6hR7ElkJK4Z5Xfte0VyqG3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "获取推荐",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/api/homepage/get_recommend?token=23zK0V1dIgLU5PEQ6vcmxMwSp",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"homepage",
+						"get_recommend"
+					],
+					"query": [
+						{
+							"key": "token",
+							"value": "23zK0V1dIgLU5PEQ6vcmxMwSp"
+						}
+					]
+				}
 			},
 			"response": []
 		}
