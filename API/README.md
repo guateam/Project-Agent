@@ -57,6 +57,12 @@ Packages:
     Flask==1.0.2
     PyMySQL==0.9.2
     Flask-Cors==3.0.6
+    numpy == 1.15.4
+    jieba == 0.39
+    tensorflow == 1.12.0
+    tensorboard == 1.12.1
+    sklearn == 0.0
+    
 ```
 
 ## 设计思路
