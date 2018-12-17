@@ -354,6 +354,108 @@ Format:
 
 8. 
 
+#### Homepage 首页
+
+1. 获取推荐 get_recommend
+   - 接口 `/api/homepage/get_recommend()`
+
+   - 参数 `token`-token 
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # 0=未知用户 1=成功
+         msg: msg,      # 信息
+         data:[
+             {
+                 # 根据type决定
+             }
+             # ...
+         ]
+     }
+     ```
+
+2. 获取分类 get_category
+   - 接口 `/api/homepage/get_category()` 
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # 0=未知问题 1=成功
+         msg: msg,      # 信息
+         data:[
+             {
+                 name:name, # 名称
+                 id:id, # 分类id
+             }
+             # ...
+         ]
+     }
+     ```
+
+3. 获取热搜 get_hot_search
+   - 接口 `/api/homepage/get_hot_search()`
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # 0=未知问题 1=成功
+         msg: msg,      # 信息
+         data:data      # 热搜内容
+     }
+     ```
+
+4. 
+
+#### Message 信息
+
+1. 获取信息列表 get_message_list
+
+   - 这个接口估计要改，暂时废弃
+
+2. 发送信息 add_message
+   - 接口 `/api/message/add_message()`
+
+   - 参数 `token`-token  `receiver`-收件人 `content`-内容 `message_type`-信息种类
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # 0=未知用户 -1=无法录入 1=成功
+         msg: msg,      # 信息
+     }
+     ```
+
+3. 获取聊天室信息 get_chat_box
+   - 接口 `/api/message/get_chat_box()`
+
+   - 参数 `token`-token `user_id`-聊天室目标用户id
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # 0=未知用户 1=成功
+         msg: msg,      # 信息
+         data:[
+             {
+                 messageID:messageID, # 信息id
+                 content:content, # 内容
+                 poster:poster, # 发件人id
+                 receiver:receiver, # 收件人id
+                 type:type, # 信息类型
+                 post_time:post_time # 发送时间
+             }
+             # ...
+         ]
+     }
+     ```
+
+4. 
 
 ## 数据库 DataBase
 

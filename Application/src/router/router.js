@@ -7,6 +7,7 @@ import Register from '../components/register/register'
 import AnswerDetail from '../components/answer-detail/answer-detail'
 import Comment from '../components/comment/comment'
 import Message from '../components/message/message'
+import School from '../components/school/school'
 
 Vue.use(Router);
 
@@ -32,6 +33,11 @@ export default new Router({
                     component: Comment
                 }
             ]
+        },
+        {
+            path: '/school',
+            name: 'school',
+            component: School,
         },
         {
             path: '/home',

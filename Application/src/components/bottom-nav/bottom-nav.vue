@@ -4,10 +4,10 @@
                 :active.sync="bottomNav"
                 :value="true"
                 absolute
-                color="white"
+                color="blue"
         >
             <v-btn
-                    color="yellow lighten-1"
+                    color="yellow"
                     flat
                     value="home"
                     @click="$router.push('/home')"
@@ -20,6 +20,7 @@
                     color="yellow lighten-1"
                     flat
                     value="school"
+                    @click="$router.push('/school')"
             >
                 <span>学院</span>
                 <v-icon>school</v-icon>
@@ -53,7 +54,7 @@
         name: "bottom-nav",
         data() {
             return {
-                bottomNav: 'message',
+                bottomNav: 'home',
             }
         }
     }
