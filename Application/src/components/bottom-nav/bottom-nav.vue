@@ -4,10 +4,10 @@
                 :active.sync="bottomNav"
                 :value="true"
                 absolute
-                color="blue"
+                color="white"
         >
             <v-btn
-                    color="yellow"
+                    color="#FFCC00"
                     flat
                     value="home"
                     @click="$router.push('/home')"
@@ -17,7 +17,7 @@
             </v-btn>
 
             <v-btn
-                    color="yellow lighten-1"
+                    color="#FFCC00"
                     flat
                     value="school"
                     @click="$router.push('/school')"
@@ -27,7 +27,7 @@
             </v-btn>
 
             <v-btn
-                    color="yellow lighten-1"
+                    color="#FFCC00"
                     flat
                     value="message"
                     @click="$router.push('/message')"
@@ -37,7 +37,7 @@
             </v-btn>
 
             <v-btn
-                    color="yellow lighten-1"
+                    color="#FFCC00"
                     flat
                     value="mine"
                     @click="$router.push('/login')"

@@ -183,7 +183,7 @@ Format:
      ```
 
 3. 获取问题列表 get_questions
-   - 接口 `/api/question/get_questions()`
+   - 接口 `/api/question/get_questions()`**错误，待修改**
 
    - 返回值
 

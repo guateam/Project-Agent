@@ -15,12 +15,12 @@
                         <v-tabs
                                 slot="extension"
                                 color="white"
-                                slider-color="yellow lighten-1"
+                                slider-color="#FFCC00"
                                 centered
                         >
                             <v-tab
-                                    v-for="tab in tabs"
-                                    :key="tab"
+                                    v-for="(tab, index) in tabs"
+                                    :key="index"
                             >
                                 {{ tab }}
                             </v-tab>
