@@ -16,7 +16,7 @@
       </v-content>
 
       <v-footer app>
-        <BottomNav></BottomNav>
+        <bottom-nav></bottom-nav>
       </v-footer>
     </v-app>
   </div>

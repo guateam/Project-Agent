@@ -2,10 +2,10 @@
     <div class="message">
 
         <v-layout row>
-            <v-flex xs12 sm6 offset-sm3>
+            <v-flex xs12 offset-sm3>
                 <v-card>
                     <v-toolbar color="white" tabs>
-                        <v-toolbar-title style="width: 100%;text-align: center">我的消息</v-toolbar-title>
+                        <v-toolbar-title style="width: 100%; text-align: center;">我的消息</v-toolbar-title>
                         <v-tabs slot="extension" v-model="tabs" centered color="white" slider-color="#FFCC00">
                             <v-tab :key="1">私聊</v-tab>
                             <v-tab :key="2">好友</v-tab>
@@ -17,7 +17,7 @@
             </v-flex>
         </v-layout>
 
-
+        <div style="margin-top: 1em;"></div>
 
         <v-tabs-items v-model="tabs">
             <v-tab-item :key="1">

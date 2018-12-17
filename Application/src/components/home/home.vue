@@ -2,7 +2,10 @@
     <div class="home">
 
         <v-toolbar color="white" tabs>
+            <!--搜索栏-->
             <v-text-field append-icon="mic" class="mx-3" flat label="Search" prepend-inner-icon="search" solo-inverted></v-text-field>
+
+            <!--分类标签栏-->
             <v-tabs slot="extension" v-model="tabs" centered color="white" slider-color="#FFCC00">
                 <v-tab :key="1">推荐</v-tab>
                 <v-tab :key="2">计算机</v-tab>
@@ -14,115 +17,25 @@
 
         <v-tabs-items v-model="tabs">
             <v-tab-item :key="1">
-                <v-card color="white" style="margin-top: 1em" @click="$router.push('/topic')">
-                    <v-container grid-list-md text-xs-center>
-                        <v-layout row wrap>
-                            <v-flex xs7 style="text-align: left">
-                                <h3>{{title}}</h3>
-                            </v-flex>
-                            <v-flex xs5>
-                                <img src="./1.png" style="width: 100%">
-                            </v-flex>
-                            <div style="display: flex;width: 100%;text-align: left;justify-content: space-between;">
-                                <div>
-                                    <p>标签&nbsp;&nbsp;·&nbsp;&nbsp;<span>科技/人工智能</span></p>
-                                    <p><span>4342</span>人关注&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span>40</span>条评论
-                                    </p>
-                                </div>
-                                <div>
-                                    <p style="margin-top: 1em">12小时前</p>
-                                </div>
-                            </div>
-                        </v-layout>
-                    </v-container>
-                </v-card>
-
-                <!--以下为复制的内容，不用管了。可以直接删-->
-
-                <v-card color="white" style="margin-top: 1em" @click="$router.push('/topic')">
-                    <v-container grid-list-md text-xs-center>
-                        <v-layout row wrap>
-                            <v-flex xs7 style="text-align: left">
-                                <h3>{{title}}</h3>
-                            </v-flex>
-                            <v-flex xs5>
-                                <img src="./1.png" style="width: 100%">
-                            </v-flex>
-                            <div style="display: flex;width: 100%;text-align: left;justify-content: space-between;">
-                                <div>
-                                    <p>标签&nbsp;&nbsp;·&nbsp;&nbsp;<span>科技/人工智能</span></p>
-                                    <p><span>4342</span>人关注&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span>40</span>条评论
-                                    </p>
-                                </div>
-                                <div>
-                                    <p style="margin-top: 1em">12小时前</p>
-                                </div>
-                            </div>
-                        </v-layout>
-                    </v-container>
-                </v-card>
-                <v-card color="white" style="margin-top: 1em" @click="$router.push('/topic')">
-                    <v-container grid-list-md text-xs-center>
-                        <v-layout row wrap>
-                            <v-flex xs7 style="text-align: left">
-                                <h3>{{title}}</h3>
-                            </v-flex>
-                            <v-flex xs5>
-                                <img src="./1.png" style="width: 100%">
-                            </v-flex>
-                            <div style="display: flex;width: 100%;text-align: left;justify-content: space-between;">
-                                <div>
-                                    <p>标签&nbsp;&nbsp;·&nbsp;&nbsp;<span>科技/人工智能</span></p>
-                                    <p><span>4342</span>人关注&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span>40</span>条评论
-                                    </p>
-                                </div>
-                                <div>
-                                    <p style="margin-top: 1em">12小时前</p>
-                                </div>
-                            </div>
-                        </v-layout>
-                    </v-container>
-                </v-card>
-                <v-card color="white" style="margin-top: 1em" @click="$router.push('/topic')">
-                    <v-container grid-list-md text-xs-center>
-                        <v-layout row wrap>
-                            <v-flex xs7 style="text-align: left">
-                                <h3>{{title}}</h3>
-                            </v-flex>
-                            <v-flex xs5>
-                                <img src="./1.png" style="width: 100%">
-                            </v-flex>
-                            <div style="display: flex;width: 100%;text-align: left;justify-content: space-between;">
-                                <div>
-                                    <p>标签&nbsp;&nbsp;·&nbsp;&nbsp;<span>科技/人工智能</span></p>
-                                    <p><span>4342</span>人关注&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span>40</span>条评论
-                                    </p>
-                                </div>
-                                <div>
-                                    <p style="margin-top: 1em">12小时前</p>
-                                </div>
-                            </div>
-                        </v-layout>
-                    </v-container>
-                </v-card>
-
-
-                <!--复制结束，下面的items都是空的，直接把最上面的v-card搬过来就OK-->
-
-
+                <question-card @click.native="view_detail(question.questionID)" v-for="question in question_list" :key="question.questionID" v-bind="question"></question-card>
             </v-tab-item>
+
             <v-tab-item :key="2">
-                22222
+                <question-card @click.native="view_detail(question.questionID)" v-for="question in question_list" :key="question.questionID" v-bind="question"></question-card>
             </v-tab-item>
+
             <v-tab-item :key="3">
-                33333
+                <question-card @click.native="view_detail(question.questionID)" v-for="question in question_list" :key="question.questionID" v-bind="question"></question-card>
             </v-tab-item>
+
             <v-tab-item :key="4">
-                44444
+                <question-card @click.native="view_detail(question.questionID)" v-for="question in question_list" :key="question.questionID" v-bind="question"></question-card>
             </v-tab-item>
+
             <v-tab-item :key="5">
-                55555
+                <question-card @click.native="view_detail(question.questionID)" v-for="question in question_list" :key="question.questionID" v-bind="question"></question-card>
             </v-tab-item>
+
         </v-tabs-items>
 
     </div>
@@ -130,24 +43,52 @@
 
 <script>
     import axios from 'axios';
+    import QuestionCard from '../question-card/question-card'
 
     export default {
+        components: {
+            QuestionCard,
+        },
         data: () => ({
             tabs: 0,
             question_list: [
                 {
-                    questionID: 1,
-                    title: '程序员是如何看待「祖传代码」的？',
-                    image: 'https://cdn.vuetifyjs.com/images/cards/halcyon.png',
-                    tags: ['互联网', '程序员'],
-                    edittime: '12小时前',
-                    description: '说明一下……此处「祖传代码」与百度搜索「祖传代码」词条出现的某直',
-                    follow: 1,
-                    comment: 2,
-                }
+                    questionID: 1,  // 问题ID
+                    edittime: '12小时前',  // 编辑时间
+                    title: '未来三十年内，哪些行业的工作人员可能被人工智能取代？',  // 标题
+                    tags: ['科技', '人工智能'],  // 标签
+                    follow: 4342,  // 关注人数
+                    comment: 40,  // 评论人数
+                    img: 'https://cdn.vuetifyjs.com/images/cards/halcyon.png',  // 缩略图
+                },
+                {
+                    questionID: 2,  // 问题ID
+                    edittime: '12小时前',  // 编辑时间
+                    title: '未来三十年内，哪些行业的工作人员可能被人工智能取代？',  // 标题
+                    tags: ['科技', '人工智能'],  // 标签
+                    follow: 4342,  // 关注人数
+                    comment: 40,  // 评论人数
+                    img: 'https://cdn.vuetifyjs.com/images/cards/halcyon.png',  // 缩略图
+                },
+                {
+                    questionID: 3,  // 问题ID
+                    edittime: '12小时前',  // 编辑时间
+                    title: '未来三十年内，哪些行业的工作人员可能被人工智能取代？',  // 标题
+                    tags: ['科技', '人工智能'],  // 标签
+                    follow: 4342,  // 关注人数
+                    comment: 40,  // 评论人数
+                    img: 'https://cdn.vuetifyjs.com/images/cards/halcyon.png',  // 缩略图
+                },
+                {
+                    questionID: 4,  // 问题ID
+                    edittime: '12小时前',  // 编辑时间
+                    title: '未来三十年内，哪些行业的工作人员可能被人工智能取代？',  // 标题
+                    tags: ['科技', '人工智能'],  // 标签
+                    follow: 4342,  // 关注人数
+                    comment: 40,  // 评论人数
+                    img: 'https://cdn.vuetifyjs.com/images/cards/halcyon.png',  // 缩略图
+                },
             ],
-            title: '未来三十年内，哪些行业的工作人员可能被人工智能取代？',
-
         }),
 
         watch: {},
@@ -161,10 +102,14 @@
                     window.console.log(data_list);
                 })
             },
+            view_detail(id) {
+                // 查看问题详情
+                this.$router.push({name: 'answer-detail', params: id});  // 跳转到详情页
+            },
         },
         mounted() {
-            this.getQuestionList();
-        }
+            // this.getQuestionList();
+        },
     }
 </script>
 
