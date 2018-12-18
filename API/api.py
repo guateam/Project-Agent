@@ -412,13 +412,17 @@ def edit_answer():
     """
     answer_id = request.values.get('answer_id')
     content = request.values.get('content')
+    # 获取当前时间
+    timeStamp = time.time()
+    timeArray = time.localtime(timeStamp)
+    newtime = time.strftime("%Y--%m--%d %H:%M:%S", timeArray)
 
     db = Database()
     answer = db.get({'answerID': answer_id}, 'answers')
     if not answer:
         return jsonify({'code': -1, 'msg': "the answer is not exist"})
 
-    success = db.update({'answerID': answer_id}, {'content': content}, 'answers')
+    success = db.update({'answerID': answer_id}, {'content': content, 'edittime': newtime}, 'answers')
     if success:
         return jsonify({'code': 1, 'msg': "edit success"})
     else:
@@ -533,6 +537,55 @@ def disagree_answer():
     return jsonify({'code': 0, 'msg': 'unexpected user'})
 
 
+"""
+    文章接口
+"""
+
+
+@app.route('/api/article/add_article')
+def add_article():
+    """
+    新建文章
+    :return: code:-1=用户不存在 0=新建失败  1=新建成功
+    """
+    user_id = request.values.get("user_id")
+    content = request.values.get("content")
+
+    db = Database()
+    user = db.get({'userID': user_id}, 'users')
+    if not user:
+        return jsonify({'code': -1, 'msg': 'the user is not exist'})
+
+    success = db.insert({'content': content, 'userID': user_id}, 'article')
+    if success:
+        return jsonify({'code': 1, 'msg': 'add success'})
+    else:
+        return jsonify({'code': 0, 'msg': 'there are something wrong when inserted the data into database'})
+
+
+@app.route('/api/article/edit_article')
+def edit_article():
+    """
+    修改文章
+    :return: code:-1=文章不存在 0=修改失败  1=修改成功
+    """
+    article_id = request.values.get("article_id")
+    content = request.values.get("content")
+    #获取当前时间
+    timeStamp = time.time()
+    timeArray = time.localtime(timeStamp)
+    newtime = time.strftime("%Y--%m--%d %H:%M:%S", timeArray)
+
+    db = Database()
+    article = db.get({'articleID': article_id}, 'article')
+    if not article:
+        return jsonify({'code': -1, 'msg': 'the article is not exist'})
+
+    success = db.update({'articleID': article_id}, {'content': content, 'edittime': newtime}, 'article')
+    if success:
+        return jsonify({'code': 1, 'msg': 'edit success'})
+    else:
+        return jsonify({'code': 0, 'msg': 'there are something wrong when inserted the data into database'})
 """
     首页接口
 """
