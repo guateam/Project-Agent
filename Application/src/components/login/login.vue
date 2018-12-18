@@ -46,8 +46,9 @@
         methods: {
             submit() {
                 window.console.log(this.email, this.psw);
-                axios.post('http://localhost:5000/api/account/login', {
-                    responseType: 'json',
+                axios({
+                    method: 'post',
+                    url: 'http://localhost:5000/api/account/login',
                     data: {
                         username: this.email,  // 用户名
                         password: this.psw,  // 密码

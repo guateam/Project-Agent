@@ -46,7 +46,6 @@ def login():
         """
     username = request.form['username']
     password = request.form['password']
-    print(username, password)
     db = Database()
     user = db.get({'email': username, 'password': generate_password(password)}, 'users')
     if user:
