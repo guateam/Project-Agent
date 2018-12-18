@@ -1,9 +1,12 @@
+import os
 import random
 import re
 import string
+import time
 
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, url_for
 from flask_cors import CORS
+from werkzeug.utils import secure_filename
 
 from API.db import Database, generate_password
 
@@ -113,6 +116,25 @@ def get_user():
             'nickname': user['nickname']
         }
         return jsonify({'code': 1, 'msg': 'success', 'data': data})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/account/add_user_action')
+def add_user_action():
+    """
+    添加用户行为
+    :return: code(0=未知用户，-1=无法写入，1=成功)
+    """
+    token = request.values.get('token')
+    action_type = request.values.get('action_type')
+    target_id = request.values.get('target_id')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        flag = db.insert({'userID': user['userID'], 'targettype': action_type, 'targetID': target_id}, 'useraction')
+        if flag:
+            return jsonify({'code': 1, 'msg': 'success'})
+        return jsonify({'code': -1, 'msg': 'unable to insert'})
     return jsonify({'code': 0, 'msg': 'unexpected user'})
 
 
@@ -230,6 +252,44 @@ def get_answer_list():
         # sorted(data, key=lambda a: a['agree'], reverse=True)
         # return jsonify({'code': 1, 'msg': 'success', 'data': data})
         return jsonify({'code': 1, 'msg': 'success', 'data': answer_list})
+    return jsonify({'code': 0, 'msg': 'unknown question'})
+
+
+@app.route('/api/questions/add_question_comment', methods=['POST'])
+def add_question_comment():
+    """
+        添加评论
+        :return:code(0=未知用户，-1=未知问题，-2=无法添加评论，1=成功)
+        """
+    question_id = request.form['question_id']
+    content = request.form['content']
+    token = request.form['token']
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        answer = db.get({'questionID': question_id}, 'questions')
+        if answer:
+            flag = db.insert({'userID': user['userID'], 'content': content, 'questionID': question_id},
+                             'questioncomments')
+            if flag:
+                return jsonify({'code': 1, 'msg': 'success'})
+            return jsonify({'code': -2, 'msg': 'unable to insert comment'})
+        return jsonify({'code': -1, 'msg': 'unable to find question'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/questions/get_question_comment')
+def get_question_comment():
+    """
+    获取问题评论
+    :return: code(0=未知问题，1=成功)
+    """
+    question_id = request.values.get('question_id')
+    db = Database()
+    question = db.get({'questionID': question_id}, 'questions')
+    if question:
+        data = db.get({'questionID': question_id}, 'question_comments_info', 0)
+        return jsonify({'code': 1, 'msg': 'success', 'data': data})
     return jsonify({'code': 0, 'msg': 'unknown question'})
 
 
@@ -600,6 +660,33 @@ def get_chat_box():
         sorted(data, key=lambda a: a['post_time'])
         return jsonify({'code': 1, 'msg': 'success', 'data': data})
     return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+"""
+    上传接口
+"""
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'JPG', 'PNG', 'gif', 'GIF'])
+
+
+# 用于判断文件后缀
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
+
+
+@app.route('/api/upload/upload_picture', methods=['POST'])
+def upload_picture():
+    """
+    上传图片
+    :return: code(0=失败，1=成功)
+    """
+    f = request.files['picture']
+    if f and allowed_file(f.filename):
+        basepath = os.path.dirname(__file__)  # 当前文件所在路径
+        new_filename = str(int(time.time())) + secure_filename(f.filename)
+        upload_path = os.path.join(basepath, 'static/uploads', new_filename)  # 注意：没有的文件夹一定要先创建，不然会提示没有该路径
+        f.save(upload_path)
+        return jsonify({'code': 1, 'msg': 'success', 'data': '/static/uploads/' + new_filename})
+    return jsonify({'code': 0, 'msg': 'unexpected type'})
 
 
 if __name__ == '__main__':
