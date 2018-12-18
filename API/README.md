@@ -144,13 +144,14 @@ Format:
          }
      }
      ```
+
 4. 检查邮箱是否已经被注册 check_email
    - 接口 `/api/account/check_email`
-   
+
    - 参数 无
-   
+
    - 返回值
-   
+
    ```python
    {
        code: code,         # 0=邮箱已经被注册  1=邮箱可以注册
@@ -158,6 +159,22 @@ Format:
    }
    ```
 
+5. 添加用户行为 add_user_action
+   - 接口 `/api/account/add_user_action`
+
+   - 参数 `token`-token `action_type`-行为类型 `target_id`-行为目标
+
+   - 返回值
+
+   ```python
+   {
+       code: code,         # 0=未知用户 -1=无法写入 1=成功
+       msg: msg,           # 信息
+       
+   }
+   ```
+
+6. 
 #### Question 问题
 
 1. 添加问题 add_question
@@ -246,7 +263,47 @@ Format:
      }
      ```
 
-5. 
+5. 添加问题评论 add_question_comment
+   - 接口 `/api/question/add_question_comment()`
+
+   - 参数 `question_id`-问题id `token`-token `content`-内容 
+
+   - 返回值
+
+     ```python
+     {
+         code: code,       	# 0=未知用户 -1=未知问题 -2=无法添加评论 1=成功
+         msg: msg,        	# 信息
+     }
+     ```
+
+6. 获取问题评论 get_question_comment
+   - 接口 `/api/question/get_question()`
+
+   - 参数 `question_id`-问题id 
+
+   - 返回值
+
+     ```python
+     {
+         code: code,       	# 0=未知问题 1=成功
+         msg: msg,        	# 信息
+         data:{
+             qcommentID:id, # 评论id
+             userID:userID, # 用户id
+             content:content, # 内容
+             agree:agree, # 点赞数
+             createtime:createtime, # 创建时间
+             questionID:questionID, # 问题id
+             nickname:nickname, # 昵称
+             headportrait:headportrait, # 头像
+             usergroup:usergroup, # 用户组
+             exp:exp # 经验值
+         }
+     }
+     ```
+
+7. 
 
 #### Answer 回答
 
@@ -317,7 +374,7 @@ Format:
 4. 添加回答评论 add_answer_comment
    - 接口 `/api/account/add_answer_comment()`
 
-   - 参数 `answer_id`-问题id `token`-token `content`-内容 
+   - 参数 `answer_id`-回答id `token`-token `content`-内容 
 
    - 返回值
 
@@ -331,7 +388,7 @@ Format:
 5. 点赞回答 agree_answer
    - 接口 `/api/account/agree_answer()`
 
-   - 参数 `answer_id`-问题id `token`-token 
+   - 参数 `answer_id`-回答id `token`-token 
 
    - 返回值
 
@@ -359,7 +416,7 @@ Format:
 7. 点踩回答 disagree_answer
    - 接口 `/api/account/disagree_answer()`
 
-   - 参数 `answer_id`-问题id `token`-token 
+   - 参数 `answer_id`-回答id `token`-token 
 
    - 返回值
 
@@ -474,6 +531,25 @@ Format:
      ```
 
 4. 
+
+#### Upload 上传
+
+1. 上传图片 upload_picture
+   - 接口 `/api/upload/upload_picture()`
+
+   - 参数 `picture`-图片文件
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # 0=未知用户 1=成功
+         msg: msg,      # 信息
+         data:data      # 文件上传路径
+     }
+     ```
+
+2. 
 
 ## 数据库 DataBase
 
