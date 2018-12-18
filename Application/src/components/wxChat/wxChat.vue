@@ -22,7 +22,7 @@
             <ScrollLoader :minHeight="minHeight" @scroll-to-top="refresh" @scroll-to-botton="infinite" class="container-main" v-if="dataArray && dataArray.length>0" :style="{maxHeight: maxHeight-50 + 'px'}">
                 <div class="message">
                     <ul>
-                        <li v-for="(message, index) in dataArray" :key="message.id" :class="message.direction==2?'an-move-right':'an-move-left'">
+                        <li v-for="message in dataArray" :key="message.id" :class="message.direction==2?'an-move-right':'an-move-left'">
                             <p class="time"> <span v-text="message.ctime"></span> </p>
                             <p class="time system" v-if="message.type==10000"> <span v-html="message.content"></span> </p>
                             <div :class="'main' + (message.direction==2?' self':'')" v-else>
@@ -159,7 +159,7 @@
                         }
                     })
                 } catch (error) {
-                    console.error('wxChat: props "getUpperData" must return a promise object!')
+                    window.console.error('wxChat: props "getUpperData" must return a promise object!')
                 }
                 me.isUpperLaoding = false;
             },
@@ -187,7 +187,7 @@
                         }
                     })
                 } catch (error) {
-                    console.error('wxChat: props "getUnderData" must return a promise object!')
+                    window.console.error('wxChat: props "getUnderData" must return a promise object!')
                 }
                 me.isUnderLaoding = false;
             }
@@ -310,24 +310,24 @@
         background: none;
     }
     @keyframes moveRight{
-        0%{left:-20px; opacity: 0};
-    100%{left:0; opacity: 1}
+        0%{left:-20px; opacity: 0}
+        100%{left:0; opacity: 1}
     }
 
     @-webkit-keyframes moveRight
     {
-        0%{left:-20px; opacity: 0};
-    100%{left:0px; opacity: 1}
+        0%{left:-20px; opacity: 0}
+        100%{left:0px; opacity: 1}
     }
     @keyframes moveLeft{
-        0%{left:20px; opacity: 0};
-    100%{left:0px; opacity: 1}
+        0%{left:20px; opacity: 0}
+        100%{left:0px; opacity: 1}
     }
 
     @-webkit-keyframes moveLeft
     {
-        0%{left:20px; opacity: 0};
-    100%{left:0px; opacity: 1}
+        0%{left:20px; opacity: 0}
+        100%{left:0px; opacity: 1}
     }
 
     @media (max-width: 367px){

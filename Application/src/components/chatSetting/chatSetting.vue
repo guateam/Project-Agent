@@ -1,7 +1,7 @@
 <template>
     <div class="chatSetting">
         <div class="head">
-            <span class="goback" @click="$router.push('./chat')"><</span>
+            <span class="goback" @click="$router.push('./chat')">&lt;</span>
             <h2>设置</h2>
         </div>
         <!--这里写的有点蠢了，一时间想不到什么好办法-->
