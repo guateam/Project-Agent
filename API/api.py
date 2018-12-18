@@ -320,6 +320,51 @@ def get_answer_comment_list():
     return jsonify({'code': 0, 'msg': 'unknown answer'})
 
 
+@app.route('/api/answer/collect_answer')
+def collect_answer():
+    """
+    关注某个回答
+    :return: code:-1 = 回答不存在, -2 = 用户不存在, 0 = 关注失败, 1 = 关注成功
+    """
+    user_id = request.values.get('user_id')
+    answer_id = request.values.get('answer_id')
+
+    db = Database()
+    user = db.get({'userID': user_id}, 'users')
+    answer = db.get({'answerID': answer_id}, 'answers')
+
+    if not answer:
+        return jsonify({'code': -1, 'msg': "the answer is not exist"})
+    if not user:
+        return jsonify({'code': -2, 'msg': "the user is not exist"})
+
+    success = db.insert({'userID': user_id, 'answerID': answer_id}, 'collectanswer')
+    if success:
+        return jsonify({'code': 1, 'msg': "collect success"})
+    else:
+        return jsonify({'code': 0, 'msg': "there are something wrong when inserted the data into database"})
+
+@app.route('/api/answer/edit_answer')
+def edit_answer():
+    """
+    编辑回答
+    :return: code:0 = 编辑失败  1 = 编辑成功  -1 = 回答不存在
+    """
+    answer_id = request.values.get('answer_id')
+    content = request.values.get('content')
+
+    db = Database()
+    answer = db.get({'answerID': answer_id}, 'answers')
+    if not answer:
+        return jsonify({'code': -1, 'msg': "the answer is not exist"})
+
+    success = db.update({'answerID': answer_id}, {'content': content}, 'answers')
+    if success:
+        return jsonify({'code': 1, 'msg': "edit success"})
+    else:
+        return jsonify({'code': 0, 'msg': "there are something wrong when edited the data in database"})
+
+
 @app.route('/api/answer/add_answer_comment', methods=['POST'])
 def add_answer_comment():
     """
