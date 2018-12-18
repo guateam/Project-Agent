@@ -5,7 +5,7 @@ import string
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 
-from db import Database, generate_password
+from API.db import Database, generate_password
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
@@ -431,7 +431,9 @@ def get_recommend():
         '''
         pattern = re.compile(r'<[Ii][Mm][Gg].+?/>')  # 正则表达匹配图片
         for value1 in questions:
-            value1.update({'type': 0, 'image': pattern.findall(value1['description'])})
+            value1.update({'type': 0, 'image': pattern.findall(value1['description']),
+                           'follow': db.count({'targettype': 4, 'targetID': value1['questionID']}, 'useraction'),
+                           'comment': db.count({'questionID': value1['questionID']}, 'questioncomments')})
         for value2 in answers:
             value2.update({'type': 1, 'image': pattern.findall(value2['content'])})
         data = [{'title': '震惊！这样可以测出你的血脂', 'type': 2}]  # 假装有广告
@@ -464,7 +466,7 @@ def get_hot_search():
     获取热搜推荐(假的)
     :return:code(0=未知问题，1=成功)
     """
-    
+
     return jsonify({'code': 1, 'msg': 'success', 'data': ''})
 
 
