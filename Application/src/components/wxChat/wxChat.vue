@@ -15,9 +15,13 @@
                 </div>
             </div>
 
-            <div class="title" v-if="dataArray && dataArray.length>0">
-                <p v-text="contactNickname"></p>
-            </div>
+
+            <!--聊天组件原来的自带标题（联系人名字）的，我们这里好像没什们用-->
+            <!--<div class="title" v-if="dataArray && dataArray.length>0">-->
+                <!--<p v-text="contactNickname"></p>-->
+            <!--</div>-->
+
+
             <!-- main -->
             <ScrollLoader :minHeight="minHeight" @scroll-to-top="refresh" @scroll-to-botton="infinite" class="container-main" v-if="dataArray && dataArray.length>0" :style="{maxHeight: maxHeight-50 + 'px'}">
                 <div class="message">
@@ -197,7 +201,7 @@
 </script>
 
 <style scoped>
-    .wxchat-container{ width: 100%; height: 100%;z-index: 100; position: fixed; left:0; top: 0; overflow: hidden;}
+    .wxchat-container{ width: 100%;left:0; top: 0; overflow: hidden;}
     .shadow{ position: absolute; top:0; left: 0; z-index: 100; width: 100%; height: 100%; background: #000; opacity: .2; }
     .window {box-shadow: 1px 1px 20px -5px #000; /*max-width: 450px;*/ min-width: 300px; background: #F5F5F5; margin: 0 auto; overflow: hidden; padding: 0; height: 100%;position: relative;z-index: 101;}
     button{border:0; background:none; border-radius: 0;text-align: center;}

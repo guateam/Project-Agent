@@ -159,4 +159,7 @@
     .cardtitle {
         font-size: 20px;
     }
+    .v-toolbar__content{
+        height: 5em;
+    }
 </style>
