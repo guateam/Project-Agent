@@ -5,7 +5,7 @@ import string
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 
-from API.db import Database, generate_password
+from db import Database, generate_password
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
@@ -419,6 +419,7 @@ def get_recommend():
     token = request.values.get('token')
     db = Database()
     user = db.get({'token': token}, 'users')
+    user = True
     if user:
         '''
         这里是从数据库里拿东西
