@@ -8,6 +8,8 @@ import AnswerDetail from '../components/answer-detail/answer-detail'
 import Comment from '../components/comment/comment'
 import Message from '../components/message/message'
 import School from '../components/school/school'
+import Chat from '../components/chat/chat'
+import ChatSetting from '../components/chatSetting/chatSetting'
 
 Vue.use(Router);
 
@@ -68,6 +70,18 @@ export default new Router({
             path: '/message',
             name: 'message',
             component: Message,
-        }
+            children: [
+            ]
+        },
+        {
+            path: '/chat',
+            name: 'chat',
+            component: Chat,
+        },
+        {
+            path: '/chatSetting',
+            name: 'chatSetting',
+            component: ChatSetting,
+        },
     ]
 })

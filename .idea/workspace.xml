@@ -28,9 +28,6 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/Project_Agent$api.coverage" NAME="api Coverage Results" MODIFIED="1544876237891" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/API" />
-  </component>
   <component name="FUSProjectUsageTrigger">
     <session id="-1207968567">
       <usages-collector id="statistics.lifecycle.project">
@@ -127,33 +124,33 @@
       <usages-collector id="statistics.lifecycle.project">
         <counts>
           <entry key="project.closed" value="2" />
-          <entry key="project.open.time.0" value="3" />
+          <entry key="project.open.time.0" value="4" />
           <entry key="project.open.time.8" value="1" />
-          <entry key="project.opened" value="4" />
+          <entry key="project.opened" value="5" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="js" value="1" />
-          <entry key="vue" value="14" />
+          <entry key="vue" value="17" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="JavaScript" value="1" />
-          <entry key="Vue.js" value="14" />
+          <entry key="Vue.js" value="17" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="js" value="47" />
-          <entry key="vue" value="1306" />
+          <entry key="vue" value="1474" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="JavaScript" value="47" />
-          <entry key="Vue.js" value="1306" />
+          <entry key="Vue.js" value="1474" />
         </counts>
       </usages-collector>
     </session>
@@ -166,6 +163,7 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
         <entry file="file://$PROJECT_DIR$/Application/src/router/router.js">
           <provider selected="true" editor-type-id="text-editor">
@@ -220,8 +218,22 @@
               </folding>
 >>>>>>> Stashed changes
 =======
+<<<<<<< Updated upstream
             <state relative-caret-position="108">
               <caret line="6" selection-start-line="6" selection-end-line="6" />
+=======
+        <entry file="file://$PROJECT_DIR$/Word2Vec/checkpoint">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Word2Vec/get_wiki_text.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <folding>
+                <element signature="e#0#9#0" expanded="true" />
+              </folding>
+>>>>>>> Stashed changes
 >>>>>>> Stashed changes
             </state>
           </provider>
@@ -242,11 +254,21 @@
                 <element signature="e#0#12#0" expanded="true" />
               </folding>
 >>>>>>> Stashed changes
+=======
+        <entry file="file://$PROJECT_DIR$/Word2Vec/jieba_text.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="34">
+              <caret line="2" column="12" selection-start-line="2" selection-start-column="12" selection-end-line="2" selection-end-column="12" />
+              <folding>
+                <element signature="e#0#9#0" expanded="true" />
+              </folding>
+>>>>>>> Stashed changes
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
         <entry file="file://$PROJECT_DIR$/Application/src/components/home/home.vue">
           <provider selected="true" editor-type-id="text-editor">
@@ -258,13 +280,23 @@
             <state relative-caret-position="108">
               <caret line="6" selection-start-line="6" selection-end-line="6" />
 >>>>>>> Stashed changes
+=======
+        <entry file="file://$PROJECT_DIR$/Word2Vec/word2graph.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="238">
+              <caret line="14" column="17" selection-start-line="14" selection-start-column="17" selection-end-line="14" selection-end-column="17" />
+              <folding>
+                <element signature="e#1#41#0" expanded="true" />
+              </folding>
+>>>>>>> Stashed changes
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Application/src/components/login/login.vue">
+        <entry file="file://$PROJECT_DIR$/Word2Vec/opencc_to_text.py">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
             <state relative-caret-position="136">
               <caret line="8" column="12" selection-start-line="8" selection-start-column="12" selection-end-line="10" selection-end-column="18" />
@@ -278,9 +310,13 @@
               <caret line="22" column="38" selection-start-line="22" selection-start-column="28" selection-end-line="22" selection-end-column="38" />
 >>>>>>> Stashed changes
               <folding>
-                <element signature="n#style#0;n#span#0;n#div#1;n#div#1;n#div#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#1;n#div#1;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#v-toolbar#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#v-toolbar-title#0;n#v-toolbar#0;n#div#0;n#template#0;n#!!top" expanded="true" />
               </folding>
+=======
+            <state>
+              <caret column="11" selection-start-column="11" selection-end-column="11" />
+>>>>>>> Stashed changes
             </state>
           </provider>
         </entry>
@@ -371,6 +407,7 @@
         <option value="$PROJECT_DIR$/Application/src/components/my-header/my-header.vue" />
         <option value="$PROJECT_DIR$/Application/src/components/register/register.vue" />
         <option value="$PROJECT_DIR$/Application/src/components/bottom-nav/bottom-nav.vue" />
+        <option value="$PROJECT_DIR$/Application/src/components/chat/chat.vue" />
         <option value="$PROJECT_DIR$/Application/src/components/home/home.vue" />
 =======
         <option value="$PROJECT_DIR$/API/api.py" />
@@ -502,11 +539,12 @@
       <workItem from="1544872638843" duration="4424000" />
       <workItem from="1544877237568" duration="447000" />
       <workItem from="1545040930359" duration="7229000" />
+      <workItem from="1545049166057" duration="1591000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="12100000" />
+    <option name="totallyTimeSpent" value="13691000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -518,7 +556,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-7" y="-7" width="1295" height="695" extended-state="7" />
     <editor active="true" />
     <layout>
 <<<<<<< Updated upstream
@@ -630,6 +668,7 @@
     <entry file="file://$PROJECT_DIR$/Application/package.json">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+<<<<<<< Updated upstream
     <entry file="file://$PROJECT_DIR$/Application/src/components/topic/topic.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
@@ -665,6 +704,8 @@
         </state>
       </provider>
     </entry>
+=======
+>>>>>>> Stashed changes
     <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/flask/app.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30073">
@@ -818,6 +859,23 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/API/api.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="8835">
+          <caret line="465" column="4" selection-start-line="465" selection-start-column="4" selection-end-line="465" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/src/components/comment/comment.vue">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/src/components/bottom-nav/bottom-nav.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="40" column="24" lean-forward="true" selection-start-line="40" selection-start-column="24" selection-end-line="40" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Application/src/components/topic/topic.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="156">
@@ -861,6 +919,17 @@
             <marker date="1545050027964" expanded="true" signature="2184:2530" ph="..." />
             <marker date="1545050027964" expanded="true" signature="11284:11446" ph="..." />
 >>>>>>> Stashed changes
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/src/components/message/message.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="247">
+          <caret line="21" column="101" selection-start-line="21" selection-start-column="101" selection-end-line="21" selection-end-column="101" />
+          <folding>
+            <element signature="n#style#0;n#v-toolbar#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#v-toolbar-title#0;n#v-toolbar#0;n#div#0;n#template#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
