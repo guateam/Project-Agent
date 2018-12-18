@@ -11,10 +11,10 @@
                     </v-flex>
                 </v-layout>
                 <v-layout row>
-                    <v-flex xs12>标签 · <span v-for="(tag, index) in tags" :key="index">{{ tag }} </span></v-flex>
+                    <v-flex xs12>标签 · <span v-for="(tag, index) in tags" :key="index">{{ index===0 ? '' : '/' }}{{ tag }}</span></v-flex>
                 </v-layout>
                 <v-layout row justify-space-between>
-                    <v-flex xs8>{{ follow }}人关注&nbsp;·&nbsp;{{ comment }}条评论</v-flex>
+                    <v-flex xs8>{{ follow }} 人关注&nbsp;·&nbsp;{{ comment }} 条评论</v-flex>
                     <v-flex xs3>{{ edittime }}</v-flex>
                 </v-layout>
             </v-container>
@@ -31,7 +31,7 @@
 
 <style scoped>
     .v-card {
-        margin-top: 1em;
-        margin-bottom: 1em;
+        margin-top: 10px;
+        margin-bottom: 10px;
     }
 </style>
