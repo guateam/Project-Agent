@@ -13,14 +13,12 @@
                 <v-form v-model="valid">
                     <v-text-field
                             v-model="email"
-                            :rules="emailRules"
                             :counter="30"
                             label="请输入邮件"
                             required
                     ></v-text-field>
                     <v-text-field
                             v-model="psw"
-                            :rules="pswRules"
                             label="请输入密码"
                             required
                     ></v-text-field>
@@ -47,15 +45,15 @@
         },
         methods: {
             submit() {
-                console.log(this.email, this.psw);
-                axios.get('http://localhost:5000/api/account/login', {
+                window.console.log(this.email, this.psw);
+                axios.post('http://localhost:5000/api/account/login', {
                     responseType: 'json',
-                    params: {
+                    data: {
                         username: this.email,  // 用户名
                         password: this.psw,  // 密码
                     }
                 }).then((response) => {
-                    console.log(response);
+                    window.console.log(response);
                     // 把token写入cookies，需要写一个修改cookies的方法 @wh
                 })
             }
