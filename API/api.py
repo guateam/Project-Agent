@@ -1,9 +1,12 @@
+import os
 import random
 import re
 import string
+import time
 
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, url_for
 from flask_cors import CORS
+from werkzeug.utils import secure_filename
 
 from API.db import Database, generate_password
 
@@ -38,6 +41,9 @@ def new_token():
     return token
 
 
+"""
+    用户接口
+"""
 @app.route('/api/account/login', methods=['POST'])
 def login():
     """
@@ -46,7 +52,6 @@ def login():
         """
     username = request.form['username']
     password = request.form['password']
-    print(username, password)
     db = Database()
     user = db.get({'email': username, 'password': generate_password(password)}, 'users')
     if user:
@@ -117,6 +122,50 @@ def get_user():
     return jsonify({'code': 0, 'msg': 'unexpected user'})
 
 
+@app.route('/api/account/add_user_action')
+def add_user_action():
+    """
+    添加用户行为
+    :return: code(0=未知用户，-1=无法写入，1=成功)
+    """
+    token = request.values.get('token')
+    action_type = request.values.get('action_type')
+    target_id = request.values.get('target_id')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        flag = db.insert({'userID': user['userID'], 'targettype': action_type, 'targetID': target_id}, 'useraction')
+        if flag:
+            return jsonify({'code': 1, 'msg': 'success'})
+        return jsonify({'code': -1, 'msg': 'unable to insert'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/account/follow_user')
+def follow_user():
+    """
+    关注某个用户
+    :return: code:-1 = 用户不存在, -2 = 被关注用户不存在, 0 = 关注失败, 1 = 关注成功
+    """
+    user_id = request.values.get('user_id')
+    be_followed_user_id = request.values.get('followed_user_id')
+
+    db = Database()
+    user = db.get({'userID': user_id}, 'users')
+    followed_user = db.get({'userID': be_followed_user_id}, 'users')
+
+    if not user:
+        return jsonify({'code': -1, 'msg': 'the user is not exist'})
+    if not followed_user:
+        return jsonify({'code': -1, 'msg': 'the followed_user is not exist'})
+
+    success = db.insert({'userID': user_id, 'target': be_followed_user_id}, 'followuser')
+    if success:
+        return jsonify({'code': 1, 'msg': 'follow success'})
+    else:
+        return jsonify({'code': 0, 'msg': 'there are something wrong when inserted the data into database'})
+
+
 """
     问题接口
 """
@@ -178,6 +227,31 @@ def get_question():
     return jsonify({'code': 0, 'msg': 'unknown question'})
 
 
+@app.route('/api/questions/follow_question')
+def follow_question():
+    """
+    关注某个问题
+    :return: code:-1 = 问题不存在, -2 = 用户不存在, 0 = 关注失败, 1 = 关注成功
+    """
+    user_id = request.values.get('user_id')
+    question_id = request.values.get('question_id')
+
+    db = Database()
+    user = db.get({'userID': user_id}, 'users')
+    question = db.get({'questionID': question_id}, 'questions')
+
+    if not question:
+        return jsonify({'code': -1, 'msg': "the question is not exist"})
+    if not user:
+        return jsonify({'code': -2, 'msg': "the user is not exist"})
+
+    success = db.insert({'userID': user_id, 'target': question_id}, 'followtopic')
+    if success:
+        return jsonify({'code': 1, 'msg': "follow success"})
+    else:
+        return jsonify({'code': 0, 'msg': "there are something wrong when inserted the data into database"})
+
+
 @app.route('/api/questions/get_answer_list')
 def get_answer_list():
     """
@@ -206,6 +280,44 @@ def get_answer_list():
         # sorted(data, key=lambda a: a['agree'], reverse=True)
         # return jsonify({'code': 1, 'msg': 'success', 'data': data})
         return jsonify({'code': 1, 'msg': 'success', 'data': answer_list})
+    return jsonify({'code': 0, 'msg': 'unknown question'})
+
+
+@app.route('/api/questions/add_question_comment', methods=['POST'])
+def add_question_comment():
+    """
+        添加评论
+        :return:code(0=未知用户，-1=未知问题，-2=无法添加评论，1=成功)
+        """
+    question_id = request.form['question_id']
+    content = request.form['content']
+    token = request.form['token']
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        answer = db.get({'questionID': question_id}, 'questions')
+        if answer:
+            flag = db.insert({'userID': user['userID'], 'content': content, 'questionID': question_id},
+                             'questioncomments')
+            if flag:
+                return jsonify({'code': 1, 'msg': 'success'})
+            return jsonify({'code': -2, 'msg': 'unable to insert comment'})
+        return jsonify({'code': -1, 'msg': 'unable to find question'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/questions/get_question_comment')
+def get_question_comment():
+    """
+    获取问题评论
+    :return: code(0=未知问题，1=成功)
+    """
+    question_id = request.values.get('question_id')
+    db = Database()
+    question = db.get({'questionID': question_id}, 'questions')
+    if question:
+        data = db.get({'questionID': question_id}, 'question_comments_info', 0)
+        return jsonify({'code': 1, 'msg': 'success', 'data': data})
     return jsonify({'code': 0, 'msg': 'unknown question'})
 
 
@@ -294,6 +406,59 @@ def get_answer_comment_list():
         sorted(data, key=lambda a: a['agree'], reverse=True)
         return jsonify({'code': 1, 'msg': 'success', 'data': data})
     return jsonify({'code': 0, 'msg': 'unknown answer'})
+
+
+@app.route('/api/answer/collect_answer')
+def collect_answer():
+    """
+    关注某个回答
+    :return: code:-1 = 回答不存在, -2 = 用户不存在, 0 = 关注失败, 1 = 关注成功
+    """
+    user_id = request.values.get('user_id')
+    answer_id = request.values.get('answer_id')
+
+    db = Database()
+    user = db.get({'userID': user_id}, 'users')
+    answer = db.get({'answerID': answer_id}, 'answers')
+
+    if not answer:
+        return jsonify({'code': -1, 'msg': "the answer is not exist"})
+    if not user:
+        return jsonify({'code': -2, 'msg': "the user is not exist"})
+
+    success = db.insert({'userID': user_id, 'answerID': answer_id}, 'collectanswer')
+    if success:
+        return jsonify({'code': 1, 'msg': "collect success"})
+    else:
+        return jsonify({'code': 0, 'msg': "there are something wrong when inserted the data into database"})
+
+@app.route('/api/answer/edit_answer')
+def edit_answer():
+    """
+    编辑回答
+    :return: code:0 = 编辑失败  1 = 编辑成功  -1 = 回答不存在
+    """
+    answer_id = request.values.get('answer_id')
+    content = request.values.get('content')
+    # 获取当前时间
+    timeStamp = time.time()
+    timeArray = time.localtime(timeStamp)
+    newtime = time.strftime("%Y--%m--%d %H:%M:%S", timeArray)
+
+    db = Database()
+    answer = db.get({'answerID': answer_id}, 'answers')
+    if not answer:
+        return jsonify({'code': -1, 'msg': "the answer is not exist"})
+
+    success = db.update({'answerID': answer_id}, {'content': content, 'edittime': newtime}, 'answers')
+    if success:
+        return jsonify({'code': 1, 'msg': "edit success"})
+    else:
+        return jsonify({'code': 0, 'msg': "there are something wrong when edited the data in database"})
+
+
+
+
 
 
 @app.route('/api/answer/add_answer_comment', methods=['POST'])
@@ -402,6 +567,81 @@ def disagree_answer():
                 return jsonify({'code': -3, 'msg': 'unable to update agree number'})
         return jsonify({'code': -1, 'msg': 'unknown answer'})
     return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+"""
+    文章接口
+"""
+
+
+@app.route('/api/article/add_article')
+def add_article():
+    """
+    新建文章
+    :return: code:-1=用户不存在 0=新建失败  1=新建成功
+    """
+    user_id = request.values.get("user_id")
+    content = request.values.get("content")
+
+    db = Database()
+    user = db.get({'userID': user_id}, 'users')
+    if not user:
+        return jsonify({'code': -1, 'msg': 'the user is not exist'})
+
+    success = db.insert({'content': content, 'userID': user_id}, 'article')
+    if success:
+        return jsonify({'code': 1, 'msg': 'add success'})
+    else:
+        return jsonify({'code': 0, 'msg': 'there are something wrong when inserted the data into database'})
+
+
+@app.route('/api/article/edit_article')
+def edit_article():
+    """
+    修改文章
+    :return: code:-1=文章不存在 0=修改失败  1=修改成功
+    """
+    article_id = request.values.get("article_id")
+    content = request.values.get("content")
+    #获取当前时间
+    timeStamp = time.time()
+    timeArray = time.localtime(timeStamp)
+    newtime = time.strftime("%Y--%m--%d %H:%M:%S", timeArray)
+
+    db = Database()
+    article = db.get({'articleID': article_id}, 'article')
+    if not article:
+        return jsonify({'code': -1, 'msg': 'the article is not exist'})
+
+    success = db.update({'articleID': article_id}, {'content': content, 'edittime': newtime}, 'article')
+    if success:
+        return jsonify({'code': 1, 'msg': 'edit success'})
+    else:
+        return jsonify({'code': 0, 'msg': 'there are something wrong when inserted the data into database'})
+
+
+@app.route('/api/article/collect_article')
+def collect_article():
+    """
+    收藏一篇文章
+    :return: code:0=收藏失败 1=收藏成功 -1=文章不存在 -2=用户不存在
+    """
+    article_id = request.values.get("article_id")
+    user_id = request.values.get("user_id")
+
+    db = Database()
+    article = db.get({'articleID': article_id}, 'article')
+
+    if not article:
+        return jsonify({'code': -1, 'msg': 'the article is not exist'})
+    if not article:
+        return jsonify({'code': -2, 'msg': 'the user is not exist'})
+
+    success = db.insert({'userID': user_id, 'articleID': article_id}, 'collectarticle')
+    if success:
+        return jsonify({'code': 1, 'msg': 'collect success'})
+    else:
+        return jsonify({'code': 0, 'msg': 'there are something wrong when inserted the data into database'})
 
 
 """
@@ -531,6 +771,33 @@ def get_chat_box():
         sorted(data, key=lambda a: a['post_time'])
         return jsonify({'code': 1, 'msg': 'success', 'data': data})
     return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+"""
+    上传接口
+"""
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'JPG', 'PNG', 'gif', 'GIF'])
+
+
+# 用于判断文件后缀
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
+
+
+@app.route('/api/upload/upload_picture', methods=['POST'])
+def upload_picture():
+    """
+    上传图片
+    :return: code(0=失败，1=成功)
+    """
+    f = request.files['picture']
+    if f and allowed_file(f.filename):
+        basepath = os.path.dirname(__file__)  # 当前文件所在路径
+        new_filename = str(int(time.time())) + secure_filename(f.filename)
+        upload_path = os.path.join(basepath, 'static/uploads', new_filename)  # 注意：没有的文件夹一定要先创建，不然会提示没有该路径
+        f.save(upload_path)
+        return jsonify({'code': 1, 'msg': 'success', 'data': '/static/uploads/' + new_filename})
+    return jsonify({'code': 0, 'msg': 'unexpected type'})
 
 
 if __name__ == '__main__':
