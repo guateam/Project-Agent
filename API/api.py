@@ -429,6 +429,10 @@ def edit_answer():
         return jsonify({'code': 0, 'msg': "there are something wrong when edited the data in database"})
 
 
+
+
+
+
 @app.route('/api/answer/add_answer_comment', methods=['POST'])
 def add_answer_comment():
     """
@@ -586,6 +590,32 @@ def edit_article():
         return jsonify({'code': 1, 'msg': 'edit success'})
     else:
         return jsonify({'code': 0, 'msg': 'there are something wrong when inserted the data into database'})
+
+
+@app.route('/api/article/collect_article')
+def collect_article():
+    """
+    收藏一篇文章
+    :return: code:0=收藏失败 1=收藏成功 -1=文章不存在 -2=用户不存在
+    """
+    article_id = request.values.get("article_id")
+    user_id = request.values.get("user_id")
+
+    db = Database()
+    article = db.get({'articleID': article_id}, 'article')
+
+    if not article:
+        return jsonify({'code': -1, 'msg': 'the article is not exist'})
+    if not article:
+        return jsonify({'code': -2, 'msg': 'the user is not exist'})
+
+    success = db.insert({'userID': user_id, 'articleID': article_id}, 'collectarticle')
+    if success:
+        return jsonify({'code': 1, 'msg': 'collect success'})
+    else:
+        return jsonify({'code': 0, 'msg': 'there are something wrong when inserted the data into database'})
+
+
 """
     首页接口
 """
