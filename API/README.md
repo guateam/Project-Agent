@@ -144,7 +144,19 @@ Format:
          }
      }
      ```
-4. 
+4. 检查邮箱是否已经被注册 check_email
+   - 接口 `/api/account/check_email`
+   
+   - 参数 无
+   
+   - 返回值
+   
+   ```python
+   {
+       code: code,         # 0=邮箱已经被注册  1=邮箱可以注册
+       msg: msg,           # 信息
+   }
+   ```
 
 #### Question 问题
 
