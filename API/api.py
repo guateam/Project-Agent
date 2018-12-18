@@ -46,7 +46,6 @@ def login():
         """
     username = request.form['username']
     password = request.form['password']
-    print(username, password)
     db = Database()
     user = db.get({'email': username, 'password': generate_password(password)}, 'users')
     if user:
@@ -176,6 +175,31 @@ def get_question():
             return jsonify({'code': 1, 'msg': 'success', 'data': data})
         return jsonify({'code': -1, 'msg': 'unknown user'})
     return jsonify({'code': 0, 'msg': 'unknown question'})
+
+
+@app.route('/api/questions/follow_question')
+def follow_question():
+    """
+    关注某个问题
+    :return: code:-1 = 问题不存在, -2 = 用户不存在, 0 = 关注失败, 1 = 关注成功
+    """
+    user_id = request.values.get('user_id')
+    question_id = request.values.get('question_id')
+
+    db = Database()
+    user = db.get({'userID': user_id}, 'users')
+    question = db.get({'questionID': question_id}, 'questions')
+
+    if not question:
+        return jsonify({'code': -1, 'msg': "the question is not exist"})
+    if not user:
+        return jsonify({'code': -2, 'msg': "the user is not exist"})
+
+    success = db.insert({'userID': user_id, 'target': question_id}, 'followtopic')
+    if success:
+        return jsonify({'code': 1, 'msg': "follow success"})
+    else:
+        return jsonify({'code': 0, 'msg': "there are something wrong when inserted the data into database"})
 
 
 @app.route('/api/questions/get_answer_list')
