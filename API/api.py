@@ -188,7 +188,7 @@ def follow_question():
 
     db = Database()
     user = db.get({'userID': user_id}, 'users')
-    question = db.get({'questionID', question_id}, 'questions')
+    question = db.get({'questionID': question_id}, 'questions')
 
     if not question:
         return jsonify({'code': -1, 'msg': "the question is not exist"})
