@@ -1,7 +1,7 @@
 <template>
   <div id="app">
 
-    <!--<Myheader></Myheader>-->
+    <!--<my-header></my-header>-->
 
     <!--<router-view></router-view>-->
 
@@ -24,12 +24,12 @@
 
 <script>
     // @ is an alias to /src
-    import Myheader from './components/my-header/my-header'
+    // import MyHeader from './components/my-header/my-header'
     import BottomNav from './components/bottom-nav/bottom-nav'
 
     export default {
         components: {
-            Myheader,
+            // MyHeader,
             BottomNav,
         }
     }

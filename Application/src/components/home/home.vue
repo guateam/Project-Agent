@@ -104,7 +104,7 @@
             },
             view_detail(id) {
                 // 查看问题详情
-                this.$router.push({name: 'answer-detail', params: id});  // 跳转到详情页
+                this.$router.push({name: 'topic', params: id});  // 跳转到问题详情页
             },
         },
         mounted() {
