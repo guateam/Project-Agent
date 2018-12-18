@@ -41,6 +41,9 @@ def new_token():
     return token
 
 
+"""
+    用户接口
+"""
 @app.route('/api/account/login', methods=['POST'])
 def login():
     """
@@ -136,6 +139,31 @@ def add_user_action():
             return jsonify({'code': 1, 'msg': 'success'})
         return jsonify({'code': -1, 'msg': 'unable to insert'})
     return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/account/follow_user')
+def follow_user():
+    """
+    关注某个用户
+    :return: code:-1 = 用户不存在, -2 = 被关注用户不存在, 0 = 关注失败, 1 = 关注成功
+    """
+    user_id = request.values.get('user_id')
+    be_followed_user_id = request.values.get('followed_user_id')
+
+    db = Database()
+    user = db.get({'userID': user_id}, 'users')
+    followed_user = db.get({'userID': be_followed_user_id}, 'users')
+
+    if not user:
+        return jsonify({'code': -1, 'msg': 'the user is not exist'})
+    if not followed_user:
+        return jsonify({'code': -1, 'msg': 'the followed_user is not exist'})
+
+    success = db.insert({'userID': user_id, 'target': be_followed_user_id}, 'followuser')
+    if success:
+        return jsonify({'code': 1, 'msg': 'follow success'})
+    else:
+        return jsonify({'code': 0, 'msg': 'there are something wrong when inserted the data into database'})
 
 
 """
