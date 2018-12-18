@@ -105,7 +105,7 @@ venv.bak/
 
 # custom
 .idea/
-API/config.py
+API/config\.py
 
 Word2Vec/logs/
 
@@ -128,3 +128,5 @@ Word2Vec/word2vec\.model\.trainables\.syn1neg\.npy
 Word2Vec/word2vec\.model\.wv\.vectors\.npy
 
 Word2Vec/word2vec\.vec
+
+API/static/uploads/
