@@ -11,6 +11,10 @@ import School from '../components/school/school'
 import Chat from '../components/chat/chat'
 import ChatSetting from '../components/chatSetting/chatSetting'
 import Myself from '../components/myself/myself'
+import Approval from '../components/approval/approval'
+import Notice from '../components/notice/notice'
+import Reply from '../components/reply/reply'
+import Callme from '../components/callme/callme'
 
 Vue.use(Router);
 
@@ -88,6 +92,26 @@ export default new Router({
             path: '/chatSetting',
             name: 'chatSetting',
             component: ChatSetting,
+        },
+        {
+            path: '/approval',
+            name: 'approval',
+            component: Approval,
+        },
+        {
+            path: '/notice',
+            name: 'notice',
+            component: Notice,
+        },
+        {
+            path: '/reply',
+            name: 'reply',
+            component: Reply,
+        },
+        {
+            path: '/callme',
+            name: 'callme',
+            component: Callme,
         },
     ]
 })
