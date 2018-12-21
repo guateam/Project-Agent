@@ -10,6 +10,7 @@ import Message from '../components/message/message'
 import School from '../components/school/school'
 import Chat from '../components/chat/chat'
 import ChatSetting from '../components/chatSetting/chatSetting'
+import Myself from '../components/myself/myself'
 
 Vue.use(Router);
 
@@ -45,6 +46,11 @@ export default new Router({
             path: '/home',
             name: 'home',
             component: Home,
+        },
+        {
+            path: '/myself',
+            name: 'myself',
+            component: Myself,
         },
         {
             path: '/login',
