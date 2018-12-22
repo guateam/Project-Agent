@@ -44,6 +44,8 @@ def new_token():
 """
     用户接口
 """
+
+
 @app.route('/api/account/login', methods=['POST'])
 def login():
     """
@@ -432,6 +434,7 @@ def collect_answer():
     else:
         return jsonify({'code': 0, 'msg': "there are something wrong when inserted the data into database"})
 
+
 @app.route('/api/answer/edit_answer')
 def edit_answer():
     """
@@ -455,10 +458,6 @@ def edit_answer():
         return jsonify({'code': 1, 'msg': "edit success"})
     else:
         return jsonify({'code': 0, 'msg': "there are something wrong when edited the data in database"})
-
-
-
-
 
 
 @app.route('/api/answer/add_answer_comment', methods=['POST'])
@@ -603,7 +602,7 @@ def edit_article():
     """
     article_id = request.values.get("article_id")
     content = request.values.get("content")
-    #获取当前时间
+    # 获取当前时间
     timeStamp = time.time()
     timeArray = time.localtime(timeStamp)
     newtime = time.strftime("%Y--%m--%d %H:%M:%S", timeArray)
@@ -773,10 +772,37 @@ def get_chat_box():
     return jsonify({'code': 0, 'msg': 'unexpected user'})
 
 
+@app.route('/api/message/get_friend_list')
+def get_friend_list():
+    """
+    获取好友列表
+    :return: code(0=未知用户，1=成功)
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')  # 从token获取用户
+    if user:
+        followed = db.get({'userID': user['userID']}, 'followuser', 0)  # 获取所有用户关注的用户
+        data = []
+        for value in followed:
+            if db.get({'userID': value['target'], 'target': value['userID']}, 'followuser'):  # 判断关注的用户是否为互关，互关即好友
+                friend = db.get({'userID': value['target']}, 'users')  # 获取好友信息
+                if friend:
+                    data.append({
+                        'user_id': friend['userID'],
+                        'nickname': friend['nickname'],
+                        'headportrait': friend['headportrait'],
+                        'usergroup': friend['usergroup'],
+                        'exp': friend['exp']
+                    })  # 存入信息
+        return jsonify({'code': 1, 'msg': 'success', 'data': data})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
 """
     上传接口
 """
-ALLOWED_EXTENSIONS = set(['png', 'jpg', 'JPG', 'PNG', 'gif', 'GIF'])
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'JPG', 'PNG', 'gif', 'GIF'])  # 允许上传的格式
 
 
 # 用于判断文件后缀
