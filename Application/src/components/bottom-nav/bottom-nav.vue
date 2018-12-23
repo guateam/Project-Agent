@@ -16,7 +16,7 @@
                 <v-icon>speaker_notes</v-icon>
             </v-btn>
 
-            <v-btn color="#FFCC00" flat value="mine" @click="$router.push('/login')" >
+            <v-btn color="#FFCC00" flat value="mine" @click="$router.push('/myself')" >
                 <span>我的</span>
                 <v-icon>account_circle</v-icon>
             </v-btn>
