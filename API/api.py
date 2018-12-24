@@ -766,7 +766,14 @@ def get_chat_box():
     if user:
         message1 = db.get({'poster': user['userID'], 'receiver': user_id}, 'messages', 0)
         message2 = db.get({'receiver': user['userID'], 'poster': user_id}, 'messages', 0)
-        data = message1 + message2
+        if message2 and message1:
+            data = message1 + message2
+        elif message1:
+            data = message1
+        elif message2:
+            data = message2
+        else:
+            data = []
         sorted(data, key=lambda a: a['post_time'])
         return jsonify({'code': 1, 'msg': 'success', 'data': data})
     return jsonify({'code': 0, 'msg': 'unexpected user'})
