@@ -45,8 +45,23 @@
 </template>
 
 <script>
-    import axios from 'axios';
     import QuestionCard from '../question-card/question-card'
+
+    Date.prototype.Format = function (fmt) { //author: meizz
+        let o = {
+            "M+": this.getMonth() + 1, //月份
+            "d+": this.getDate(), //日
+            "h+": this.getHours(), //小时
+            "m+": this.getMinutes(), //分
+            "s+": this.getSeconds(), //秒
+            "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+            "S": this.getMilliseconds() //毫秒
+        };
+        if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+            if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        return fmt;
+    };
 
     export default {
         components: {
@@ -107,13 +122,22 @@
             }
         },
         methods: {
-            getQuestionList() {
+            get_question_list() {
                 // 获取问题列表
-                axios.get('http://127.0.0.1:5000/api/homepage/get_recommend', {
-                    responseType: 'json',
-                }).then((response) => {
-                    let data_list = response.data.data;
-                    window.console.log(data_list);
+                import('axios').then((axios) => {
+                    axios.get('http://127.0.0.1:5000/api/homepage/get_recommend', {
+                        responseType: 'json',
+                    }).then((response) => {
+                        let data_list = response.data.data;
+                        window.console.log(data_list);
+                        this.question_list = [];
+                        for (let i = 0; i < data_list.length; i += 1) {
+                            if (data_list[i].type === 0) {
+                                data_list[i].edittime = new Date(data_list[i].edittime).Format('yyyy-MM-dd');
+                                this.question_list.unshift(data_list[i]);
+                            }
+                        }
+                    })
                 })
             },
             querySelections (v) {
@@ -132,7 +156,7 @@
             },
         },
         mounted() {
-            // this.getQuestionList();
+            this.get_question_list();
         },
     }
 </script>

@@ -7,7 +7,7 @@
             <h2>{{questionData.title}}</h2>
             <div class="head-something">
                 <div style="flex: 0 0 70%">
-                    <p>标签 : <span v-for="tag in questionData.tags">{{tag}} </span></p>
+                    <p>标签 : <span v-for="(tag, index) in questionData.tags" :key="index">{{tag}} </span></p>
                     <p><span> {{questionData.follow}} </span>人关注&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span>{{questionData.commentsNum}} </span>
                         条评论</p>
                 </div>
@@ -25,7 +25,7 @@
 
         <!--页面主体，展示不同的回答列表-->
 
-        <div v-for="answer in answersDataList">
+        <div v-for="(answer, index) in answersDataList" :key="index">
             <div style="padding-left: 1em; padding-right: 1em;padding-bottom: 1em">
                 <router-link to="answer-detail">
                     <p class="answerDetail">{{answer.content}}</p>
@@ -65,9 +65,6 @@
 </template>
 
 <script>
-    import img1 from './1.png'
-    import img2 from './2.png'
-    import img3 from './3.png'
     import axios from 'axios'
 
     export default {
