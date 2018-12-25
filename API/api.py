@@ -806,6 +806,20 @@ def get_friend_list():
     return jsonify({'code': 0, 'msg': 'unexpected user'})
 
 
+@app.route('/api/message/get_agree_list')
+def get_agree_list():
+    """
+    获取踩和赞的列表
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        pass  # 不知道怎么实现，先空着
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
 """
     上传接口
 """
