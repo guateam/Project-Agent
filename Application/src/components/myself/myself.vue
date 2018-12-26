@@ -8,7 +8,7 @@
                     </div>
                     <div style="display: flex;justify-content: space-between;flex-direction: column;">
                         <div style="margin-left: 0.8em">
-                            <span style="font-size: 1.5em;font-weight: 600">{{name}}</span>
+                            <span style="font-size: 1.5em;font-weight: 600">{{nickname}}</span>
                             <span style="border: 2px solid black;border-radius: 5px;padding: 0.3em;margin-left: 0.5em">从业者</span>
                         </div>
                         <div style="margin-left: 0.8em;display: flex;align-items: center">
@@ -34,7 +34,6 @@
                         v-for="item in items"
                         :key="item.title"
                         avatar
-                        @click=""
                 >
                     <v-list-tile-avatar>
                         <!--图片和icon都应该改一下，先做完懒得去找icon-->
@@ -55,11 +54,13 @@
 </template>
 
 <script>
+    import axios from 'axios'
+
     export default {
         name: "myself",
         data() {
             return {
-                name: '李一半',  // 用户名
+                nickname: '李一半',  // 用户名
                 valueDeterminate: 50,  // 经验等级进度条
                 items: [
                     {active: true, title: '我发布的', avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg'},
@@ -68,6 +69,24 @@
                     {title: '设置', avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg'}
                 ],
             }
+        },
+        methods: {
+            get_user_info() {
+                axios.get('http://127.0.0.1:5000/api/account/get_user', {
+                    responseType: 'json',
+                    params: {
+                        user_id: '1',
+                    }
+                }).then((response) => {
+                    let user_info = response.data.data;
+                    window.console.log(user_info);
+                    this.nickname = user_info.nickname;
+                    this.valueDeterminate = user_info.exp;
+                })
+            }
+        },
+        mounted() {
+            this.get_user_info();
         }
     }
 </script>

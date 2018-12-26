@@ -61,7 +61,6 @@
                         <v-list-tile
                                 v-for="subItem in item.items"
                                 :key="subItem.title"
-                                @click=""
                         >
                             <v-list-tile-content>
                                 <v-list-tile-title>{{ subItem.title }}</v-list-tile-title>
@@ -81,7 +80,7 @@
                             {{ item.header }}
                         </v-subheader>
                         <v-divider v-else-if="item.divider" :inset="item.inset" :key="index"></v-divider>
-                        <v-list-tile v-else :key="item.title" avatar @click="$router.push('./chat')">
+                        <v-list-tile v-else :key="item.title" avatar  @click="$router.push('./approval')">
                             <v-list-tile-avatar>
                                 <img :src="item.avatar">
                             </v-list-tile-avatar>
@@ -101,7 +100,7 @@
                             {{ item.header }}
                         </v-subheader>
                         <v-divider v-else-if="item.divider" :inset="item.inset" :key="index"></v-divider>
-                        <v-list-tile v-else :key="item.title" avatar @click="$router.push('./chat')">
+                        <v-list-tile v-else :key="item.title" avatar  @click="$router.push('./callme')">
                             <v-list-tile-avatar>
                                 <img :src="item.avatar">
                             </v-list-tile-avatar>

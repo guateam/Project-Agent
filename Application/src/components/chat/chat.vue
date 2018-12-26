@@ -39,13 +39,14 @@
                 width: window.screen.width,
                 ownerAvatarUrl: 'https://www.asgardusk.com/images/none.png',
                 contactAvatarUrl: 'https://www.asgardusk.com/images/none.png',
-                wxChatData: [{
-                    direction: 2,
-                    id: 1,
-                    type: 1,
-                    content: '你好!![呲牙]',
-                    ctime: new Date().toLocaleString()
-                },
+                wxChatData: [
+                    {
+                        direction: 2,
+                        id: 1,
+                        type: 1,
+                        content: '你好!![呲牙]',
+                        ctime: new Date().toLocaleString()
+                    },
                     {
                         direction: 1,
                         id: 2,
@@ -80,9 +81,25 @@
             this.initWidth();
         },
         methods:{
+            get_message(token, receiver) {
+                // 获取消息记录
+                import('axios').then((axios) => {
+                    axios.get('http://127.0.0.1:5000/api/message/get_chat_box', {
+                        responseType: 'json',
+                        params: {
+                            token: token,
+                            user_id: receiver,
+                        }
+                    }).then((response) => {
+                        let msg_data = response.data.data;
+                        window.console.log(msg_data);
+                    })
+                })
+            },
+
             initWidth(){
-                var ua = navigator.userAgent;
-                var ipad = ua.match(/(iPad).*OS\s([\d_]+)/),
+                let ua = navigator.userAgent;
+                let ipad = ua.match(/(iPad).*OS\s([\d_]+)/),
                     isIphone =!ipad && ua.match(/(iPhone\sOS)\s([\d_]+)/),
                     isAndroid = ua.match(/(Android)\s+([\d.]+)/),
                     isMobile = isIphone || isAndroid;
@@ -132,7 +149,7 @@
             },
 
             getUnderData(){
-                var me = this;
+                let me = this;
 
                 //意义同getUpperData()
                 return new Promise(function(resolve){
@@ -166,6 +183,9 @@
                 })
             }
 
+        },
+        mounted() {
+            this.get_message('23zK0V1dIgLU5PEQ6vcmxMwSp', '1');
         }
     }
 </script>
