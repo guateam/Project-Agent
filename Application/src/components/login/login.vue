@@ -52,6 +52,17 @@
                     data: {
                         username: this.email,  // 用户名
                         password: this.psw,  // 密码
+                    },
+                    transformRequest: [function (data) {
+                        // Do whatever you want to transform the data
+                        let ret = '';
+                        for (let it in data) {
+                            ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+                        }
+                        return ret
+                    }],
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
                     }
                 }).then((response) => {
                     window.console.log(response);
