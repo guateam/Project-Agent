@@ -820,6 +820,24 @@ def get_agree_list():
     return jsonify({'code': 0, 'msg': 'unexpected user'})
 
 
+@app.route('/api/message/get_message')
+def get_message():
+    """
+    获取某用户的私信
+    :return: code:0=用户不存在 1=获取成功 -1=获取失败
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        message = db.get({'receiver', user['userID']}, 'messages')
+        if message:
+            return jsonify({'code': 1, 'msg': 'success', 'list': message})
+        else:
+            return jsonify({'code': -1, 'msg': 'fail'})
+    else:
+        return jsonify({'code': 0, 'msg': 'the user is not exist'})
+
 """
     上传接口
 """
