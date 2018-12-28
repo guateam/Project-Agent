@@ -1,25 +1,27 @@
 <template>
-  <div id="app">
+    <div id="app">
 
-    <!--<my-header></my-header>-->
+        <!--<my-header></my-header>-->
 
-    <!--<router-view></router-view>-->
+        <!--<router-view></router-view>-->
 
-    <v-app>
-      <!--<v-navigation-drawer app></v-navigation-drawer>-->
-      <!--<v-toolbar app></v-toolbar>-->
+        <v-app>
+            <!--<v-navigation-drawer app></v-navigation-drawer>-->
+            <!--<v-toolbar app></v-toolbar>-->
 
-      <v-content>
-        <!--<v-container fill-width>-->
-          <router-view></router-view>
-        <!--</v-container>-->
-      </v-content>
+            <v-content>
+                <!--<v-container fill-width>-->
+                <router-view></router-view>
+                <!--</v-container>-->
+            </v-content>
 
-      <v-footer app>
-        <bottom-nav></bottom-nav>
-      </v-footer>
-    </v-app>
-  </div>
+            <div :style="{ marginBottom: '2em' }"></div>
+
+            <v-footer app>
+                <bottom-nav></bottom-nav>
+            </v-footer>
+        </v-app>
+    </div>
 </template>
 
 <script>
@@ -31,18 +33,18 @@
         components: {
             // MyHeader,
             BottomNav,
-        }
+        },
     }
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  width: 100%;
-}
+    #app {
+        font-family: 'Avenir', Helvetica, Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        width: 100%;
+    }
 </style>
