@@ -33,9 +33,9 @@
                         <v-stepper-content step="2">
                             <div class="titlere"><h1>注册</h1></div>
                             <v-form v-model="valid">
-                                <v-text-field v-model="psw" :counter="30" label="请输入密码"
+                                <v-text-field type="password" v-model="psw" :counter="30" label="请输入密码"
                                               required></v-text-field>
-                                <v-text-field v-model="psw_confirm" :counter="30" label="请确认密码"
+                                <v-text-field type="password" v-model="psw_confirm" :counter="30" label="请确认密码"
                                               required></v-text-field>
                             </v-form>
                             <v-btn color="#ffcc00" @click.native="user_register()" style="float: right">注册</v-btn>
@@ -94,8 +94,9 @@
                     }
                 }).then((response) => {
                     window.console.log(response);
-                    this.e1 = 3;
-                    // 把token写入cookies，需要写一个修改cookies的方法 @wh
+                    if (response.data.code === 1) {
+                        this.e1 = 3;
+                    }
                 })
             }
         }
