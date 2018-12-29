@@ -809,15 +809,161 @@ def get_friend_list():
 @app.route('/api/message/get_agree_list')
 def get_agree_list():
     """
-    获取踩和赞的列表
+    获取点赞列表
     :return:
     """
     token = request.values.get('token')
     db = Database()
     user = db.get({'token': token}, 'users')
     if user:
-        pass  # 不知道怎么实现，先空着
+        """
+            获取所有的用户行为
+        """
+        comment1 = db.get({'userID': user['userID']}, 'answercomments')
+        user_action = []
+        for value in comment1:
+            action = db.get({'targettype': 3, 'target': value['acommentID']}, 0)
+            if action:
+                user_action = user_action + action
+        comment2 = db.get({'userID': user['userID']}, 'questioncomments')
+        for value in comment2:
+            action = db.get({'targettype': 5, 'target': value['qcommentID']}, 0)
+            if action:
+                user_action = user_action + action
+        answer = db.get({'userID': user['userID']}, 'answers')
+        for value in answer:
+            action1 = db.get({'targettype': 1, 'target': value['answerID']}, 0)
+            action2 = db.get({'targettype': 2, 'target': value['answerID']}, 0)
+            if action1:
+                user_action = user_action + action1
+            if action2:
+                user_action = user_action + action2
+        """
+            处理用户行为
+        """
+        data = []
+        for value in user_action:
+            if value['targettype'] == 1 or value['targettype'] == 2:
+                action = db.get({'actionID': value['actionID']}, 'agree_answer_info')
+                if action:
+                    data.append({
+                        'type': value['targettype'],
+                        'nickname': action['nickname'],
+                        'userID': action['userID'],
+                        'answerID': action['targetID'],
+                        'title': action['title'],
+                        'time': action['actiontime']
+                    })
+            elif value['targettype'] == 3:
+                action = db.get({'actionID': value['actionID']}, 'agree_answer_comment_info')
+                if action:
+                    data.append({
+                        'type': value['targettype'],
+                        'nickname': action['nickname'],
+                        'userID': action['userID'],
+                        'commentID': action['targetID'],
+                        'title': action['title'],
+                        'time': action['actiontime']
+                    })
+            elif value['targettype'] == 5:
+                action = db.get({'actionID': value['actionID']}, 'agree_question_comment_info')
+                if action:
+                    data.append({
+                        'type': value['targettype'],
+                        'nickname': action['nickname'],
+                        'userID': action['userID'],
+                        'commentID': action['targetID'],
+                        'title': action['title'],
+                        'time': action['actiontime']
+                    })
+        return jsonify({'code': 1, 'msg': 'success', 'data': data})
     return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/message/get_at_list')
+def get_at_list():
+    """
+    获取@列表
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        data = []
+        q_at = db.like({'description': '@' + user['nickname'] + ' '}, 'q_at_info')
+        for value in q_at:
+            data.append({
+                'nickname': value['nickname'],
+                'time': value['edittime'],
+                'id': value['questionID'],
+                'type': 1,
+                'headportrait': value['headportrait'],
+                'title': value['title'],
+                'user_id': value['userID'],
+                'content': value['description']
+            })
+        qc_at = db.like({'content': '@' + user['nickname'] + ' '}, 'qc_at_info')
+        for value in qc_at:
+            data.append({
+                'nickname': value['nickname'],
+                'time': value['createtime'],
+                'id': value['qcommentID'],
+                'type': 2,
+                'headportrait': value['headportrait'],
+                'user_id': value['userID'],
+                'content': value['content']
+            })
+        a_at = db.like({'content': '@' + user['nickname'] + ' '}, 'a_at_info')
+        for value in a_at:
+            data.append({
+                'nickname': value['nickname'],
+                'time': value['edittime'],
+                'id': value['answerID'],
+                'type': 3,
+                'headportrait': value['headportrait'],
+                'user_id': value['userID'],
+                'content': value['content']
+            })
+        ac_at = db.like({'content': '@' + user['nickname'] + ' '}, 'ac_at_info')
+        for value in ac_at:
+            data.append({
+                'nickname': value['nickname'],
+                'time': value['createtime'],
+                'id': value['acommentID'],
+                'type': 3,
+                'headportrait': value['headportrait'],
+                'user_id': value['userID'],
+                'content': value['content']
+            })
+        return jsonify({'code': 1, 'msg': 'success', 'data': data})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+ALLOWED_USER_GROUP = {0, '0'}  # 允许发送广播用户组
+
+
+@app.route('/api/message/add_sys_notice',methods=['POST'])
+def add_sys_notice():
+    """
+    发送系统消息
+    :return: code(0=未知用户，-1=权限不足，-2=无法添加，1=成功)
+    """
+    token = request.form['token']
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        if user['usergroup'] in ALLOWED_USER_GROUP:
+            content = request.form['content']
+            message_type = request.form['type']
+            flag = db.insert({'content': content, 'type': message_type,'userID':user['userID']}, 'sys_message')
+            if flag:
+                return jsonify({'code': 1, 'msg': 'success'})
+            return jsonify({'code': -2, 'msg': 'unable to insert'})
+        return jsonify({'code': -1, 'msg': 'permission denied'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
 
 
 @app.route('/api/message/get_message')
