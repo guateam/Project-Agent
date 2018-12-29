@@ -154,3 +154,31 @@ class Database(object):
         except pymysql.MySQLError as e:
             print(e.args)
             return -1  # 报错
+
+    def like(self, data, table, type=0):
+        """
+        模糊搜索
+        :param data: 模糊搜索数据
+        :param table: 目标表名
+        :return:
+        """
+        try:
+            with self.db.cursor() as cursor:
+                if not data:  # 判断data是否为空
+                    return self.get(data, table)
+                list1 = []
+                for key, values in data.items():
+                    if values == self.MYSQL_NULL:
+                        list1.append(key + self.MYSQL_NULL)
+                    else:
+                        list1.append(key + ' LIKE \'%' + str(values) + '%\'')
+                where = ' AND '.join(list1)
+                sql_query = 'SELECT * FROM %s WHERE %s' % (table, where)  # 构造sql语句
+                cursor.execute(sql_query)
+                results = cursor.fetchall()
+                if len(results) == 1 and type == 1:
+                    return results[0]  # 返回单个数组
+                return results  # 返回多个数组
+        except pymysql.MySQLError as e:
+            print(e.args)
+            return []  # 报错

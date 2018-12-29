@@ -1,25 +1,28 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Topic from '../components/topic/topic'
-import Home from '../components/home/home'
-import Login from '../components/login/login'
-import Register from '../components/register/register'
-import AnswerDetail from '../components/answer-detail/answer-detail'
-import Comment from '../components/comment/comment'
-import Message from '../components/message/message'
-import School from '../components/school/school'
-import Chat from '../components/chat/chat'
-import ChatSetting from '../components/chatSetting/chatSetting'
-import Myself from '../components/myself/myself'
-import Approval from '../components/approval/approval'
-import Notice from '../components/notice/notice'
-import Reply from '../components/reply/reply'
-import Callme from '../components/callme/callme'
+import Topic from './components/topic/topic'
+import Home from './components/home/home'
+import Login from './components/login/login'
+import Register from './components/register/register'
+import AnswerDetail from './components/answer-detail/answer-detail'
+import Comment from './components/comment/comment'
+import Message from './components/message/message'
+import School from './components/school/school'
+import Chat from './components/chat/chat'
+import ChatSetting from './components/chatSetting/chatSetting'
+import Myself from './components/myself/myself'
+import Approval from './components/approval/approval'
+import Notice from './components/notice/notice'
+import Reply from './components/reply/reply'
+import Callme from './components/callme/callme'
 
+
+const view = name => () => import(`./views/${name}`);
 Vue.use(Router);
 
 export default new Router({
     routes: [
+        { path: '/settings', name: 'settings', component: view('Settings') },
         {
             path: '/',
             redirect: '/home'
