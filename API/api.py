@@ -789,21 +789,31 @@ def get_friend_list():
     db = Database()
     user = db.get({'token': token}, 'users')  # 从token获取用户
     if user:
-        followed = db.get({'userID': user['userID']}, 'followuser', 0)  # 获取所有用户关注的用户
-        data = []
-        for value in followed:
-            if db.get({'userID': value['target'], 'target': value['userID']}, 'followuser'):  # 判断关注的用户是否为互关，互关即好友
-                friend = db.get({'userID': value['target']}, 'users')  # 获取好友信息
-                if friend:
-                    data.append({
-                        'user_id': friend['userID'],
-                        'nickname': friend['nickname'],
-                        'headportrait': friend['headportrait'],
-                        'usergroup': friend['usergroup'],
-                        'exp': friend['exp']
-                    })  # 存入信息
-        return jsonify({'code': 1, 'msg': 'success', 'data': data})
+        # 根据token获取该用户的好友列表
+        friend = db.sql(
+            "select A.userID as user_id ,A.nickname as nickname,A.headportrait as headportrait,A.usergroup as usergroup,A.exp as exp from users A,(select C.* from followuser C,users D where C.userID = D.userID and D.token= '%s') B,followuser C where A.userID=C.userID and (C.target = B.userID) and C.userID = B.target " % token)
+        if friend:
+            return jsonify({'code': 1, 'msg': 'success', 'data': friend})
+        return jsonify({'code': 1, 'msg': 'success', 'data': []})
     return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+    # user = db.get({'token': token}, 'users')  # 从token获取用户
+    # if user:
+    #     followed = db.get({'userID': user['userID']}, 'followuser', 0)  # 获取所有用户关注的用户
+    #     data = []
+    #     for value in followed:
+    #         if db.get({'userID': value['target'], 'target': value['userID']}, 'followuser'):  # 判断关注的用户是否为互关，互关即好友
+    #             friend = db.get({'userID': value['target']}, 'users')  # 获取好友信息
+    #             if friend:
+    #                 data.append({
+    #                     'user_id': friend['userID'],
+    #                     'nickname': friend['nickname'],
+    #                     'headportrait': friend['headportrait'],
+    #                     'usergroup': friend['usergroup'],
+    #                     'exp': friend['exp']
+    #                 })  # 存入信息
+    #     return jsonify({'code': 1, 'msg': 'success', 'data': data})
+    # return jsonify({'code': 0, 'msg': 'unexpected user'})
 
 
 @app.route('/api/message/get_agree_list')
@@ -943,7 +953,7 @@ def get_at_list():
 ALLOWED_USER_GROUP = {0, '0'}  # 允许发送广播用户组
 
 
-@app.route('/api/message/add_sys_notice',methods=['POST'])
+@app.route('/api/message/add_sys_notice', methods=['POST'])
 def add_sys_notice():
     """
     发送系统消息
@@ -956,14 +966,12 @@ def add_sys_notice():
         if user['usergroup'] in ALLOWED_USER_GROUP:
             content = request.form['content']
             message_type = request.form['type']
-            flag = db.insert({'content': content, 'type': message_type,'userID':user['userID']}, 'sys_message')
+            flag = db.insert({'content': content, 'type': message_type, 'userID': user['userID']}, 'sys_message')
             if flag:
                 return jsonify({'code': 1, 'msg': 'success'})
             return jsonify({'code': -2, 'msg': 'unable to insert'})
         return jsonify({'code': -1, 'msg': 'permission denied'})
     return jsonify({'code': 0, 'msg': 'unexpected user'})
-
-
 
 
 @app.route('/api/message/get_message')
@@ -983,6 +991,7 @@ def get_message():
             return jsonify({'code': -1, 'msg': 'fail'})
     else:
         return jsonify({'code': 0, 'msg': 'the user is not exist'})
+
 
 """
     上传接口
