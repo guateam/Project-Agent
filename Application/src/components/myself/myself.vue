@@ -29,11 +29,12 @@
             </div>
         </div>
         <div class="main">
-            <v-list subheader>
+            <v-list three-line>
                 <v-list-tile
                         v-for="item in items"
                         :key="item.title"
                         avatar
+                        @click="$router.push({name: 'settings'})"
                 >
                     <v-list-tile-avatar>
                         <!--图片和icon都应该改一下，先做完懒得去找icon-->
