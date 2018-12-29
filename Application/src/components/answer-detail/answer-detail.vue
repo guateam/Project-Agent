@@ -111,12 +111,12 @@
 </template>
 
 <script>
-    import Comment from '../comment/comment'
+    // import Comment from '../comment/comment'
 
     export default {
         name: "answer-detail",
         components: {
-            Comment
+            // Comment
         },
         data() {
             return {

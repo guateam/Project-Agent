@@ -33,12 +33,12 @@
                         <v-stepper-content step="2">
                             <div class="titlere"><h1>注册</h1></div>
                             <v-form v-model="valid">
-                                <v-text-field v-model="paw" :rules="pawRules" :counter="30" label="请输入密码"
+                                <v-text-field type="password" v-model="psw" :counter="30" label="请输入密码"
                                               required></v-text-field>
-                                <v-text-field v-model="paw" :rules="PawRules" :counter="30" label="请确认密码"
+                                <v-text-field type="password" v-model="psw_confirm" :counter="30" label="请确认密码"
                                               required></v-text-field>
                             </v-form>
-                            <v-btn color="#ffcc00" @click="e1 = 3" style="float: right">注册</v-btn>
+                            <v-btn color="#ffcc00" @click.native="user_register()" style="float: right">注册</v-btn>
                             <v-btn @click="e1 = 1" flat>上一步</v-btn>
                         </v-stepper-content>
 
@@ -56,14 +56,50 @@
 </template>
 
 <script>
+    import axios from 'axios'
+
     export default {
         name: "register",
         data() {
             return {
                 email: '',  // 邮箱地址
+                psw: '',  // password
+                psw_confirm: '', // password confirm
                 e1: 0  // 步进的位置
             }
         },
+        methods: {
+            user_register() {
+                if (this.psw !== this.psw_confirm) {
+                    return ;
+                }
+                window.console.log('start register');
+                axios({
+                    method: 'post',
+                    url: 'http://localhost:5000/api/account/register',
+                    data: {
+                        email: this.email,  // 用户名
+                        password: this.psw,  // 密码
+                    },
+                    transformRequest: [function (data) {
+                        // Do whatever you want to transform the data
+                        let ret = '';
+                        for (let it in data) {
+                            ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+                        }
+                        return ret
+                    }],
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    }
+                }).then((response) => {
+                    window.console.log(response);
+                    if (response.data.code === 1) {
+                        this.e1 = 3;
+                    }
+                })
+            }
+        }
     }
 </script>
 

@@ -10,7 +10,7 @@
                 <h1>你好，<br/>欢迎来到<span style="color: #ffcc00">&nbsp;&nbsp;&nbsp;批批乎</span></h1>
             </div>
             <div class="theform">
-                <v-form v-model="valid">
+                <v-form>
                     <v-text-field
                             v-model="email"
                             :counter="30"
@@ -20,6 +20,7 @@
                     <v-text-field
                             v-model="psw"
                             label="请输入密码"
+                            type="password"
                             required
                     ></v-text-field>
                 </v-form>
@@ -45,17 +46,31 @@
         },
         methods: {
             submit() {
-                window.console.log(this.email, this.psw);
                 axios({
                     method: 'post',
                     url: 'http://localhost:5000/api/account/login',
                     data: {
                         username: this.email,  // 用户名
                         password: this.psw,  // 密码
+                    },
+                    transformRequest: [function (data) {
+                        // Do whatever you want to transform the data
+                        let ret = '';
+                        for (let it in data) {
+                            ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+                        }
+                        return ret
+                    }],
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
                     }
                 }).then((response) => {
                     window.console.log(response);
-                    // 把token写入cookies，需要写一个修改cookies的方法 @wh
+                    // 把token写入cookies
+                    import('js-cookie').then((Cookies) => {
+                        Cookies.set('token', response.data.data.token);
+                    });
+                    this.$router.push({name: 'myself'});
                 })
             }
         }
