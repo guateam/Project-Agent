@@ -182,3 +182,20 @@ class Database(object):
         except pymysql.MySQLError as e:
             print(e.args)
             return []  # 报错
+
+    def sql(self, str, type = 0):
+        """
+        直接运行sql语句
+        :param str: sql语句
+        :return:
+        """
+        try:
+            with self.db.cursor() as cursor:
+                cursor.execute(str)
+                results = cursor.fetchall()
+                if len(results) == 1 and type == 1:
+                    return results[0]
+                return results
+        except pymysql.mySQLError as e:
+            print(e.args)
+            return []
