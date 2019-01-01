@@ -124,6 +124,27 @@ def get_user():
     return jsonify({'code': 0, 'msg': 'unexpected user'})
 
 
+@app.route('/api/route/get_user_by_token')
+def get_user_by_token():
+    """
+    根据token获取用户信息
+    :return:code(0=未知用户，1=成功)
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        data = {
+            'user_id': user['userID'],
+            'head_portrait': user['headportrait'],
+            'user_group': user['usergroup'],
+            'exp': user['exp'],
+            'nickname': user['nickname']
+        }
+        return jsonify({'code': 1, 'msg': 'success', 'data': data})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
 @app.route('/api/account/add_user_action')
 def add_user_action():
     """
@@ -321,6 +342,31 @@ def get_question_comment():
         data = db.get({'questionID': question_id}, 'question_comments_info', 0)
         return jsonify({'code': 1, 'msg': 'success', 'data': data})
     return jsonify({'code': 0, 'msg': 'unknown question'})
+
+
+@app.route('/api/questions/agree_question_comment')
+def agree_question_comment():
+    """
+    对特定评论点赞
+    :return: code(0=未知用户，-1=未知评论，-2=不能记录用户行为，-3=不能更新点赞数，1=成功)
+    """
+    comment_id = request.values.get('comment_id')
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        answer = db.get({'qcommentID': comment_id}, 'questioncomments')
+        if answer:
+            result = db.update({'qcommentID': comment_id}, {'agree': int(answer['agree']) + 1}, 'questioncomments')
+            flag = db.insert({'userID': user['userID'], 'targetID': comment_id, 'targettype': 5}, 'useraction')
+            if result and flag:
+                return jsonify({'code': 1, 'msg': 'success'})
+            if result:
+                return jsonify({'code': -2, 'msg': 'unable to insert user action'})
+            if flag:
+                return jsonify({'code': -3, 'msg': 'unable to update agree number'})
+        return jsonify({'code': -1, 'msg': 'unknown comment'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
 
 
 """
