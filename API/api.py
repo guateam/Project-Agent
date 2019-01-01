@@ -3,12 +3,14 @@ import random
 import re
 import string
 import time
+from CF.cf import item_cf
 
 from flask import Flask, jsonify, request, url_for
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
 
 from API.db import Database, generate_password
+
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
@@ -895,7 +897,7 @@ def get_agree_list():
             if action2:
                 user_action = user_action + action2
         """
-            处理用户行为
+            处理用户行为n
         """
         data = []
         for value in user_action:
@@ -1064,6 +1066,74 @@ def upload_picture():
         f.save(upload_path)
         return jsonify({'code': 1, 'msg': 'success', 'data': '/static/uploads/' + new_filename})
     return jsonify({'code': 0, 'msg': 'unexpected type'})
+
+
+"""
+    算法接口
+"""
+
+@app.route('/api/algorithm/item_cf')
+def item_cf_api():
+    """
+    调用item cf算法推荐
+    :return: code:0-失败  1-成功  data:被推荐的物品在评分矩阵顺序中的下标
+    """
+    #评分矩阵文件
+    dir = request.values.get('dir')
+    #要根据某个物品(文章或问题)的ID来进行相似推荐
+    target = request.values.get('target')
+    #得到的推荐结果
+    result = item_cf(dir,target);
+
+    return result
+
+
+@app.route('/api/algorithm/build_article_rate_rect')
+def build_article_rate_rect():
+    """
+    建立文章的评分矩阵
+    :return: code:0=失败 1=成功
+    """
+    # 为文章或者问题建立评分矩阵，评分矩阵的某一行是
+    # 所有用户对某一篇文章的行为进行权值计算后得到的一个向量,所有文章对应一个向量组合成矩阵
+    # chart的值目前只能为article 或 questions
+    file_name = request.values.get("file_name")
+    db = Database()
+    # targettype 对应的评分
+    rate_dict = {21: 2, 22: 4, 23: 3, 24: -2, 25: 3}
+    article = db.sql("select * from article")
+    users = db.sql("select * from users order by userID ASC")
+
+    rect = []
+    for i in range(len(article)):
+        # 对于第i篇文章的评分向量,没有参与的用户评分默认为1
+        rates = {}
+        for j in range(len(users)):
+            rates[users[j]['userID']] = 1
+            actions = db.sql(
+                "select * from useraction where targetID='%s' and userID='%s' and targettype>=21 and targettype <=25 order by userID ASC" %
+                (article[i]['articleID'], users[j]["userID"]))
+            #该用户对这篇文章的总评分
+            rate = 0;
+            if( actions ):
+                for k in range(len(actions)):
+                    rt = rate_dict[actions[k]["targettype"]]
+                    rate+= rt
+                rates[users[j]['userID']] = rate
+
+        keys = rates.keys()
+        with open("../CF/rate_rect/"+file_name, "w") as f:
+            f.write("ID:"+str(article[i]['articleID'])+" rate:")
+            rate_str = ""
+            for key in keys:
+                rate_str+= str(key)+"-"+str(rates[key])+"-"
+            rate_str = rate_str[:-1]
+            f.write(rate_str+"\n")
+
+    return jsonify({"code":1})
+
+
+
 
 
 if __name__ == '__main__':
