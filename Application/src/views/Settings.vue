@@ -210,7 +210,7 @@
                     },
                     {
                         done: false,
-                        text: 'Fizzbuzz'
+                        text: '123'
                     }
                 ],
             }
@@ -218,6 +218,10 @@
         methods: {
             logout() {
                 // 注销用户
+                import('js-cookie').then((Cookies) => {
+                    Cookies.remove('token');
+                });
+                this.$router.push({name: 'myself'});
             },
         }
     }
