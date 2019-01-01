@@ -117,7 +117,7 @@ class Database(object):
                     list1.append(key + ' = "' + values + '"')
                 list2 = []
                 for key, values in data.items():
-                    list2.append(key + ' = "' + values + '"')
+                    list2.append(key + ' = "' + str(values) + '"')
                 where = ' AND '.join(list1)
                 update = ' , '.join(list2)
                 sql_query = 'UPDATE %s SET %s WHERE %s' % (table, update, where)  # 构造sql语句
