@@ -496,7 +496,7 @@ def agree_answer():
         answer = db.get({'answerID': answer_id}, 'answers')
         if answer:
             result = db.update({'answerID': answer_id}, {'agree': int(answer['agree']) + 1}, 'answers')
-            flag = db.insert({'userID': user['userID'], 'targetID': answer_id, 'targettype': 1})
+            flag = db.insert({'userID': user['userID'], 'targetID': answer_id, 'targettype': 1}, 'useraction')
             if result and flag:
                 return jsonify({'code': 1, 'msg': 'success'})
             if result:
@@ -521,7 +521,7 @@ def agree_answer_comment():
         answer = db.get({'acommentID': comment_id}, 'answercomments')
         if answer:
             result = db.update({'acommentID': comment_id}, {'agree': int(answer['agree']) + 1}, 'answercomments')
-            flag = db.insert({'userID': user['userID'], 'targetID': comment_id, 'targettype': 3})
+            flag = db.insert({'userID': user['userID'], 'targetID': comment_id, 'targettype': 3}, 'useraction')
             if result and flag:
                 return jsonify({'code': 1, 'msg': 'success'})
             if result:
@@ -557,7 +557,7 @@ def disagree_answer():
         answer = db.get({'answerID': answer_id}, 'answers')
         if answer:
             result = db.update({'answerID': answer_id}, {'disagree': int(answer['disagree']) + 1}, 'answers')
-            flag = db.insert({'userID': user['userID'], 'targetID': answer_id, 'targettype': 2})
+            flag = db.insert({'userID': user['userID'], 'targetID': answer_id, 'targettype': 2}, 'useraction')
             if result and flag:
                 return jsonify({'code': 1, 'msg': 'success'})
             if result:
@@ -832,18 +832,18 @@ def get_agree_list():
         comment1 = db.get({'userID': user['userID']}, 'answercomments')
         user_action = []
         for value in comment1:
-            action = db.get({'targettype': 3, 'target': value['acommentID']}, 0)
+            action = db.get({'targettype': 3, 'targetID': value['acommentID']}, 'useraction', 0)
             if action:
                 user_action = user_action + action
         comment2 = db.get({'userID': user['userID']}, 'questioncomments')
         for value in comment2:
-            action = db.get({'targettype': 5, 'target': value['qcommentID']}, 0)
+            action = db.get({'targettype': 5, 'targetID': value['qcommentID']}, 'useraction', 0)
             if action:
                 user_action = user_action + action
         answer = db.get({'userID': user['userID']}, 'answers')
         for value in answer:
-            action1 = db.get({'targettype': 1, 'target': value['answerID']}, 0)
-            action2 = db.get({'targettype': 2, 'target': value['answerID']}, 0)
+            action1 = db.get({'targettype': 1, 'targetID': value['answerID']}, 'useraction', 0)
+            action2 = db.get({'targettype': 2, 'targetID': value['answerID']}, 'useraction', 0)
             if action1:
                 user_action = user_action + action1
             if action2:
