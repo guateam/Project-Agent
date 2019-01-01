@@ -23,22 +23,43 @@ def cosine_similarity(vector1, vector2):
         return round(dot_product / (norm_a*norm_b), 4)
 
 
-def set_similarity_vec(vec,name = "similarity_vector.txt"):
+def set_similarity_vec(rect_file,name = "similarity_vector.txt"):
     """
     计算相似矩阵
+
+    :param rect_file: 评分矩阵文件路径, 矩阵形式为 对象ID:id值 rate:评分者ID-评分值,评分者ID-评分值...
     :param vec: 待算的的向量，可以为 用户评分列表或者文章列表
     :param name: 存储的文件名称
-    :return: 返回规模为 用户*用户 或者 文章*文章 的相似度矩阵
+    :return: 返回规模为 用户*用户 或者 文章*文章 的相似度矩阵,物品的ID列表
     """
-    simi_vec = [[0 for i in range(len(vec))] for j in range(len(vec)) ]
+    item_ids = [];
+    rates = [];
+
+    with open(rect_file,"r") as f:
+        lines = f.readlines()
+        for i in range(len(lines)):
+            a = lines[i].split(" ")
+            id = a[0].split(":")
+            id = int(id[1])
+            item_ids.append(id)
+
+            rt = a[1].split(":")
+            rt = rt[1].split("-")
+            rtt = []
+            for i in range(len(rt)):
+                if(i % 2 == 1):
+                    rtt.append(rt[i])
+            rates.append(rtt)
+
+    simi_vec = [[0 for i in range(len(rates))] for j in range(len(rates)) ]
     f = open(name,"w")
-    for i in range(len(vec)):
-        for j in range(len(vec)):
-            simi_vec[i][j] = cosine_similarity(vec[i], vec[j])
+    for i in range(len(rates)):
+        for j in range(len(rates)):
+            simi_vec[i][j] = cosine_similarity(rates[i], rates[j])
             f.write(str(simi_vec[i][j])+",")
         f.write("\n")
     f.close()
-    return simi_vec
+    return simi_vec,item_ids
 
 
 def read_similarity_vec(dir = "similarity_vector.txt"):
@@ -70,15 +91,22 @@ def interest_value(similar, rate_vec):
     return interest_vec
 
 
-def most_similar(simi_vec,idx):
+def most_similar(simi_vec,item_ids,id):
     """
     根据相似度矩阵获取最相似的项
     :param simi_vec: 相似度矩阵
-    :param idx: 比较的对象下标
+    :param item_ids: ID列表
+    :param id: 比较的对象ID
     :return: 最相似项的下标
     """
     most_val = 10000
     most_idx = 0
+    idx = 0
+    for it in item_ids:
+        if(it == id):
+            break
+        idx+=1
+
     for i in range(len(simi_vec[idx])):
         if(abs(simi_vec[idx][i]-1) < most_val ):
             if(idx != i):
@@ -158,15 +186,17 @@ def cf(self_vec,others_vec,k=1, m=1,item_vec = []):
     return data
 
 
-def item_cf(dir,target):
+def item_cf(rate_dir,dir,target):
     """
     基于物品的cf算法
-    :param dir: 要读取的物品相似度矩阵文件
-    :param target: 为某个物品推荐，该物品的下标
-    :return: 推荐的物品下标
+    :param rate_dir: 评分矩阵路径
+    :param dir: 物品相似度矩阵文件路径
+    :param target: 为某个物品推荐，该物品的ID
+    :return: 推荐的物品ID
     """
+    simi_vec,item_ids = set_similarity_vec(rate_dir, dir)
     simi_vec = read_similarity_vec(dir)
-    idx = most_similar(simi_vec,target)
+    idx = most_similar(simi_vec,item_ids,target)
     return idx
 
 # 以下为基于用户的使用样例
@@ -195,7 +225,7 @@ def item_cf(dir,target):
 #     [1,1,2,2,1],
 #     [2,1,2,3,1]
 # ]
-# set_similarity_vec(item,"item_simi.txt")
+#
 # print(item_cf("item_simi.txt",0))
 #
 # print(read_similarity_vec())
