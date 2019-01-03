@@ -19,27 +19,27 @@
         </v-toolbar>
 
         <v-tabs-items v-model="tabs">
-            <v-tab-item :key="1">
-                <question-card @click.native="view_detail(question.questionID)" v-for="question in question_list" :key="question.questionID" v-bind="question"></question-card>
-            </v-tab-item>
+        <v-tab-item :key="1">
+            <question-card @click.native="view_detail(question.questionID)" v-for="question in question_list" :key="question.questionID" v-bind="question"></question-card>
+        </v-tab-item>
 
-            <v-tab-item :key="2">
-                <question-card @click.native="view_detail(question.questionID)" v-for="question in question_list" :key="question.questionID" v-bind="question"></question-card>
-            </v-tab-item>
+        <v-tab-item :key="2">
+            <question-card @click.native="view_detail(question.questionID)" v-for="question in question_list" :key="question.questionID" v-bind="question"></question-card>
+        </v-tab-item>
 
-            <v-tab-item :key="3">
-                <question-card @click.native="view_detail(question.questionID)" v-for="question in question_list" :key="question.questionID" v-bind="question"></question-card>
-            </v-tab-item>
+        <v-tab-item :key="3">
+            <question-card @click.native="view_detail(question.questionID)" v-for="question in question_list" :key="question.questionID" v-bind="question"></question-card>
+        </v-tab-item>
 
-            <v-tab-item :key="4">
-                <question-card @click.native="view_detail(question.questionID)" v-for="question in question_list" :key="question.questionID" v-bind="question"></question-card>
-            </v-tab-item>
+        <v-tab-item :key="4">
+            <question-card @click.native="view_detail(question.questionID)" v-for="question in question_list" :key="question.questionID" v-bind="question"></question-card>
+        </v-tab-item>
 
-            <v-tab-item :key="5">
-                <question-card @click.native="view_detail(question.questionID)" v-for="question in question_list" :key="question.questionID" v-bind="question"></question-card>
-            </v-tab-item>
+        <v-tab-item :key="5">
+            <question-card @click.native="view_detail(question.questionID)" v-for="question in question_list" :key="question.questionID" v-bind="question"></question-card>
+        </v-tab-item>
 
-        </v-tabs-items>
+    </v-tabs-items>
 
     </div>
 </template>
