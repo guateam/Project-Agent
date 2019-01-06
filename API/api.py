@@ -11,7 +11,6 @@ from werkzeug.utils import secure_filename
 
 from API.db import Database, generate_password
 
-
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
 
@@ -707,7 +706,6 @@ def get_recommend():
     token = request.values.get('token')
     db = Database()
     user = db.get({'token': token}, 'users')
-    user = True
     if user:
         '''
         这里是从数据库里拿东西
@@ -1072,18 +1070,19 @@ def upload_picture():
     算法接口
 """
 
+
 @app.route('/api/algorithm/item_cf')
 def item_cf_api():
     """
     调用item cf算法推荐
     :return: code:0-失败  1-成功  data:被推荐的物品在评分矩阵顺序中的下标
     """
-    #评分矩阵文件
+    # 评分矩阵文件
     dir = request.values.get('dir')
-    #要根据某个物品(文章或问题)的ID来进行相似推荐
+    # 要根据某个物品(文章或问题)的ID来进行相似推荐
     target = request.values.get('target')
-    #得到的推荐结果
-    result = item_cf(dir,target);
+    # 得到的推荐结果
+    result = item_cf(dir, target);
 
     return result
 
@@ -1113,27 +1112,24 @@ def build_article_rate_rect():
             actions = db.sql(
                 "select * from useraction where targetID='%s' and userID='%s' and targettype>=21 and targettype <=25 order by userID ASC" %
                 (article[i]['articleID'], users[j]["userID"]))
-            #该用户对这篇文章的总评分
+            # 该用户对这篇文章的总评分
             rate = 0;
-            if( actions ):
+            if (actions):
                 for k in range(len(actions)):
                     rt = rate_dict[actions[k]["targettype"]]
-                    rate+= rt
+                    rate += rt
                 rates[users[j]['userID']] = rate
 
         keys = rates.keys()
-        with open("../CF/rate_rect/"+file_name, "w") as f:
-            f.write("ID:"+str(article[i]['articleID'])+" rate:")
+        with open("../CF/rate_rect/" + file_name, "w") as f:
+            f.write("ID:" + str(article[i]['articleID']) + " rate:")
             rate_str = ""
             for key in keys:
-                rate_str+= str(key)+"-"+str(rates[key])+"-"
+                rate_str += str(key) + "-" + str(rates[key]) + "-"
             rate_str = rate_str[:-1]
-            f.write(rate_str+"\n")
+            f.write(rate_str + "\n")
 
-    return jsonify({"code":1})
-
-
-
+    return jsonify({"code": 1})
 
 
 if __name__ == '__main__':
