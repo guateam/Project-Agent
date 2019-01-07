@@ -771,10 +771,29 @@ def get_message_list():
     db = Database()
     user = db.get({'token': token}, 'users')
     if user:
-        message_list = db.get({'receiver': user['userID']}, 'chat_box', 0)
-        if message_list:
-            return jsonify({'code': 1, 'msg': 'success', 'data': message_list})
-        return jsonify({'code': -1, 'msg': 'empty list'})
+        receive = db.get({'receiver': user['userID']}, 'chat_box',0)
+        post = db.get({'poster': user['userID']}, 'chat_box',0)
+        data = []
+        for value in receive + post:
+            data.append({
+                'user_id': value['receiver'] if value['poster'] == user['userID'] else value['poster'],
+                'nickname': value['receiver_nickname'] if value['poster'] == user['userID'] else value[
+                    'poster_nickname'],
+                'headportrait': value['receiver_headportrait'] if value['poster'] == user['userID'] else value[
+                    'poster_headportrait'],
+                'post_time': value['post_time'],
+                'content': value['content']
+            })
+        sorted(data, key=lambda a: a['post_time'], reverse=True)
+        back = []
+        for value in data:
+            flag = True
+            for value1 in back:
+                if value1['user_id'] == value['user_id']:
+                    flag = False
+            if flag:
+                back.append(value)
+        return jsonify({'code': 1, 'msg': 'success', 'data': back})
     return jsonify({'code': 0, 'msg': 'unexpected user'})
 
 
