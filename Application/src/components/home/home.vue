@@ -10,36 +10,33 @@
 
             <!--分类标签栏-->
             <v-tabs slot="extension" v-model="tabs" centered color="transparent" slider-color="#FFCC00">
-                <v-tab :key="1">推荐</v-tab>
-                <v-tab :key="2">计算机</v-tab>
-                <v-tab :key="3">互联网</v-tab>
-                <v-tab :key="4">通信</v-tab>
-                <v-tab :key="5">信息安全</v-tab>
+                <v-tab :key="0">推荐</v-tab>
+                <v-tab v-for="data in category" :key="data.id">{{ data.name }}</v-tab>
             </v-tabs>
         </v-toolbar>
 
         <v-tabs-items v-model="tabs">
-            <v-tab-item :key="1">
-                <question-card @click.native="view_detail(question.questionID)" v-for="question in question_list" :key="question.questionID" v-bind="question"></question-card>
-            </v-tab-item>
+        <v-tab-item :key="1">
+            <question-card @click.native="view_detail(question.questionID)" v-for="question in question_list" :key="question.questionID" v-bind="question"></question-card>
+        </v-tab-item>
 
-            <v-tab-item :key="2">
-                <question-card @click.native="view_detail(question.questionID)" v-for="question in question_list" :key="question.questionID" v-bind="question"></question-card>
-            </v-tab-item>
+        <v-tab-item :key="2">
+            <question-card @click.native="view_detail(question.questionID)" v-for="question in question_list" :key="question.questionID" v-bind="question"></question-card>
+        </v-tab-item>
 
-            <v-tab-item :key="3">
-                <question-card @click.native="view_detail(question.questionID)" v-for="question in question_list" :key="question.questionID" v-bind="question"></question-card>
-            </v-tab-item>
+        <v-tab-item :key="3">
+            <question-card @click.native="view_detail(question.questionID)" v-for="question in question_list" :key="question.questionID" v-bind="question"></question-card>
+        </v-tab-item>
 
-            <v-tab-item :key="4">
-                <question-card @click.native="view_detail(question.questionID)" v-for="question in question_list" :key="question.questionID" v-bind="question"></question-card>
-            </v-tab-item>
+        <v-tab-item :key="4">
+            <question-card @click.native="view_detail(question.questionID)" v-for="question in question_list" :key="question.questionID" v-bind="question"></question-card>
+        </v-tab-item>
 
-            <v-tab-item :key="5">
-                <question-card @click.native="view_detail(question.questionID)" v-for="question in question_list" :key="question.questionID" v-bind="question"></question-card>
-            </v-tab-item>
+        <v-tab-item :key="5">
+            <question-card @click.native="view_detail(question.questionID)" v-for="question in question_list" :key="question.questionID" v-bind="question"></question-card>
+        </v-tab-item>
 
-        </v-tabs-items>
+    </v-tabs-items>
 
     </div>
 </template>
@@ -69,6 +66,7 @@
         },
         data: () => ({
             tabs: 0,
+            category: [],
             question_list: [
                 {
                     questionID: 1,  // 问题ID
@@ -124,19 +122,32 @@
         methods: {
             get_question_list() {
                 // 获取问题列表
-                import('axios').then((axios) => {
-                    axios.get('http://127.0.0.1:5000/api/homepage/get_recommend', {
-                        responseType: 'json',
-                    }).then((response) => {
-                        let data_list = response.data.data;
-                        window.console.log(data_list);
-                        this.question_list = [];
-                        for (let i = 0; i < data_list.length; i += 1) {
-                            if (data_list[i].type === 0) {
-                                data_list[i].edittime = new Date(data_list[i].edittime).Format('yyyy-MM-dd');
-                                this.question_list.unshift(data_list[i]);
+                import('js-cookie').then((Cookies) => {
+                    import('axios').then((axios) => {
+                        axios.get('http://127.0.0.1:5000/api/homepage/get_recommend', {
+                            responseType: 'json',
+                            params: { token: Cookies.get('token') }
+                        }).then((response) => {
+                            let data_list = response.data.data;
+                            window.console.log(data_list);
+                            this.question_list = [];
+                            for (let i = 0; i < data_list.length; i += 1) {
+                                if (data_list[i].type === 0) {
+                                    data_list[i].edittime = new Date(data_list[i].edittime).Format('yyyy-MM-dd');
+                                    this.question_list.unshift(data_list[i]);
+                                }
                             }
-                        }
+                        })
+                    })
+                })
+            },
+            get_category() {
+                // 获取分类
+                import('axios').then((axios) => {
+                    axios.get('http://localhost:5000/api/homepage/get_category', {
+                        responseType: 'json'
+                    }).then((res) => {
+                        this.category = res.data.data;
                     })
                 })
             },
@@ -156,7 +167,9 @@
             },
         },
         mounted() {
+            this.get_category();
             this.get_question_list();
+
         },
     }
 </script>

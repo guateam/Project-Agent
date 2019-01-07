@@ -7,78 +7,19 @@
             <h2>@我的</h2>
         </div>
         <div class="line"></div>
-        <div class="box">
+        <div v-for="data in dataList" :key="data.id" class="box">
             <div style="display: flex;align-items: center;height: 5em">
                 <div style="width: 50px;height: 50px;border-radius: 50%;overflow:hidden;position: absolute;"><img
-                        style="width: 50px;height: 50px;border-radius: 50%;" src="./head.png" alt=""></div>
+                        style="width: 50px;height: 50px;border-radius: 50%;" :src="data.headportrait" alt=""></div>
                 <div style="display: flex;justify-content: space-between;flex-direction: column;margin-left: 60px">
-                    <div>张三</div>
-                    <p><span style="color: blue">@李一半</span>&nbsp;&nbsp;感谢分享呀</p>
+                    <div>{{ data.nickname }}</div>
+                    <p>{{ data.title }}</p>
                 </div>
             </div>
             <div>
                 <p style="background-color: #eee">
-                    <span>李一半</span>:
-                    <span>要是不用工作就好了</span>
-                    &nbsp;&nbsp;&nbsp;
-                    {{text}}
-                </p>
-            </div>
-        </div>
-
-        <!--以下为复制-->
-
-        <div class="box">
-            <div style="display: flex;align-items: center;height: 5em">
-                <div style="width: 50px;height: 50px;border-radius: 50%;overflow:hidden;position: absolute;"><img
-                        style="width: 50px;height: 50px;border-radius: 50%;" src="./head.png" alt=""></div>
-                <div style="display: flex;justify-content: space-between;flex-direction: column;margin-left: 60px">
-                    <div>张三</div>
-                    <p><span style="color: blue">@李一半</span>&nbsp;&nbsp;感谢分享呀</p>
-                </div>
-            </div>
-            <div>
-                <p style="background-color: #eee">
-                    <span>李一半</span>:
-                    <span>要是不用工作就好了</span>
-                    &nbsp;&nbsp;&nbsp;
-                    {{text}}
-                </p>
-            </div>
-        </div>
-        <div class="box">
-            <div style="display: flex;align-items: center;height: 5em">
-                <div style="width: 50px;height: 50px;border-radius: 50%;overflow:hidden;position: absolute;"><img
-                        style="width: 50px;height: 50px;border-radius: 50%;" src="./head.png" alt=""></div>
-                <div style="display: flex;justify-content: space-between;flex-direction: column;margin-left: 60px">
-                    <div>张三</div>
-                    <p><span style="color: blue">@李一半</span>&nbsp;&nbsp;感谢分享呀</p>
-                </div>
-            </div>
-            <div>
-                <p style="background-color: #eee">
-                    <span>李一半</span>:
-                    <span>要是不用工作就好了</span>
-                    &nbsp;&nbsp;&nbsp;
-                    {{text}}
-                </p>
-            </div>
-        </div>
-        <div class="box">
-            <div style="display: flex;align-items: center;height: 5em">
-                <div style="width: 50px;height: 50px;border-radius: 50%;overflow:hidden;position: absolute;"><img
-                        style="width: 50px;height: 50px;border-radius: 50%;" src="./head.png" alt=""></div>
-                <div style="display: flex;justify-content: space-between;flex-direction: column;margin-left: 60px">
-                    <div>张三</div>
-                    <p><span style="color: blue">@李一半</span>&nbsp;&nbsp;感谢分享呀</p>
-                </div>
-            </div>
-            <div>
-                <p style="background-color: #eee">
-                    <span>李一半</span>:
-                    <span>要是不用工作就好了</span>
-                    &nbsp;&nbsp;&nbsp;
-                    {{text}}
+                    <!--<span>李一半</span>:-->
+                    <span>{{ data.content }}</span>
                 </p>
             </div>
         </div>
@@ -91,8 +32,37 @@
         name: "callme",
         data() {
             return {
-                text: '这里是内容简略显示，大概显示三行的样子这里是内容简略显示，大概显示三行的样子这里是内容简略显示，大概显示三行的样子这里是内容简略显示，大概显示三行的样子'
+                text: '这里是内容简略显示，大概显示三行的样子这里是内容简略显示，大概显示三行的样子这里是内容简略显示，大概显示三行的样子这里是内容简略显示，大概显示三行的样子',
+                dataList: [
+                    {
+                        id: 0,
+                        nickname: '张三',
+                        title: '@李一半 感谢分享',
+                        content: '这里是内容简略显示，大概显示三行的样子这里是内容简略显示，大概显示三行的样子这里是内容简略显示，大概显示三行的样子这里是内容简略显示，大概显示三行的样子',
+                        headportrait: './head.png',
+                    },
+                ],
             }
+        },
+        methods: {
+            get_at_message() {
+                import('js-cookie').then((Cookies) => {
+                    import('axios').then((axios) => {
+                        axios.get('http://127.0.0.1:5000/api/message/get_at_list', {
+                            responseType: 'json',
+                            params: {
+                                token: Cookies.get('token'),
+                            }
+                        }).then((response) => {
+                            window.console.log(response.data.data);
+                            this.dataList = response.data.data;
+                        })
+                    })
+                });
+            }
+        },
+        mounted() {
+            this.get_at_message();
         }
     }
 </script>
