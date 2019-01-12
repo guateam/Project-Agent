@@ -5,11 +5,13 @@ import string
 import time
 from CF.cf import item_cf
 
-from flask import Flask, jsonify, request, url_for
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
 
 from API.db import Database, generate_password
+
+from utils import *
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
@@ -752,9 +754,12 @@ def get_recommend():
         '''
         pattern = re.compile(r'<[Ii][Mm][Gg].+?/>')  # 正则表达匹配图片
         for value1 in questions:
-            value1.update({'type': 0, 'image': pattern.findall(value1['description']),
-                           'follow': db.count({'targettype': 4, 'targetID': value1['questionID']}, 'useraction'),
-                           'comment': db.count({'questionID': value1['questionID']}, 'questioncomments')})
+            value1.update({
+                'type': 0,
+                'image': pattern.findall(value1['description']),
+                'follow': db.count({'targettype': 4, 'targetID': value1['questionID']}, 'useraction'),
+                'comment': db.count({'questionID': value1['questionID']}, 'questioncomments')
+            })
         for value2 in answers:
             value2.update({'type': 1, 'image': pattern.findall(value2['content'])})
         data = [{'title': '震惊！这样可以测出你的血脂', 'type': 2}]  # 假装有广告
@@ -762,6 +767,7 @@ def get_recommend():
         这里是随机乱序假装这是推荐了
         '''
         for value in questions + answers:
+            value['edittime'] = get_formative_datetime(value['edittime'])  # 修改日期格式
             position = int(random.random() * len(data))  # 随机插入位置
             data.insert(position, value)
         return jsonify({'code': 1, 'msg': 'success', 'data': data})
@@ -816,7 +822,7 @@ def get_message_list():
                     'poster_nickname'],
                 'headportrait': value['receiver_headportrait'] if value['poster'] == user['userID'] else value[
                     'poster_headportrait'],
-                'post_time': value['post_time'],
+                'post_time': get_formative_datetime(value['post_time']),
                 'content': value['content']
             })
         sorted(data, key=lambda a: a['post_time'], reverse=True)
