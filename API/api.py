@@ -144,7 +144,7 @@ def get_user_by_token():
         data = {
             'user_id': user['userID'],
             'head_portrait': user['headportrait'],
-            'user_group': get_group(user['usergroup']),
+            'group': get_group(user['usergroup']),
             'nickname': user['nickname'],
             'level': get_level(user['exp']),
             'exp': user['exp'] / LEVEL_EXP[get_level(user['exp'])] * 100,
