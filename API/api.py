@@ -14,6 +14,12 @@ from API.db import Database, generate_password
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
 
+"""
+    常量区
+"""
+USER_GROUP = ['管理员', '从业者', '专家', '企业']
+LEVEL_EXP = [100, 1000, 10000]
+
 
 @app.route("/")
 def first_cry():
@@ -125,7 +131,7 @@ def get_user():
     return jsonify({'code': 0, 'msg': 'unexpected user'})
 
 
-@app.route('/api/route/get_user_by_token')
+@app.route('/api/account/get_user_by_token')
 def get_user_by_token():
     """
     根据token获取用户信息
@@ -138,12 +144,31 @@ def get_user_by_token():
         data = {
             'user_id': user['userID'],
             'head_portrait': user['headportrait'],
-            'user_group': user['usergroup'],
-            'exp': user['exp'],
-            'nickname': user['nickname']
+            'user_group': get_group(user['usergroup']),
+            'nickname': user['nickname'],
+            'level': get_level(user['exp']),
+            'exp': user['exp'] / LEVEL_EXP[get_level(user['exp'])] * 100,
+            'answer': db.count({'userID': user['userID']}, 'answers'),
+            'follow': db.count({'userID': user['userID']}, 'followuser'),
+            'fans': db.count({'target': user['userID']}, 'followuser')
         }
         return jsonify({'code': 1, 'msg': 'success', 'data': data})
     return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+def get_level(exp):
+    i = 0
+    while i < len(LEVEL_EXP):
+        if LEVEL_EXP[i] > exp:
+            return i
+        i = i + 1
+    return len(LEVEL_EXP)
+
+
+def get_group(group):
+    if group < len(USER_GROUP):
+        return {'text': USER_GROUP[group], 'value': group}
+    return {'text': '未知', 'value': group}
 
 
 @app.route('/api/account/add_user_action')
@@ -771,8 +796,8 @@ def get_message_list():
     db = Database()
     user = db.get({'token': token}, 'users')
     if user:
-        receive = db.get({'receiver': user['userID']}, 'chat_box',0)
-        post = db.get({'poster': user['userID']}, 'chat_box',0)
+        receive = db.get({'receiver': user['userID']}, 'chat_box', 0)
+        post = db.get({'poster': user['userID']}, 'chat_box', 0)
         data = []
         for value in receive + post:
             data.append({

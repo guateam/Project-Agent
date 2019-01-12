@@ -17,6 +17,7 @@ def native_word(word, encoding='utf-8'):
     else:
         return word
 
+
 def native_content(content):
     if not is_py3:
         return content.decode('utf-8')
@@ -90,14 +91,14 @@ def read_vocab(voca_dir):
 def read_category():
     """从文件中读取分类目录"""
     categories = []
-    with open("categories.txt","r") as f:
+    with open("categories.txt", "r") as f:
         categories = f.readlines()
         for i in range(len(categories)):
             categories[i] = categories[i].rstrip('\n')
 
-    #若分类目录为空，则输出None停止训练或预测过程
-    if(len(categories)<=0):
-        return None,None
+    # 若分类目录为空，则输出None停止训练或预测过程
+    if (len(categories) <= 0):
+        return None, None
     categories = [native_content(x) for x in categories]
 
     cat_to_id = dict(zip(categories, range(len(categories))))
@@ -254,7 +255,7 @@ def evaluate(model, sess, x_, y_):
     return total_loss / data_len, total_acc / data_len
 
 
-def train(cate = []):
+def train(cate=[]):
     """
     训练
     :param cate: 要进行训练的categoryies数组
@@ -271,14 +272,14 @@ def train(cate = []):
         build_vocab(train_dir, vocab_dir, config.vocab_size)
 
     # 若输入的categories长度大于零，则认为是重新训练，将本次训练的categories写入文件
-    if(len(cate)>0):
+    if (len(cate) > 0):
         with open('categories.txt', 'w') as f:
             for it in cate:
-                f.write(it+'\n')
+                f.write(it + '\n')
 
-    #从文件中读取categories，若返回None,表示文件为空，停止训练
+    # 从文件中读取categories，若返回None,表示文件为空，停止训练
     categories, cat_to_id = read_category()
-    if( (categories is None) and (cat_to_id is None) ):
+    if ((categories is None) and (cat_to_id is None)):
         return False
 
     words, word_to_id = read_vocab(vocab_dir)
@@ -382,12 +383,12 @@ def pred(article):
         model.keep_prob: 1.0
     }
     y_pred_cls, logits = session.run([model.y_pred_cls, model.logits], feed_dict=feed_dict)
-#    print(categories[y_pred_cls[0]])
+    #    print(categories[y_pred_cls[0]])
     simi = []
     for i in range(len(logits[0:1][0])):
-        simi.append({"name":categories[i],"weight":(float)(logits[0:1][0][i])})
-#    print(simi)
-#    categories[y_pred_cls[0]]
+        simi.append({"name": categories[i], "weight": (float)(logits[0:1][0][i])})
+    #    print(simi)
+    #    categories[y_pred_cls[0]]
     return simi
 
 
@@ -459,5 +460,3 @@ if __name__ == '__main__':
     #   用法如下
     str_tiyu = '姚明是中国男篮历史上最伟大的球员，无论是CBA和国家队时期，还是登陆NBA之后，大姚都取得了极大的成功。也正是由于大姚的成功，才将NBA推向中国，让此后的男篮球员进军NBA变得更加简单。不过大姚在进军NBA之前，也曾遭遇过不小的困难，一度萌生了退役的想法。'
     pred(str_tiyu)
-
-
