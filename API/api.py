@@ -125,7 +125,7 @@ def get_user():
     return jsonify({'code': 0, 'msg': 'unexpected user'})
 
 
-@app.route('/api/route/get_user_by_token')
+@app.route('/api/account/get_user_by_token')
 def get_user_by_token():
     """
     根据token获取用户信息
