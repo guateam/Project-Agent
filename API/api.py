@@ -64,13 +64,23 @@ def login():
     db = Database()
     user = db.get({'email': username, 'password': generate_password(password)}, 'users')
     if user:
-
+        data = {
+            'user_id': user['userID'],
+            'head_portrait': user['headportrait'],
+            'group': get_group(user['usergroup']),
+            'nickname': user['nickname'],
+            'level': get_level(user['exp']),
+            'exp': user['exp'] / LEVEL_EXP[get_level(user['exp'])] * 100,
+            'answer': db.count({'userID': user['userID']}, 'answers'),
+            'follow': db.count({'userID': user['userID']}, 'followuser'),
+            'fans': db.count({'target': user['userID']}, 'followuser')
+        }
         result = db.update({'email': username, 'password': generate_password(password)},
                            {'token': new_token()},
                            'users')  # 更新token
         if result:
             return jsonify(
-                {'code': 1, 'msg': 'success', 'data': {'token': result['token'], 'group': result['usergroup']}})
+                {'code': 1, 'msg': 'success', 'data': {'token': result['token'], 'data': data}})
         return jsonify({'code': -1, 'msg': 'unable to update token'})  # 失败返回
     return jsonify({'code': 0, 'msg': 'unexpected user'})  # 失败返回
 
