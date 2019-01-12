@@ -46,12 +46,12 @@
             <v-tab-item :key="2">
                 <v-list>
                     <v-list-group
-                            v-for="item in items2"
+                            v-for="item in friendList"
                             v-model="item.active"
                             :key="item.title"
-                            :prepend-icon="item.action"
                             no-action
                     >
+                        <!--:prepend-icon="item.action"-->
                         <v-list-tile slot="activator">
                             <v-list-tile-content>
                                 <v-list-tile-title>{{ item.title }}</v-list-tile-title>
@@ -60,15 +60,15 @@
 
                         <v-list-tile
                                 v-for="subItem in item.items"
-                                :key="subItem.title"
+                                :key="subItem.nickname"
                         >
                             <v-list-tile-content>
-                                <v-list-tile-title>{{ subItem.title }}</v-list-tile-title>
+                                <v-list-tile-title>{{ subItem.nickname }}</v-list-tile-title>
                             </v-list-tile-content>
 
-                            <v-list-tile-action>
-                                <v-icon>{{ subItem.action }}</v-icon>
-                            </v-list-tile-action>
+                            <!--<v-list-tile-action>-->
+                                <!--<v-icon>{{ subItem.action }}</v-icon>-->
+                            <!--</v-list-tile-action>-->
                         </v-list-tile>
                     </v-list-group>
                 </v-list>
@@ -146,31 +146,14 @@
                         subtitle: "Do you have Paris recommendations? Have you ever been?"
                     },
                 ],
-                items2: [
+                friendList: [
                     {
-                        action: 'local_activity',
                         title: '分组一',
-                        items: [
-                            {title: '赵一'}
-                        ]
-                    },
-                    {
-                        action: 'restaurant',
-                        title: '分组二',
                         active: true,
                         items: [
-                            {title: '钱二'},
-                            {title: '孙三'},
-                            {title: '李四'}
+                            { nickname: '赵一', user_id: -1, },
                         ]
                     },
-                    {
-                        action: 'school',
-                        title: '分组三',
-                        items: [
-                            {title: '周五'}
-                        ]
-                    }
                 ],
                 items3: [
                     {header: '今天'},
@@ -202,6 +185,38 @@
                 ],
             }
         },
+        methods: {
+            get_friend_list() {
+                // 获取好友列表
+                import('js-cookie').then((Cookies) => {
+                    import('axios').then((axios) => {
+                        axios.get('http://localhost:5000/api/message/get_friend_list', {
+                            responseType: 'json',
+                            params: {
+                                token: Cookies.get('token'),
+                            }
+                        }).then((response) => {
+                            window.console.log(this.friendList[0]);
+                            this.friendList[0].items = response.data.data;
+                        })
+                    })
+                })
+            },
+        },
+        mounted() {
+            this.get_friend_list();
+            // import('js-cookie').then((Cookies) => {
+            //     import('axios').then((axios) => {
+            //         axios.get('http://127.0.0.1:5000/api/message/get_message_list', {
+            //             responseType: 'json',
+            //             params: { token: Cookies.get('token') }
+            //         }).then((response) => {
+            //             let data_list = response.data.data;
+            //             window.console.log(data_list);
+            //         })
+            //     })
+            // })
+        }
     }
 </script>
 

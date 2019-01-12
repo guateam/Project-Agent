@@ -3,6 +3,7 @@ import random
 import re
 import string
 import time
+from CF.cf import item_cf
 
 from flask import Flask, jsonify, request, url_for
 from flask_cors import CORS
@@ -115,6 +116,27 @@ def get_user():
     if user:
         data = {
             'user_id': user_id,
+            'head_portrait': user['headportrait'],
+            'user_group': user['usergroup'],
+            'exp': user['exp'],
+            'nickname': user['nickname']
+        }
+        return jsonify({'code': 1, 'msg': 'success', 'data': data})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/route/get_user_by_token')
+def get_user_by_token():
+    """
+    根据token获取用户信息
+    :return:code(0=未知用户，1=成功)
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        data = {
+            'user_id': user['userID'],
             'head_portrait': user['headportrait'],
             'user_group': user['usergroup'],
             'exp': user['exp'],
@@ -323,6 +345,31 @@ def get_question_comment():
     return jsonify({'code': 0, 'msg': 'unknown question'})
 
 
+@app.route('/api/questions/agree_question_comment')
+def agree_question_comment():
+    """
+    对特定评论点赞
+    :return: code(0=未知用户，-1=未知评论，-2=不能记录用户行为，-3=不能更新点赞数，1=成功)
+    """
+    comment_id = request.values.get('comment_id')
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        answer = db.get({'qcommentID': comment_id}, 'questioncomments')
+        if answer:
+            result = db.update({'qcommentID': comment_id}, {'agree': int(answer['agree']) + 1}, 'questioncomments')
+            flag = db.insert({'userID': user['userID'], 'targetID': comment_id, 'targettype': 5}, 'useraction')
+            if result and flag:
+                return jsonify({'code': 1, 'msg': 'success'})
+            if result:
+                return jsonify({'code': -2, 'msg': 'unable to insert user action'})
+            if flag:
+                return jsonify({'code': -3, 'msg': 'unable to update agree number'})
+        return jsonify({'code': -1, 'msg': 'unknown comment'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
 """
     答案接口
 """
@@ -496,7 +543,7 @@ def agree_answer():
         answer = db.get({'answerID': answer_id}, 'answers')
         if answer:
             result = db.update({'answerID': answer_id}, {'agree': int(answer['agree']) + 1}, 'answers')
-            flag = db.insert({'userID': user['userID'], 'targetID': answer_id, 'targettype': 1})
+            flag = db.insert({'userID': user['userID'], 'targetID': answer_id, 'targettype': 1}, 'useraction')
             if result and flag:
                 return jsonify({'code': 1, 'msg': 'success'})
             if result:
@@ -521,7 +568,7 @@ def agree_answer_comment():
         answer = db.get({'acommentID': comment_id}, 'answercomments')
         if answer:
             result = db.update({'acommentID': comment_id}, {'agree': int(answer['agree']) + 1}, 'answercomments')
-            flag = db.insert({'userID': user['userID'], 'targetID': comment_id, 'targettype': 3})
+            flag = db.insert({'userID': user['userID'], 'targetID': comment_id, 'targettype': 3}, 'useraction')
             if result and flag:
                 return jsonify({'code': 1, 'msg': 'success'})
             if result:
@@ -557,7 +604,7 @@ def disagree_answer():
         answer = db.get({'answerID': answer_id}, 'answers')
         if answer:
             result = db.update({'answerID': answer_id}, {'disagree': int(answer['disagree']) + 1}, 'answers')
-            flag = db.insert({'userID': user['userID'], 'targetID': answer_id, 'targettype': 2})
+            flag = db.insert({'userID': user['userID'], 'targetID': answer_id, 'targettype': 2}, 'useraction')
             if result and flag:
                 return jsonify({'code': 1, 'msg': 'success'})
             if result:
@@ -659,7 +706,6 @@ def get_recommend():
     token = request.values.get('token')
     db = Database()
     user = db.get({'token': token}, 'users')
-    user = True
     if user:
         '''
         这里是从数据库里拿东西
@@ -725,10 +771,29 @@ def get_message_list():
     db = Database()
     user = db.get({'token': token}, 'users')
     if user:
-        message_list = db.get({'receiver': user['userID']}, 'chat_box', 0)
-        if message_list:
-            return jsonify({'code': 1, 'msg': 'success', 'data': message_list})
-        return jsonify({'code': -1, 'msg': 'empty list'})
+        receive = db.get({'receiver': user['userID']}, 'chat_box',0)
+        post = db.get({'poster': user['userID']}, 'chat_box',0)
+        data = []
+        for value in receive + post:
+            data.append({
+                'user_id': value['receiver'] if value['poster'] == user['userID'] else value['poster'],
+                'nickname': value['receiver_nickname'] if value['poster'] == user['userID'] else value[
+                    'poster_nickname'],
+                'headportrait': value['receiver_headportrait'] if value['poster'] == user['userID'] else value[
+                    'poster_headportrait'],
+                'post_time': value['post_time'],
+                'content': value['content']
+            })
+        sorted(data, key=lambda a: a['post_time'], reverse=True)
+        back = []
+        for value in data:
+            flag = True
+            for value1 in back:
+                if value1['user_id'] == value['user_id']:
+                    flag = False
+            if flag:
+                back.append(value)
+        return jsonify({'code': 1, 'msg': 'success', 'data': back})
     return jsonify({'code': 0, 'msg': 'unexpected user'})
 
 
@@ -832,24 +897,24 @@ def get_agree_list():
         comment1 = db.get({'userID': user['userID']}, 'answercomments')
         user_action = []
         for value in comment1:
-            action = db.get({'targettype': 3, 'target': value['acommentID']}, 0)
+            action = db.get({'targettype': 3, 'targetID': value['acommentID']}, 'useraction', 0)
             if action:
                 user_action = user_action + action
         comment2 = db.get({'userID': user['userID']}, 'questioncomments')
         for value in comment2:
-            action = db.get({'targettype': 5, 'target': value['qcommentID']}, 0)
+            action = db.get({'targettype': 5, 'targetID': value['qcommentID']}, 'useraction', 0)
             if action:
                 user_action = user_action + action
         answer = db.get({'userID': user['userID']}, 'answers')
         for value in answer:
-            action1 = db.get({'targettype': 1, 'target': value['answerID']}, 0)
-            action2 = db.get({'targettype': 2, 'target': value['answerID']}, 0)
+            action1 = db.get({'targettype': 1, 'targetID': value['answerID']}, 'useraction', 0)
+            action2 = db.get({'targettype': 2, 'targetID': value['answerID']}, 'useraction', 0)
             if action1:
                 user_action = user_action + action1
             if action2:
                 user_action = user_action + action2
         """
-            处理用户行为
+            处理用户行为n
         """
         data = []
         for value in user_action:
@@ -1018,6 +1083,72 @@ def upload_picture():
         f.save(upload_path)
         return jsonify({'code': 1, 'msg': 'success', 'data': '/static/uploads/' + new_filename})
     return jsonify({'code': 0, 'msg': 'unexpected type'})
+
+
+"""
+    算法接口
+"""
+
+
+@app.route('/api/algorithm/item_cf')
+def item_cf_api():
+    """
+    调用item cf算法推荐
+    :return: code:0-失败  1-成功  data:被推荐的物品在评分矩阵顺序中的下标
+    """
+    # 评分矩阵文件
+    dir = request.values.get('dir')
+    # 要根据某个物品(文章或问题)的ID来进行相似推荐
+    target = request.values.get('target')
+    # 得到的推荐结果
+    result = item_cf(dir, target);
+
+    return result
+
+
+@app.route('/api/algorithm/build_article_rate_rect')
+def build_article_rate_rect():
+    """
+    建立文章的评分矩阵
+    :return: code:0=失败 1=成功
+    """
+    # 为文章或者问题建立评分矩阵，评分矩阵的某一行是
+    # 所有用户对某一篇文章的行为进行权值计算后得到的一个向量,所有文章对应一个向量组合成矩阵
+    # chart的值目前只能为article 或 questions
+    file_name = request.values.get("file_name")
+    db = Database()
+    # targettype 对应的评分
+    rate_dict = {21: 2, 22: 4, 23: 3, 24: -2, 25: 3}
+    article = db.sql("select * from article")
+    users = db.sql("select * from users order by userID ASC")
+
+    rect = []
+    for i in range(len(article)):
+        # 对于第i篇文章的评分向量,没有参与的用户评分默认为1
+        rates = {}
+        for j in range(len(users)):
+            rates[users[j]['userID']] = 1
+            actions = db.sql(
+                "select * from useraction where targetID='%s' and userID='%s' and targettype>=21 and targettype <=25 order by userID ASC" %
+                (article[i]['articleID'], users[j]["userID"]))
+            # 该用户对这篇文章的总评分
+            rate = 0;
+            if (actions):
+                for k in range(len(actions)):
+                    rt = rate_dict[actions[k]["targettype"]]
+                    rate += rt
+                rates[users[j]['userID']] = rate
+
+        keys = rates.keys()
+        with open("../CF/rate_rect/" + file_name, "w") as f:
+            f.write("ID:" + str(article[i]['articleID']) + " rate:")
+            rate_str = ""
+            for key in keys:
+                rate_str += str(key) + "-" + str(rates[key]) + "-"
+            rate_str = rate_str[:-1]
+            f.write(rate_str + "\n")
+
+    return jsonify({"code": 1})
 
 
 if __name__ == '__main__':
