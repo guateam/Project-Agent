@@ -11,7 +11,7 @@ from werkzeug.utils import secure_filename
 
 from API.db import Database, generate_password
 
-from utils import *
+from API.utils import *
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
@@ -437,6 +437,22 @@ def add_answer():
     return jsonify({'code': 0, 'msg': 'unexpected user'})
 
 
+def get_tags(tags):
+    """
+    获取标签
+    :param tags:字符串
+    :return: 标签列表
+    """
+    tag_list = tags.split(',')
+    db = Database()
+    data = []
+    for value in tag_list:
+        tag = db.get({'id': value}, 'tags')
+        if tag:
+            data.append({'text': tag['name'], 'id': value})
+    return data
+
+
 @app.route('/api/answer/get_answer')
 def get_answer():
     """
@@ -462,6 +478,9 @@ def get_answer():
                 'answer_type': answer['answertype'],
                 'question_id': answer['questionID'],
                 'question_title': question['title'],
+                'description': user['description'],
+                'group': get_group(user['usergroup']),
+                'tag': get_tags(answer['tags'])
             }
             return jsonify({'code': 1, 'msg': 'success', 'data': data})
         return jsonify({'code': -1, 'msg': 'unknown user'})
