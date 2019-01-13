@@ -438,6 +438,7 @@ def get_answer():
     answer = db.get({'answerID': answer_id}, 'answers')
     if answer:
         user = db.get({'userID': answer['userID']}, 'users')
+        question = db.get({'questionID': answer['questionID']}, 'questions')
         if user:
             data = {
                 'id': answer['answerID'],
@@ -445,11 +446,12 @@ def get_answer():
                 'user_nickname': user['nickname'],
                 'user_headportrait': user['headportrait'],
                 'content': answer['content'],
-                'edit_time': answer['edittime'],
+                'edit_time': get_formative_datetime(answer['edittime']),
                 'agree': answer['agree'],
                 'disagree': answer['disagree'],
                 'answer_type': answer['answertype'],
-                'question_id': answer['questionID']
+                'question_id': answer['questionID'],
+                'question_title': question['title'],
             }
             return jsonify({'code': 1, 'msg': 'success', 'data': data})
         return jsonify({'code': -1, 'msg': 'unknown user'})
