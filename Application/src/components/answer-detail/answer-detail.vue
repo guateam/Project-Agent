@@ -6,7 +6,7 @@
         <div style="padding-left: 1em; padding-right: 1em;padding-top: 1em">
             <h2>{{topicTitle}}</h2>
             <h2 style="line-height: 1.5;height: 1.5em">
-                <router-link to="topic" class="totopic">查看话题></router-link>
+                <router-link :to="$route.query.redirect" class="totopic">查看话题></router-link>
             </h2>
         </div>
 
@@ -20,12 +20,12 @@
                 <div style="display: flex;flex: 0 0 80%;">
                     <div style="display: flex;flex: 0 0 25%;align-items: center;justify-content: center">
                         <div style="width: 60px;height: 60px;border-radius: 50%">
-                            <img src="./head.png" alt="" style="width: 100%;height: 100%;border-radius: 50%">
+                            <img :src="avatar" alt="" style="width: 100%;height: 100%;border-radius: 50%">
                         </div>
                     </div>
                     <div style="display: flex;flex-direction: column;justify-content: space-between;">
-                        <h2 style="margin-top: 8px;">看风景的蜗牛君<span style="color: #ffcc00">&nbsp;&nbsp;专家</span></h2>
-                        <p style="margin-bottom: 8px;">杭州<span>光学专家</span></p>
+                        <h2 style="margin-top: 8px;">{{ nickname }}<span style="color: #ffcc00">&nbsp;&nbsp;{{ group }}</span></h2>
+                        <p style="margin-bottom: 8px;">{{ address }}<span>{{ desc }}</span></p>
                     </div>
                 </div>
                 <div style="display: flex;flex: 0 0 20%;align-items: center;justify-content: center">
@@ -35,11 +35,12 @@
                 </div>
             </div>
             <div style="padding-left: 1em; padding-right: 1em;display: flex;justify-content: space-between;border-bottom: 1px solid #EBEBEB">
-                <p>上一次编辑 <span>· 19小时以前</span></p>
+                <p>上一次编辑 <span>· {{ latestEdit }}</span></p>
                 <p>
-                    <span>原创</span>
-                    &nbsp;&nbsp;·&nbsp;&nbsp;
-                    <span>不可转载</span>
+                    <span v-for="(tag, idx) in warning" :key="idx">
+                        {{ tag }}
+                        <span v-if="idx !== warning.length - 1">&nbsp;&nbsp;·&nbsp;&nbsp;</span>
+                    </span>
                 </p>
             </div>
         </div>
@@ -137,8 +138,37 @@
                     '这就意味着，利用表面等离子体波进行光刻时，从原理上就不在受到传统衍射极限的限制了。\n' +
                     '在光刻机研制方面，我们一直有两个选择：沿用ASML的老路走一遍，还是另辟蹊径通过新原理弯道超车？我们国家很有钱，两个选择都在做。而这台SP光刻机的研制成功，就是让我们看到了弯道超车的可能性。其实从原理上，这简直就不是弯道超车了，而是在别的人还在绕山路的时候，我们尝试着打了一条隧道……虽然还没有完全挖通，但曙光就在眼前了。\n' +
                     '这个装备是我在的课题组主导研发的（但我没做这个方向），从原理提出、项目立项到装备最终验收通过，前前后后有十几年的时间。十几年磨一剑，挥洒了许许多多的老师和师兄师姐的智慧、汗水与青春。向他们致敬~',  // 回答内容
+                nickname: '看风景的蜗牛君',
+                group: '专家',
+                address: '杭州',
+                desc: '光学专家',
+                latestEdit: '19:00',
+                warning: ['原创', '不可转载'],
+                avatar: './head.png',
             }
-        }
+        },
+        mounted() {
+            import('axios').then(axios => {
+                axios.get('http://localhost:5000/api/answer/get_answer', {
+                    responseType: 'json',
+                    params: {
+                        answer_id: this.$route.params.id
+                    }
+                }).then(res => {
+                    if (res.data.code === 1) {
+                        this.intro = res.data.data.content;
+                        this.nickname = res.data.data.user_nickname;
+                        this.avatar = res.data.data.user_headportrait;
+                        this.topicTitle = res.data.data.question_title;
+                        this.latestEdit = res.data.data.edit_time;
+                        this.group = '缺少用户组';
+                        this.address = '缺少地址';
+                        this.desc = '缺少用户介绍';
+                        this.warning = ['缺少标签', '不可转载'];
+                    }
+                })
+            })
+        },
     }
 </script>
 
