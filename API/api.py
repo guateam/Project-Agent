@@ -494,7 +494,7 @@ def get_answer_comment_list():
                     'user_nickname': user['nickname'],
                     'user_headportrait': user['headportrait'],
                     'content': value['content'],
-                    'create_time': value['createtime'],
+                    'create_time': get_formative_datetime(value['createtime']),
                     'agree': value['agree']
                 })
         sorted(data, key=lambda a: a['agree'], reverse=True)
