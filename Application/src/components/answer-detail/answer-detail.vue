@@ -24,7 +24,7 @@
                         </div>
                     </div>
                     <div style="display: flex;flex-direction: column;justify-content: space-between;">
-                        <h2 style="margin-top: 8px;">{{ nickname }}<span style="color: #ffcc00">&nbsp;&nbsp;{{ group }}</span></h2>
+                        <h2 style="margin-top: 8px;">{{ nickname }}<span style="color: #ffcc00">&nbsp;&nbsp;{{ group.text }}</span></h2>
                         <p style="margin-bottom: 8px;"><span>{{ desc }}</span></p>
                     </div>
                 </div>
@@ -38,7 +38,7 @@
                 <p>上一次编辑 <span>· {{ latestEdit }}</span></p>
                 <p>
                     <span v-for="(tag, idx) in warning" :key="idx">
-                        {{ tag }}
+                        {{ tag.text }}
                         <span v-if="idx !== warning.length - 1">&nbsp;&nbsp;·&nbsp;&nbsp;</span>
                     </span>
                 </p>
@@ -160,9 +160,9 @@
                         this.avatar = res.data.data.user_headportrait;
                         this.topicTitle = res.data.data.question_title;
                         this.latestEdit = res.data.data.edit_time;
-                        this.group = '缺少用户组';
-                        this.desc = '缺少用户介绍';
-                        this.warning = ['缺少标签', '不可转载'];
+                        this.group = res.data.data.group;
+                        this.desc = res.data.data.description;
+                        this.warning = res.data.data.tag;
                     }
                 })
             })
