@@ -25,7 +25,7 @@
                     </div>
                     <div style="display: flex;flex-direction: column;justify-content: space-between;">
                         <h2 style="margin-top: 8px;">{{ nickname }}<span style="color: #ffcc00">&nbsp;&nbsp;{{ group }}</span></h2>
-                        <p style="margin-bottom: 8px;">{{ address }}<span>{{ desc }}</span></p>
+                        <p style="margin-bottom: 8px;"><span>{{ desc }}</span></p>
                     </div>
                 </div>
                 <div style="display: flex;flex: 0 0 20%;align-items: center;justify-content: center">
@@ -48,7 +48,7 @@
         <!--回答的答案-->
 
         <div class="intro" style="padding-left: 1em; padding-right: 1em;">
-            <p v-html="intro"></p>
+            <p v-html="intro.replace(/\n/g, '<br>')"></p>
         </div>
 
         <!--评论这部分,是有组件的，但是这里不用，仅获取前三个类似热评一样的东西，不然样式不好写-->
@@ -140,8 +140,7 @@
                     '这个装备是我在的课题组主导研发的（但我没做这个方向），从原理提出、项目立项到装备最终验收通过，前前后后有十几年的时间。十几年磨一剑，挥洒了许许多多的老师和师兄师姐的智慧、汗水与青春。向他们致敬~',  // 回答内容
                 nickname: '看风景的蜗牛君',
                 group: '专家',
-                address: '杭州',
-                desc: '光学专家',
+                desc: '杭州光学专家',
                 latestEdit: '19:00',
                 warning: ['原创', '不可转载'],
                 avatar: './head.png',
@@ -162,7 +161,6 @@
                         this.topicTitle = res.data.data.question_title;
                         this.latestEdit = res.data.data.edit_time;
                         this.group = '缺少用户组';
-                        this.address = '缺少地址';
                         this.desc = '缺少用户介绍';
                         this.warning = ['缺少标签', '不可转载'];
                     }
@@ -172,7 +170,7 @@
     }
 </script>
 
-<style scoped>
+<style>
 
     * {
         line-height: 1.5;
@@ -254,5 +252,8 @@
         width: 100%;
         height: 100%;
         outline: #EBEBEB;
+    }
+    img {
+        width: 100%;
     }
 </style>

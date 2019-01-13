@@ -43,10 +43,10 @@
                         <img src="./3.png" alt="">
                     </div>
                 </router-link>
-                <div class="like">点赞: {{answer.agree}} 评论: 233</div>
+                <div class="like">点赞: {{answer.agree}} 反对: {{ answer.disagree }}</div>
                 <div style="width: 100%;display: flex;align-items: center;position: relative;">
                     <div class="userhead">
-                        <img src="./head.png" alt="">
+                        <img :src="answer.headportrait" alt="">
                     </div>
                     <p class="userName">{{answer.nickname}}</p>
                     &nbsp;&nbsp;&nbsp;
