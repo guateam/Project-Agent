@@ -325,21 +325,8 @@ def get_answer_list():
     if question:
         # answer_list = db.get({'questionID': question_id}, 'answers', 0)
         answer_list = db.get({'questionID': question_id}, 'answersinfo', 0)
-        # print(answer_list)
-        # data = []
-        # for value in answer_list:
-        #     data.append({
-        #         'id': value['answerID'],
-        #         'user_id': value['userID'],
-        #         'content': value['content'],
-        #         'edit_time': value['edittime'],
-        #         'agree': value['agree'],
-        #         'disagree': value['disagree'],
-        #         'answer_type': value['answertype'],
-        #         'question_id': value['questionID']
-        #     })
-        # sorted(data, key=lambda a: a['agree'], reverse=True)
-        # return jsonify({'code': 1, 'msg': 'success', 'data': data})
+        for answer in answer_list:
+            answer['edittime'] = get_formative_datetime(answer['edittime'])
         return jsonify({'code': 1, 'msg': 'success', 'data': answer_list})
     return jsonify({'code': 0, 'msg': 'unknown question'})
 
@@ -347,9 +334,9 @@ def get_answer_list():
 @app.route('/api/questions/add_question_comment', methods=['POST'])
 def add_question_comment():
     """
-        添加评论
-        :return:code(0=未知用户，-1=未知问题，-2=无法添加评论，1=成功)
-        """
+    添加评论
+    :return:code(0=未知用户，-1=未知问题，-2=无法添加评论，1=成功)
+    """
     question_id = request.form['question_id']
     content = request.form['content']
     token = request.form['token']
@@ -507,7 +494,7 @@ def get_answer_comment_list():
                     'user_nickname': user['nickname'],
                     'user_headportrait': user['headportrait'],
                     'content': value['content'],
-                    'create_time': value['createtime'],
+                    'create_time': get_formative_datetime(value['createtime']),
                     'agree': value['agree']
                 })
         sorted(data, key=lambda a: a['agree'], reverse=True)
