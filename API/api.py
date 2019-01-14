@@ -227,6 +227,37 @@ def follow_user():
         return jsonify({'code': 0, 'msg': 'there are something wrong when inserted the data into database'})
 
 
+@app.route('/api/account/verify', methods=['POST'])
+def verify():
+    """
+    实名认证
+    :return:
+    """
+    token = request.form['token']
+    user_id = request.form['user_id']
+    real_name = request.form['real_name']
+    birthday = request.form['birthday']
+    gender = request.form['gender']
+    number = request.form['number']
+    address = request.form['address']
+    nationality = request.form['nationality']
+    db = Database()
+    user = db.get({'token': token, 'usergroup': 0}, 'users')
+    if user:
+        flag = db.update({'userID': user_id}, {
+            'real_name': real_name,
+            'birthday': birthday,
+            'gender': gender,
+            'number': number,
+            'address': address,
+            'nationality': nationality
+        }, 'users')
+        if flag:
+            return jsonify({'code': 1, 'msg': 'success'})
+        return jsonify({'code': -1, 'msg': 'unable to update'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
 """
     问题接口
 """
@@ -1111,6 +1142,7 @@ def get_message():
     上传接口
 """
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'JPG', 'PNG', 'gif', 'GIF'])  # 允许上传的格式
+ALLOWED_PIC = ['png', 'jpg', 'JPG', 'PNG']  # 允许上传的身份证格式
 
 
 # 用于判断文件后缀
@@ -1132,6 +1164,46 @@ def upload_picture():
         f.save(upload_path)
         return jsonify({'code': 1, 'msg': 'success', 'data': '/static/uploads/' + new_filename})
     return jsonify({'code': 0, 'msg': 'unexpected type'})
+
+
+def allowed_pic(filename):
+    """
+    检测文件是否符合要求
+    :param filename:
+    :return:
+    """
+    return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_PIC
+
+
+@app.route('/api/upload/upload_identity_card', methods=['POST'])
+def upload_identity_card():
+    """
+    上传身份证
+    :return:code(0=未知用户，-1=文件格式不正确-2=无法自动识别，1=成功）
+    """
+    front = request.files['front']
+    back = request.files['back']
+    token = request.form['token']
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        if front and back and allowed_pic(front.filename) and allowed_pic(back.filename):
+            basepath = os.path.dirname(__file__)  # 当前文件所在路径
+            front_filename = user['userID'] + '_front_' + front.filename.rsplit('.', 1)[1]
+            upload_path = os.path.join(basepath, 'identity_card', front_filename)  # 注意：没有的文件夹一定要先创建，不然会提示没有该路径
+            front.save(upload_path)
+            back_filename = user['userID'] + '_front_' + front.filename.rsplit('.', 1)[1]
+            upload_path = os.path.join(basepath, 'identity_card/', back_filename)  # 注意：没有的文件夹一定要先创建，不然会提示没有该路径
+            back.save(upload_path)
+            """
+                这里执行一波识别操作
+            """
+            flag = db.update({'userID': user['userID']}, {'state': 1}, 'users')
+            if flag:
+                return jsonify({'code': 1, 'msg': 'success'})
+            return jsonify({'code': -2, 'msg': 'unable to identify'})
+        return jsonify({'code': -1, 'msg': 'unexpected file'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
 
 
 """
