@@ -4,12 +4,12 @@
             <div class="head-main">
                 <div class="head-items">
                     <div class="pic">
-                        <img src="./head.png" alt="">
+                        <img :src="head_portrait" alt="">
                     </div>
                     <div style="display: flex;justify-content: space-between;flex-direction: column;">
                         <div style="margin-left: 0.8em">
                             <span style="font-size: 1.5em;font-weight: 600">{{nickname}}</span>
-                            <span style="border: 2px solid black;border-radius: 5px;padding: 0.3em;margin-left: 0.5em">从业者</span>
+                            <span style="border: 2px solid black;border-radius: 5px;padding: 0.3em;margin-left: 0.5em">{{ group }}</span>
                         </div>
                         <div style="margin-left: 0.8em;display: flex;align-items: center">
                             <span style="font-size: 1.3em;font-weight: 600;position: absolute;width: 2.5em">lv.1</span>
@@ -61,8 +61,10 @@
         name: "myself",
         data() {
             return {
-                nickname: '李一半',  // 用户名
+                nickname: '默认用户名',  // 用户名
+                head_portrait: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
                 valueDeterminate: 50,  // 经验等级进度条
+                group: '未知',
                 items: [
                     {active: true, title: '我发布的', avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg'},
                     {active: true, title: '我的收藏', avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg'},
@@ -73,17 +75,25 @@
         },
         methods: {
             get_user_info() {
-                axios.get('http://127.0.0.1:5000/api/account/get_user', {
-                    responseType: 'json',
-                    params: {
-                        user_id: '1',
-                    }
-                }).then((response) => {
-                    let user_info = response.data.data;
-                    window.console.log(user_info);
-                    this.nickname = user_info.nickname;
-                    this.valueDeterminate = user_info.exp;
-                })
+                import('js-cookie').then((Cookies) => {
+                    let token = Cookies.get('token');
+                    axios.get('http://127.0.0.1:5000/api/account/get_user_by_token', {
+                        responseType: 'json',
+                        params: {
+                            token: token,
+                        }
+                    }).then((response) => {
+                        let group = {
+                            0: '从业者',
+                            1: '专家',
+                        };
+                        let user_info = response.data.data;
+                        this.nickname = user_info.nickname;
+                        this.valueDeterminate = user_info.exp;
+                        this.head_portrait = user_info.head_portrait;
+                        this.group = group[user_info['user_group']];
+                    });
+                });
             }
         },
         mounted() {

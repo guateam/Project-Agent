@@ -97,6 +97,8 @@ class Database(object):
                 results = cursor.fetchall()
                 if len(results) == 1 and type == 1:
                     return results[0]  # 返回单个数组
+                if not results and type==0:
+                    return []
                 return results  # 返回多个数组
         except pymysql.MySQLError as e:
             print(e.args)
@@ -117,7 +119,7 @@ class Database(object):
                     list1.append(key + ' = "' + values + '"')
                 list2 = []
                 for key, values in data.items():
-                    list2.append(key + ' = "' + values + '"')
+                    list2.append(key + ' = "' + str(values) + '"')
                 where = ' AND '.join(list1)
                 update = ' , '.join(list2)
                 sql_query = 'UPDATE %s SET %s WHERE %s' % (table, update, where)  # 构造sql语句

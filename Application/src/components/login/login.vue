@@ -9,7 +9,7 @@
             <div>
                 <h1>你好，<br/>欢迎来到<span style="color: #ffcc00">&nbsp;&nbsp;&nbsp;批批乎</span></h1>
             </div>
-            <div class="theform">
+            <div class="the-form">
                 <v-form>
                     <v-text-field
                             v-model="email"
@@ -65,7 +65,6 @@
                         'Content-Type': 'application/x-www-form-urlencoded'
                     }
                 }).then((response) => {
-                    window.console.log(response);
                     // 把token写入cookies
                     import('js-cookie').then((Cookies) => {
                         Cookies.set('token', response.data.data.token);
@@ -96,7 +95,7 @@
         padding: 0 3em;
     }
 
-    .theform {
+    .the-form {
         margin-top: 2em;
     }
 </style>

@@ -5,15 +5,22 @@ import string
 import time
 from CF.cf import item_cf
 
-from flask import Flask, jsonify, request, url_for
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
 
 from API.db import Database, generate_password
 
+from API.utils import *
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
+
+"""
+    常量区
+"""
+USER_GROUP = ['管理员', '从业者', '专家', '企业']
+LEVEL_EXP = [100, 1000, 10000]
 
 
 @app.route("/")
@@ -59,13 +66,23 @@ def login():
     db = Database()
     user = db.get({'email': username, 'password': generate_password(password)}, 'users')
     if user:
-
+        data = {
+            'user_id': user['userID'],
+            'head_portrait': user['headportrait'],
+            'group': get_group(user['usergroup']),
+            'nickname': user['nickname'],
+            'level': get_level(user['exp']),
+            'exp': user['exp'] / LEVEL_EXP[get_level(user['exp'])] * 100,
+            'answer': db.count({'userID': user['userID']}, 'answers'),
+            'follow': db.count({'userID': user['userID']}, 'followuser'),
+            'fans': db.count({'target': user['userID']}, 'followuser')
+        }
         result = db.update({'email': username, 'password': generate_password(password)},
                            {'token': new_token()},
                            'users')  # 更新token
         if result:
             return jsonify(
-                {'code': 1, 'msg': 'success', 'data': {'token': result['token'], 'group': result['usergroup']}})
+                {'code': 1, 'msg': 'success', 'data': {'token': result['token'], 'data': data}})
         return jsonify({'code': -1, 'msg': 'unable to update token'})  # 失败返回
     return jsonify({'code': 0, 'msg': 'unexpected user'})  # 失败返回
 
@@ -126,6 +143,46 @@ def get_user():
     return jsonify({'code': 0, 'msg': 'unexpected user'})
 
 
+@app.route('/api/account/get_user_by_token')
+def get_user_by_token():
+    """
+    根据token获取用户信息
+    :return:code(0=未知用户，1=成功)
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        data = {
+            'user_id': user['userID'],
+            'head_portrait': user['headportrait'],
+            'group': get_group(user['usergroup']),
+            'nickname': user['nickname'],
+            'level': get_level(user['exp']),
+            'exp': user['exp'] / LEVEL_EXP[get_level(user['exp'])] * 100,
+            'answer': db.count({'userID': user['userID']}, 'answers'),
+            'follow': db.count({'userID': user['userID']}, 'followuser'),
+            'fans': db.count({'target': user['userID']}, 'followuser')
+        }
+        return jsonify({'code': 1, 'msg': 'success', 'data': data})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+def get_level(exp):
+    i = 0
+    while i < len(LEVEL_EXP):
+        if LEVEL_EXP[i] > exp:
+            return i
+        i = i + 1
+    return len(LEVEL_EXP)
+
+
+def get_group(group):
+    if group < len(USER_GROUP):
+        return {'text': USER_GROUP[group], 'value': group}
+    return {'text': '未知', 'value': group}
+
+
 @app.route('/api/account/add_user_action')
 def add_user_action():
     """
@@ -168,6 +225,37 @@ def follow_user():
         return jsonify({'code': 1, 'msg': 'follow success'})
     else:
         return jsonify({'code': 0, 'msg': 'there are something wrong when inserted the data into database'})
+
+
+@app.route('/api/account/verify', methods=['POST'])
+def verify():
+    """
+    实名认证
+    :return:
+    """
+    token = request.form['token']
+    user_id = request.form['user_id']
+    real_name = request.form['real_name']
+    birthday = request.form['birthday']
+    gender = request.form['gender']
+    number = request.form['number']
+    address = request.form['address']
+    nationality = request.form['nationality']
+    db = Database()
+    user = db.get({'token': token, 'usergroup': 0}, 'users')
+    if user:
+        flag = db.update({'userID': user_id}, {
+            'real_name': real_name,
+            'birthday': birthday,
+            'gender': gender,
+            'number': number,
+            'address': address,
+            'nationality': nationality
+        }, 'users')
+        if flag:
+            return jsonify({'code': 1, 'msg': 'success'})
+        return jsonify({'code': -1, 'msg': 'unable to update'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
 
 
 """
@@ -268,21 +356,8 @@ def get_answer_list():
     if question:
         # answer_list = db.get({'questionID': question_id}, 'answers', 0)
         answer_list = db.get({'questionID': question_id}, 'answersinfo', 0)
-        # print(answer_list)
-        # data = []
-        # for value in answer_list:
-        #     data.append({
-        #         'id': value['answerID'],
-        #         'user_id': value['userID'],
-        #         'content': value['content'],
-        #         'edit_time': value['edittime'],
-        #         'agree': value['agree'],
-        #         'disagree': value['disagree'],
-        #         'answer_type': value['answertype'],
-        #         'question_id': value['questionID']
-        #     })
-        # sorted(data, key=lambda a: a['agree'], reverse=True)
-        # return jsonify({'code': 1, 'msg': 'success', 'data': data})
+        for answer in answer_list:
+            answer['edittime'] = get_formative_datetime(answer['edittime'])
         return jsonify({'code': 1, 'msg': 'success', 'data': answer_list})
     return jsonify({'code': 0, 'msg': 'unknown question'})
 
@@ -290,9 +365,9 @@ def get_answer_list():
 @app.route('/api/questions/add_question_comment', methods=['POST'])
 def add_question_comment():
     """
-        添加评论
-        :return:code(0=未知用户，-1=未知问题，-2=无法添加评论，1=成功)
-        """
+    添加评论
+    :return:code(0=未知用户，-1=未知问题，-2=无法添加评论，1=成功)
+    """
     question_id = request.form['question_id']
     content = request.form['content']
     token = request.form['token']
@@ -325,6 +400,31 @@ def get_question_comment():
     return jsonify({'code': 0, 'msg': 'unknown question'})
 
 
+@app.route('/api/questions/agree_question_comment')
+def agree_question_comment():
+    """
+    对特定评论点赞
+    :return: code(0=未知用户，-1=未知评论，-2=不能记录用户行为，-3=不能更新点赞数，1=成功)
+    """
+    comment_id = request.values.get('comment_id')
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        answer = db.get({'qcommentID': comment_id}, 'questioncomments')
+        if answer:
+            result = db.update({'qcommentID': comment_id}, {'agree': int(answer['agree']) + 1}, 'questioncomments')
+            flag = db.insert({'userID': user['userID'], 'targetID': comment_id, 'targettype': 5}, 'useraction')
+            if result and flag:
+                return jsonify({'code': 1, 'msg': 'success'})
+            if result:
+                return jsonify({'code': -2, 'msg': 'unable to insert user action'})
+            if flag:
+                return jsonify({'code': -3, 'msg': 'unable to update agree number'})
+        return jsonify({'code': -1, 'msg': 'unknown comment'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
 """
     答案接口
 """
@@ -355,6 +455,22 @@ def add_answer():
     return jsonify({'code': 0, 'msg': 'unexpected user'})
 
 
+def get_tags(tags):
+    """
+    获取标签
+    :param tags:字符串
+    :return: 标签列表
+    """
+    tag_list = tags.split(',')
+    db = Database()
+    data = []
+    for value in tag_list:
+        tag = db.get({'id': value}, 'tags')
+        if tag:
+            data.append({'text': tag['name'], 'id': value})
+    return data
+
+
 @app.route('/api/answer/get_answer')
 def get_answer():
     """
@@ -366,6 +482,7 @@ def get_answer():
     answer = db.get({'answerID': answer_id}, 'answers')
     if answer:
         user = db.get({'userID': answer['userID']}, 'users')
+        question = db.get({'questionID': answer['questionID']}, 'questions')
         if user:
             data = {
                 'id': answer['answerID'],
@@ -373,11 +490,15 @@ def get_answer():
                 'user_nickname': user['nickname'],
                 'user_headportrait': user['headportrait'],
                 'content': answer['content'],
-                'edit_time': answer['edittime'],
+                'edit_time': get_formative_datetime(answer['edittime']),
                 'agree': answer['agree'],
                 'disagree': answer['disagree'],
                 'answer_type': answer['answertype'],
-                'question_id': answer['questionID']
+                'question_id': answer['questionID'],
+                'question_title': question['title'],
+                'description': user['description'],
+                'group': get_group(user['usergroup']),
+                'tag': get_tags(answer['tags'])
             }
             return jsonify({'code': 1, 'msg': 'success', 'data': data})
         return jsonify({'code': -1, 'msg': 'unknown user'})
@@ -404,7 +525,7 @@ def get_answer_comment_list():
                     'user_nickname': user['nickname'],
                     'user_headportrait': user['headportrait'],
                     'content': value['content'],
-                    'create_time': value['createtime'],
+                    'create_time': get_formative_datetime(value['createtime']),
                     'agree': value['agree']
                 })
         sorted(data, key=lambda a: a['agree'], reverse=True)
@@ -498,7 +619,7 @@ def agree_answer():
         answer = db.get({'answerID': answer_id}, 'answers')
         if answer:
             result = db.update({'answerID': answer_id}, {'agree': int(answer['agree']) + 1}, 'answers')
-            flag = db.insert({'userID': user['userID'], 'targetID': answer_id, 'targettype': 1})
+            flag = db.insert({'userID': user['userID'], 'targetID': answer_id, 'targettype': 1}, 'useraction')
             if result and flag:
                 return jsonify({'code': 1, 'msg': 'success'})
             if result:
@@ -523,7 +644,7 @@ def agree_answer_comment():
         answer = db.get({'acommentID': comment_id}, 'answercomments')
         if answer:
             result = db.update({'acommentID': comment_id}, {'agree': int(answer['agree']) + 1}, 'answercomments')
-            flag = db.insert({'userID': user['userID'], 'targetID': comment_id, 'targettype': 3})
+            flag = db.insert({'userID': user['userID'], 'targetID': comment_id, 'targettype': 3}, 'useraction')
             if result and flag:
                 return jsonify({'code': 1, 'msg': 'success'})
             if result:
@@ -559,7 +680,7 @@ def disagree_answer():
         answer = db.get({'answerID': answer_id}, 'answers')
         if answer:
             result = db.update({'answerID': answer_id}, {'disagree': int(answer['disagree']) + 1}, 'answers')
-            flag = db.insert({'userID': user['userID'], 'targetID': answer_id, 'targettype': 2})
+            flag = db.insert({'userID': user['userID'], 'targetID': answer_id, 'targettype': 2}, 'useraction')
             if result and flag:
                 return jsonify({'code': 1, 'msg': 'success'})
             if result:
@@ -661,7 +782,6 @@ def get_recommend():
     token = request.values.get('token')
     db = Database()
     user = db.get({'token': token}, 'users')
-    user = True
     if user:
         '''
         这里是从数据库里拿东西
@@ -673,9 +793,12 @@ def get_recommend():
         '''
         pattern = re.compile(r'<[Ii][Mm][Gg].+?/>')  # 正则表达匹配图片
         for value1 in questions:
-            value1.update({'type': 0, 'image': pattern.findall(value1['description']),
-                           'follow': db.count({'targettype': 4, 'targetID': value1['questionID']}, 'useraction'),
-                           'comment': db.count({'questionID': value1['questionID']}, 'questioncomments')})
+            value1.update({
+                'type': 0,
+                'image': pattern.findall(value1['description']),
+                'follow': db.count({'targettype': 4, 'targetID': value1['questionID']}, 'useraction'),
+                'comment': db.count({'questionID': value1['questionID']}, 'questioncomments')
+            })
         for value2 in answers:
             value2.update({'type': 1, 'image': pattern.findall(value2['content'])})
         data = [{'title': '震惊！这样可以测出你的血脂', 'type': 2}]  # 假装有广告
@@ -683,6 +806,7 @@ def get_recommend():
         这里是随机乱序假装这是推荐了
         '''
         for value in questions + answers:
+            value['edittime'] = get_formative_datetime(value['edittime'])  # 修改日期格式
             position = int(random.random() * len(data))  # 随机插入位置
             data.insert(position, value)
         return jsonify({'code': 1, 'msg': 'success', 'data': data})
@@ -727,10 +851,29 @@ def get_message_list():
     db = Database()
     user = db.get({'token': token}, 'users')
     if user:
-        message_list = db.get({'receiver': user['userID']}, 'chat_box', 0)
-        if message_list:
-            return jsonify({'code': 1, 'msg': 'success', 'data': message_list})
-        return jsonify({'code': -1, 'msg': 'empty list'})
+        receive = db.get({'receiver': user['userID']}, 'chat_box', 0)
+        post = db.get({'poster': user['userID']}, 'chat_box', 0)
+        data = []
+        for value in receive + post:
+            data.append({
+                'user_id': value['receiver'] if value['poster'] == user['userID'] else value['poster'],
+                'nickname': value['receiver_nickname'] if value['poster'] == user['userID'] else value[
+                    'poster_nickname'],
+                'headportrait': value['receiver_headportrait'] if value['poster'] == user['userID'] else value[
+                    'poster_headportrait'],
+                'post_time': get_formative_datetime(value['post_time']),
+                'content': value['content']
+            })
+        sorted(data, key=lambda a: a['post_time'], reverse=True)
+        back = []
+        for value in data:
+            flag = True
+            for value1 in back:
+                if value1['user_id'] == value['user_id']:
+                    flag = False
+            if flag:
+                back.append(value)
+        return jsonify({'code': 1, 'msg': 'success', 'data': back})
     return jsonify({'code': 0, 'msg': 'unexpected user'})
 
 
@@ -834,18 +977,18 @@ def get_agree_list():
         comment1 = db.get({'userID': user['userID']}, 'answercomments')
         user_action = []
         for value in comment1:
-            action = db.get({'targettype': 3, 'target': value['acommentID']}, 0)
+            action = db.get({'targettype': 3, 'targetID': value['acommentID']}, 'useraction', 0)
             if action:
                 user_action = user_action + action
         comment2 = db.get({'userID': user['userID']}, 'questioncomments')
         for value in comment2:
-            action = db.get({'targettype': 5, 'target': value['qcommentID']}, 0)
+            action = db.get({'targettype': 5, 'targetID': value['qcommentID']}, 'useraction', 0)
             if action:
                 user_action = user_action + action
         answer = db.get({'userID': user['userID']}, 'answers')
         for value in answer:
-            action1 = db.get({'targettype': 1, 'target': value['answerID']}, 0)
-            action2 = db.get({'targettype': 2, 'target': value['answerID']}, 0)
+            action1 = db.get({'targettype': 1, 'targetID': value['answerID']}, 'useraction', 0)
+            action2 = db.get({'targettype': 2, 'targetID': value['answerID']}, 'useraction', 0)
             if action1:
                 user_action = user_action + action1
             if action2:
@@ -999,6 +1142,7 @@ def get_message():
     上传接口
 """
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'JPG', 'PNG', 'gif', 'GIF'])  # 允许上传的格式
+ALLOWED_PIC = ['png', 'jpg', 'JPG', 'PNG']  # 允许上传的身份证格式
 
 
 # 用于判断文件后缀
@@ -1022,9 +1166,50 @@ def upload_picture():
     return jsonify({'code': 0, 'msg': 'unexpected type'})
 
 
+def allowed_pic(filename):
+    """
+    检测文件是否符合要求
+    :param filename:
+    :return:
+    """
+    return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_PIC
+
+
+@app.route('/api/upload/upload_identity_card', methods=['POST'])
+def upload_identity_card():
+    """
+    上传身份证
+    :return:code(0=未知用户，-1=文件格式不正确-2=无法自动识别，1=成功）
+    """
+    front = request.files['front']
+    back = request.files['back']
+    token = request.form['token']
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        if front and back and allowed_pic(front.filename) and allowed_pic(back.filename):
+            basepath = os.path.dirname(__file__)  # 当前文件所在路径
+            front_filename = user['userID'] + '_front_' + front.filename.rsplit('.', 1)[1]
+            upload_path = os.path.join(basepath, 'identity_card', front_filename)  # 注意：没有的文件夹一定要先创建，不然会提示没有该路径
+            front.save(upload_path)
+            back_filename = user['userID'] + '_front_' + front.filename.rsplit('.', 1)[1]
+            upload_path = os.path.join(basepath, 'identity_card/', back_filename)  # 注意：没有的文件夹一定要先创建，不然会提示没有该路径
+            back.save(upload_path)
+            """
+                这里执行一波识别操作
+            """
+            flag = db.update({'userID': user['userID']}, {'state': 1}, 'users')
+            if flag:
+                return jsonify({'code': 1, 'msg': 'success'})
+            return jsonify({'code': -2, 'msg': 'unable to identify'})
+        return jsonify({'code': -1, 'msg': 'unexpected file'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
 """
     算法接口
 """
+
 
 @app.route('/api/algorithm/item_cf')
 def item_cf_api():
@@ -1032,12 +1217,12 @@ def item_cf_api():
     调用item cf算法推荐
     :return: code:0-失败  1-成功  data:被推荐的物品在评分矩阵顺序中的下标
     """
-    #评分矩阵文件
+    # 评分矩阵文件
     dir = request.values.get('dir')
-    #要根据某个物品(文章或问题)的ID来进行相似推荐
+    # 要根据某个物品(文章或问题)的ID来进行相似推荐
     target = request.values.get('target')
-    #得到的推荐结果
-    result = item_cf(dir,target);
+    # 得到的推荐结果
+    result = item_cf(dir, target);
 
     return result
 
@@ -1067,27 +1252,24 @@ def build_article_rate_rect():
             actions = db.sql(
                 "select * from useraction where targetID='%s' and userID='%s' and targettype>=21 and targettype <=25 order by userID ASC" %
                 (article[i]['articleID'], users[j]["userID"]))
-            #该用户对这篇文章的总评分
+            # 该用户对这篇文章的总评分
             rate = 0;
-            if( actions ):
+            if (actions):
                 for k in range(len(actions)):
                     rt = rate_dict[actions[k]["targettype"]]
-                    rate+= rt
+                    rate += rt
                 rates[users[j]['userID']] = rate
 
         keys = rates.keys()
-        with open("../CF/rate_rect/"+file_name, "w") as f:
-            f.write("ID:"+str(article[i]['articleID'])+" rate:")
+        with open("../CF/rate_rect/" + file_name, "w") as f:
+            f.write("ID:" + str(article[i]['articleID']) + " rate:")
             rate_str = ""
             for key in keys:
-                rate_str+= str(key)+"-"+str(rates[key])+"-"
+                rate_str += str(key) + "-" + str(rates[key]) + "-"
             rate_str = rate_str[:-1]
-            f.write(rate_str+"\n")
+            f.write(rate_str + "\n")
 
-    return jsonify({"code":1})
-
-
-
+    return jsonify({"code": 1})
 
 
 if __name__ == '__main__':
