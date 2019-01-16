@@ -19,7 +19,7 @@ CORS(app, supports_credentials=True)
 """
     常量区
 """
-USER_GROUP = ['管理员', '从业者', '专家', '企业']
+USER_GROUP = ['管理员', '从业者', '专家', '企业', '封禁']
 LEVEL_EXP = [100, 1000, 10000]
 
 
@@ -258,6 +258,112 @@ def verify():
     return jsonify({'code': 0, 'msg': 'unexpected user'})
 
 
+@app.route('/api/account/get_exp_change')
+def get_exp_change():
+    """
+    获取积分变动详情
+    :return: code(0=未知用户，1=成功)
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        exp_list = db.get({'userID': user['userID']}, 'exp_change')
+        sorted(exp_list, key=lambda x: x['time'], reverse=True)
+        return jsonify({'code': 1, 'msg': 'success', 'data': exp_list})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/account/set_exp_change')
+def set_exp_change():
+    """
+    设置积分变动
+    :return: code(0=未知用户，-1=更新失败，1=成功)
+    """
+    token = request.values.get('token')
+    value = request.values.get('value')
+    description = request.values.get('description')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        flag = db.update({'token': token}, {'exp': user['exp'] + value}, 'users')
+        flag2 = db.insert({'value': value, 'userID': user['userID'], 'description': description}, 'exp_change')
+        if flag and flag2:
+            return jsonify({'code': 1, 'msg': 'success'})
+        return jsonify({'code': -1, 'msg': 'unable to insert'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/account/back_get_users')
+def back_get_users():
+    """
+    获取所有用户列表
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token, 'usergroup': 0}, 'users')
+    if user:
+        users = db.get({}, 'users')
+        for value in users:
+            value.update({
+                'group': get_group(value['usergroup']),
+                'level': get_level(value['exp']),
+                'exp': {'value': value['exp'], 'percent': value['exp'] / LEVEL_EXP[get_level(value['exp'])] * 100},
+                'answer': db.count({'userID': value['userID']}, 'answers'),
+                'follow': db.count({'userID': value['userID']}, 'followuser'),
+                'fans': db.count({'target': value['userID']}, 'followuser')
+            })
+        return jsonify({'code': 1, 'msg': 'success', 'data': users})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/account/delete_user')
+def delete_user():
+    """
+    清除用户
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token, 'usergroup': 0}, 'users')
+    if user:
+        user_id = request.values.get('user_id')
+        flag = db.update({'userID': user_id}, {'usergroup': 4}, 'users')
+        if flag:
+            return jsonify({'code': 1, 'msg': 'success'})
+        return jsonify({'code': -1, 'msg': 'unable to delete'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/account/change_user', methods=['POST'])
+def change_user():
+    """
+    修改用户信息
+    :return:
+    """
+    token = request.form['token']
+    db = Database()
+    user = db.get({'token': token, 'usergroup': 0}, 'users')
+    if user:
+        user_id = request.form['user_id']
+        nickname = request.form['nickname']
+        headportrait = request.form['headportrait']
+        usergroup = request.form['usergroup']
+        exp = request.form['exp']
+        update = {
+            'nickname': nickname,
+            'headportrait': headportrait,
+            'usergroup': usergroup,
+            'exp': exp
+        }
+        flag = db.update({'userID': user_id}, update, 'users')
+        if flag:
+            return jsonify({'code': 1, 'msg': 'success'})
+        return jsonify({'code': -1, 'msg': 'unable to delete'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
 """
     问题接口
 """
@@ -289,7 +395,7 @@ def get_questions():
     :return:code(0=未知用户，-1=无法添加问题，1=成功)
     """
     db = Database()
-    data = db.get({}, 'questions')
+    data = db.get({'state': 0}, 'questionsinfo')
     return jsonify({'code': 0, 'msg': '', 'data': data})
 
 
@@ -301,7 +407,7 @@ def get_question():
     """
     question_id = request.values.get('question_id')
     db = Database()
-    question = db.get({'questionID': question_id}, 'questions')
+    question = db.get({'questionID': question_id, 'state': 0}, 'questions')
     if question:
         user = db.get({'userID': question['userID']}, 'users')
         if user:
@@ -425,6 +531,51 @@ def agree_question_comment():
     return jsonify({'code': 0, 'msg': 'unexpected user'})
 
 
+@app.route('/api/questions/back_get_questions')
+def back_get_questions():
+    """
+    后台用查看所有问题
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token, 'usergroup': 0}, 'users')
+    if user:
+        questions = db.get({}, 'questionsinfo')
+        data = []
+        for value in questions:
+            data.append({
+                'questionID': value['questionID'],
+                'description': value['description'],
+                'title': value['title'],
+                'edittime': value['edittime'],
+                'userID': value['userID'],
+                'tags': get_tags(value['tags']),
+                'nickname': value['nickname'],
+                'state': value['state']
+            })
+        return jsonify({'code': 1, 'msg': 'success', 'data': data})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/questions/delete_question')
+def delete_question():
+    """
+    清除问题
+    :return:
+    """
+    token = request.values.get('token')
+    question_id = request.values.get('question_id')
+    db = Database()
+    user = db.get({'token': token, 'usergroup': 0}, 'users')
+    if user:
+        flag = db.update({'questionID': question_id}, {'state': -1}, 'questions')
+        if flag:
+            return jsonify({'code': 1, 'msg': 'success'})
+        return jsonify({'code': -1, 'msg': 'unable to delete'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
 """
     答案接口
 """
@@ -479,7 +630,7 @@ def get_answer():
     """
     answer_id = request.values.get('answer_id')
     db = Database()
-    answer = db.get({'answerID': answer_id}, 'answers')
+    answer = db.get({'answerID': answer_id, 'state': 0}, 'answers')
     if answer:
         user = db.get({'userID': answer['userID']}, 'users')
         question = db.get({'questionID': answer['questionID']}, 'questions')
@@ -691,6 +842,41 @@ def disagree_answer():
     return jsonify({'code': 0, 'msg': 'unexpected user'})
 
 
+@app.route('/api/answer/back_get_answers')
+def back_get_answers():
+    """
+    后台获取所有回答
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token, 'usergroup': 0}, 'users')
+    if user:
+        answers = db.get({}, 'answersinfo')
+        for value in answers:
+            value.update({'tags': get_tags(value['tags'])})
+        return jsonify({'code': 1, 'msg': 'success', 'data': answers})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('api/answer/delete_answer')
+def delete_answer():
+    """
+    清除答案
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token, 'usergroup': 0}, 'users')
+    if user:
+        answer_id = request.values.get('answer_id')
+        flag = db.update({'answerID': answer_id}, {'state': -1}, 'answers')
+        if flag:
+            return jsonify({'code': 1, 'msg': 'success'})
+        return jsonify({'code': -1, 'msg': 'unable to delete'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
 """
     文章接口
 """
@@ -786,8 +972,8 @@ def get_recommend():
         '''
         这里是从数据库里拿东西
         '''
-        questions = db.get({}, 'questionsinfo', 0)
-        answers = db.get({}, 'answersinfo', 0)
+        questions = db.get({'state': 0}, 'questionsinfo', 0)
+        answers = db.get({'state': 0}, 'answersinfo', 0)
         '''
         到时候换成cf算法
         '''
