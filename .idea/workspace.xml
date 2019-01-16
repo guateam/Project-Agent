@@ -160,11 +160,19 @@
       <path value="$PROJECT_DIR$/Application/package.json" />
     </packageJsonPaths>
   </component>
+<<<<<<< Updated upstream
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
     <option name="width" value="1936" />
     <option name="height" value="1056" />
+=======
+  <component name="ProjectFrameBounds" extendedState="7">
+    <option name="x" value="315" />
+    <option name="y" value="35" />
+    <option name="width" value="1405" />
+    <option name="height" value="1005" />
+>>>>>>> Stashed changes
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
