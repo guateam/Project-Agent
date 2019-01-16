@@ -4,7 +4,6 @@
     <list default="true" id="c0ae127e-f612-46ec-82b0-0dfd8862412b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/API/api.py" beforeDir="false" afterPath="$PROJECT_DIR$/API/api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project-Agent.sql" beforeDir="false" afterPath="$PROJECT_DIR$/Project-Agent.sql" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -13,18 +12,20 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/Project_Agent$api.coverage" NAME="api Coverage Results" MODIFIED="1547388560345" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/API" />
+    <SUITE FILE_PATH="coverage/Project_Agent$api.coverage" NAME="api Coverage Results" MODIFIED="1547614493418" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/API" />
   </component>
   <component name="FUSProjectUsageTrigger">
     <session id="-1207968567">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="12" />
+          <entry key="project.closed" value="15" />
+          <entry key="project.open.time.10" value="1" />
           <entry key="project.open.time.5" value="6" />
-          <entry key="project.open.time.6" value="5" />
+          <entry key="project.open.time.6" value="6" />
+          <entry key="project.open.time.7" value="1" />
           <entry key="project.open.time.8" value="3" />
           <entry key="project.open.time.9" value="1" />
-          <entry key="project.opened" value="15" />
+          <entry key="project.opened" value="18" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -43,12 +44,12 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="6026" />
+          <entry key="py" value="9770" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="6026" />
+          <entry key="Python" value="9770" />
         </counts>
       </usages-collector>
     </session>
@@ -58,13 +59,17 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/API/api.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="680">
-              <caret line="236" column="37" selection-start-line="236" selection-start-column="37" selection-end-line="236" selection-end-column="37" />
+            <state relative-caret-position="647">
+              <caret line="359" column="52" selection-start-line="359" selection-start-column="52" selection-end-line="359" selection-end-column="52" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
-                <marker date="1547453477238" expanded="true" signature="6739:7650" ph="..." />
-                <marker date="1547453477238" expanded="true" signature="40032:40173" ph="..." />
-                <marker date="1547453477238" expanded="true" signature="40265:41564" ph="..." />
+                <marker date="1547615865562" expanded="true" signature="6815:11341" ph="..." />
+                <marker date="1547615865562" expanded="true" signature="9080:11341" ph="..." />
+                <marker date="1547615865562" expanded="true" signature="9960:11341" ph="..." />
+                <marker date="1547615865562" expanded="true" signature="10528:11341" ph="..." />
+                <marker date="1547615865562" expanded="true" signature="18234:18702" ph="..." />
+                <marker date="1547615865562" expanded="true" signature="28396:29355" ph="..." />
+                <marker date="1547615865562" expanded="true" signature="28855:29355" ph="..." />
               </folding>
             </state>
           </provider>
@@ -155,17 +160,26 @@
       <path value="$PROJECT_DIR$/Application/package.json" />
     </packageJsonPaths>
   </component>
+<<<<<<< Updated upstream
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
     <option name="width" value="1936" />
     <option name="height" value="1056" />
+=======
+  <component name="ProjectFrameBounds" extendedState="7">
+    <option name="x" value="315" />
+    <option name="y" value="35" />
+    <option name="width" value="1405" />
+    <option name="height" value="1005" />
+>>>>>>> Stashed changes
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -208,7 +222,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -282,8 +295,8 @@
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49728554" visible="true" weight="0.20735608" />
-      <window_info active="true" id="Structure" order="1" sideWeight="0.50271446" side_tool="true" visible="true" weight="0.20735608" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49402824" visible="true" weight="0.21375267" />
+      <window_info active="true" id="Structure" order="1" sideWeight="0.5059718" side_tool="true" visible="true" weight="0.21375267" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
@@ -334,13 +347,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/API/api.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="680">
-          <caret line="236" column="37" selection-start-line="236" selection-start-column="37" selection-end-line="236" selection-end-column="37" />
+        <state relative-caret-position="647">
+          <caret line="359" column="52" selection-start-line="359" selection-start-column="52" selection-end-line="359" selection-end-column="52" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
-            <marker date="1547453477238" expanded="true" signature="6739:7650" ph="..." />
-            <marker date="1547453477238" expanded="true" signature="40032:40173" ph="..." />
-            <marker date="1547453477238" expanded="true" signature="40265:41564" ph="..." />
+            <marker date="1547615865562" expanded="true" signature="6815:11341" ph="..." />
+            <marker date="1547615865562" expanded="true" signature="9080:11341" ph="..." />
+            <marker date="1547615865562" expanded="true" signature="9960:11341" ph="..." />
+            <marker date="1547615865562" expanded="true" signature="10528:11341" ph="..." />
+            <marker date="1547615865562" expanded="true" signature="18234:18702" ph="..." />
+            <marker date="1547615865562" expanded="true" signature="28396:29355" ph="..." />
+            <marker date="1547615865562" expanded="true" signature="28855:29355" ph="..." />
           </folding>
         </state>
       </provider>
