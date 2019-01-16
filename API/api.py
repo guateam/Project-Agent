@@ -72,7 +72,7 @@ def login():
             'group': get_group(user['usergroup']),
             'nickname': user['nickname'],
             'level': get_level(user['exp']),
-            'exp': user['exp'] / LEVEL_EXP[get_level(user['exp'])] * 100,
+            'exp': {'value': user['exp'], 'percent': user['exp'] / LEVEL_EXP[get_level(user['exp'])] * 100},
             'answer': db.count({'userID': user['userID']}, 'answers'),
             'follow': db.count({'userID': user['userID']}, 'followuser'),
             'fans': db.count({'target': user['userID']}, 'followuser')
@@ -159,7 +159,7 @@ def get_user_by_token():
             'group': get_group(user['usergroup']),
             'nickname': user['nickname'],
             'level': get_level(user['exp']),
-            'exp': user['exp'] / LEVEL_EXP[get_level(user['exp'])] * 100,
+            'exp': {'value': user['exp'], 'percent': user['exp'] / LEVEL_EXP[get_level(user['exp'])] * 100},
             'answer': db.count({'userID': user['userID']}, 'answers'),
             'follow': db.count({'userID': user['userID']}, 'followuser'),
             'fans': db.count({'target': user['userID']}, 'followuser')
