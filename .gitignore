@@ -130,3 +130,5 @@ Word2Vec/word2vec\.model\.wv\.vectors\.npy
 Word2Vec/word2vec\.vec
 
 API/static/uploads/
+
+.idea
