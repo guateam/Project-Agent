@@ -65,7 +65,6 @@
                         'Content-Type': 'application/x-www-form-urlencoded'
                     }
                 }).then((response) => {
-                    window.console.log(response);
                     // 把token写入cookies
                     import('js-cookie').then((Cookies) => {
                         Cookies.set('token', response.data.data.token);

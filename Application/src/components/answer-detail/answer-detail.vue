@@ -6,7 +6,7 @@
         <div style="padding-left: 1em; padding-right: 1em;padding-top: 1em">
             <h2>{{topicTitle}}</h2>
             <h2 style="line-height: 1.5;height: 1.5em">
-                <router-link to="topic" class="totopic">查看话题></router-link>
+                <router-link :to="$route.query.redirect" class="totopic">查看话题></router-link>
             </h2>
         </div>
 
@@ -20,12 +20,12 @@
                 <div style="display: flex;flex: 0 0 80%;">
                     <div style="display: flex;flex: 0 0 25%;align-items: center;justify-content: center">
                         <div style="width: 60px;height: 60px;border-radius: 50%">
-                            <img src="./head.png" alt="" style="width: 100%;height: 100%;border-radius: 50%">
+                            <img :src="avatar" alt="" style="width: 100%;height: 100%;border-radius: 50%">
                         </div>
                     </div>
                     <div style="display: flex;flex-direction: column;justify-content: space-between;">
-                        <h2 style="margin-top: 8px;">看风景的蜗牛君<span style="color: #ffcc00">&nbsp;&nbsp;专家</span></h2>
-                        <p style="margin-bottom: 8px;">杭州<span>光学专家</span></p>
+                        <h2 style="margin-top: 8px;">{{ nickname }}<span style="color: #ffcc00">&nbsp;&nbsp;{{ group.text }}</span></h2>
+                        <p style="margin-bottom: 8px;"><span>{{ desc }}</span></p>
                     </div>
                 </div>
                 <div style="display: flex;flex: 0 0 20%;align-items: center;justify-content: center">
@@ -35,11 +35,12 @@
                 </div>
             </div>
             <div style="padding-left: 1em; padding-right: 1em;display: flex;justify-content: space-between;border-bottom: 1px solid #EBEBEB">
-                <p>上一次编辑 <span>· 19小时以前</span></p>
+                <p>上一次编辑 <span>· {{ latestEdit }}</span></p>
                 <p>
-                    <span>原创</span>
-                    &nbsp;&nbsp;·&nbsp;&nbsp;
-                    <span>不可转载</span>
+                    <span v-for="(tag, idx) in warning" :key="idx">
+                        {{ tag.text }}
+                        <span v-if="idx !== warning.length - 1">&nbsp;&nbsp;·&nbsp;&nbsp;</span>
+                    </span>
                 </p>
             </div>
         </div>
@@ -47,50 +48,25 @@
         <!--回答的答案-->
 
         <div class="intro" style="padding-left: 1em; padding-right: 1em;">
-            <p v-html="intro"></p>
+            <p v-html="intro.replace(/\n/g, '<br>')"></p>
         </div>
 
         <!--评论这部分,是有组件的，但是这里不用，仅获取前三个类似热评一样的东西，不然样式不好写-->
         <div class="comment" style="padding-left: 1em; padding-right: 1em;">
             <h2>评论</h2>
-            <router-link to="comment">
-                <div class="comment-item">
+            <router-link :to="{name: 'comment', params: {id: $route.params.id}}">
+                <div v-for="(comment, index) in comments" :key="index" class="comment-item">
                     <div class="comment-user">
-                        <img src="./head.png" alt="">
-                        <span class="comment-user-name">李一半</span>
-                        <span class="comment-user-tag">从业者</span>
-                        <div class="comment-like">一个icon</div>
+                        <img :src="comment.avatar" alt=""><!-- 头像 -->
+                        <span class="comment-user-name">{{ comment.nickname }}</span>
+                        <!--<span class="comment-user-tag">从业者</span>-->
+                        <div class="comment-like">赞同 {{ comment.agree }}</div>
                     </div>
                     <div>
-                        <p>不知道我的理解对不对。激发表面等离子激源要光源波长和材料表面自由电子相耦合。以后要突破更小...</p>
+                        <p>{{ comment.content.length > 20 ? comment.content.substring(0, 20) + '...' : comment.content }}</p>
                     </div>
                 </div>
             </router-link>
-
-            <!--下面这俩div没有router-link，纯粹为了看起来舒服点加的，可以直接删-->
-
-            <div class="comment-item">
-                <div class="comment-user">
-                    <img src="./head.png" alt="">
-                    <span class="comment-user-name">李一半</span>
-                    <span class="comment-user-tag">从业者</span>
-                    <div class="comment-like">一个icon</div>
-                </div>
-                <div>
-                    <p>不知道我的理解对不对。激发表面等离子激源要光源波长和材料表面自由电子相耦合。以后要突破更小...</p>
-                </div>
-            </div>
-            <div class="comment-item">
-                <div class="comment-user">
-                    <img src="./head.png" alt="">
-                    <span class="comment-user-name">李一半</span>
-                    <span class="comment-user-tag">从业者</span>
-                    <div class="comment-like">一个icon</div>
-                </div>
-                <div>
-                    <p>不知道我的理解对不对。激发表面等离子激源要光源波长和材料表面自由电子相耦合。以后要突破更小...</p>
-                </div>
-            </div>
         </div>
 
         <!--占位的div，用来把下面的foot所遮住的空间挤出来-->
@@ -137,12 +113,98 @@
                     '这就意味着，利用表面等离子体波进行光刻时，从原理上就不在受到传统衍射极限的限制了。\n' +
                     '在光刻机研制方面，我们一直有两个选择：沿用ASML的老路走一遍，还是另辟蹊径通过新原理弯道超车？我们国家很有钱，两个选择都在做。而这台SP光刻机的研制成功，就是让我们看到了弯道超车的可能性。其实从原理上，这简直就不是弯道超车了，而是在别的人还在绕山路的时候，我们尝试着打了一条隧道……虽然还没有完全挖通，但曙光就在眼前了。\n' +
                     '这个装备是我在的课题组主导研发的（但我没做这个方向），从原理提出、项目立项到装备最终验收通过，前前后后有十几年的时间。十几年磨一剑，挥洒了许许多多的老师和师兄师姐的智慧、汗水与青春。向他们致敬~',  // 回答内容
+                nickname: '看风景的蜗牛君',
+                group: '专家',
+                desc: '杭州光学专家',
+                latestEdit: '19:00',
+                warning: ['原创', '不可转载'],
+                avatar: './head.png',
+                comments: [
+                    {
+                        agree: 1,
+                        content: "这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论",
+                        create_time: "Sat, 29 Dec 2018 11:15:40 GMT",
+                        avatar: "",
+                        id: 1,
+                        nickname: "拉拉人"
+                    },
+                    {
+                        agree: 0,
+                        content: "这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论",
+                        create_time: "Sat, 15 Dec 2018 19:08:09 GMT",
+                        avatar: "",
+                        id: 1,
+                        nickname: "拉拉人"
+                    },
+                    {
+                        agree: 0,
+                        content: "这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论",
+                        create_time: "Sat, 15 Dec 2018 19:08:36 GMT",
+                        avatar: "",
+                        id: 1,
+                        nickname: "拉拉人"
+                    },
+                ],
             }
-        }
+        },
+
+        methods: {
+            // 获取答案信息
+            getAnswerData() {
+                import('axios').then(axios => {
+                    axios.get('http://localhost:5000/api/answer/get_answer', {
+                        responseType: 'json',
+                        params: {
+                            answer_id: this.$route.params.id
+                        }
+                    }).then(res => {
+                        if (res.data.code === 1) {
+                            this.intro = res.data.data.content;
+                            this.nickname = res.data.data.user_nickname;
+                            this.avatar = res.data.data.user_headportrait;
+                            this.topicTitle = res.data.data.question_title;
+                            this.latestEdit = res.data.data.edit_time;
+                            this.group = res.data.data.group;
+                            this.desc = res.data.data.description;
+                            this.warning = res.data.data.tag;
+                        }
+                    })
+                })
+            },
+            // 获取评论信息
+            getCommentData() {
+                import('axios').then(axios => {
+                    axios.get('http://localhost:5000/api/get_answer_comment_list', {
+                        responseType: 'json',
+                        params: {
+                            answer_id: this.$route.params.id
+                        }
+                    }).then(res => {
+                        if (res.data.code === 1) {
+                            this.comments = [];
+                            for (let i = 0; i < 3; i++) {
+                                this.comments.push({
+                                    content: res.data.data[i].content,
+                                    avatar: res.data.data[i].user_headportrait,
+                                    id: res.data.data[i].user_id,
+                                    nickname: res.data.data[i].user_nickname,
+                                    agree: res.data.data[i].agree
+                                })
+                            }
+                        }
+                    })
+                })
+            },
+        },
+
+        mounted() {
+            this.getAnswerData();
+            this.getCommentData();
+        },
     }
 </script>
 
-<style scoped>
+<style>
 
     * {
         line-height: 1.5;
@@ -224,5 +286,8 @@
         width: 100%;
         height: 100%;
         outline: #EBEBEB;
+    }
+    img {
+        width: 100%;
     }
 </style>

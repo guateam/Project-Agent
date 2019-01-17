@@ -104,7 +104,17 @@ Format:
          msg: msg,        	# 信息
          data: {
              token: token,  	# 用户标识
-             group: group,  	# 用户群组
+             data: {
+                 user_id: user_id,
+                 head_portrait: head_portrait,
+                 group: {text: text, value: value},
+                 nickname: nickname,
+                 level: level,
+                 exp: exp,
+                 answer: answer,
+                 follow: follow,
+                 fans: fans,
+             },  	        # 用户信息
          }
      }
      ```
@@ -571,3 +581,8 @@ Format:
 | 24   | 点踩文章            |      |
 | 25   | 评论文章            |      |
 
+### 问题回答等状态类型约定 StateFormat
+| 代码 | 释义 | 备注 |
+| ---- | ---- | ---- |
+| -1   | 清除 |      |
+| 0   | 正常  |      |

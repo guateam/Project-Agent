@@ -129,7 +129,6 @@
                             params: { token: Cookies.get('token') }
                         }).then((response) => {
                             let data_list = response.data.data;
-                            window.console.log(data_list);
                             this.question_list = [];
                             for (let i = 0; i < data_list.length; i += 1) {
                                 if (data_list[i].type === 0) {
@@ -163,13 +162,12 @@
             },
             view_detail(id) {
                 // 查看问题详情
-                this.$router.push({name: 'topic', params: id});  // 跳转到话题详情页
+                this.$router.push({name: 'topic', params: {id: id}});  // 跳转到话题详情页
             },
         },
         mounted() {
             this.get_category();
             this.get_question_list();
-
         },
     }
 </script>

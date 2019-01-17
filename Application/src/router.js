@@ -28,21 +28,19 @@ export default new Router({
             redirect: '/home'
         },
         {
-            path: '/topic',
+            path: '/topic/:id',
             name: 'topic',
             component: Topic,
-            children: [
-                {
-                    path: '../answer-detail',
-                    name: 'answer-detail',
-                    component: AnswerDetail,
-                },
-                {
-                    path: '../comment',
-                    name: 'comment',
-                    component: Comment
-                }
-            ]
+        },
+        {
+            path: '/answer-detail/:id',
+            name: 'answer-detail',
+            component: AnswerDetail,
+        },
+        {
+            path: '/comment/:id',
+            name: 'comment',
+            component: Comment
         },
         {
             path: '/school',

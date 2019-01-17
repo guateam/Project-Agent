@@ -3,95 +3,27 @@
         <div style="width: 100%; height: 3em; background-color: rgba(238, 238, 238, 0.7)"></div>
         <div class="title">
             <div class="off">
-                <router-link to="answer-detail">
+                <button @click="$router.go(-1)">
                 X
-                </router-link>
+                </button>
             </div>
             <h4>全部<span>5</span>条评论</h4>
             <span class="list">默认排序∨</span>
         </div>
         <div class="line" style="width: 100%;height: 1em;background-color: #eee"></div>
         <div class="main" style="padding-left: 1em;padding-right: 1em">
-            <div class="comment-item">
+            <div v-for="(comment, index) in comments" :key="index" class="comment-item">
                 <div class="comment-user">
-                    <img src="./head.png" alt="">
-                    <span class="comment-user-name">李一半</span>
-                    <span class="comment-user-tag">从业者</span>
-                    <div class="comment-like">一个icon</div>
+                    <img :src="comment.user_headportrait" alt="">
+                    <span class="comment-user-name">{{ comment.user_nickname }}</span>
+                    <!--<span class="comment-user-tag">从业者</span>-->
+                    <div class="comment-like">赞同 {{ comment.agree }}</div>
                 </div>
                 <div>
-                    <p>不知道我的理解对不对。激发表面等离子激源要光源波长和材料表面自由电子相耦合。以后要突破更小...</p>
+                    <p>{{ comment.content }}</p>
                 </div>
                 <div class="comment-item-foot">
-                    <span>2018-12-12</span>
-                    &nbsp;&nbsp;&nbsp;
-                    <span>查看回复</span>
-                    <span style="position: absolute;right: 1em;">又是俩icon</span>
-                </div>
-            </div>
-            <div class="comment-item">
-                <div class="comment-user">
-                    <img src="./head.png" alt="">
-                    <span class="comment-user-name">李一半</span>
-                    <span class="comment-user-tag">从业者</span>
-                    <div class="comment-like">一个icon</div>
-                </div>
-                <div>
-                    <p>不知道我的理解对不对。激发表面等离子激源要光源波长和材料表面自由电子相耦合。以后要突破更小...</p>
-                </div>
-                <div class="comment-item-foot">
-                    <span>2018-12-12</span>
-                    &nbsp;&nbsp;&nbsp;
-                    <span>查看回复</span>
-                    <span style="position: absolute;right: 1em;">又是俩icon</span>
-                </div>
-            </div>
-            <div class="comment-item">
-                <div class="comment-user">
-                    <img src="./head.png" alt="">
-                    <span class="comment-user-name">李一半</span>
-                    <span class="comment-user-tag">从业者</span>
-                    <div class="comment-like">一个icon</div>
-                </div>
-                <div>
-                    <p>不知道我的理解对不对。激发表面等离子激源要光源波长和材料表面自由电子相耦合。以后要突破更小...</p>
-                </div>
-                <div class="comment-item-foot">
-                    <span>2018-12-12</span>
-                    &nbsp;&nbsp;&nbsp;
-                    <span>查看回复</span>
-                    <span style="position: absolute;right: 1em;">又是俩icon</span>
-                </div>
-            </div>
-            <div class="comment-item">
-                <div class="comment-user">
-                    <img src="./head.png" alt="">
-                    <span class="comment-user-name">李一半</span>
-                    <span class="comment-user-tag">从业者</span>
-                    <div class="comment-like">一个icon</div>
-                </div>
-                <div>
-                    <p>不知道我的理解对不对。激发表面等离子激源要光源波长和材料表面自由电子相耦合。以后要突破更小...</p>
-                </div>
-                <div class="comment-item-foot">
-                    <span>2018-12-12</span>
-                    &nbsp;&nbsp;&nbsp;
-                    <span>查看回复</span>
-                    <span style="position: absolute;right: 1em;">又是俩icon</span>
-                </div>
-            </div>
-            <div class="comment-item">
-                <div class="comment-user">
-                    <img src="./head.png" alt="">
-                    <span class="comment-user-name">李一半</span>
-                    <span class="comment-user-tag">从业者</span>
-                    <div class="comment-like">一个icon</div>
-                </div>
-                <div>
-                    <p>不知道我的理解对不对。激发表面等离子激源要光源波长和材料表面自由电子相耦合。以后要突破更小...</p>
-                </div>
-                <div class="comment-item-foot">
-                    <span>2018-12-12</span>
+                    <span>{{ comment.create_time }}</span>
                     &nbsp;&nbsp;&nbsp;
                     <span>查看回复</span>
                     <span style="position: absolute;right: 1em;">又是俩icon</span>
@@ -103,7 +35,44 @@
 
 <script>
     export default {
-        name: "comment"
+        name: "comment",
+
+        data() {
+            return {
+                comments: [
+                    {
+                        agree: 0,
+                        content: "这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论",
+                        create_time: "Sat, 15 Dec 2018 19:08:09 GMT",
+                        user_headportrait: "",
+                        user_id: 1,
+                        user_nickname: "拉拉人"
+                    }
+                ],
+            }
+        },
+
+        methods: {
+            // Request comments
+            getComments() {
+                import('axios').then(axios => {
+                    axios.get('http://localhost:5000/api/get_answer_comment_list', {
+                        responseType: 'json',
+                        params: {
+                            answer_id: this.$route.params.id
+                        }
+                    }).then(res => {
+                        if (res.data.code === 1) {
+                            this.comments = res.data.data;
+                        }
+                    })
+                })
+            },
+        },
+
+        mounted() {
+            this.getComments();
+        },
     }
 </script>
 

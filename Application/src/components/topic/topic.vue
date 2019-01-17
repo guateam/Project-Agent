@@ -13,7 +13,14 @@
                 </div>
                 <div class="attention" style="flex: 0 0 30%">+关注话题</div>
             </div>
-            <p class="topicdetail">{{questionData.content}}</p>
+            <p class="topicdetail">
+                <span v-if="!showAll">{{ questionData.content.length > 65 ? questionData.content.substring(0, 65) + '...' : questionData.content }} </span>
+                <span v-else>{{ questionData.content }} </span>
+                <button id="show-all-button" v-if="questionData.content.length > 65" @click="showAll = !showAll">
+                    <span v-if="!showAll">显示全部</span>
+                    <span v-else>收起</span>
+                </button>
+            </p>
         </div>
 
         <!--一个浅色的分割栏，只有回答数和排序-->
@@ -27,8 +34,8 @@
 
         <div v-for="(answer, index) in answersDataList" :key="index">
             <div style="padding-left: 1em; padding-right: 1em;padding-bottom: 1em">
-                <router-link to="answer-detail">
-                    <p class="answerDetail">{{answer.content}}</p>
+                <router-link :to="{name: 'answer-detail', params: {id: answer.answerID}, query: {redirect: $route.fullPath}}">
+                    <p class="answerDetail">{{ answer.content.length > 70 ? answer.content.substring(0, 70) + '...' : answer.content }}</p>
                     <div class="answerImg">
                         <!--<img v-for="item in answerImg" :src="item.src" alt="">-->
                         <img src="./1.png" alt="">
@@ -36,10 +43,10 @@
                         <img src="./3.png" alt="">
                     </div>
                 </router-link>
-                <div class="like">点赞: {{answer.agree}} 评论: 233</div>
+                <div class="like">点赞: {{answer.agree}} 反对: {{ answer.disagree }}</div>
                 <div style="width: 100%;display: flex;align-items: center;position: relative;">
                     <div class="userhead">
-                        <img src="./head.png" alt="">
+                        <img :src="answer.headportrait" alt="">
                     </div>
                     <p class="userName">{{answer.nickname}}</p>
                     &nbsp;&nbsp;&nbsp;
@@ -71,6 +78,7 @@
         name: "Topic",
         data() {
             return {
+                showAll: false,
                 questionData: {
                     title: '刚刚研制成功的世界首台分辨力最高紫外超分辨光刻装备意味着什么？对国内芯片行业有何影响？',  // 问题标题
                     tags: ['新闻', '芯片'],  // 标签
@@ -116,7 +124,7 @@
                     },
                 }).then((response) => {
                     // console.log(response.data.data);
-                    var data = response.data.data;
+                    const data = response.data.data;
                     this.questionData.title=data.title;
                     this.questionData.content=data.description;
                     //this.questionData.tags=data.tags;
@@ -124,8 +132,9 @@
             }
         },
         mounted() {
-            this.getAnswers('1');
-            this.getQuestion('1');
+            const id = this.$route.params.id;
+            this.getAnswers(id);
+            this.getQuestion(id);
         },
     }
 </script>
@@ -256,5 +265,8 @@
         width: 100%;
         height: 100%;
         outline: #EBEBEB;
+    }
+    #show-all-button {
+        color: grey;
     }
 </style>
