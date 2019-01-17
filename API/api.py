@@ -3,8 +3,10 @@ import random
 import re
 import string
 import time
-from CF.cf import item_cf
+import pytesseract
 
+from CF.cf import item_cf
+from PIL import Image
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
@@ -1457,6 +1459,33 @@ def build_article_rate_rect():
 
     return jsonify({"code": 1})
 
+
+@app.route('/api/algorithm/ocr')
+def ocr():
+    """
+    调用ocr识别图像
+    :param source: 图片路径
+    :return: code:1-识别成功  0-识别失败
+    """
+    source = request.values.get('source')
+    img = Image.open(source)
+    w, h = img.size
+    img = img.resize((w*2, h*2))
+    img = img.convert('L')
+    threshold = 85
+    table = []
+    for i in range(256):
+        if i < threshold:
+            table.append(0)
+        else:
+            table.append(1)
+    img = img.point(table, '1')
+    img.show()
+    # 调用ocr识别
+    res = pytesseract.image_to_string(img,lang="chi_sim")
+    if(res):
+        return jsonify({"code":1,"data":res})
+    return jsonify({"code":0})
 
 if __name__ == '__main__':
     # 开启调试模式，修改代码后不需要重新启动服务即可生效
