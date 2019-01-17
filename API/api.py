@@ -1419,15 +1419,19 @@ def upload_identity_card():
     if user:
         if front and back and allowed_pic(front.filename) and allowed_pic(back.filename):
             basepath = os.path.dirname(__file__)  # 当前文件所在路径
+            # 正面的图片
             front_filename = user['userID'] + '_front_' + front.filename.rsplit('.', 1)[1]
             upload_path = os.path.join(basepath, 'identity_card', front_filename)  # 注意：没有的文件夹一定要先创建，不然会提示没有该路径
             front.save(upload_path)
+            # 反面的图片
             back_filename = user['userID'] + '_front_' + front.filename.rsplit('.', 1)[1]
-            upload_path = os.path.join(basepath, 'identity_card/', back_filename)  # 注意：没有的文件夹一定要先创建，不然会提示没有该路径
-            back.save(upload_path)
-            """
-                这里执行一波识别操作
-            """
+            upload_path_reverse = os.path.join(basepath, 'identity_card/', back_filename)  # 注意：没有的文件夹一定要先创建，不然会提示没有该路径
+            back.save(upload_path_reverse)
+
+            # 调用ocr进行正反两面识别文字信息
+            info = ocr(upload_path);
+            info_reverse = ocr(upload_path_reverse);
+
             flag = db.update({'userID': user['userID']}, {'state': 1}, 'users')
             if flag:
                 return jsonify({'code': 1, 'msg': 'success'})
@@ -1502,14 +1506,12 @@ def build_article_rate_rect():
     return jsonify({"code": 1})
 
 
-@app.route('/api/algorithm/ocr')
-def ocr():
+def ocr(source):
     """
     调用ocr识别图像
     :param source: 图片路径
     :return: code:1-识别成功  0-识别失败
     """
-    source = request.values.get('source')
     img = Image.open(source)
     w, h = img.size
     img = img.resize((w * 2, h * 2))
@@ -1524,10 +1526,10 @@ def ocr():
     img = img.point(table, '1')
     img.show()
     # 调用ocr识别
-    res = pytesseract.image_to_string(img, lang="chi_sim")
-    if (res):
-        return jsonify({"code": 1, "data": res})
-    return jsonify({"code": 0})
+    res = pytesseract.image_to_string(img,lang="chi_sim")
+    if(res):
+        return res
+    return ""
 
 
 if __name__ == '__main__':
