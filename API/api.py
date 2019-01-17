@@ -1514,8 +1514,11 @@ def ocr(source):
     """
     img = Image.open(source)
     w, h = img.size
+    # 放大图片
     img = img.resize((w * 2, h * 2))
+    # 灰度化
     img = img.convert('L')
+    # 以85阈值进行二值化
     threshold = 85
     table = []
     for i in range(256):
@@ -1523,13 +1526,15 @@ def ocr(source):
             table.append(0)
         else:
             table.append(1)
+    # 二值化
     img = img.point(table, '1')
-    img.show()
+
+    #显示图片，测试用，正式上线了注释掉
+    #img.show()
+
     # 调用ocr识别
     res = pytesseract.image_to_string(img,lang="chi_sim")
-    if(res):
-        return res
-    return ""
+    return res
 
 
 if __name__ == '__main__':
