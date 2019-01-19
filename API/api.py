@@ -3,10 +3,10 @@ import random
 import re
 import string
 import time
-import pytesseract
+
 
 from CF.cf import item_cf
-from PIL import Image
+from API.OCR import ocr
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
@@ -861,7 +861,7 @@ def back_get_answers():
     return jsonify({'code': 0, 'msg': 'unexpected user'})
 
 
-@app.route('api/answer/delete_answer')
+@app.route('/api/answer/delete_answer')
 def delete_answer():
     """
     清除答案
@@ -1419,16 +1419,19 @@ def upload_identity_card():
     if user:
         if front and back and allowed_pic(front.filename) and allowed_pic(back.filename):
             basepath = os.path.dirname(__file__)  # 当前文件所在路径
+            # 正面的图片
             front_filename = user['userID'] + '_front_' + front.filename.rsplit('.', 1)[1]
             upload_path = os.path.join(basepath, 'identity_card', front_filename)  # 注意：没有的文件夹一定要先创建，不然会提示没有该路径
             front.save(upload_path)
+            # 反面的图片
             back_filename = user['userID'] + '_front_' + front.filename.rsplit('.', 1)[1]
-            upload_path = os.path.join(basepath, 'identity_card/', back_filename)  # 注意：没有的文件夹一定要先创建，不然会提示没有该路径
-            back.save(upload_path)
-            """
-                这里执行一波识别操作
-            """
-            flag = db.update({'userID': user['userID']}, {'state': 1}, 'users')
+            upload_path_reverse = os.path.join(basepath, 'identity_card/', back_filename)  # 注意：没有的文件夹一定要先创建，不然会提示没有该路径
+            back.save(upload_path_reverse)
+
+            # 调用ocr进行反面识别文字信息(反面是有个人信息的那一面)
+            info_reverse = ocr(upload_path_reverse);
+
+            flag = db.update({'userID': user['userID'],'real_name':info_reverse['name'],'gender':info_reverse['gender'],'address':info_reverse['address'],'birthday':info_reverse['birthday']}, {'state': 1}, 'users')
             if flag:
                 return jsonify({'code': 1, 'msg': 'success'})
             return jsonify({'code': -2, 'msg': 'unable to identify'})
@@ -1500,34 +1503,6 @@ def build_article_rate_rect():
             f.write(rate_str + "\n")
 
     return jsonify({"code": 1})
-
-
-@app.route('/api/algorithm/ocr')
-def ocr():
-    """
-    调用ocr识别图像
-    :param source: 图片路径
-    :return: code:1-识别成功  0-识别失败
-    """
-    source = request.values.get('source')
-    img = Image.open(source)
-    w, h = img.size
-    img = img.resize((w * 2, h * 2))
-    img = img.convert('L')
-    threshold = 85
-    table = []
-    for i in range(256):
-        if i < threshold:
-            table.append(0)
-        else:
-            table.append(1)
-    img = img.point(table, '1')
-    img.show()
-    # 调用ocr识别
-    res = pytesseract.image_to_string(img, lang="chi_sim")
-    if (res):
-        return jsonify({"code": 1, "data": res})
-    return jsonify({"code": 0})
 
 
 if __name__ == '__main__':
