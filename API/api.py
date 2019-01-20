@@ -4,7 +4,6 @@ import re
 import string
 import time
 
-
 from CF.cf import item_cf
 from API.OCR import ocr
 from flask import Flask, jsonify, request
@@ -987,7 +986,7 @@ def delete_article():
     token = request.values.get('token')
     article_id = request.values.get('article_id')
     db = Database()
-    user = db.get({'token': token,'usergroup':0}, 'users')
+    user = db.get({'token': token, 'usergroup': 0}, 'users')
     if user:
         article = db.update({'articleID': article_id}, {'state': -1}, 'article')
         if article:
@@ -1431,7 +1430,9 @@ def upload_identity_card():
             # 调用ocr进行反面识别文字信息(反面是有个人信息的那一面)
             info_reverse = ocr(upload_path_reverse);
 
-            flag = db.update({'userID': user['userID'],'real_name':info_reverse['name'],'gender':info_reverse['gender'],'address':info_reverse['address'],'birthday':info_reverse['birthday']}, {'state': 1}, 'users')
+            flag = db.update(
+                {'userID': user['userID'], 'real_name': info_reverse['name'], 'gender': info_reverse['gender'],
+                 'address': info_reverse['address'], 'birthday': info_reverse['birthday']}, {'state': 1}, 'users')
             if flag:
                 return jsonify({'code': 1, 'msg': 'success'})
             return jsonify({'code': -2, 'msg': 'unable to identify'})
@@ -1503,6 +1504,70 @@ def build_article_rate_rect():
             f.write(rate_str + "\n")
 
     return jsonify({"code": 1})
+
+
+"""
+    专家接口
+"""
+
+
+@app.route('/api/specialist/get_my_answers')
+def get_my_answers():
+    """
+    获取自己的回答
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        answers = db.get({'userID': user['userID']}, 'answersinfo')
+        for value in answers:
+            value.update({'tags': get_tags(value['tags'])})
+        return jsonify({'code': 1, 'msg': 'success', 'data': answers})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/specialist/get_my_articles')
+def get_my_articles():
+    """
+    获取自己的文章
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        articles = db.get({'userID': user['userID']}, 'articleinfo')
+        for value in articles:
+            value.update({'tags': get_tags(value['tags'])})
+        return jsonify({'code': 1, 'msg': 'success', 'data': articles})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/specialist/get_my_fans')
+def get_my_fans():
+    """
+    获取粉丝列表
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        followers = db.get({'target': user['userID']}, 'followinfo')
+        data = []
+        for value in followers:
+            data.append({
+                'id': value['userID'],
+                'nickname': value['follower_nickname'],
+                'usergroup': get_group(value['follower_usergroup']),
+                'exp': value['follower_exp'],
+                'level': get_level(value['follower_exp']),
+                'description': value['follower_description']
+            })
+        return jsonify({'code': 1, 'msg': 'success', 'data': data})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
 
 
 if __name__ == '__main__':
