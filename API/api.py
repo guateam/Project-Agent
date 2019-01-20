@@ -1431,9 +1431,9 @@ def upload_identity_card():
             # 调用ocr进行反面识别文字信息(反面是有个人信息的那一面)
             info_reverse = ocr(upload_path_reverse);
 
-            flag = db.update({'userID': user['userID'],'real_name':info_reverse['name'],'gender':info_reverse['gender'],'address':info_reverse['address'],'birthday':info_reverse['birthday']}, {'state': 1}, 'users')
+            flag = db.update({'userID': user['userID']}, {'state': 1}, 'users')
             if flag:
-                return jsonify({'code': 1, 'msg': 'success'})
+                return jsonify({'code': 1, 'msg': 'success','data':info_reverse})
             return jsonify({'code': -2, 'msg': 'unable to identify'})
         return jsonify({'code': -1, 'msg': 'unexpected file'})
     return jsonify({'code': 0, 'msg': 'unexpected user'})
@@ -1448,7 +1448,7 @@ def upload_identity_card():
 def item_cf_api():
     """
     调用item cf算法推荐
-    :return: code:0-失败  1-成功  data:被推荐的物品在评分矩阵顺序中的下标
+    :return: code:0-失败  1-成功  data:被推荐的物品ID
     """
     # 评分矩阵文件
     dir = request.values.get('dir')
