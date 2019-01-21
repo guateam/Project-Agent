@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2019-01-20 17:35:00
+Date: 2019-01-21 12:04:30
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -113,6 +113,26 @@ CREATE TABLE `collectarticle` (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for `demands`
+-- ----------------------------
+DROP TABLE IF EXISTS `demands`;
+CREATE TABLE `demands` (
+  `demandID` int(10) NOT NULL AUTO_INCREMENT,
+  `userID` int(10) NOT NULL,
+  `content` text NOT NULL,
+  `allowedUserGroup` varchar(45) NOT NULL,
+  `price` varchar(45) NOT NULL,
+  `tags` varchar(45) NOT NULL,
+  `createtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `state` int(2) NOT NULL,
+  PRIMARY KEY (`demandID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of demands
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for `exp_change`
 -- ----------------------------
 DROP TABLE IF EXISTS `exp_change`;
@@ -202,6 +222,25 @@ INSERT INTO `messages` VALUES ('7', 'emoji\\u6d4b\\u8bd5\\U0001f600', '1', '2', 
 INSERT INTO `messages` VALUES ('8', 'emoji测试????略略略', '3', '2', '0', '2019-01-07 18:44:56');
 
 -- ----------------------------
+-- Table structure for `orders`
+-- ----------------------------
+DROP TABLE IF EXISTS `orders`;
+CREATE TABLE `orders` (
+  `orderID` int(10) NOT NULL AUTO_INCREMENT,
+  `userID` int(10) NOT NULL,
+  `target` int(10) NOT NULL,
+  `start_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  `content` text NOT NULL,
+  `state` int(2) NOT NULL DEFAULT '0',
+  `end_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`orderID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of orders
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for `questioncomments`
 -- ----------------------------
 DROP TABLE IF EXISTS `questioncomments`;
@@ -265,6 +304,22 @@ INSERT INTO `questions` VALUES ('3', '为什么总是有人说 Java 啰嗦，却
 INSERT INTO `questions` VALUES ('4', '有哪些让你目瞪口呆的 bug？', '', '2018-12-15 18:49:52', '1', null, '0');
 INSERT INTO `questions` VALUES ('5', '互联网行业的裁员潮是否已经开始了？', '【此为2018年的提问】\n\n看到媒体也开始说这件事了……普通员工如何扛过去呢？', '2018-12-15 18:51:16', '1', null, '0');
 INSERT INTO `questions` VALUES ('6', '@测试提问', '【此为2018年的提问】\n@拉拉人 \n看到媒体也开始说这件事了……普通员工如何扛过去呢？', '2018-12-29 10:35:05', '1', null, '0');
+
+-- ----------------------------
+-- Table structure for `sign_demand`
+-- ----------------------------
+DROP TABLE IF EXISTS `sign_demand`;
+CREATE TABLE `sign_demand` (
+  `signID` int(10) NOT NULL AUTO_INCREMENT,
+  `userID` int(10) NOT NULL,
+  `target` int(10) NOT NULL,
+  `state` int(2) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`signID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of sign_demand
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for `sys_message`
@@ -404,10 +459,22 @@ DROP VIEW IF EXISTS `chat_box`;
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `chat_box` AS select `messages`.`messageID` AS `messageID`,`messages`.`content` AS `content`,`messages`.`poster` AS `poster`,`messages`.`receiver` AS `receiver`,`messages`.`type` AS `type`,`poster`.`headportrait` AS `poster_headportrait`,`poster`.`usergroup` AS `poster_usergroup`,`poster`.`nickname` AS `poster_nickname`,`poster`.`exp` AS `poster_exp`,`receiver`.`nickname` AS `receiver_nickname`,`receiver`.`headportrait` AS `receiver_headportrait`,`receiver`.`usergroup` AS `receiver_usergroup`,`receiver`.`exp` AS `receiver_exp`,`messages`.`post_time` AS `post_time` from ((`messages` join `users` `poster`) join `users` `receiver`) where ((`messages`.`poster` = `poster`.`userID`) and (`messages`.`receiver` = `receiver`.`userID`)) order by `messages`.`post_time` desc ;
 
 -- ----------------------------
+-- View structure for `demands_info`
+-- ----------------------------
+DROP VIEW IF EXISTS `demands_info`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `demands_info` AS select `demands`.`demandID` AS `demandID`,`demands`.`userID` AS `userID`,`demands`.`content` AS `content`,`demands`.`allowedUserGroup` AS `allowedUserGroup`,`demands`.`price` AS `price`,`demands`.`tags` AS `tags`,`users`.`nickname` AS `nickname`,`users`.`headportrait` AS `headportrait`,`users`.`usergroup` AS `usergroup`,`users`.`exp` AS `exp`,`users`.`description` AS `description`,`demands`.`createtime` AS `createtime`,`demands`.`state` AS `state` from (`demands` join `users`) where (`demands`.`userID` = `users`.`userID`) ;
+
+-- ----------------------------
 -- View structure for `followinfo`
 -- ----------------------------
 DROP VIEW IF EXISTS `followinfo`;
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `followinfo` AS select `followuser`.`idFollowUser` AS `idFollowUser`,`followuser`.`userID` AS `userID`,`followuser`.`target` AS `target`,`target`.`nickname` AS `target_nickname`,`target`.`headportrait` AS `target_headportrait`,`target`.`usergroup` AS `target_usergroup`,`target`.`exp` AS `target_exp`,`target`.`description` AS `target_description`,`follower`.`nickname` AS `follower_nickname`,`follower`.`headportrait` AS `follower_headportrait`,`follower`.`usergroup` AS `follower_usergroup`,`follower`.`exp` AS `follower_exp`,`follower`.`description` AS `follower_description` from ((`followuser` join `users` `follower`) join `users` `target`) where ((`followuser`.`userID` = `follower`.`userID`) and (`followuser`.`target` = `target`.`userID`)) ;
+
+-- ----------------------------
+-- View structure for `orderinfo`
+-- ----------------------------
+DROP VIEW IF EXISTS `orderinfo`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `orderinfo` AS select `orders`.`orderID` AS `orderID`,`orders`.`userID` AS `userID`,`orders`.`target` AS `target`,`orders`.`start_time` AS `start_time`,`orders`.`content` AS `content`,`orders`.`end_time` AS `end_time`,`users`.`nickname` AS `nickname`,`users`.`headportrait` AS `headportrait`,`users`.`usergroup` AS `usergroup`,`users`.`exp` AS `exp`,`users`.`description` AS `description`,`orders`.`state` AS `state` from (`users` join `orders`) where (`users`.`userID` = `orders`.`userID`) ;
 
 -- ----------------------------
 -- View structure for `qc_at_info`
@@ -432,3 +499,9 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 -- ----------------------------
 DROP VIEW IF EXISTS `q_at_info`;
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `q_at_info` AS select `questions`.`questionID` AS `questionID`,`questions`.`title` AS `title`,`questions`.`description` AS `description`,`questions`.`userID` AS `userID`,`users`.`nickname` AS `nickname`,`users`.`headportrait` AS `headportrait`,`users`.`usergroup` AS `usergroup`,`users`.`exp` AS `exp`,`questions`.`edittime` AS `edittime` from (`questions` join `users`) where (`questions`.`userID` = `users`.`userID`) ;
+
+-- ----------------------------
+-- View structure for `signed_demand_info`
+-- ----------------------------
+DROP VIEW IF EXISTS `signed_demand_info`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `signed_demand_info` AS select `sign_demand`.`signID` AS `signID`,`sign_demand`.`userID` AS `userID`,`sign_demand`.`target` AS `target`,`sign_demand`.`state` AS `state`,`users`.`nickname` AS `nickname`,`users`.`headportrait` AS `headportrait`,`users`.`usergroup` AS `usergroup`,`users`.`exp` AS `exp`,`users`.`description` AS `description` from (`sign_demand` join `users`) where (`sign_demand`.`userID` = `users`.`userID`) ;
