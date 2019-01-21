@@ -1568,6 +1568,174 @@ def get_my_fans():
     return jsonify({'code': 0, 'msg': 'unexpected user'})
 
 
+@app.route('/api/specialist/get_order_list')
+def get_order_list():
+    """
+    获取付费咨询的预定列表
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        order = db.get({'target': user['userID']}, 'orderinfo')
+        for value in order:
+            value.update({'level': get_level(value['exp']), 'usergroup': get_group(value['usergroup'])})
+        return jsonify({'code': 1, 'msg': 'success', 'data': order})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/specialist/confirm_order')
+def confirm_order():
+    """
+    确认付费咨询预约
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        order_id = request.values.get('order_id')
+        order = db.update({'order_id': order_id, 'target': user['userID']}, {'state': 1}, 'orders')
+        if order:
+            return jsonify({'code': 1, 'msg': 'success'})
+        return jsonify({'code': -1, 'msg': 'unable to find order or user is not correct'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/specialist/refuse_order')
+def refuse_order():
+    """
+    拒绝付费咨询预约
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        order_id = request.values.get('order_id')
+        order = db.update({'order_id': order_id, 'target': user['userID']}, {'state': -1}, 'orders')
+        if order:
+            return jsonify({'code': 1, 'msg': 'success'})
+        return jsonify({'code': -1, 'msg': 'unable to find order or user is not correct'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/specialist/get_click_info')
+def get_click_info():
+    """
+    获取点击量图表（还没想好怎么写）
+    :return:
+    """
+    pass
+
+
+@app.route('/api/specialist/get_fans_info')
+def get_fans_info():
+    """
+    获取关注量增减图表（同样没想好怎么写）
+    :return:
+    """
+    pass
+
+
+"""
+    企业接口
+"""
+
+
+@app.route('/api/enterprise/add_demand', methods=['POST'])
+def add_demand():
+    """
+    企业添加需求
+    :return:
+    """
+    token = request.form['token']
+    db = Database()
+    user = db.get({'token': token, 'usergroup': 3}, 'users')
+    if user:
+        content = request.form['content']
+        allowed_user = request.form['allowed_user']
+        price = request.form['price']
+        tags = request.form['tags']
+        flag = db.insert(
+            {'userID': user['userID'], 'content': content, 'allowedUserGroup': allowed_user, 'price': price,
+             'tags': tags}, 'demands')
+        if flag:
+            return jsonify({'code': 1, 'msg': 'success'})
+        return jsonify({'code': -1, 'msg': 'unable to insert'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/enterprise/get_my_demands')
+def get_my_demands():
+    """
+    获取需求列表
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        demands = db.get({'userID': user['userID']}, 'demands_info')
+        return jsonify({'code': 1, 'msg': 'success', 'data': demands})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/enterprise/get_signed_users')
+def get_signed_users():
+    """
+    获取报名需求列表
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        demand_id = request.values.get('demand_id')
+        signed_list = db.get({'target': demand_id}, 'signed_demand_info')
+        return jsonify({'code': 1, 'msg': 'success', 'data': signed_list})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/enterprise/confirm_signed_user')
+def confirm_signed_user():
+    """
+    确认报名的用户
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        user_id = request.values.get('user_id')
+        target = request.values.get('target')
+        flag = db.update({'userID': user_id, 'target': target}, {'state': 1}, 'sign_demand')
+        if flag:
+            return jsonify({'code': 1, 'msg': 'success'})
+        return jsonify({'code': -1, 'msg': 'unable to confirm'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/enterprise/refuse_signed_user')
+def refuse_signed_user():
+    """
+    拒绝报名的用户
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        user_id = request.values.get('user_id')
+        target = request.values.get('target')
+        flag = db.update({'userID': user_id, 'target': target}, {'state': -1}, 'sign_demand')
+        if flag:
+            return jsonify({'code': 1, 'msg': 'success'})
+        return jsonify({'code': -1, 'msg': 'unable to refuse'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
 if __name__ == '__main__':
     # 开启调试模式，修改代码后不需要重新启动服务即可生效
     # 请勿在生产环境下使用调试模式
