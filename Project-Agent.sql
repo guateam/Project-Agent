@@ -229,10 +229,10 @@ CREATE TABLE `orders` (
   `orderID` int(10) NOT NULL AUTO_INCREMENT,
   `userID` int(10) NOT NULL,
   `target` int(10) NOT NULL,
-  `start_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  `start_time` timestamp NOT NULL  ON UPDATE CURRENT_TIMESTAMP,
   `content` text NOT NULL,
   `state` int(2) NOT NULL DEFAULT '0',
-  `end_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  `end_time` timestamp NOT NULL,
   PRIMARY KEY (`orderID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
