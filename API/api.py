@@ -1430,11 +1430,9 @@ def upload_identity_card():
             # 调用ocr进行反面识别文字信息(反面是有个人信息的那一面)
             info_reverse = ocr(upload_path_reverse);
 
-            flag = db.update(
-                {'userID': user['userID'], 'real_name': info_reverse['name'], 'gender': info_reverse['gender'],
-                 'address': info_reverse['address'], 'birthday': info_reverse['birthday']}, {'state': 1}, 'users')
+            flag = db.update({'userID': user['userID']}, {'state': 1}, 'users')
             if flag:
-                return jsonify({'code': 1, 'msg': 'success'})
+                return jsonify({'code': 1, 'msg': 'success', 'data': info_reverse})
             return jsonify({'code': -2, 'msg': 'unable to identify'})
         return jsonify({'code': -1, 'msg': 'unexpected file'})
     return jsonify({'code': 0, 'msg': 'unexpected user'})
@@ -1449,7 +1447,7 @@ def upload_identity_card():
 def item_cf_api():
     """
     调用item cf算法推荐
-    :return: code:0-失败  1-成功  data:被推荐的物品在评分矩阵顺序中的下标
+    :return: code:0-失败  1-成功  data:被推荐的物品ID
     """
     # 评分矩阵文件
     dir = request.values.get('dir')
@@ -1641,6 +1639,28 @@ def get_fans_info():
     pass
 
 
+@app.route('/api/specialist/add_order', methods=['POST'])
+def add_order():
+    """
+    添加付费咨询
+    :return:
+    """
+    token = request.form['token']
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        target = request.form['target']
+        start_time = request.form['start_time']
+        end_time = request.form['end_time']
+        content = request.form['content']
+        flag = db.insert({'userID': user['userID'], 'target': target, 'start_time': start_time, 'end_time': end_time,
+                          'content': content}, 'orders')
+        if flag:
+            return jsonify({'code': 1, 'msg': 'success'})
+        return jsonify({'code': -1, 'msg': 'unable to insert'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
 """
     企业接口
 """
@@ -1735,6 +1755,42 @@ def refuse_signed_user():
         if flag:
             return jsonify({'code': 1, 'msg': 'success'})
         return jsonify({'code': -1, 'msg': 'unable to refuse'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/enterprise/close_demand')
+def close_demand():
+    """
+    关闭需求
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        demand_id = request.values.get('demand_id')
+        flag = db.update({'demandID': demand_id, 'userID': user['userID']}, {'state': 2}, 'demands')
+        if flag:
+            return jsonify({'code': 1, 'msg': 'success'})
+        return jsonify({'code': -1, 'msg': 'unable to close or user is not correct'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/enterprise/start_demand')
+def start_demand():
+    """
+    开始项目停止招标
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        demand_id = request.values.get('demand_id')
+        flag = db.update({'demandID': demand_id, 'userID': user['userID']}, {'state': 1}, 'demands')
+        if flag:
+            return jsonify({'code': 1, 'msg': 'success'})
+        return jsonify({'code': -1, 'msg': 'unable to start or user is not correct'})
     return jsonify({'code': 0, 'msg': 'unexpected user'})
 
 
