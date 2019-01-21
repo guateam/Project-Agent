@@ -881,8 +881,7 @@ def complain():
     举报某一条评论
     :return:code(0=未知评论，1=举报成功)
     """
-    comment_id = request.values.get('comment_id')
-    db = Database()
+    pass
     # 由于页面未定，举报形式未定，暂时无法继续往下写
 
 
@@ -1233,7 +1232,10 @@ def get_friend_list():
     if user:
         # 根据token获取该用户的好友列表
         friend = db.sql(
-            "select A.userID as user_id ,A.nickname as nickname,A.headportrait as headportrait,A.usergroup as usergroup,A.exp as exp from users A,(select C.* from followuser C,users D where C.userID = D.userID and D.token= '%s') B,followuser C where A.userID=C.userID and (C.target = B.userID) and C.userID = B.target " % token)
+            "select A.userID as user_id ,A.nickname as nickname,A.headportrait as headportrait,A.usergroup as "
+            "usergroup,A.exp as exp from users A,(select C.* from followuser C,users D where C.userID = D.userID and "
+            "D.token= '%s') B,followuser C where A.userID=C.userID and (C.target = B.userID) and C.userID = B.target "
+            "" % token)
         if friend:
             return jsonify({'code': 1, 'msg': 'success', 'data': friend})
         return jsonify({'code': 1, 'msg': 'success', 'data': []})
@@ -1549,7 +1551,8 @@ def build_article_rate_rect():
         for j in range(len(users)):
             rates[users[j]['userID']] = 1
             actions = db.sql(
-                "select * from useraction where targetID='%s' and userID='%s' and targettype>=21 and targettype <=25 order by userID ASC" %
+                "select * from useraction where targetID='%s' and userID='%s' and targettype>=21 and targettype <=25 "
+                "order by userID ASC" %
                 (article[i]['articleID'], users[j]["userID"]))
             # 该用户对这篇文章的总评分
             rate = 0
