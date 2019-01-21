@@ -4,7 +4,9 @@
     <list default="true" id="c0ae127e-f612-46ec-82b0-0dfd8862412b" name="Default Changelist" comment="">
 <<<<<<< Updated upstream
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/API/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/API/api.py" beforeDir="false" afterPath="$PROJECT_DIR$/API/api.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CF/cf.py" beforeDir="false" afterPath="$PROJECT_DIR$/CF/cf.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -30,99 +32,23 @@
     <expand />
     <select />
   </component>
-  <component name="FUSProjectUsageTrigger">
-    <session id="-1207968567">
-      <usages-collector id="statistics.lifecycle.project">
-        <counts>
-          <entry key="project.closed" value="3" />
-          <entry key="project.open.time.0" value="1" />
-          <entry key="project.open.time.4" value="1" />
-          <entry key="project.open.time.6" value="3" />
-          <entry key="project.opened" value="5" />
-=======
-  <component name="FUSProjectUsageTrigger">
-    <session id="1288964583">
-      <usages-collector id="statistics.lifecycle.project">
-        <counts>
-          <entry key="project.closed" value="1" />
-          <entry key="project.open.time.12" value="1" />
-          <entry key="project.opened" value="1" />
->>>>>>> Stashed changes
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.open">
-        <counts>
-<<<<<<< Updated upstream
-          <entry key="py" value="1" />
-<<<<<<< Updated upstream
-          <entry key="sql" value="1" />
-=======
-=======
-          <entry key="py" value="2" />
->>>>>>> Stashed changes
->>>>>>> Stashed changes
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.open">
-        <counts>
-<<<<<<< Updated upstream
-          <entry key="Python" value="1" />
-<<<<<<< Updated upstream
-          <entry key="SQL" value="1" />
-=======
-=======
-          <entry key="Python" value="2" />
->>>>>>> Stashed changes
->>>>>>> Stashed changes
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.edit">
-        <counts>
-          <entry key="py" value="5142" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.edit">
-        <counts>
-          <entry key="Python" value="5142" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.vcs.git.usages">
-        <counts>
-          <entry key="git.branch.checkout.local" value="1" />
->>>>>>> Stashed changes
-        </counts>
-      </usages-collector>
-    </session>
-  </component>
   <component name="FileEditorManager">
 <<<<<<< Updated upstream
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/API/api.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-10465">
-              <caret line="1167" column="12" selection-start-line="1167" selection-start-column="12" selection-end-line="1167" selection-end-column="12" />
+            <state relative-caret-position="290">
+              <caret line="1456" column="16" lean-forward="true" selection-start-line="1456" selection-start-column="16" selection-end-line="1456" selection-end-column="16" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
-                <marker date="1548047471114" expanded="true" signature="51446:60777" ph="..." />
-                <marker date="1548047471114" expanded="true" signature="52475:60777" ph="..." />
-                <marker date="1548047471114" expanded="true" signature="53872:55011" ph="..." />
-                <marker date="1548047471114" expanded="true" signature="55342:56043" ph="..." />
-                <marker date="1548047471114" expanded="true" signature="57841:60777" ph="..." />
-                <marker date="1548047471114" expanded="true" signature="59071:60777" ph="..." />
-                <marker date="1548047471114" expanded="true" signature="60280:60777" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/API/OCR.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-551">
-              <folding>
-                <element signature="e#0#18#0" expanded="true" />
->>>>>>> Stashed changes
+                <marker date="1548048783605" expanded="true" signature="51448:60779" ph="..." />
+                <marker date="1548048783605" expanded="true" signature="52477:60779" ph="..." />
+                <marker date="1548048783605" expanded="true" signature="53874:55013" ph="..." />
+                <marker date="1548048783605" expanded="true" signature="55344:56045" ph="..." />
+                <marker date="1548048783605" expanded="true" signature="57843:60779" ph="..." />
+                <marker date="1548048783605" expanded="true" signature="59073:60779" ph="..." />
+                <marker date="1548048783605" expanded="true" signature="60282:60779" ph="..." />
               </folding>
             </state>
           </provider>
@@ -155,22 +81,9 @@
         <option value="$PROJECT_DIR$/API/db.py" />
         <option value="$PROJECT_DIR$/Application/src/components/topic/topic.vue" />
         <option value="$PROJECT_DIR$/API/api.py" />
+        <option value="$PROJECT_DIR$/CF/cf.py" />
       </list>
     </option>
-  </component>
-  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
-  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
-  <component name="JsGulpfileManager">
-    <detection-done>true</detection-done>
-    <sorting>DEFINITION_ORDER</sorting>
-  </component>
-  <component name="NodeModulesDirectoryManager">
-    <handled-path value="$PROJECT_DIR$/Application/node_modules" />
-  </component>
-  <component name="NodePackageJsonFileManager">
-    <packageJsonPaths>
-      <path value="$PROJECT_DIR$/Application/package.json" />
-    </packageJsonPaths>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="315" />
@@ -183,6 +96,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -199,7 +113,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -265,11 +178,12 @@
       <workItem from="1547282120622" duration="1370000" />
       <workItem from="1547298578617" duration="211000" />
       <workItem from="1547716771780" duration="1168000" />
+      <workItem from="1548047660408" duration="1163000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="4571000" />
+    <option name="totallyTimeSpent" value="5734000" />
   </component>
   <component name="ToolWindowManager">
 <<<<<<< Updated upstream
@@ -277,11 +191,6 @@
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18763326" />
-=======
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
-    <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24966975" />
->>>>>>> Stashed changes
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -294,21 +203,18 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
-      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" weight="0.32899022" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" weight="0.3286334" />
       <window_info anchor="bottom" id="Terminal" order="11" weight="0.30911064" />
       <window_info anchor="bottom" id="Python Console" order="12" weight="0.32899022" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="SciView" order="3" />
+      <window_info anchor="right" id="SciView" order="3" weight="0.32995737" />
       <window_info anchor="right" id="Database" order="4" weight="0.32995737" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
-  </component>
-  <component name="VcsContentAnnotationSettings">
-    <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
 <<<<<<< Updated upstream
@@ -372,20 +278,27 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/API/api.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-10465">
-          <caret line="1167" column="12" selection-start-line="1167" selection-start-column="12" selection-end-line="1167" selection-end-column="12" />
+        <state relative-caret-position="290">
+          <caret line="1456" column="16" lean-forward="true" selection-start-line="1456" selection-start-column="16" selection-end-line="1456" selection-end-column="16" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
-            <marker date="1548047471114" expanded="true" signature="51446:60777" ph="..." />
-            <marker date="1548047471114" expanded="true" signature="52475:60777" ph="..." />
-            <marker date="1548047471114" expanded="true" signature="53872:55011" ph="..." />
-            <marker date="1548047471114" expanded="true" signature="55342:56043" ph="..." />
-            <marker date="1548047471114" expanded="true" signature="57841:60777" ph="..." />
-            <marker date="1548047471114" expanded="true" signature="59071:60777" ph="..." />
-            <marker date="1548047471114" expanded="true" signature="60280:60777" ph="..." />
+            <marker date="1548048783605" expanded="true" signature="51448:60779" ph="..." />
+            <marker date="1548048783605" expanded="true" signature="52477:60779" ph="..." />
+            <marker date="1548048783605" expanded="true" signature="53874:55013" ph="..." />
+            <marker date="1548048783605" expanded="true" signature="55344:56045" ph="..." />
+            <marker date="1548048783605" expanded="true" signature="57843:60779" ph="..." />
+            <marker date="1548048783605" expanded="true" signature="59073:60779" ph="..." />
+            <marker date="1548048783605" expanded="true" signature="60282:60779" ph="..." />
           </folding>
 =======
 >>>>>>> Stashed changes
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CF/cf.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="366">
+          <caret line="193" column="26" lean-forward="true" selection-start-line="193" selection-start-column="26" selection-end-line="193" selection-end-column="26" />
         </state>
       </provider>
     </entry>

@@ -1518,11 +1518,11 @@ def item_cf_api():
     :return: code:0-失败  1-成功  data:被推荐的物品ID
     """
     # 评分矩阵文件
-    dir = request.values.get('dir')
+    dirs = request.values.get('dir')
     # 要根据某个物品(文章或问题)的ID来进行相似推荐
     target = request.values.get('target')
     # 得到的推荐结果
-    result = item_cf(dir, target)
+    result = item_cf(dirs, target)
 
     return result
 
