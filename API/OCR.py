@@ -29,11 +29,11 @@ def ocr(source):
     res = pytesseract.image_to_string(img,lang="chi_sim")
     data = res.split('\n')
     # 删除无效行
-    index = 0;
+    index = 0
     while True:
-        if(index >= len(data)):
+        if index >= len(data):
             break
-        if(data[index] == "" ):
+        if data[index] == "" :
             del data[index]
         index+=1
 
@@ -41,22 +41,22 @@ def ocr(source):
     gender = ""
     birthday = ""
     address = ""
-    if(len(data)>= 1 ):
+    if len(data)>= 1 :
         name = (data[0].split(' '))
-        if(len(name) >= 2):
+        if len(name) >= 2:
             name = name[1]
-        if(len(data) >= 2):
+        if len(data) >= 2:
             gender = (data[1].split(' '))
-            if(len(gender) >= 2):
+            if len(gender) >= 2:
                 gender = gender[1]
-            if(len(data) >= 3):
+            if len(data) >= 3:
                 birthday = (data[2].split(' '))
-                if(len(birthday) >= 2):
+                if len(birthday) >= 2:
                     birthday= birthday[1]
-                if(len(data) >= 4):
+                if len(data) >= 4:
                     address = (data[3].split(' '))
-                    if(len(address) >= 2):
+                    if len(address) >= 2:
                         address= address[len(address)-1]
-                    if(len(address) < 9):
+                    if len(address) < 9:
                         address = ""
     return {"name":name,"gender":gender,"birthday":birthday,"address":address}

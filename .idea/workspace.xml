@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c0ae127e-f612-46ec-82b0-0dfd8862412b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/OCR.py" beforeDir="false" afterPath="$PROJECT_DIR$/API/OCR.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/API/api.py" beforeDir="false" afterPath="$PROJECT_DIR$/API/api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project-Agent.sql" beforeDir="false" afterPath="$PROJECT_DIR$/Project-Agent.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CF/cf.py" beforeDir="false" afterPath="$PROJECT_DIR$/CF/cf.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -47,20 +47,78 @@
         </counts>
       </usages-collector>
     </session>
+    <session id="1288964583">
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="py" value="82" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="Python" value="82" />
+        </counts>
+      </usages-collector>
+    </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/API/api.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="517">
-              <caret line="1610" column="6" selection-start-line="1610" selection-start-column="6" selection-end-line="1610" selection-end-column="6" />
+            <state relative-caret-position="280">
+              <caret line="388" column="29" lean-forward="true" selection-start-line="388" selection-start-column="29" selection-end-line="388" selection-end-column="29" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
-                <marker date="1548043531588" expanded="true" signature="51626:58414" ph="..." />
-                <marker date="1548043531588" expanded="true" signature="52655:58414" ph="..." />
-                <marker date="1548043531588" expanded="true" signature="54052:55191" ph="..." />
-                <marker date="1548043531588" expanded="true" signature="57246:58414" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/API/OCR.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="630">
+              <caret line="35" column="29" selection-start-line="35" selection-start-column="29" selection-end-line="35" selection-end-column="29" />
+              <folding>
+                <element signature="e#0#18#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/API/config.py">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/API/db.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="462">
+              <caret line="173" column="45" selection-start-line="173" selection-start-column="45" selection-end-line="173" selection-end-column="45" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/CF/cf.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-152">
+              <caret line="35" column="14" lean-forward="true" selection-start-line="35" selection-start-column="14" selection-end-line="35" selection-end-column="14" />
+              <folding>
+                <element signature="e#0#37#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/WSG/WordSegmentation.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="306">
+              <caret line="17" column="19" lean-forward="true" selection-start-line="17" selection-start-column="19" selection-end-line="17" selection-end-column="19" />
+              <folding>
+                <element signature="e#0#12#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -71,6 +129,7 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>cf</find>
+      <find>;</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -84,6 +143,8 @@
         <option value="$PROJECT_DIR$/API/config.py" />
         <option value="$PROJECT_DIR$/API/db.py" />
         <option value="$PROJECT_DIR$/Application/src/components/topic/topic.vue" />
+        <option value="$PROJECT_DIR$/CF/cf.py" />
+        <option value="$PROJECT_DIR$/API/OCR.py" />
         <option value="$PROJECT_DIR$/API/api.py" />
       </list>
     </option>
@@ -124,6 +185,16 @@
               <item name="Project-Agent" type="b2602c69:ProjectViewProjectNode" />
               <item name="Project-Agent" type="462c0819:PsiDirectoryNode" />
               <item name="API" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Project-Agent" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Project-Agent" type="462c0819:PsiDirectoryNode" />
+              <item name="CF" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Project-Agent" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Project-Agent" type="462c0819:PsiDirectoryNode" />
+              <item name="WSG" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -202,10 +273,10 @@
     <option name="totallyTimeSpent" value="4571000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18763326" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24966975" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -273,16 +344,32 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/CF/cf.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-152">
+          <caret line="35" column="14" lean-forward="true" selection-start-line="35" selection-start-column="14" selection-end-line="35" selection-end-column="14" />
+          <folding>
+            <element signature="e#0#37#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/OCR.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="630">
+          <caret line="35" column="29" selection-start-line="35" selection-start-column="29" selection-end-line="35" selection-end-column="29" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/API/api.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="517">
-          <caret line="1610" column="6" selection-start-line="1610" selection-start-column="6" selection-end-line="1610" selection-end-column="6" />
+        <state relative-caret-position="280">
+          <caret line="388" column="29" lean-forward="true" selection-start-line="388" selection-start-column="29" selection-end-line="388" selection-end-column="29" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
-            <marker date="1548043531588" expanded="true" signature="51626:58414" ph="..." />
-            <marker date="1548043531588" expanded="true" signature="52655:58414" ph="..." />
-            <marker date="1548043531588" expanded="true" signature="54052:55191" ph="..." />
-            <marker date="1548043531588" expanded="true" signature="57246:58414" ph="..." />
           </folding>
         </state>
       </provider>

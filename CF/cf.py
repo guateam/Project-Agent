@@ -32,8 +32,8 @@ def set_similarity_vec(rect_file,name = "similarity_vector.txt"):
     :param name: 存储的文件名称
     :return: 返回规模为 用户*用户 或者 文章*文章 的相似度矩阵,物品的ID列表
     """
-    item_ids = [];
-    rates = [];
+    item_ids = []
+    rates = []
 
     with open(rect_file,"r") as f:
         lines = f.readlines()
