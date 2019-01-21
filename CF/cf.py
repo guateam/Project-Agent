@@ -1,6 +1,7 @@
 from WSG.WordSegmentation import pred
 import numpy as np
 
+
 def cosine_similarity(vector1, vector2):
     """
     计算出余弦相似度,越接近1越相似
@@ -20,10 +21,10 @@ def cosine_similarity(vector1, vector2):
     else:
         norm_a = norm_a ** 0.5
         norm_b = norm_b ** 0.5
-        return round(dot_product / (norm_a*norm_b), 4)
+        return round(dot_product / (norm_a * norm_b), 4)
 
 
-def set_similarity_vec(rect_file,name = "similarity_vector.txt"):
+def set_similarity_vec(rect_file, name="similarity_vector.txt"):
     """
     计算相似矩阵
 
@@ -35,7 +36,7 @@ def set_similarity_vec(rect_file,name = "similarity_vector.txt"):
     item_ids = [];
     rates = [];
 
-    with open(rect_file,"r") as f:
+    with open(rect_file, "r") as f:
         lines = f.readlines()
         for i in range(len(lines)):
             a = lines[i].split(" ")
@@ -47,33 +48,33 @@ def set_similarity_vec(rect_file,name = "similarity_vector.txt"):
             rt = rt[1].split("-")
             rtt = []
             for i in range(len(rt)):
-                if(i % 2 == 1):
+                if (i % 2 == 1):
                     rtt.append(rt[i])
             rates.append(rtt)
 
-    simi_vec = [[0 for i in range(len(rates))] for j in range(len(rates)) ]
-    f = open(name,"w")
+    simi_vec = [[0 for i in range(len(rates))] for j in range(len(rates))]
+    f = open(name, "w")
     for i in range(len(rates)):
         for j in range(len(rates)):
             simi_vec[i][j] = cosine_similarity(rates[i], rates[j])
-            f.write(str(simi_vec[i][j])+",")
+            f.write(str(simi_vec[i][j]) + ",")
         f.write("\n")
     f.close()
-    return simi_vec,item_ids
+    return simi_vec, item_ids
 
 
-def read_similarity_vec(dir = "similarity_vector.txt"):
+def read_similarity_vec(dir="similarity_vector.txt"):
     """
     读取文件中存储的相似度矩阵
     :param dir: 读取的文件路径，默认为本目录下的similarity_vector.txt
     :return: 相似度矩阵
     """
-    with open(dir,'r') as f:
+    with open(dir, 'r') as f:
         lines = f.readlines()
-        simi_vec = [[0 for i in range(len(lines))] for j in range(len(lines)) ]
+        simi_vec = [[0 for i in range(len(lines))] for j in range(len(lines))]
         for i in range(len(lines)):
             line = lines[i].split(",")
-            for j in range(len(line)-1):
+            for j in range(len(line) - 1):
                 simi_vec[i][j] = float(line[j])
     return simi_vec
 
@@ -91,7 +92,7 @@ def interest_value(similar, rate_vec):
     return interest_vec
 
 
-def most_similar(simi_vec,item_ids,id):
+def most_similar(simi_vec, item_ids, id):
     """
     根据相似度矩阵获取最相似的项
     :param simi_vec: 相似度矩阵
@@ -103,14 +104,14 @@ def most_similar(simi_vec,item_ids,id):
     most_idx = 0
     idx = 0
     for it in item_ids:
-        if(it == id):
+        if (it == id):
             break
-        idx+=1
+        idx += 1
 
     for i in range(len(simi_vec[idx])):
-        if(abs(simi_vec[idx][i]-1) < most_val ):
-            if(idx != i):
-                most_val = abs(simi_vec[idx][i]-1)
+        if (abs(simi_vec[idx][i] - 1) < most_val):
+            if (idx != i):
+                most_val = abs(simi_vec[idx][i] - 1)
                 most_idx = i
     return most_idx
 
@@ -150,7 +151,7 @@ def most_interest(similar_vec, rate_vec, k=1, m=1):
     return sorted_interest[:m]
 
 
-def cf(self_vec,others_vec,k=1, m=1,item_vec = []):
+def cf(self_vec, others_vec, k=1, m=1, item_vec=[]):
     """
     用cf算法推荐对象
     :param self_vec: 需要进行推荐的用户评分矩阵,一维[ , , ]
@@ -162,7 +163,7 @@ def cf(self_vec,others_vec,k=1, m=1,item_vec = []):
     """
     # 相似度矩阵，待计算
     similar_vec = []
-    rate_vec = [self_vec]+others_vec
+    rate_vec = [self_vec] + others_vec
     for i in range(len(rate_vec)):
         if i == 0:
             # 以第一个用户为目标用户，第一次循环计算自己的相似度，adjusted_cosin算法得到的值越接近1，相似度越大，这里设置为1-1=0
@@ -170,7 +171,7 @@ def cf(self_vec,others_vec,k=1, m=1,item_vec = []):
             similar_vec.append(0)
         else:
             # 以第一个用户为目标用户，计算其他用户的相似度
-            similar_vec.append(abs(cosine_similarity(rate_vec[0], rate_vec[i])-1))
+            similar_vec.append(abs(cosine_similarity(rate_vec[0], rate_vec[i]) - 1))
 
     # 获取目标用户最感兴趣的对象类型
     most_interest_vec = most_interest(similar_vec[1:], rate_vec[1:], k, m)
@@ -179,24 +180,24 @@ def cf(self_vec,others_vec,k=1, m=1,item_vec = []):
     # 比如这个例子下的结果"财经",目标用户对财经的评价很低，但是依然推荐了财经
     data = []
     for i in range(m):
-        if len(item_vec)!=0:
+        if len(item_vec) != 0:
             data.append(item_vec[most_interest_vec[i][0]])
         else:
             data.append(most_interest_vec[i][0])
     return data
 
 
-def item_cf(rate_dir,dir,target):
+def item_cf(rate_dir, dirs, target):
     """
     基于物品的cf算法
     :param rate_dir: 评分矩阵路径
-    :param dir: 物品相似度矩阵文件路径
+    :param dirs: 物品相似度矩阵文件路径
     :param target: 为某个物品推荐，该物品的ID
     :return: 推荐的物品ID
     """
-    simi_vec,item_ids = set_similarity_vec(rate_dir, dir)
-    simi_vec = read_similarity_vec(dir)
-    idx = most_similar(simi_vec,item_ids,target)
+    simi_vec, item_ids = set_similarity_vec(rate_dir, dirs)
+    simi_vec = read_similarity_vec(dirs)
+    idx = most_similar(simi_vec, item_ids, target)
     return idx
 
 # 以下为基于用户的使用样例
@@ -229,5 +230,3 @@ def item_cf(rate_dir,dir,target):
 # print(item_cf("item_simi.txt",0))
 #
 # print(read_similarity_vec())
-
-

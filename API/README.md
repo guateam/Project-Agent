@@ -561,6 +561,44 @@ Format:
 
 2. 
 
+#### Specialist 专家
+
+1. 获取自己的回答 get_my_answers
+
+   - 接口 `/api/specialist/get_my_answers`
+
+   - 参数 `token`-token
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # 0=未知用户 1=成功
+         msg: msg,      # 信息
+         data:[{
+             answerID:answerID,
+             userID:userID,
+             edittime:edittime,
+             content:content,
+             agree:agree,
+             disagree:disagree,
+             answertype:answertype,
+             questionID:questionID,
+             nickname:nickname,
+             headportrait:headportrait,
+             tags:[{
+                 text:text,
+                 id:id
+             }],
+             state:state
+         },
+         	#...
+         ]
+     }
+     ```
+
+2. 
+
 ## 数据库 DataBase
 
 ### 用户行为类型约定 TypeFormat
@@ -586,3 +624,29 @@ Format:
 | ---- | ---- | ---- |
 | -1   | 清除 |      |
 | 0   | 正常  |      |
+
+### 付费咨询预约类型约定 OrderStateFormat
+
+| 代码 | 释义   | 备注 |
+| ---- | ------ | ---- |
+| 0    | 已预约 |      |
+| 1    | 已确认 |      |
+| 2    | 已完成 |      |
+| -1   | 已拒绝 |      |
+
+### 需求类型约定 DemandStateFormat
+
+| 代码 | 释义     | 备注 |
+| ---- | -------- | ---- |
+| 0    | 招标中   |      |
+| 1    | 项目开始 |      |
+| 2    | 项目结束 |      |
+
+### 报名类型约定 RegisterStateFormat
+
+| 代码 | 释义   | 备注 |
+| ---- | ------ | ---- |
+| 0    | 已报名 |      |
+| 1    | 已确认 |      |
+| -1   | 已拒绝 |      |
+

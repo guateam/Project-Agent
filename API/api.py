@@ -365,6 +365,74 @@ def change_user():
     return jsonify({'code': 0, 'msg': 'unexpected user'})
 
 
+@app.route('/api/account/get_account_balance', methods=['POST'])
+def get_account_balance():
+    """
+    获取用户的钱包余额
+    :return: code:0=用户不存在  1=获取成功
+    """
+    token = request.form['token']
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        return jsonify({'code': 1, 'msg': 'success', 'data': user['account_balance']})
+    return jsonify({'code': 0, 'msg': 'the user is not exist'})
+
+
+@app.route('/api/account/add_account_balance', methods=['POST'])
+def add_account_balance():
+    """
+    增加用户的钱包余额
+    :return:code:0=数据库操作失败  1=增加成功  -2=用户不存在
+    """
+    # 要增加的量
+    num = request.form['num']
+    token = request.form['token']
+    res = change_account_balance(num, token)
+    if(res == 1):
+        return jsonify({'code': 1, 'msg': 'success'})
+    elif(res == 0):
+        return jsonify({'code': 0, 'msg': 'there are something wrong when operate the database'})
+    elif(res == -2):
+        return jsonify({'code': -2, 'msg': 'the user is not exist'})
+
+
+@app.route('/api/account/minus_account_balance', methods=['POST'])
+def minus_account_balance():
+    """
+    减少用户的钱包余额
+    :return:code:-2=用户不存在  -1=余额不足  0=数据库操作失败  1=成功
+    """
+    # 要减少的量
+    num = request.form['num']
+    # 减少的量在计算时应该为负数
+    num = -num
+    token = request.form['token']
+    res = change_account_balance(num, token)
+    if(res == 1):
+        return jsonify({'code': 1, 'msg': 'success'})
+    elif(res == 0):
+        return jsonify({'code': 0, 'msg': 'there are something wrong when operate the database'})
+    elif(res == -2):
+        return jsonify({'code': -2, 'msg': 'the user is not exist'})
+    elif(res == -1):
+        return jsonify({'code': -1, 'msg': 'account balance not enough'})
+
+
+def change_account_balance(num, token):
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        # 若num为负数，钱包可能被扣到负值
+        if(user['account_balance']+num < 0):
+            return -1
+        flag = db.update({'userID': user['user_id']}, {'account_balance':user['account_balance']+num}, 'users')
+        if(flag):
+            return 1
+        return 0
+    return -2
+
+
 """
     问题接口
 """
@@ -1450,11 +1518,11 @@ def item_cf_api():
     :return: code:0-失败  1-成功  data:被推荐的物品ID
     """
     # 评分矩阵文件
-    dir = request.values.get('dir')
+    dirs = request.values.get('dir')
     # 要根据某个物品(文章或问题)的ID来进行相似推荐
     target = request.values.get('target')
     # 得到的推荐结果
-    result = item_cf(dir, target)
+    result = item_cf(dirs, target)
 
     return result
 
