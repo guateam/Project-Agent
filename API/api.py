@@ -1794,6 +1794,29 @@ def start_demand():
     return jsonify({'code': 0, 'msg': 'unexpected user'})
 
 
+"""
+    告示板接口
+"""
+
+
+@app.route('/api/board/sign_to_demand')
+def sign_to_demand():
+    """
+    报名特定项目
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        demand_id = request.values.get('demand_id')
+        flag = db.insert({'userID': user['userID'], 'target': demand_id}, 'sign_demand')
+        if flag:
+            return jsonify({'code': 1, 'msg': 'success'})
+        return jsonify({'code': -1, 'msg': 'unable to sign'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
 if __name__ == '__main__':
     # 开启调试模式，修改代码后不需要重新启动服务即可生效
     # 请勿在生产环境下使用调试模式
