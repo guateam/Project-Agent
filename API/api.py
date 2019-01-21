@@ -4,7 +4,6 @@ import re
 import string
 import time
 
-
 from CF.cf import item_cf
 from API.OCR import ocr
 from flask import Flask, jsonify, request
@@ -987,7 +986,7 @@ def delete_article():
     token = request.values.get('token')
     article_id = request.values.get('article_id')
     db = Database()
-    user = db.get({'token': token,'usergroup':0}, 'users')
+    user = db.get({'token': token, 'usergroup': 0}, 'users')
     if user:
         article = db.update({'articleID': article_id}, {'state': -1}, 'article')
         if article:
@@ -1503,6 +1502,238 @@ def build_article_rate_rect():
             f.write(rate_str + "\n")
 
     return jsonify({"code": 1})
+
+
+"""
+    专家接口
+"""
+
+
+@app.route('/api/specialist/get_my_answers')
+def get_my_answers():
+    """
+    获取自己的回答
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        answers = db.get({'userID': user['userID']}, 'answersinfo')
+        for value in answers:
+            value.update({'tags': get_tags(value['tags'])})
+        return jsonify({'code': 1, 'msg': 'success', 'data': answers})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/specialist/get_my_articles')
+def get_my_articles():
+    """
+    获取自己的文章
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        articles = db.get({'userID': user['userID']}, 'articleinfo')
+        for value in articles:
+            value.update({'tags': get_tags(value['tags'])})
+        return jsonify({'code': 1, 'msg': 'success', 'data': articles})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/specialist/get_my_fans')
+def get_my_fans():
+    """
+    获取粉丝列表
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        followers = db.get({'target': user['userID']}, 'followinfo')
+        data = []
+        for value in followers:
+            data.append({
+                'id': value['userID'],
+                'nickname': value['follower_nickname'],
+                'usergroup': get_group(value['follower_usergroup']),
+                'exp': value['follower_exp'],
+                'level': get_level(value['follower_exp']),
+                'description': value['follower_description']
+            })
+        return jsonify({'code': 1, 'msg': 'success', 'data': data})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/specialist/get_order_list')
+def get_order_list():
+    """
+    获取付费咨询的预定列表
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        order = db.get({'target': user['userID']}, 'orderinfo')
+        for value in order:
+            value.update({'level': get_level(value['exp']), 'usergroup': get_group(value['usergroup'])})
+        return jsonify({'code': 1, 'msg': 'success', 'data': order})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/specialist/confirm_order')
+def confirm_order():
+    """
+    确认付费咨询预约
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        order_id = request.values.get('order_id')
+        order = db.update({'order_id': order_id, 'target': user['userID']}, {'state': 1}, 'orders')
+        if order:
+            return jsonify({'code': 1, 'msg': 'success'})
+        return jsonify({'code': -1, 'msg': 'unable to find order or user is not correct'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/specialist/refuse_order')
+def refuse_order():
+    """
+    拒绝付费咨询预约
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        order_id = request.values.get('order_id')
+        order = db.update({'order_id': order_id, 'target': user['userID']}, {'state': -1}, 'orders')
+        if order:
+            return jsonify({'code': 1, 'msg': 'success'})
+        return jsonify({'code': -1, 'msg': 'unable to find order or user is not correct'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/specialist/get_click_info')
+def get_click_info():
+    """
+    获取点击量图表（还没想好怎么写）
+    :return:
+    """
+    pass
+
+
+@app.route('/api/specialist/get_fans_info')
+def get_fans_info():
+    """
+    获取关注量增减图表（同样没想好怎么写）
+    :return:
+    """
+    pass
+
+
+"""
+    企业接口
+"""
+
+
+@app.route('/api/enterprise/add_demand', methods=['POST'])
+def add_demand():
+    """
+    企业添加需求
+    :return:
+    """
+    token = request.form['token']
+    db = Database()
+    user = db.get({'token': token, 'usergroup': 3}, 'users')
+    if user:
+        content = request.form['content']
+        allowed_user = request.form['allowed_user']
+        price = request.form['price']
+        tags = request.form['tags']
+        flag = db.insert(
+            {'userID': user['userID'], 'content': content, 'allowedUserGroup': allowed_user, 'price': price,
+             'tags': tags}, 'demands')
+        if flag:
+            return jsonify({'code': 1, 'msg': 'success'})
+        return jsonify({'code': -1, 'msg': 'unable to insert'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/enterprise/get_my_demands')
+def get_my_demands():
+    """
+    获取需求列表
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        demands = db.get({'userID': user['userID']}, 'demands_info')
+        return jsonify({'code': 1, 'msg': 'success', 'data': demands})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/enterprise/get_signed_users')
+def get_signed_users():
+    """
+    获取报名需求列表
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        demand_id = request.values.get('demand_id')
+        signed_list = db.get({'target': demand_id}, 'signed_demand_info')
+        return jsonify({'code': 1, 'msg': 'success', 'data': signed_list})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/enterprise/confirm_signed_user')
+def confirm_signed_user():
+    """
+    确认报名的用户
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        user_id = request.values.get('user_id')
+        target = request.values.get('target')
+        flag = db.update({'userID': user_id, 'target': target}, {'state': 1}, 'sign_demand')
+        if flag:
+            return jsonify({'code': 1, 'msg': 'success'})
+        return jsonify({'code': -1, 'msg': 'unable to confirm'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/enterprise/refuse_signed_user')
+def refuse_signed_user():
+    """
+    拒绝报名的用户
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        user_id = request.values.get('user_id')
+        target = request.values.get('target')
+        flag = db.update({'userID': user_id, 'target': target}, {'state': -1}, 'sign_demand')
+        if flag:
+            return jsonify({'code': 1, 'msg': 'success'})
+        return jsonify({'code': -1, 'msg': 'unable to refuse'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
 
 
 if __name__ == '__main__':
