@@ -424,9 +424,9 @@ def change_account_balance(num, token):
     user = db.get({'token': token}, 'users')
     if user:
         # 若num为负数，钱包可能被扣到负值
-        if user['account_balance']+num < 0:
+        if user['account_balance'] + num < 0:
             return -1
-        flag = db.update({'userID': user['user_id']}, {'account_balance':user['account_balance']+num}, 'users')
+        flag = db.update({'userID': user['user_id']}, {'account_balance': user['account_balance'] + num}, 'users')
         if flag:
             return 1
         return 0
@@ -1520,13 +1520,13 @@ def item_cf_api():
     :return: code:0-失败  1-成功  data:被推荐的物品ID
     """
     # 评分矩阵文件
-    dir = request.values.get('dir')
+    dirs = request.values.get('dir')
     # 相似度矩阵文件
     simi = request.values.get('similar_rect_dir')
     # 要根据某个物品(文章或问题)的ID来进行相似推荐
     target = request.values.get('target')
     # 得到的推荐结果
-    result = item_cf(dir,simi, target)
+    result = item_cf(dirs, simi, target)
 
     return result
 
