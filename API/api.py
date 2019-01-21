@@ -97,8 +97,8 @@ def register():
     email = request.form['email']
     password = request.form['password']
     db = Database()
-    check_email = db.get({'email': email}, 'users')
-    if not check_email:
+    email_check = db.get({'email': email}, 'users')
+    if not email_check:
         flag = db.insert({
             'email': email,
             'password': generate_password(password)
@@ -719,9 +719,9 @@ def edit_answer():
     answer_id = request.values.get('answer_id')
     content = request.values.get('content')
     # 获取当前时间
-    timeStamp = time.time()
-    timeArray = time.localtime(timeStamp)
-    newtime = time.strftime("%Y--%m--%d %H:%M:%S", timeArray)
+    time_stamp = time.time()
+    time_array = time.localtime(time_stamp)
+    newtime = time.strftime("%Y--%m--%d %H:%M:%S", time_array)
 
     db = Database()
     answer = db.get({'answerID': answer_id}, 'answers')
@@ -916,9 +916,9 @@ def edit_article():
     title = request.form['title']
     token = request.form['token']
     # 获取当前时间
-    timeStamp = time.time()
-    timeArray = time.localtime(timeStamp)
-    newtime = time.strftime("%Y--%m--%d %H:%M:%S", timeArray)
+    time_stamp = time.time()
+    time_array = time.localtime(time_stamp)
+    newtime = time.strftime("%Y--%m--%d %H:%M:%S", time_array)
 
     db = Database()
     article = db.get({'articleID': article_id}, 'article')
@@ -1370,7 +1370,7 @@ def get_message():
 """
     上传接口
 """
-ALLOWED_EXTENSIONS = set(['png', 'jpg', 'JPG', 'PNG', 'gif', 'GIF'])  # 允许上传的格式
+ALLOWED_EXTENSIONS = ['png', 'jpg', 'JPG', 'PNG', 'gif', 'GIF']  # 允许上传的格式
 ALLOWED_PIC = ['png', 'jpg', 'JPG', 'PNG']  # 允许上传的身份证格式
 
 
@@ -1428,7 +1428,7 @@ def upload_identity_card():
             back.save(upload_path_reverse)
 
             # 调用ocr进行反面识别文字信息(反面是有个人信息的那一面)
-            info_reverse = ocr(upload_path_reverse);
+            info_reverse = ocr(upload_path_reverse)
 
             flag = db.update({'userID': user['userID']}, {'state': 1}, 'users')
             if flag:
@@ -1454,7 +1454,7 @@ def item_cf_api():
     # 要根据某个物品(文章或问题)的ID来进行相似推荐
     target = request.values.get('target')
     # 得到的推荐结果
-    result = item_cf(dir, target);
+    result = item_cf(dir, target)
 
     return result
 
@@ -1475,7 +1475,6 @@ def build_article_rate_rect():
     article = db.sql("select * from article")
     users = db.sql("select * from users order by userID ASC")
 
-    rect = []
     for i in range(len(article)):
         # 对于第i篇文章的评分向量,没有参与的用户评分默认为1
         rates = {}
@@ -1485,8 +1484,8 @@ def build_article_rate_rect():
                 "select * from useraction where targetID='%s' and userID='%s' and targettype>=21 and targettype <=25 order by userID ASC" %
                 (article[i]['articleID'], users[j]["userID"]))
             # 该用户对这篇文章的总评分
-            rate = 0;
-            if (actions):
+            rate = 0
+            if actions:
                 for k in range(len(actions)):
                     rt = rate_dict[actions[k]["targettype"]]
                     rate += rt
