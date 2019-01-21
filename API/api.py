@@ -389,11 +389,11 @@ def add_account_balance():
     num = request.form['num']
     token = request.form['token']
     res = change_account_balance(num, token)
-    if(res == 1):
+    if res == 1:
         return jsonify({'code': 1, 'msg': 'success'})
-    elif(res == 0):
+    elif res == 0:
         return jsonify({'code': 0, 'msg': 'there are something wrong when operate the database'})
-    elif(res == -2):
+    elif res == -2:
         return jsonify({'code': -2, 'msg': 'the user is not exist'})
 
 
@@ -409,13 +409,13 @@ def minus_account_balance():
     num = -num
     token = request.form['token']
     res = change_account_balance(num, token)
-    if(res == 1):
+    if res == 1:
         return jsonify({'code': 1, 'msg': 'success'})
-    elif(res == 0):
+    elif res == 0:
         return jsonify({'code': 0, 'msg': 'there are something wrong when operate the database'})
-    elif(res == -2):
+    elif res == -2:
         return jsonify({'code': -2, 'msg': 'the user is not exist'})
-    elif(res == -1):
+    elif res == -1:
         return jsonify({'code': -1, 'msg': 'account balance not enough'})
 
 
@@ -424,10 +424,10 @@ def change_account_balance(num, token):
     user = db.get({'token': token}, 'users')
     if user:
         # 若num为负数，钱包可能被扣到负值
-        if(user['account_balance']+num < 0):
+        if user['account_balance']+num < 0:
             return -1
         flag = db.update({'userID': user['user_id']}, {'account_balance':user['account_balance']+num}, 'users')
-        if(flag):
+        if flag:
             return 1
         return 0
     return -2
@@ -1518,11 +1518,13 @@ def item_cf_api():
     :return: code:0-失败  1-成功  data:被推荐的物品ID
     """
     # 评分矩阵文件
-    dirs = request.values.get('dir')
+    dir = request.values.get('dir')
+    # 相似度矩阵文件
+    simi = request.values.get('similar_rect_dir')
     # 要根据某个物品(文章或问题)的ID来进行相似推荐
     target = request.values.get('target')
     # 得到的推荐结果
-    result = item_cf(dirs, target)
+    result = item_cf(dir,simi, target)
 
     return result
 
