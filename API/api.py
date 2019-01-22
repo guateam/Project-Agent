@@ -423,7 +423,7 @@ def minus_account_balance():
 def history_pay():
     """
     获取用户的支付记录
-    :return: code: -2=用户不存在
+    :return: code: 0=用户不存在 1=成功
     """
     token = request.form['token']
     db = Database()
@@ -437,7 +437,7 @@ def history_pay():
 
 def change_account_balance(num, token):
     """
-
+    增加或减少余额值
     :param num: 改变量
     :param token: 用户token
     :return: code:-2=用户不存在  -1=余额不足  0=数据库操作失败  1=改变成功
@@ -694,7 +694,7 @@ def pay_question():
             # 若创建支付记录失败，视为支付失败，将钱退还
             return_money = change_account_balance(question['price'], user_token)
             # 若退还失败，提示与客服沟通取钱
-            if not return_money:
+            if return_money != 1:
                 jsonify({'code': -5, 'msg': 'create the pay_log fail,please call 客服 to get your money back'})
             # 退还成功，提示支付记录创建失败，未能完成支付
             return jsonify({'code': -4, 'msg': 'paying fail,there are something wrong when create the pay_log'})
