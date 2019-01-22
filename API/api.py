@@ -97,8 +97,8 @@ def register():
     email = request.form['email']
     password = request.form['password']
     db = Database()
-    check_email = db.get({'email': email}, 'users')
-    if not check_email:
+    email_check = db.get({'email': email}, 'users')
+    if not email_check:
         flag = db.insert({
             'email': email,
             'password': generate_password(password)
@@ -424,9 +424,9 @@ def change_account_balance(num, token):
     user = db.get({'token': token}, 'users')
     if user:
         # 若num为负数，钱包可能被扣到负值
-        if user['account_balance']+num < 0:
+        if user['account_balance'] + num < 0:
             return -1
-        flag = db.update({'userID': user['user_id']}, {'account_balance':user['account_balance']+num}, 'users')
+        flag = db.update({'userID': user['user_id']}, {'account_balance': user['account_balance'] + num}, 'users')
         if flag:
             return 1
         return 0
@@ -787,9 +787,9 @@ def edit_answer():
     answer_id = request.values.get('answer_id')
     content = request.values.get('content')
     # 获取当前时间
-    timeStamp = time.time()
-    timeArray = time.localtime(timeStamp)
-    newtime = time.strftime("%Y--%m--%d %H:%M:%S", timeArray)
+    time_stamp = time.time()
+    time_array = time.localtime(time_stamp)
+    newtime = time.strftime("%Y--%m--%d %H:%M:%S", time_array)
 
     db = Database()
     answer = db.get({'answerID': answer_id}, 'answers')
@@ -881,8 +881,7 @@ def complain():
     举报某一条评论
     :return:code(0=未知评论，1=举报成功)
     """
-    comment_id = request.values.get('comment_id')
-    db = Database()
+    pass
     # 由于页面未定，举报形式未定，暂时无法继续往下写
 
 
@@ -984,9 +983,9 @@ def edit_article():
     title = request.form['title']
     token = request.form['token']
     # 获取当前时间
-    timeStamp = time.time()
-    timeArray = time.localtime(timeStamp)
-    newtime = time.strftime("%Y--%m--%d %H:%M:%S", timeArray)
+    time_stamp = time.time()
+    time_array = time.localtime(time_stamp)
+    newtime = time.strftime("%Y--%m--%d %H:%M:%S", time_array)
 
     db = Database()
     article = db.get({'articleID': article_id}, 'article')
@@ -1233,7 +1232,10 @@ def get_friend_list():
     if user:
         # 根据token获取该用户的好友列表
         friend = db.sql(
-            "select A.userID as user_id ,A.nickname as nickname,A.headportrait as headportrait,A.usergroup as usergroup,A.exp as exp from users A,(select C.* from followuser C,users D where C.userID = D.userID and D.token= '%s') B,followuser C where A.userID=C.userID and (C.target = B.userID) and C.userID = B.target " % token)
+            "select A.userID as user_id ,A.nickname as nickname,A.headportrait as headportrait,A.usergroup as "
+            "usergroup,A.exp as exp from users A,(select C.* from followuser C,users D where C.userID = D.userID and "
+            "D.token= '%s') B,followuser C where A.userID=C.userID and (C.target = B.userID) and C.userID = B.target "
+            "" % token)
         if friend:
             return jsonify({'code': 1, 'msg': 'success', 'data': friend})
         return jsonify({'code': 1, 'msg': 'success', 'data': []})
@@ -1438,7 +1440,7 @@ def get_message():
 """
     上传接口
 """
-ALLOWED_EXTENSIONS = set(['png', 'jpg', 'JPG', 'PNG', 'gif', 'GIF'])  # 允许上传的格式
+ALLOWED_EXTENSIONS = ['png', 'jpg', 'JPG', 'PNG', 'gif', 'GIF']  # 允许上传的格式
 ALLOWED_PIC = ['png', 'jpg', 'JPG', 'PNG']  # 允许上传的身份证格式
 
 
@@ -1500,7 +1502,7 @@ def upload_identity_card():
 
             flag = db.update({'userID': user['userID']}, {'state': 1}, 'users')
             if flag:
-                return jsonify({'code': 1, 'msg': 'success','data':info_reverse})
+                return jsonify({'code': 1, 'msg': 'success', 'data': info_reverse})
             return jsonify({'code': -2, 'msg': 'unable to identify'})
         return jsonify({'code': -1, 'msg': 'unexpected file'})
     return jsonify({'code': 0, 'msg': 'unexpected user'})
@@ -1518,13 +1520,13 @@ def item_cf_api():
     :return: code:0-失败  1-成功  data:被推荐的物品ID
     """
     # 评分矩阵文件
-    dir = request.values.get('dir')
+    dirs = request.values.get('dir')
     # 相似度矩阵文件
     simi = request.values.get('similar_rect_dir')
     # 要根据某个物品(文章或问题)的ID来进行相似推荐
     target = request.values.get('target')
     # 得到的推荐结果
-    result = item_cf(dir,simi, target)
+    result = item_cf(dirs, simi, target)
 
     return result
 
@@ -1545,14 +1547,14 @@ def build_article_rate_rect():
     article = db.sql("select * from article")
     users = db.sql("select * from users order by userID ASC")
 
-    rect = []
     for i in range(len(article)):
         # 对于第i篇文章的评分向量,没有参与的用户评分默认为1
         rates = {}
         for j in range(len(users)):
             rates[users[j]['userID']] = 1
             actions = db.sql(
-                "select * from useraction where targetID='%s' and userID='%s' and targettype>=21 and targettype <=25 order by userID ASC" %
+                "select * from useraction where targetID='%s' and userID='%s' and targettype>=21 and targettype <=25 "
+                "order by userID ASC" %
                 (article[i]['articleID'], users[j]["userID"]))
             # 该用户对这篇文章的总评分
             rate = 0
@@ -1709,6 +1711,28 @@ def get_fans_info():
     pass
 
 
+@app.route('/api/specialist/add_order', methods=['POST'])
+def add_order():
+    """
+    添加付费咨询
+    :return:
+    """
+    token = request.form['token']
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        target = request.form['target']
+        start_time = request.form['start_time']
+        end_time = request.form['end_time']
+        content = request.form['content']
+        flag = db.insert({'userID': user['userID'], 'target': target, 'start_time': start_time, 'end_time': end_time,
+                          'content': content}, 'orders')
+        if flag:
+            return jsonify({'code': 1, 'msg': 'success'})
+        return jsonify({'code': -1, 'msg': 'unable to insert'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
 """
     企业接口
 """
@@ -1803,6 +1827,65 @@ def refuse_signed_user():
         if flag:
             return jsonify({'code': 1, 'msg': 'success'})
         return jsonify({'code': -1, 'msg': 'unable to refuse'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/enterprise/close_demand')
+def close_demand():
+    """
+    关闭需求
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        demand_id = request.values.get('demand_id')
+        flag = db.update({'demandID': demand_id, 'userID': user['userID']}, {'state': 2}, 'demands')
+        if flag:
+            return jsonify({'code': 1, 'msg': 'success'})
+        return jsonify({'code': -1, 'msg': 'unable to close or user is not correct'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/enterprise/start_demand')
+def start_demand():
+    """
+    开始项目停止招标
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        demand_id = request.values.get('demand_id')
+        flag = db.update({'demandID': demand_id, 'userID': user['userID']}, {'state': 1}, 'demands')
+        if flag:
+            return jsonify({'code': 1, 'msg': 'success'})
+        return jsonify({'code': -1, 'msg': 'unable to start or user is not correct'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+"""
+    告示板接口
+"""
+
+
+@app.route('/api/board/sign_to_demand')
+def sign_to_demand():
+    """
+    报名特定项目
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        demand_id = request.values.get('demand_id')
+        flag = db.insert({'userID': user['userID'], 'target': demand_id}, 'sign_demand')
+        if flag:
+            return jsonify({'code': 1, 'msg': 'success'})
+        return jsonify({'code': -1, 'msg': 'unable to sign'})
     return jsonify({'code': 0, 'msg': 'unexpected user'})
 
 
