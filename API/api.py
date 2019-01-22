@@ -301,7 +301,7 @@ def back_get_users():
     获取所有用户列表
     :return:
     """
-    token = request.values.get('token')
+    token = request.headers.get('X-Token')
     db = Database()
     user = db.get({'token': token, 'usergroup': 0}, 'users')
     if user:
