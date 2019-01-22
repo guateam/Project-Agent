@@ -423,7 +423,7 @@ def minus_account_balance():
 def history_pay():
     """
     获取用户的支付记录
-    :return: code: -2=用户不存在
+    :return: code: 0=用户不存在 1=成功
     """
     token = request.form['token']
     db = Database()
