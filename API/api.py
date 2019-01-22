@@ -477,7 +477,7 @@ def add_priced_question():
             tags = request.form['tags']
             allowed_user = request.form['allowed_user']
             flag = db.insert({'title': title, 'description': description, 'userID': user['userID'], 'tags': tags,
-                              'allowed_user': allowed_user},
+                              'allowed_user': allowed_user,'question_type':1},
                              'questions')
             if flag:
                 return jsonify({'code': 1, 'msg': 'success'})
