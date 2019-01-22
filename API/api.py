@@ -638,7 +638,7 @@ def get_priced_answer_list():
     user_token = request.values.get('token')
     # 获取问题和用户信息
     db = Database()
-    question = db.get({'questionID': question_id}, 'questions')
+    question = db.get({'questionID': question_id, 'question_type': 1}, 'questions')
     user = db.get({'token': user_token}, 'users')
     # 检查用户和问题是否存在
     if not question:
