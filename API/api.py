@@ -447,13 +447,80 @@ def add_question():
     token = request.form['token']
     title = request.form['title']
     description = request.form['description']
+    tags = request.form['tags']
     db = Database()
     user = db.get({'token': token}, 'users')
     if user:
-        flag = db.insert({'title': title, 'description': description, 'userID': user['userID']}, 'questions')
+        flag = db.insert({'title': title, 'description': description, 'userID': user['userID'], 'tags': tags},
+                         'questions')
         if flag:
             return jsonify({'code': 1, 'msg': 'success'})
         return jsonify({'code': -1, 'msg': 'unable to insert question'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/questions/add_priced_question', methods=['POST'])
+def add_priced_question():
+    """
+    添加付费问题
+    :return:code(-2=用户不存在  -1=余额不足  0=数据库操作失败  1=成功)
+    """
+    token = request.form['token']
+    price = request.form['price']
+    db = Database()
+    res = change_account_balance(int(price), token)
+    if res == 1:
+        user = db.get({'token': token}, 'users')
+        if user:
+            title = request.form['title']
+            description = request.form['description']
+            tags = request.form['tags']
+            allowed_user = request.form['allowed_user']
+            flag = db.insert({'title': title, 'description': description, 'userID': user['userID'], 'tags': tags,
+                              'allowed_user': allowed_user},
+                             'questions')
+            if flag:
+                return jsonify({'code': 1, 'msg': 'success'})
+            change_account_balance(-int(price), token)
+            return jsonify({'code': 0, 'msg': 'there are something wrong when operate the database'})
+        return jsonify({'code': -2, 'msg': 'the user is not exist'})
+    elif res == 0:
+        return jsonify({'code': 0, 'msg': 'there are something wrong when operate the database'})
+    elif res == -2:
+        return jsonify({'code': -2, 'msg': 'the user is not exist'})
+    elif res == -1:
+        return jsonify({'code': -1, 'msg': 'account balance not enough'})
+
+
+@app.route('/api/questions/adopt_answer')
+def adopt_answer():
+    """
+    针对付费问题采纳回答
+    :return: code()
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        answer_id = request.values.get('answer_id')
+        answer = db.get({'answerID': answer_id}, 'answers')
+        if answer:
+            question = db.get({'questionID': answer['questionID']}, 'questions')
+            if question:
+                if question['userID'] == user['userID']:
+                    flag = db.get({'userID': answer['userID']}, 'users')
+                    if flag:
+                        flag1 = db.update({'userID': answer['userID']},
+                                          {'account_balance': int(flag['account_balance']) + int(question['price'])},
+                                          'users')
+                        flag2 = db.update({'answerID': answer['answerID']}, {'answerType': 2}, 'answers')
+                        if flag1 and flag2:
+                            return jsonify({'code': 1, 'msg': 'success'})
+                        return jsonify({'code': -1, 'msg': 'unable to update'})
+                    return jsonify({'code': -2, 'msg': 'unexpected answer user'})
+                return jsonify({'code': 0, 'msg': 'unexpected user'})
+            return jsonify({'code': -3, 'msg': 'cannot find question'})
+        return jsonify({'code': -4, 'msg': 'cannot find answer'})
     return jsonify({'code': 0, 'msg': 'unexpected user'})
 
 
@@ -487,7 +554,8 @@ def get_question():
                 'user_headportrait': user['headportrait'],
                 'title': question['title'],
                 'description': question['description'],
-                'tags': question['tags']
+                'tags': question['tags'],
+                'question_type': question['question_type']
             }
             return jsonify({'code': 1, 'msg': 'success', 'data': data})
         return jsonify({'code': -1, 'msg': 'unknown user'})
@@ -535,6 +603,14 @@ def get_answer_list():
             answer['edittime'] = get_formative_datetime(answer['edittime'])
         return jsonify({'code': 1, 'msg': 'success', 'data': answer_list})
     return jsonify({'code': 0, 'msg': 'unknown question'})
+
+
+@app.route('/api/questions/get_priced_answer_list')
+def get_priced_answer_list():
+    """
+    获取付费问题的回答
+    :return:
+    """
 
 
 @app.route('/api/questions/add_question_comment', methods=['POST'])
