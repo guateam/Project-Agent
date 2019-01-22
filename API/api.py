@@ -419,7 +419,29 @@ def minus_account_balance():
         return jsonify({'code': -1, 'msg': 'account balance not enough'})
 
 
+@app.route('/api/account/history_pay', methods=['POST'])
+def history_pay():
+    """
+    获取用户的支付记录
+    :return: code: -2=用户不存在
+    """
+    token = request.form['token']
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if not user:
+        return jsonify({'code': -1, 'msg': 'the user is not exist'})
+
+    log = db.get({'from': user['userID']}, 'pay_log')
+    return jsonify({'code': 1, 'msg': 'success', 'data': log})
+
+
 def change_account_balance(num, token):
+    """
+
+    :param num: 改变量
+    :param token: 用户token
+    :return: code:-2=用户不存在  -1=余额不足  0=数据库操作失败  1=改变成功
+    """
     db = Database()
     user = db.get({'token': token}, 'users')
     if user:
@@ -609,8 +631,75 @@ def get_answer_list():
 def get_priced_answer_list():
     """
     获取付费问题的回答
-    :return:
+    :return: code:-2=问题不存在  -1=用户不存在  0=未付费  1=成功
     """
+    # 获取问题ID和用户ID
+    question_id = request.values.get('question_id')
+    user_token = request.values.get('token')
+    # 获取问题和用户信息
+    db = Database()
+    question = db.get({'questionID': question_id}, 'questions')
+    user = db.get({'token': user_token}, 'users')
+    # 检查用户和问题是否存在
+    if not question:
+        return jsonify({'code': -2, 'msg': 'the question is not exist'})
+    if not user:
+        return jsonify({'code': -1, 'msg': 'the user is not exist'})
+
+    user_id = user['userID']
+    # 获取该问题,由该用户付费的记录
+    payer = db.get({'receive': question_id, 'from': user_id, 'type': 1}, 'pay_log')
+    # 获取是否为作者本人
+    is_author = (user_id == question['userID'])
+
+    # 已支付的或者提问者本人可以直接查看问题下的答案
+    if payer or is_author:
+        answers = db.get({'questionID': question_id}, 'answers')
+        return jsonify({'code': 1, 'msg': 'success', 'data': answers})
+    # 未支付用户则无权限获取答案
+    return jsonify({'code': 0, 'msg': 'the user have not paid this question'})
+
+
+@app.route('/api/questions/pay_question')
+def pay_question():
+    """
+    支付某一付费问题
+    :return: code:-5=退钱失败  -4=创建支付记录失败  -3=问题不存在  -2=用户不存在  -1=余额不足  0=支付失败  1=成功
+    """
+    # 获取问题ID和用户ID
+    question_id = request.values.get('question_id')
+    user_token = request.values.get('token')
+    # 获取问题和用户信息
+    db = Database()
+    question = db.get({'questionID': question_id}, 'questions')
+    user = db.get({'token': user_token}, 'users')
+    # 检查用户和问题是否存在
+    if not question:
+        return jsonify({'code': -3, 'msg': 'the question is not exist'})
+    if not user:
+        return jsonify({'code': -2, 'msg': 'the user is not exist'})
+
+    # 试图扣钱,将价格取负数
+    result = change_account_balance(-question['price'], user_token)
+    # 余额不足，提示
+    if result == -1:
+        return jsonify({'code': -1, 'msg': 'account balance not enough'})
+    # 支付的扣钱操作失败时，提示
+    elif result == 0:
+        return jsonify({'code': 0, 'msg': 'there are something wrong when paying'})
+    # 支付成功，生成支付记录
+    elif result == 1:
+        res = db.insert({'from': user['userID'], 'receive': question_id, 'amount': question['price'], 'type': 1})
+        if not res:
+            # 若创建支付记录失败，视为支付失败，将钱退还
+            return_money = change_account_balance(question['price'], user_token)
+            # 若退还失败，提示与客服沟通取钱
+            if not return_money:
+                jsonify({'code': -5, 'msg': 'create the pay_log fail,please call 客服 to get your money back'})
+            # 退还成功，提示支付记录创建失败，未能完成支付
+            return jsonify({'code': -4, 'msg': 'paying fail,there are something wrong when create the pay_log'})
+        # 支付成功
+        return jsonify({'code': 1, 'msg': 'success'})
 
 
 @app.route('/api/questions/add_question_comment', methods=['POST'])
