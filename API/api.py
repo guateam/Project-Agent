@@ -406,26 +406,6 @@ def back_get_normal_users():
     return jsonify({'code': 0, 'msg': 'unexpected user'})
 
 
-@app.route('/api/account/ban_user')
-def ban_user():
-    """
-    封禁用户
-    :return:code(0=未知用户，-1=数据库问题，1=成功)
-    """
-    token = request.headers.get('X-Token')
-    db = Database()
-    user = db.get({'token': token, 'usergroup': 0}, 'users')
-    if user:
-        user_id = request.values.get('user_id')
-        flag = db.update({'userID': user_id}, {'usergroup': 4}, 'users')
-        set_user_action(user['userID'], user_id, 32)
-        set_sys_message(user['userID'], 2, '你已被管理员封禁！', user_id)
-        if flag:
-            return jsonify({'code': 1, 'msg': 'success'})
-        return jsonify({'code': -1, 'msg': 'unable to ban user'})
-    return jsonify({'code': 0, 'msg': 'unexpected user'})
-
-
 @app.route('/api/account/back_get_specialist_users')
 def back_get_specialist_users():
     """
@@ -529,7 +509,7 @@ def refuse_specialist():
 @app.route('/api/account/confirm_enterprise')
 def confirm_enterprise():
     """
-    确认专家身份
+    确认企业身份
     :return:
     """
     token = request.headers.get('X-Token')
@@ -552,7 +532,7 @@ def confirm_enterprise():
 @app.route('/api/account/refuse_enterprise')
 def refuse_enterprise():
     """
-    确认专家身份
+    确认企业身份
     :return:
     """
     token = request.headers.get('X-Token')
@@ -584,6 +564,8 @@ def delete_user():
     if user:
         user_id = request.values.get('user_id')
         flag = db.update({'userID': user_id}, {'usergroup': 4}, 'users')
+        set_user_action(user['userID'], user_id, 32)
+        set_sys_message(user['userID'], 2, '你已被管理员封禁！', user_id)
         if flag:
             return jsonify({'code': 1, 'msg': 'success'})
         return jsonify({'code': -1, 'msg': 'unable to delete'})
@@ -771,7 +753,7 @@ def add_priced_question():
 def adopt_answer():
     """
     针对付费问题采纳回答
-    :return: code()
+    :return: code(0=未知用户，-4=不能找到回答，-3=不能找到问题，-2=未知答题人，-1=无法写入，1=成功)
     """
     token = request.values.get('token')
     db = Database()
@@ -1445,8 +1427,8 @@ def collect_article():
         return jsonify({'code': 0, 'msg': 'there are something wrong when inserted the data into database'})
 
 
-@app.route('/api/article/back_get_article')
-def back_get_article():
+@app.route('/api/article/back_get_articles')
+def back_get_articles():
     """
     后台获取article列表
     :return:
@@ -2230,8 +2212,10 @@ def add_demand():
         allowed_user = request.form['allowed_user']
         price = request.form['price']
         tags = request.form['tags']
+        title = request.form['title']
         flag = db.insert(
             {'userID': user['userID'], 'content': content, 'allowedUserGroup': allowed_user, 'price': price,
+             'title': title,
              'tags': tags}, 'demands')
         if flag:
             return jsonify({'code': 1, 'msg': 'success'})
@@ -2283,6 +2267,8 @@ def confirm_signed_user():
         user_id = request.values.get('user_id')
         target = request.values.get('target')
         flag = db.update({'userID': user_id, 'target': target}, {'state': 1}, 'sign_demand')
+        demand = db.get({'demandID': target}, 'demands')
+        set_sys_message(user['userID'], 2, '您之前报名的'+demand['title']+'已由企业审核通过，您现在是该需求的参与者了！', user_id)
         if flag:
             return jsonify({'code': 1, 'msg': 'success'})
         return jsonify({'code': -1, 'msg': 'unable to confirm'})
@@ -2302,6 +2288,8 @@ def refuse_signed_user():
         user_id = request.values.get('user_id')
         target = request.values.get('target')
         flag = db.update({'userID': user_id, 'target': target}, {'state': -1}, 'sign_demand')
+        demand = db.get({'demandID': target}, 'demands')
+        set_sys_message(user['userID'], 2, '您之前报名的 ' + demand['title'] + ' 申请未通过！', user_id)
         if flag:
             return jsonify({'code': 1, 'msg': 'success'})
         return jsonify({'code': -1, 'msg': 'unable to refuse'})

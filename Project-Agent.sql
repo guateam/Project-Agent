@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2019-01-23 13:39:29
+Date: 2019-01-23 14:25:21
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -125,6 +125,7 @@ CREATE TABLE `demands` (
   `tags` varchar(45) NOT NULL,
   `createtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `state` int(2) NOT NULL,
+  `title` varchar(45) NOT NULL,
   PRIMARY KEY (`demandID`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;
 
