@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2019-01-17 15:20:38
+Date: 2019-01-24 13:16:34
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -26,8 +26,8 @@ CREATE TABLE `answercomments` (
   `agree` int(11) NOT NULL COMMENT '赞同数',
   `createtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
   `answerID` int(11) NOT NULL COMMENT '对应答案ID',
-  PRIMARY KEY (`acommentID`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='回答评论表';
+  PRIMARY KEY (`acommentID`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='回答评论表';
 
 -- ----------------------------
 -- Records of answercomments
@@ -52,8 +52,8 @@ CREATE TABLE `answers` (
   `questionID` int(11) NOT NULL COMMENT '对应问题ID\n',
   `tags` text NOT NULL,
   `state` int(2) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`answerID`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='答案';
+  PRIMARY KEY (`answerID`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='答案';
 
 -- ----------------------------
 -- Records of answers
@@ -75,8 +75,8 @@ CREATE TABLE `article` (
   `userID` int(10) NOT NULL,
   `tags` varchar(45) NOT NULL,
   `state` int(2) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`articleID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  PRIMARY KEY (`articleID`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of article
@@ -90,8 +90,8 @@ CREATE TABLE `collectanswer` (
   `idCollectAnswer` int(11) NOT NULL AUTO_INCREMENT,
   `userID` int(11) NOT NULL,
   `answerID` int(11) NOT NULL,
-  PRIMARY KEY (`idCollectAnswer`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='收藏：用户-答案映射';
+  PRIMARY KEY (`idCollectAnswer`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='收藏：用户-答案映射';
 
 -- ----------------------------
 -- Records of collectanswer
@@ -105,11 +105,32 @@ CREATE TABLE `collectarticle` (
   `idCollectArticle` int(11) NOT NULL AUTO_INCREMENT,
   `userID` int(11) NOT NULL,
   `articleID` int(11) NOT NULL,
-  PRIMARY KEY (`idCollectArticle`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='收藏：用户-文章映射';
+  PRIMARY KEY (`idCollectArticle`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='收藏：用户-文章映射';
 
 -- ----------------------------
 -- Records of collectarticle
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `demands`
+-- ----------------------------
+DROP TABLE IF EXISTS `demands`;
+CREATE TABLE `demands` (
+  `demandID` int(10) NOT NULL AUTO_INCREMENT,
+  `userID` int(10) NOT NULL,
+  `content` text NOT NULL,
+  `allowedUserGroup` varchar(45) NOT NULL,
+  `price` varchar(45) NOT NULL,
+  `tags` varchar(45) NOT NULL,
+  `createtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `state` int(2) NOT NULL,
+  `title` varchar(45) NOT NULL,
+  PRIMARY KEY (`demandID`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;
+
+-- ----------------------------
+-- Records of demands
 -- ----------------------------
 
 -- ----------------------------
@@ -122,8 +143,8 @@ CREATE TABLE `exp_change` (
   `value` int(10) NOT NULL,
   `userID` int(10) NOT NULL,
   `description` varchar(45) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of exp_change
@@ -137,8 +158,8 @@ CREATE TABLE `followcolumn` (
   `idFollowColumn` int(11) NOT NULL AUTO_INCREMENT,
   `userID` int(11) NOT NULL COMMENT '用户ID',
   `target` int(11) NOT NULL COMMENT '目标 专栏ID',
-  PRIMARY KEY (`idFollowColumn`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户-专栏 关注关系映射表';
+  PRIMARY KEY (`idFollowColumn`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='用户-专栏 关注关系映射表';
 
 -- ----------------------------
 -- Records of followcolumn
@@ -152,8 +173,8 @@ CREATE TABLE `followtopic` (
   `idFollowTopic` int(11) NOT NULL AUTO_INCREMENT,
   `userID` int(11) NOT NULL COMMENT '用户ID',
   `target` int(11) NOT NULL COMMENT '目标 话题ID',
-  PRIMARY KEY (`idFollowTopic`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户-话题 关注关系映射表';
+  PRIMARY KEY (`idFollowTopic`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='用户-话题 关注关系映射表';
 
 -- ----------------------------
 -- Records of followtopic
@@ -167,8 +188,8 @@ CREATE TABLE `followuser` (
   `idFollowUser` int(11) NOT NULL AUTO_INCREMENT,
   `userID` int(11) NOT NULL COMMENT '用户ID',
   `target` int(11) NOT NULL COMMENT '目标 用户ID',
-  PRIMARY KEY (`idFollowUser`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='用户-用户 关注关系映射表';
+  PRIMARY KEY (`idFollowUser`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='用户-用户 关注关系映射表';
 
 -- ----------------------------
 -- Records of followuser
@@ -186,8 +207,8 @@ CREATE TABLE `messages` (
   `receiver` int(11) NOT NULL,
   `type` int(2) NOT NULL,
   `post_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`messageID`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
+  PRIMARY KEY (`messageID`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of messages
@@ -202,6 +223,43 @@ INSERT INTO `messages` VALUES ('7', 'emoji\\u6d4b\\u8bd5\\U0001f600', '1', '2', 
 INSERT INTO `messages` VALUES ('8', 'emoji测试????略略略', '3', '2', '0', '2019-01-07 18:44:56');
 
 -- ----------------------------
+-- Table structure for `orders`
+-- ----------------------------
+DROP TABLE IF EXISTS `orders`;
+CREATE TABLE `orders` (
+  `orderID` int(10) NOT NULL AUTO_INCREMENT,
+  `userID` int(10) NOT NULL,
+  `target` int(10) NOT NULL,
+  `start_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `content` text NOT NULL,
+  `state` int(2) NOT NULL DEFAULT '0',
+  `end_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`orderID`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;
+
+-- ----------------------------
+-- Records of orders
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `pay_log`
+-- ----------------------------
+DROP TABLE IF EXISTS `pay_log`;
+CREATE TABLE `pay_log` (
+  `from` int(255) NOT NULL COMMENT '钱的来源，用户ID',
+  `receive` int(255) DEFAULT NULL COMMENT '钱的接收ID ,问题ID或专家ID或告示板需求ID',
+  `amount` int(255) DEFAULT NULL COMMENT '金额数量',
+  `type` int(255) DEFAULT NULL COMMENT '交易形式  1-付费问答  2-专家咨询  3-告示板需求',
+  `time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '交易发起时间',
+  `ID` int(11) NOT NULL AUTO_INCREMENT COMMENT '交易单号',
+  PRIMARY KEY (`ID`) USING BTREE
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED;
+
+-- ----------------------------
+-- Records of pay_log
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for `questioncomments`
 -- ----------------------------
 DROP TABLE IF EXISTS `questioncomments`;
@@ -212,8 +270,8 @@ CREATE TABLE `questioncomments` (
   `agree` int(11) NOT NULL COMMENT '赞同数\n',
   `createtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
   `questionID` int(11) DEFAULT NULL COMMENT '对应问题ID\n',
-  PRIMARY KEY (`qcommentID`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='问题评论';
+  PRIMARY KEY (`qcommentID`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='问题评论';
 
 -- ----------------------------
 -- Records of questioncomments
@@ -234,8 +292,8 @@ CREATE TABLE `questionlog` (
   `description` text NOT NULL COMMENT '描述',
   `userID` int(11) NOT NULL COMMENT '编辑者',
   `reason` varchar(200) NOT NULL COMMENT '编辑理由',
-  PRIMARY KEY (`idQuestionLog`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='问题日志';
+  PRIMARY KEY (`idQuestionLog`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='问题日志';
 
 -- ----------------------------
 -- Records of questionlog
@@ -253,18 +311,37 @@ CREATE TABLE `questions` (
   `userID` int(11) NOT NULL COMMENT '创建者ID',
   `tags` varchar(45) DEFAULT NULL COMMENT '问题标签',
   `state` int(2) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`questionID`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='问题\r\n';
+  `question_type` int(2) NOT NULL DEFAULT '0',
+  `price` int(255) NOT NULL DEFAULT '0',
+  `allowed_user` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`questionID`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='问题\r\n';
 
 -- ----------------------------
 -- Records of questions
 -- ----------------------------
-INSERT INTO `questions` VALUES ('1', '刚刚研制成功的世界首台分辨力最高紫外超分辨光刻装备意味着什么？对国内芯片行业有何影响？', '这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述', '2018-12-17 21:00:38', '1', null, '0');
-INSERT INTO `questions` VALUES ('2', '程序员是如何看待「祖传代码」的？', '说明一下……此处「祖传代码」与百度搜索「祖传代码」词条出现的某直播平台后缀无关……\n\n几位答主提到祖传代码不仅游戏领域有，其他领域也存在，所以删除了游戏标签，问题修改为作为程序员对于「祖传代码」这种说法或其本身有什么看法吐槽。\n\n对码农一无所知，提问的初衷大概是为了爱与和平。\n\n感谢扫盲_(:з」∠)_', '2018-12-15 18:46:54', '1', null, '0');
-INSERT INTO `questions` VALUES ('3', '为什么总是有人说 Java 啰嗦，却没人说 C++ 啰嗦？', '哈哈哈哈哈哈', '2018-12-15 18:47:38', '1', null, '0');
-INSERT INTO `questions` VALUES ('4', '有哪些让你目瞪口呆的 bug？', '', '2018-12-15 18:49:52', '1', null, '0');
-INSERT INTO `questions` VALUES ('5', '互联网行业的裁员潮是否已经开始了？', '【此为2018年的提问】\n\n看到媒体也开始说这件事了……普通员工如何扛过去呢？', '2018-12-15 18:51:16', '1', null, '0');
-INSERT INTO `questions` VALUES ('6', '@测试提问', '【此为2018年的提问】\n@拉拉人 \n看到媒体也开始说这件事了……普通员工如何扛过去呢？', '2018-12-29 10:35:05', '1', null, '0');
+INSERT INTO `questions` VALUES ('1', '刚刚研制成功的世界首台分辨力最高紫外超分辨光刻装备意味着什么？对国内芯片行业有何影响？', '这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述', '2018-12-17 21:00:38', '1', null, '0', '0', '0', null);
+INSERT INTO `questions` VALUES ('2', '程序员是如何看待「祖传代码」的？', '说明一下……此处「祖传代码」与百度搜索「祖传代码」词条出现的某直播平台后缀无关……\n\n几位答主提到祖传代码不仅游戏领域有，其他领域也存在，所以删除了游戏标签，问题修改为作为程序员对于「祖传代码」这种说法或其本身有什么看法吐槽。\n\n对码农一无所知，提问的初衷大概是为了爱与和平。\n\n感谢扫盲_(:з」∠)_', '2018-12-15 18:46:54', '1', null, '0', '0', '0', null);
+INSERT INTO `questions` VALUES ('3', '为什么总是有人说 Java 啰嗦，却没人说 C++ 啰嗦？', '哈哈哈哈哈哈', '2018-12-15 18:47:38', '1', null, '0', '0', '0', null);
+INSERT INTO `questions` VALUES ('4', '有哪些让你目瞪口呆的 bug？', '', '2018-12-15 18:49:52', '1', null, '0', '0', '0', null);
+INSERT INTO `questions` VALUES ('5', '互联网行业的裁员潮是否已经开始了？', '【此为2018年的提问】\n\n看到媒体也开始说这件事了……普通员工如何扛过去呢？', '2018-12-15 18:51:16', '1', null, '0', '0', '0', null);
+INSERT INTO `questions` VALUES ('6', '@测试提问', '【此为2018年的提问】\n@拉拉人 \n看到媒体也开始说这件事了……普通员工如何扛过去呢？', '2018-12-29 10:35:05', '1', null, '0', '0', '0', null);
+
+-- ----------------------------
+-- Table structure for `sign_demand`
+-- ----------------------------
+DROP TABLE IF EXISTS `sign_demand`;
+CREATE TABLE `sign_demand` (
+  `signID` int(10) NOT NULL AUTO_INCREMENT,
+  `userID` int(10) NOT NULL,
+  `target` int(10) NOT NULL,
+  `state` int(2) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`signID`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;
+
+-- ----------------------------
+-- Records of sign_demand
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for `sys_message`
@@ -276,13 +353,14 @@ CREATE TABLE `sys_message` (
   `userID` int(10) NOT NULL,
   `createtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `type` int(2) NOT NULL,
-  PRIMARY KEY (`noticeID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+  `target` int(10) NOT NULL,
+  PRIMARY KEY (`noticeID`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of sys_message
 -- ----------------------------
-INSERT INTO `sys_message` VALUES ('1', '系统通知啊，今天要例会', '1', '2018-12-29 10:58:21', '1');
+INSERT INTO `sys_message` VALUES ('1', '系统通知啊，今天要例会', '1', '2018-12-29 10:58:21', '1', '0');
 
 -- ----------------------------
 -- Table structure for `tags`
@@ -293,14 +371,28 @@ CREATE TABLE `tags` (
   `name` varchar(45) NOT NULL,
   `type` int(2) NOT NULL,
   `father` int(10) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of tags
 -- ----------------------------
 INSERT INTO `tags` VALUES ('1', '非原创', '0', null);
 INSERT INTO `tags` VALUES ('2', '随便抄', '0', null);
+INSERT INTO `tags` VALUES ('3', '减振降噪', '1', null);
+INSERT INTO `tags` VALUES ('4', '新材料应用', '1', null);
+INSERT INTO `tags` VALUES ('5', '传感器', '1', null);
+INSERT INTO `tags` VALUES ('6', '绿色能源', '1', null);
+INSERT INTO `tags` VALUES ('7', '射频技术', '1', null);
+INSERT INTO `tags` VALUES ('8', '人工智能', '1', null);
+INSERT INTO `tags` VALUES ('9', '流体机械', '1', null);
+INSERT INTO `tags` VALUES ('10', '水处理技术', '1', null);
+INSERT INTO `tags` VALUES ('11', '食品技术', '1', null);
+INSERT INTO `tags` VALUES ('12', '制冷系统设计', '1', null);
+INSERT INTO `tags` VALUES ('13', '燃烧技术', '1', null);
+INSERT INTO `tags` VALUES ('14', '空气净化技术', '1', null);
+INSERT INTO `tags` VALUES ('15', '机械结构设计', '1', null);
+INSERT INTO `tags` VALUES ('16', '加热技术', '1', null);
 
 -- ----------------------------
 -- Table structure for `useraction`
@@ -312,8 +404,8 @@ CREATE TABLE `useraction` (
   `targetID` int(11) NOT NULL COMMENT '行为对应ID\n',
   `targettype` int(11) NOT NULL COMMENT '行为类型',
   `actiontime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '行为发生时间',
-  PRIMARY KEY (`actionID`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='用户行为表\n';
+  PRIMARY KEY (`actionID`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='用户行为表\n';
 
 -- ----------------------------
 -- Records of useraction
@@ -345,15 +437,17 @@ CREATE TABLE `users` (
   `number` varchar(45) NOT NULL,
   `real_name` varchar(20) NOT NULL,
   `nationality` varchar(20) NOT NULL,
-  PRIMARY KEY (`userID`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='用户表';
+  `account_balance` int(255) NOT NULL DEFAULT '0' COMMENT '账户余额',
+  `specialitst_license` varchar(255) NOT NULL,
+  PRIMARY KEY (`userID`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='用户表';
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES ('1', 'zhangyu199946@126.com', '拉拉人', 'ec847003d2eadc9baf60853e8391e167a292c21f01892fcb8bad0f4af6cd74a7', '', '0', '998', 'Jw0urbB4AoidRM1PyGxTWc7CU', null, null, null, '弗兰秀秀牛逼', '0', '', '', '', '');
-INSERT INTO `users` VALUES ('2', 'yyz@126.com', '袁宜照', '317f16f4833885da6766e81b35c7258fe4451798600a1ad980babb9e9f412fc2', '', '0', '0', 'TNp6hR7ElkJK4Z5Xfte0VyqG3', null, null, null, '', '0', '', '', '', '');
-INSERT INTO `users` VALUES ('3', 'zyxiaohao@126.com', '', 'cb8f260c5b29ec2a17d662133ebcf99cd4594e29b0ffeb54599ffe5f3801c3ed', null, '0', '0', 'U3WieM95EkGpfXTwdohKFgnjv', null, null, null, '', '0', '', '', '', '');
+INSERT INTO `users` VALUES ('1', 'zhangyu199946@126.com', '拉拉人', 'ec847003d2eadc9baf60853e8391e167a292c21f01892fcb8bad0f4af6cd74a7', '', '0', '998', 'VHjWIO5Kp7So6uGxY4Fcbs3Jt', null, null, null, '弗兰秀秀牛逼', '0', '', '', '', '', '0', '');
+INSERT INTO `users` VALUES ('2', 'yyz@126.com', '袁宜照', '317f16f4833885da6766e81b35c7258fe4451798600a1ad980babb9e9f412fc2', '', '0', '0', 'TNp6hR7ElkJK4Z5Xfte0VyqG3', null, null, null, '', '0', '', '', '', '', '0', '');
+INSERT INTO `users` VALUES ('3', 'zyxiaohao@126.com', '', 'cb8f260c5b29ec2a17d662133ebcf99cd4594e29b0ffeb54599ffe5f3801c3ed', null, '0', '0', 'U3WieM95EkGpfXTwdohKFgnjv', null, null, null, '', '0', '', '', '', '', '0', '');
 
 -- ----------------------------
 -- View structure for `ac_at_info`
@@ -404,6 +498,24 @@ DROP VIEW IF EXISTS `chat_box`;
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `chat_box` AS select `messages`.`messageID` AS `messageID`,`messages`.`content` AS `content`,`messages`.`poster` AS `poster`,`messages`.`receiver` AS `receiver`,`messages`.`type` AS `type`,`poster`.`headportrait` AS `poster_headportrait`,`poster`.`usergroup` AS `poster_usergroup`,`poster`.`nickname` AS `poster_nickname`,`poster`.`exp` AS `poster_exp`,`receiver`.`nickname` AS `receiver_nickname`,`receiver`.`headportrait` AS `receiver_headportrait`,`receiver`.`usergroup` AS `receiver_usergroup`,`receiver`.`exp` AS `receiver_exp`,`messages`.`post_time` AS `post_time` from ((`messages` join `users` `poster`) join `users` `receiver`) where ((`messages`.`poster` = `poster`.`userID`) and (`messages`.`receiver` = `receiver`.`userID`)) order by `messages`.`post_time` desc ;
 
 -- ----------------------------
+-- View structure for `demands_info`
+-- ----------------------------
+DROP VIEW IF EXISTS `demands_info`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `demands_info` AS select `demands`.`demandID` AS `demandID`,`demands`.`userID` AS `userID`,`demands`.`content` AS `content`,`demands`.`allowedUserGroup` AS `allowedUserGroup`,`demands`.`price` AS `price`,`demands`.`tags` AS `tags`,`users`.`nickname` AS `nickname`,`users`.`headportrait` AS `headportrait`,`users`.`usergroup` AS `usergroup`,`users`.`exp` AS `exp`,`users`.`description` AS `description`,`demands`.`createtime` AS `createtime`,`demands`.`state` AS `state` from (`demands` join `users`) where (`demands`.`userID` = `users`.`userID`) ;
+
+-- ----------------------------
+-- View structure for `followinfo`
+-- ----------------------------
+DROP VIEW IF EXISTS `followinfo`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `followinfo` AS select `followuser`.`idFollowUser` AS `idFollowUser`,`followuser`.`userID` AS `userID`,`followuser`.`target` AS `target`,`target`.`nickname` AS `target_nickname`,`target`.`headportrait` AS `target_headportrait`,`target`.`usergroup` AS `target_usergroup`,`target`.`exp` AS `target_exp`,`target`.`description` AS `target_description`,`follower`.`nickname` AS `follower_nickname`,`follower`.`headportrait` AS `follower_headportrait`,`follower`.`usergroup` AS `follower_usergroup`,`follower`.`exp` AS `follower_exp`,`follower`.`description` AS `follower_description` from ((`followuser` join `users` `follower`) join `users` `target`) where ((`followuser`.`userID` = `follower`.`userID`) and (`followuser`.`target` = `target`.`userID`)) ;
+
+-- ----------------------------
+-- View structure for `orderinfo`
+-- ----------------------------
+DROP VIEW IF EXISTS `orderinfo`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `orderinfo` AS select `orders`.`orderID` AS `orderID`,`orders`.`userID` AS `userID`,`orders`.`target` AS `target`,`orders`.`start_time` AS `start_time`,`orders`.`content` AS `content`,`orders`.`end_time` AS `end_time`,`users`.`nickname` AS `nickname`,`users`.`headportrait` AS `headportrait`,`users`.`usergroup` AS `usergroup`,`users`.`exp` AS `exp`,`users`.`description` AS `description`,`orders`.`state` AS `state` from (`users` join `orders`) where (`users`.`userID` = `orders`.`userID`) ;
+
+-- ----------------------------
 -- View structure for `qc_at_info`
 -- ----------------------------
 DROP VIEW IF EXISTS `qc_at_info`;
@@ -426,3 +538,9 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 -- ----------------------------
 DROP VIEW IF EXISTS `q_at_info`;
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `q_at_info` AS select `questions`.`questionID` AS `questionID`,`questions`.`title` AS `title`,`questions`.`description` AS `description`,`questions`.`userID` AS `userID`,`users`.`nickname` AS `nickname`,`users`.`headportrait` AS `headportrait`,`users`.`usergroup` AS `usergroup`,`users`.`exp` AS `exp`,`questions`.`edittime` AS `edittime` from (`questions` join `users`) where (`questions`.`userID` = `users`.`userID`) ;
+
+-- ----------------------------
+-- View structure for `signed_demand_info`
+-- ----------------------------
+DROP VIEW IF EXISTS `signed_demand_info`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `signed_demand_info` AS select `sign_demand`.`signID` AS `signID`,`sign_demand`.`userID` AS `userID`,`sign_demand`.`target` AS `target`,`sign_demand`.`state` AS `state`,`users`.`nickname` AS `nickname`,`users`.`headportrait` AS `headportrait`,`users`.`usergroup` AS `usergroup`,`users`.`exp` AS `exp`,`users`.`description` AS `description` from (`sign_demand` join `users`) where (`sign_demand`.`userID` = `users`.`userID`) ;
