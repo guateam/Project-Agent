@@ -1040,6 +1040,8 @@ def delete_question():
     if user:
         flag = db.update({'questionID': question_id}, {'state': -1}, 'questions')
         if flag:
+            set_user_action(user['userID'], question_id, 34)
+            set_sys_message(user['userID'], 2, '您发布的问题 ' + flag['title'] + ' 已被管理员清除！', flag['userID'])
             return jsonify({'code': 1, 'msg': 'success'})
         return jsonify({'code': -1, 'msg': 'unable to delete'})
     return jsonify({'code': 0, 'msg': 'unexpected user'})
@@ -1340,6 +1342,10 @@ def delete_answer():
         answer_id = request.values.get('answer_id')
         flag = db.update({'answerID': answer_id}, {'state': -1}, 'answers')
         if flag:
+            set_user_action(user['userID'], answer_id, 35)
+            question = db.get({'questionID': flag['questionID']}, 'questions')
+            if question:
+                set_sys_message(user['userID'], 2, '您在 ' + question['title'] + ' 下的回答已被管理员清除！', flag['userID'])
             return jsonify({'code': 1, 'msg': 'success'})
         return jsonify({'code': -1, 'msg': 'unable to delete'})
     return jsonify({'code': 0, 'msg': 'unexpected user'})
@@ -1457,6 +1463,8 @@ def delete_article():
     if user:
         article = db.update({'articleID': article_id}, {'state': -1}, 'article')
         if article:
+            set_user_action(user['userID'], article_id, 36)
+            set_sys_message(user['userID'], 2, '您发布的文章 ' + article['title'] + ' 已被管理员清除！', article['userID'])
             return jsonify({'code': 1, 'msg': 'success'})
         return jsonify({'code': -1, 'msg': 'unable to delete'})
     return jsonify({'code': 0, 'msg': 'unexpected user'})
@@ -1512,14 +1520,18 @@ def get_recommend():
 @app.route('/api/homepage/get_category')
 def get_category():
     """
-    获取分类(假的)
-    :return:code(0=未知问题，1=成功)
+    获取分类(真的)
+    :return:code(1=成功)
     """
-    return jsonify({'code': 1, 'msg': 'success',
-                    'data': [{'name': '材料学', 'id': 1},
-                             {'name': '计算机图形学', 'id': 2},
-                             {'name': '机械学', 'id': 3},
-                             {'name': '热力学', 'id': 4}, ]})
+    db = Database()
+    tags = db.get({'type': 1}, 'tags')
+    data = []
+    for value in tags:
+        data.append({
+            'name': value['name'],
+            'id': value['id']
+        })
+    return jsonify({'code': 1, 'msg': 'success', 'data': data})
 
 
 @app.route('/api/homepage/get_hot_search')
@@ -2268,7 +2280,7 @@ def confirm_signed_user():
         target = request.values.get('target')
         flag = db.update({'userID': user_id, 'target': target}, {'state': 1}, 'sign_demand')
         demand = db.get({'demandID': target}, 'demands')
-        set_sys_message(user['userID'], 2, '您之前报名的'+demand['title']+'已由企业审核通过，您现在是该需求的参与者了！', user_id)
+        set_sys_message(user['userID'], 2, '您之前报名的' + demand['title'] + '已由企业审核通过，您现在是该需求的参与者了！', user_id)
         if flag:
             return jsonify({'code': 1, 'msg': 'success'})
         return jsonify({'code': -1, 'msg': 'unable to confirm'})
@@ -2376,6 +2388,152 @@ def sign_to_demand():
         if flag:
             return jsonify({'code': 1, 'msg': 'success'})
         return jsonify({'code': -1, 'msg': 'unable to sign'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/board/get_board_recommend')
+def get_board_recommend():
+    """
+    获取需求推荐
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        """
+            没对接cf算法，到时候对接一下cf算法
+        """
+        demand = db.get({'state': 0}, 'demands_info')
+        """
+            对接处
+        """
+        for value in demand:
+            value.update({
+                'tags': get_tags(value['tags']),
+                'usergroup': get_group(value['usergroup']),
+                'level': get_level(value['exp']),
+            })
+        return jsonify({'code': 1, 'msg': 'success', 'data': demand})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/board/get_board_category')
+def get_board_category():
+    """
+    获取告示板分类
+    :return:
+    """
+    db = Database()
+    tags = db.get({'type': 1}, 'tags')
+    data = []
+    for value in tags:
+        data.append({
+            'name': value['name'],
+            'id': value['id']
+        })
+    return jsonify({'code': 1, 'msg': 'success', 'data': data})
+
+
+@app.route('/api/board/get_child_category')
+def get_child_category():
+    """
+    获取父级标签下的子集标签
+    :return:
+    """
+    db = Database()
+    tag_id = request.values.get('tag_id')
+    tags = db.get({'father': tag_id}, 'tags')
+    data = []
+    for value in tags:
+        data.append({
+            'name': value['name'],
+            'id': value['id']
+        })
+    return jsonify({'code': 1, 'msg': 'success', 'data': data})
+
+
+@app.route('/api/board/get_demand')
+def get_demand():
+    """
+    获取需求信息
+    :return:
+    """
+    demand_id = request.values.get('demand_id')
+    db = Database()
+    demand = db.get({'demandID': demand_id}, 'demands_info')
+    if demand:
+        demand.update({
+            'tags': get_tags(demand['tags']),
+            'usergroup': get_group(demand['usergroup']),
+            'level': get_level(demand['exp']),
+        })
+        return jsonify({'code': 1, 'msg': 'success', 'data': demand})
+    return jsonify({'code': 0, 'msg': 'unknown demand'})
+
+
+@app.route('/api/board/get_demands_by_tag')
+def get_demands_by_tag():
+    """
+    获取该tag下的所有需求
+    :return:
+    """
+    tag_id = request.values.get('tag_id')
+    db = Database()
+    demands = db.get({'state': 0}, 'demands_info')
+    data = []
+    for value in demands:
+        tags = get_tags(value['tags'])
+        for tag in tags:
+            if tag['id'] == tag_id:
+                value.update({
+                    'tags': get_tags(value['tags']),
+                    'usergroup': get_group(value['usergroup']),
+                    'level': get_level(value['exp']),
+                })
+                data.append(value)
+                break
+    return jsonify({'code': 1, 'msg': 'success', 'data': data})
+
+
+@app.route('/api/board/back_get_demands')
+def back_get_demands():
+    """
+    后台获取需求列表
+    :return:
+    """
+    token = request.headers.get('X-Token')
+    db = Database()
+    user = db.get({'token': token, 'usergroup': 0}, 'users')
+    if user:
+        demands = db.get({}, 'demands_info')
+        for value in demands:
+            value.update({
+                'tags': get_tags(value['tags']),
+                'usergroup': get_group(value['usergroup']),
+                'level': get_level(value['exp']),
+            })
+        return jsonify({'code': 1, 'msg': 'success', 'data': demands})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/board/delete_demand')
+def delete_demand():
+    """
+    清除需求
+    :return:
+    """
+    token = request.headers.get('X-Token')
+    db = Database()
+    user = db.get({'token': token, 'usergroup': 0}, 'users')
+    if user:
+        demand_id = request.values.get('demand_id')
+        flag = db.update({'demandID': demand_id}, {'state': -1}, 'demands')
+        if flag:
+            set_user_action(user['userID'], demand_id, 33)
+            set_sys_message(user['userID'], 2, '您发布的需求 ' + flag['title'] + ' 已被管理员清除！', flag['userID'])
+            return jsonify({'code': 1, 'msg': 'success'})
+        return jsonify({'code': -1, 'msg': 'unable to delete'})
     return jsonify({'code': 0, 'msg': 'unexpected user'})
 
 
