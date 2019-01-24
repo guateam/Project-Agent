@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2019-01-23 14:25:21
+Date: 2019-01-24 13:16:34
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -372,13 +372,27 @@ CREATE TABLE `tags` (
   `type` int(2) NOT NULL,
   `father` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of tags
 -- ----------------------------
 INSERT INTO `tags` VALUES ('1', '非原创', '0', null);
 INSERT INTO `tags` VALUES ('2', '随便抄', '0', null);
+INSERT INTO `tags` VALUES ('3', '减振降噪', '1', null);
+INSERT INTO `tags` VALUES ('4', '新材料应用', '1', null);
+INSERT INTO `tags` VALUES ('5', '传感器', '1', null);
+INSERT INTO `tags` VALUES ('6', '绿色能源', '1', null);
+INSERT INTO `tags` VALUES ('7', '射频技术', '1', null);
+INSERT INTO `tags` VALUES ('8', '人工智能', '1', null);
+INSERT INTO `tags` VALUES ('9', '流体机械', '1', null);
+INSERT INTO `tags` VALUES ('10', '水处理技术', '1', null);
+INSERT INTO `tags` VALUES ('11', '食品技术', '1', null);
+INSERT INTO `tags` VALUES ('12', '制冷系统设计', '1', null);
+INSERT INTO `tags` VALUES ('13', '燃烧技术', '1', null);
+INSERT INTO `tags` VALUES ('14', '空气净化技术', '1', null);
+INSERT INTO `tags` VALUES ('15', '机械结构设计', '1', null);
+INSERT INTO `tags` VALUES ('16', '加热技术', '1', null);
 
 -- ----------------------------
 -- Table structure for `useraction`
