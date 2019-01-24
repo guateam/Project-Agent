@@ -437,7 +437,7 @@ Format:
 
 14. ##### 后台获取专家列表 back_get_specialist_users
 
-    - 接口 `/api/account/back_get_sepcialist_users()`
+    - 接口 `/api/account/back_get_specialist_users()`
 
     - 参数 `X-Token`-token
 
