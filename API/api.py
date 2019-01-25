@@ -243,6 +243,62 @@ def set_user_action(user_id, target, action_type):
     return False
 
 
+@app.route('/api/account/set_verify_info', methods=['POST'])
+def set_verify_info():
+    """
+    上传实名信息
+    :return:
+    """
+    token = request.form['token']
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        real_name = request.form['real_name']
+        nationality = request.form['nationality']
+        address = request.form['address']
+        gender = request.form['gender']
+        number = request.form['number']
+        flag = db.update({'userID': user['userID']},
+                         {'real_name': real_name, 'nationality': nationality, 'address': address, 'gender': gender,
+                          'number': number, 'state': 1}, 'users')
+        if flag:
+            return jsonify({'code': 1, 'msg': 'success'})
+        return jsonify({'code': -1, 'msg': 'unable to set'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/account/get_verify_user')
+def get_verify_user():
+    """
+    获取待实名审核的用户
+    :return:
+    """
+    token = request.headers.get('X-Token')
+    db = Database()
+    user = db.get({'token': token, 'usergroup': 0}, 'users')
+    if user:
+        user_id = request.values.get('user_id')
+        user = db.get({'userID': user_id}, 'users')
+        if user:
+            data = {
+                'nickname': user['nickname'],
+                'group': get_group(user['usergroup']),
+                'level': get_level(user['exp']),
+                'headportrait': user['headportrait'],
+                'exp': user['exp'],
+                'real_name': user['real_name'],
+                'nationality': user['nationality'],
+                'number': user['number'],
+                'gender': user['gender'],
+                'front_pic': user['front_pic'],
+                'back_pic': user['back_pic'],
+                'address': user['address']
+            }
+            return jsonify({'code': 1, 'msg': 'success', 'data': data})
+        return jsonify({'code': -1, 'msg': 'unknown user'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
 @app.route('/api/account/verify', methods=['POST'])
 def verify():
     """
@@ -459,6 +515,38 @@ def back_get_enterprise_users():
 
         return jsonify({'code': 1, 'msg': 'success',
                         'data': {'all': confirm + wait, 'wait': wait, 'confirm': confirm}})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/account/get_specialist_info')
+def get_specialist_info():
+    """
+    获取专家申请人的个人消息
+    :return:
+    """
+    token = request.headers.get('X-Token')
+    db = Database()
+    user = db.get({'token': token, 'usergroup': 0}, 'users')
+    if user:
+        user_id = request.values.get('user_id')
+        user = db.get({'userID': user_id}, 'users')
+        if user:
+            data = {
+                'nickname': user['nickname'],
+                'group': get_group(user['usergroup']),
+                'level': get_level(user['exp']),
+                'headportrait': user['headportrait'],
+                'exp': user['exp'],
+                'specialitst_license': user['specialitst_license'],
+                'license_type': user['license_type'],
+                'real_name': user['real_name'],
+                'nationality': user['nationality'],
+                'number': user['number'],
+                'gender': user['gender'],
+                'address': user['address']
+            }
+            return jsonify({'code': 1, 'msg': 'success', 'data': data})
+        return jsonify({'code': -1, 'msg': 'unknown user'})
     return jsonify({'code': 0, 'msg': 'unexpected user'})
 
 
@@ -1949,13 +2037,14 @@ def upload_identity_card():
             front.save(upload_path)
             # 反面的图片
             back_filename = user['userID'] + '_front_' + front.filename.rsplit('.', 1)[1]
-            upload_path_reverse = os.path.join(basepath, 'identity_card/', back_filename)  # 注意：没有的文件夹一定要先创建，不然会提示没有该路径
+            upload_path_reverse = os.path.join(basepath, 'identity_card', back_filename)  # 注意：没有的文件夹一定要先创建，不然会提示没有该路径
             back.save(upload_path_reverse)
 
             # 调用ocr进行反面识别文字信息(反面是有个人信息的那一面)
             info_reverse = ocr(upload_path_reverse)
 
-            flag = db.update({'userID': user['userID']}, {'state': 1}, 'users')
+            flag = db.update({'userID': user['userID']}, {'front_pic': upload_path, 'back_pic': upload_path_reverse},
+                             'users')
             if flag:
                 return jsonify({'code': 1, 'msg': 'success', 'data': info_reverse})
             return jsonify({'code': -2, 'msg': 'unable to identify'})
@@ -2205,7 +2294,9 @@ def request_upgrade():
             filename = user['userID'] + '_license' + specialist_license.filename.rsplit('.', 1)[1]
             upload_path = os.path.join(basepath, 'license', filename)  # 注意：没有的文件夹一定要先创建，不然会提示没有该路径
             specialist_license.save(upload_path)
-            flag = db.update({'userID': user['userID']}, {'usergroup': 5}, 'users')
+            license_type = request.form['license_type']
+            flag = db.update({'userID': user['userID']},
+                             {'usergroup': 5, 'license_type': license_type, 'specialist_license': upload_path}, 'users')
             if flag:
                 return jsonify({'code': 1, 'msg': 'success'})
             return jsonify({'code': -1, 'msg': 'unable to request'})
@@ -2368,7 +2459,9 @@ def request_enterprise_upgrade():
             filename = user['userID'] + '_license' + specialist_license.filename.rsplit('.', 1)[1]
             upload_path = os.path.join(basepath, 'license', filename)  # 注意：没有的文件夹一定要先创建，不然会提示没有该路径
             specialist_license.save(upload_path)
-            flag = db.update({'userID': user['userID']}, {'usergroup': 6}, 'users')
+            license_type = request.form['license_type']
+            flag = db.update({'userID': user['userID']},
+                             {'usergroup': 6, 'license_type': license_type, 'specialist_license': upload_path}, 'users')
             if flag:
                 return jsonify({'code': 1, 'msg': 'success'})
             return jsonify({'code': -1, 'msg': 'unable to request'})
