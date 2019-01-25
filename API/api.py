@@ -20,7 +20,7 @@ CORS(app, supports_credentials=True)
 """
     常量区
 """
-USER_GROUP = ['管理员', '从业者', '专家', '企业', '封禁', '待审核专家', '待审核企业']
+USER_GROUP = ['系统管理员', '从业者', '专家', '企业', '封禁', '待审核专家', '待审核企业']
 LEVEL_EXP = [100, 1000, 10000]
 
 
@@ -2898,6 +2898,61 @@ def get_groups():
                 }
             })
         return jsonify({'code': 1, 'msg': 'success', 'data': data})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/group/get_group_members')
+def get_group_members():
+    """
+    获取当前群组的成员列表
+    :return:
+    """
+    group_id = request.values.get('group_id')
+    db = Database()
+    members = db.get({'groupID': group_id}, 'group_members_info', 0)
+    for value in members:
+        value.update({
+            'usergroup': get_group(value['usergroup']),
+            'level': get_level(value['exp'])
+        })
+    return jsonify({'code': 1, 'msg': 'success', 'data': members})
+
+
+@app.route('/api/group/ban_user')
+def ban_user():
+    """
+    封禁用户
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        group_id = request.values.get('group_id')
+        member = db.get({'userID': user['userID'], 'groupID': group_id}, 'group_members')
+        user_id = request.values.get('user_id')
+        if member['state'] == 0:
+            flag = db.update({'userID': user_id, 'groupID': group_id}, {'state': 5}, 'group_members')
+            if flag:
+                group = db.get({'groupID': group_id}, 'groups')
+                if group:
+                    set_sys_message(user['userID'], 2, '您已被管理员 ' + user['nickname'] + ' 踢出群组 ' + group['name'] + ' !',
+                                    user_id)
+                return jsonify({'code': 1, 'msg': 'success'})
+            return jsonify({'code': -1, 'msg': 'unable to ban user'})
+        elif member['state'] == 1:
+            member1 = db.get({'userID': user_id, 'groupID': group_id}, 'group_members')
+            if member1['state'] > member['state']:
+                flag = db.update({'userID': user_id, 'groupID': group_id}, {'state': 5}, 'group_members')
+                if flag:
+                    group = db.get({'groupID': group_id}, 'groups')
+                    if group:
+                        set_sys_message(user['userID'], 2,
+                                        '您已被管理员 ' + user['nickname'] + ' 踢出群组 ' + group['name'] + ' !', user_id)
+                    return jsonify({'code': 1, 'msg': 'success'})
+                return jsonify({'code': -1, 'msg': 'unable to ban user'})
+            return jsonify({'code': 0, 'msg': 'unexpected user'})
+        return jsonify({'code': 0, 'msg': 'unexpected user'})
     return jsonify({'code': 0, 'msg': 'unexpected user'})
 
 
