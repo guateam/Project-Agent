@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2019-01-24 13:16:34
+Date: 2019-01-25 13:35:46
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -195,6 +195,59 @@ CREATE TABLE `followuser` (
 -- Records of followuser
 -- ----------------------------
 INSERT INTO `followuser` VALUES ('1', '1', '2');
+
+-- ----------------------------
+-- Table structure for `groups`
+-- ----------------------------
+DROP TABLE IF EXISTS `groups`;
+CREATE TABLE `groups` (
+  `groupID` int(10) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) NOT NULL,
+  `description` text NOT NULL,
+  `userID` int(10) NOT NULL,
+  `head_portrait` text,
+  `state` int(2) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`groupID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of groups
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `group_members`
+-- ----------------------------
+DROP TABLE IF EXISTS `group_members`;
+CREATE TABLE `group_members` (
+  `id` int(20) NOT NULL AUTO_INCREMENT,
+  `groupID` int(20) NOT NULL,
+  `userID` int(10) NOT NULL,
+  `state` int(2) NOT NULL,
+  `silent` int(2) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of group_members
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `group_message`
+-- ----------------------------
+DROP TABLE IF EXISTS `group_message`;
+CREATE TABLE `group_message` (
+  `id` int(20) NOT NULL AUTO_INCREMENT,
+  `content` text NOT NULL,
+  `userID` int(10) NOT NULL,
+  `groupID` int(10) NOT NULL,
+  `type` int(2) NOT NULL,
+  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of group_message
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for `messages`
@@ -508,6 +561,18 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 -- ----------------------------
 DROP VIEW IF EXISTS `followinfo`;
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `followinfo` AS select `followuser`.`idFollowUser` AS `idFollowUser`,`followuser`.`userID` AS `userID`,`followuser`.`target` AS `target`,`target`.`nickname` AS `target_nickname`,`target`.`headportrait` AS `target_headportrait`,`target`.`usergroup` AS `target_usergroup`,`target`.`exp` AS `target_exp`,`target`.`description` AS `target_description`,`follower`.`nickname` AS `follower_nickname`,`follower`.`headportrait` AS `follower_headportrait`,`follower`.`usergroup` AS `follower_usergroup`,`follower`.`exp` AS `follower_exp`,`follower`.`description` AS `follower_description` from ((`followuser` join `users` `follower`) join `users` `target`) where ((`followuser`.`userID` = `follower`.`userID`) and (`followuser`.`target` = `target`.`userID`)) ;
+
+-- ----------------------------
+-- View structure for `group_members_info`
+-- ----------------------------
+DROP VIEW IF EXISTS `group_members_info`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `group_members_info` AS select `group_members`.`id` AS `id`,`group_members`.`groupID` AS `groupID`,`group_members`.`userID` AS `userID`,`group_members`.`state` AS `state`,`group_members`.`silent` AS `silent`,`users`.`nickname` AS `nickname`,`users`.`headportrait` AS `headportrait`,`users`.`usergroup` AS `usergroup`,`users`.`exp` AS `exp`,`groups`.`name` AS `name`,`groups`.`description` AS `description`,`groups`.`head_portrait` AS `head_portrait`,`groups`.`state` AS `group_state` from ((`group_members` join `users`) join `groups`) where ((`group_members`.`groupID` = `groups`.`groupID`) and (`users`.`userID` = `group_members`.`userID`)) ;
+
+-- ----------------------------
+-- View structure for `group_message_info`
+-- ----------------------------
+DROP VIEW IF EXISTS `group_message_info`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `group_message_info` AS select `group_message`.`id` AS `id`,`group_message`.`content` AS `content`,`group_message`.`userID` AS `userID`,`group_message`.`groupID` AS `groupID`,`group_message`.`type` AS `type`,`group_message`.`time` AS `time`,`users`.`nickname` AS `nickname`,`users`.`headportrait` AS `headportrait`,`users`.`usergroup` AS `usergroup`,`users`.`exp` AS `exp` from (`group_message` join `users`) where (`group_message`.`userID` = `users`.`userID`) ;
 
 -- ----------------------------
 -- View structure for `orderinfo`
