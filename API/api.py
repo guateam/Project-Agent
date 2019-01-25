@@ -5,7 +5,7 @@ import string
 import time
 
 from CF.cf import item_cf
-from vague_search.vague_search import  similar
+from vague_search.vague_search import  select_by_similarity, compute_tf
 from API.OCR import ocr
 from flask import Flask, jsonify, request
 from flask_cors import CORS
@@ -2032,11 +2032,101 @@ def build_article_rate_rect():
     return jsonify({"code": 1})
 
 
-@app.route('/api/algorithm/search')
-def vague_search_api():
+@app.route('/api/algorithm/before_search')
+def before_vague_search_api():
+    """
+    根据输入的内容模糊匹配待选搜索项
+    例如：输入框内输入 王刚 ，则弹出 王刚，美食作家王刚，王**刚**等待选项，根据相似度和搜索热度排序
+    用户便可以选择待选项进行搜索
+    :return: code: 0-失败  1-成功
+    """
+    # 获取输入的内容
     input_word = request.values.get('word')
     db = Database()
-    word_bank = db.get()
+    # 获取模糊匹配的热搜项
+    word_bank = db.vague({"content":input_word}, "search_word")
+    #  根据热搜项和输入内容的相似度进行排序，若相似度都小于等于0，则按照搜索热度排序
+    rank = select_by_similarity(input_word, word_bank)
+
+    return jsonify({"code": 1, "msg": "success", "data":rank})
+
+
+@app.route('/api/algorithm/search')
+def vague_search_api():
+    # 获取输入内容
+    input_word = request.values.get('word')
+    # 搜索什么内容  question-搜索问题  article-搜索文章
+    search_type = request.values.get('type')
+
+    # 以下内容为根据当前搜索内容更新搜索表里面相印搜索项的热度
+
+    # 获取该输入内容是否存在与热搜项
+    db = Database()
+    word = db.get({'content': input_word}, 'search_word')
+    # 若存在，则搜索次数增加一次
+    if word:
+        db.update({'content': input_word}, {'time': word['time']+1}, 'search_word')
+    #  否则根据相似度进行处理
+    else:
+        # 获取所有热搜项
+        word_bank = db.vague({"content":input_word}, "search_word")
+        # 将输入内容和热搜项进行相似度计算，相似度低于0.5的不计入处理
+        result = select_by_similarity(input_word, word_bank, 0.5)
+        # 若存在相似度高于0.5的项，则认为输入项和该热搜项是完全相同的含义，可以视为热搜项的搜索次数+1
+        if result:
+            db.update({'content': result[0]['content']}, {'time': result[0]['time']+1}, 'search_word')
+        # 否则认为该输入项为一个新的搜索项，加入搜索表中
+        else:
+            db.insert({'content':input_word})
+
+    # 以下为根据搜索项模糊搜索对应文章或问题
+    data = []
+    output = []
+    # 根据搜索类型不同进行区分处理
+    if search_type == 'question':
+        # 找到包含输入词语的问题
+        data = db.like({'title': input_word}, 'questions')
+        # 将问题题目和描述作为文本，输入词语作为关键词计算每一个问题的tfidf值
+        for each in data:
+            tfidf = tf_idf(input_word, each['title'] + ',' + each['description'])
+            each.update({'tfidf': tfidf})
+            output.append(each)
+    elif search_type == 'article':
+        # 找到包含输入词语的文章
+        data = db.like({'title': input_word, 'content': input_word}, 'article')
+        # 将文章内容作为文本，输入词语作为关键词计算每一篇文章的tfidf值
+        for each in data:
+            tfidf = tf_idf(input_word, each['content'])
+            each.update({'tfidf': tfidf})
+            output.append(each)
+
+    # 按照tfidf值降序排列，值越高，文章或问题和输入词语关联越大
+    output.sort(key=lambda it: it['tfidf'], reverse=True)
+
+    return jsonify({'code': 1, 'msg': 'success', 'data': output})
+
+
+def tf_idf(word, content, type='question'):
+    db = Database()
+    # 计算tf值
+    tf = compute_tf(word, content)
+    # 获取总问题数量或文章数量
+    if type == 'question':
+        total_item_number = db.count({}, 'questions')
+    elif type == 'article':
+        total_item_number = db.count({}, 'article')
+
+    # 获取包含该词语的问题或文章数量
+    if type == 'question':
+        contain_word_number = db.count({'title': word, 'description': word}, 'questions') + 1
+    elif type == 'article':
+        contain_word_number = db.count({'title': word, 'content': word}, 'article') + 1
+
+    # 计算idf值
+    idf = total_item_number / contain_word_number
+
+    return tf*idf
+
 
 """
     专家接口
