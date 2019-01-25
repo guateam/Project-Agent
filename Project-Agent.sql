@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2019-01-25 15:04:03
+Date: 2019-01-25 15:50:33
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -501,15 +501,18 @@ CREATE TABLE `users` (
   `nationality` varchar(20) NOT NULL,
   `account_balance` int(255) NOT NULL DEFAULT '0' COMMENT '账户余额',
   `specialitst_license` varchar(255) NOT NULL,
+  `license_type` int(2) NOT NULL,
+  `front_pic` text,
+  `back_pic` text,
   PRIMARY KEY (`userID`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='用户表';
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES ('1', 'zhangyu199946@126.com', '拉拉人', 'ec847003d2eadc9baf60853e8391e167a292c21f01892fcb8bad0f4af6cd74a7', '', '0', '998', 'VHjWIO5Kp7So6uGxY4Fcbs3Jt', null, null, null, '弗兰秀秀牛逼', '0', '', '', '', '', '0', '');
-INSERT INTO `users` VALUES ('2', 'yyz@126.com', '袁宜照', '317f16f4833885da6766e81b35c7258fe4451798600a1ad980babb9e9f412fc2', '', '0', '0', 'TNp6hR7ElkJK4Z5Xfte0VyqG3', null, null, null, '', '0', '', '', '', '', '0', '');
-INSERT INTO `users` VALUES ('3', 'zyxiaohao@126.com', '', 'cb8f260c5b29ec2a17d662133ebcf99cd4594e29b0ffeb54599ffe5f3801c3ed', null, '0', '0', 'U3WieM95EkGpfXTwdohKFgnjv', null, null, null, '', '0', '', '', '', '', '0', '');
+INSERT INTO `users` VALUES ('1', 'zhangyu199946@126.com', '拉拉人', 'ec847003d2eadc9baf60853e8391e167a292c21f01892fcb8bad0f4af6cd74a7', '', '0', '998', 'VHjWIO5Kp7So6uGxY4Fcbs3Jt', null, null, null, '弗兰秀秀牛逼', '0', '', '', '', '', '0', '', '0', null, null);
+INSERT INTO `users` VALUES ('2', 'yyz@126.com', '袁宜照', '317f16f4833885da6766e81b35c7258fe4451798600a1ad980babb9e9f412fc2', '', '0', '0', 'TNp6hR7ElkJK4Z5Xfte0VyqG3', null, null, null, '', '0', '', '', '', '', '0', '', '0', null, null);
+INSERT INTO `users` VALUES ('3', 'zyxiaohao@126.com', '', 'cb8f260c5b29ec2a17d662133ebcf99cd4594e29b0ffeb54599ffe5f3801c3ed', null, '0', '0', 'U3WieM95EkGpfXTwdohKFgnjv', null, null, null, '', '0', '', '', '', '', '0', '', '0', null, null);
 
 -- ----------------------------
 -- View structure for `ac_at_info`
