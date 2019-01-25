@@ -351,7 +351,7 @@ def back_get_users():
     db = Database()
     user = db.get({'token': token, 'usergroup': 0}, 'users')
     if user:
-        users = db.get({}, 'users')
+        users = db.get({}, 'users', 0)
         for value in users:
             value.update({
                 'group': get_group(value['usergroup']),
@@ -375,12 +375,12 @@ def back_get_normal_users():
     db = Database()
     user = db.get({'token': token, 'usergroup': 0}, 'users')
     if user:
-        users = db.get({'usergroup': 1}, 'users')
+        users = db.get({'usergroup': 1}, 'users', 0)
         wait = []
         confirm = []
         refuse = []
         un_identity = []
-        banned = db.get({'usergroup': 4}, 'users')
+        banned = db.get({'usergroup': 4}, 'users', 0)
         for value in users + banned:
             value.update({
                 'group': get_group(value['usergroup']),
@@ -390,6 +390,8 @@ def back_get_normal_users():
                 'follow': db.count({'userID': value['userID']}, 'followuser'),
                 'fans': db.count({'target': value['userID']}, 'followuser')
             })
+            if value['usergroup']['value'] == 4:
+                break
             if value['state'] == 0:
                 un_identity.append(value)
             elif value['state'] == 1:
@@ -416,8 +418,8 @@ def back_get_specialist_users():
     db = Database()
     user = db.get({'token': token, 'usergroup': 0}, 'users')
     if user:
-        confirm = db.get({'usergroup': 1}, 'users')
-        wait = db.get({'usergroup': 5}, 'users')
+        confirm = db.get({'usergroup': 1}, 'users', 0)
+        wait = db.get({'usergroup': 5}, 'users', 0)
         for value in confirm + wait:
             value.update({
                 'group': get_group(value['usergroup']),
@@ -443,8 +445,8 @@ def back_get_enterprise_users():
     db = Database()
     user = db.get({'token': token, 'usergroup': 0}, 'users')
     if user:
-        confirm = db.get({'usergroup': 2}, 'users')
-        wait = db.get({'usergroup': 6}, 'users')
+        confirm = db.get({'usergroup': 2}, 'users', 0)
+        wait = db.get({'usergroup': 6}, 'users', 0)
         for value in confirm + wait:
             value.update({
                 'group': get_group(value['usergroup']),
@@ -788,7 +790,7 @@ def get_questions():
     :return:code(0=未知用户，-1=无法添加问题，1=成功)
     """
     db = Database()
-    data = db.get({'state': 0}, 'questionsinfo')
+    data = db.get({'state': 0}, 'questionsinfo', 0)
     return jsonify({'code': 0, 'msg': '', 'data': data})
 
 
@@ -1011,7 +1013,7 @@ def back_get_questions():
     db = Database()
     user = db.get({'token': token, 'usergroup': 0}, 'users')
     if user:
-        questions = db.get({}, 'questionsinfo')
+        questions = db.get({}, 'questionsinfo', 0)
         data = []
         for value in questions:
             data.append({
@@ -1323,7 +1325,7 @@ def back_get_answers():
     db = Database()
     user = db.get({'token': token, 'usergroup': 0}, 'users')
     if user:
-        answers = db.get({}, 'answersinfo')
+        answers = db.get({}, 'answersinfo', 0)
         for value in answers:
             value.update({'tags': get_tags(value['tags'])})
         return jsonify({'code': 1, 'msg': 'success', 'data': answers})
@@ -1444,7 +1446,7 @@ def back_get_articles():
     db = Database()
     user = db.get({'token': token, 'usergroup': 0}, 'users')
     if user:
-        article = db.get({}, 'articleinfo')
+        article = db.get({}, 'articleinfo', 0)
         for value in article:
             value.update({'tags': get_tags(value['tags'])})
         return jsonify({'code': 1, 'msg': 'success', 'data': article})
@@ -1525,7 +1527,7 @@ def get_category():
     :return:code(1=成功)
     """
     db = Database()
-    tags = db.get({'type': 1}, 'tags')
+    tags = db.get({'type': 1}, 'tags', 0)
     data = []
     for value in tags:
         data.append({
@@ -1686,18 +1688,18 @@ def get_agree_list():
         """
             获取所有的用户行为
         """
-        comment1 = db.get({'userID': user['userID']}, 'answercomments')
+        comment1 = db.get({'userID': user['userID']}, 'answercomments', 0)
         user_action = []
         for value in comment1:
             action = db.get({'targettype': 3, 'targetID': value['acommentID']}, 'useraction', 0)
             if action:
                 user_action = user_action + action
-        comment2 = db.get({'userID': user['userID']}, 'questioncomments')
+        comment2 = db.get({'userID': user['userID']}, 'questioncomments', 0)
         for value in comment2:
             action = db.get({'targettype': 5, 'targetID': value['qcommentID']}, 'useraction', 0)
             if action:
                 user_action = user_action + action
-        answer = db.get({'userID': user['userID']}, 'answers')
+        answer = db.get({'userID': user['userID']}, 'answers', 0)
         for value in answer:
             action1 = db.get({'targettype': 1, 'targetID': value['answerID']}, 'useraction', 0)
             action2 = db.get({'targettype': 2, 'targetID': value['answerID']}, 'useraction', 0)
@@ -1859,9 +1861,9 @@ def get_sys_message():
     db = Database()
     user = db.get({'token': token}, 'users')
     if user:
-        all_message = db.get({'type': 0}, 'sys_message')
-        personal = db.get({'type': 1, 'target': user['userID']}, 'sys_message')
-        group = db.get({'type': 2, 'target': user['userID']}, 'sys_message')
+        all_message = db.get({'type': 0}, 'sys_message', 0)
+        personal = db.get({'type': 1, 'target': user['userID']}, 'sys_message', 0)
+        group = db.get({'type': 2, 'target': user['userID']}, 'sys_message', 0)
         data = {
             'all': all_message,
             'personal': personal,
@@ -2044,7 +2046,7 @@ def get_my_answers():
     db = Database()
     user = db.get({'token': token}, 'users')
     if user:
-        answers = db.get({'userID': user['userID']}, 'answersinfo')
+        answers = db.get({'userID': user['userID']}, 'answersinfo', 0)
         for value in answers:
             value.update({'tags': get_tags(value['tags'])})
         return jsonify({'code': 1, 'msg': 'success', 'data': answers})
@@ -2061,7 +2063,7 @@ def get_my_articles():
     db = Database()
     user = db.get({'token': token}, 'users')
     if user:
-        articles = db.get({'userID': user['userID']}, 'articleinfo')
+        articles = db.get({'userID': user['userID']}, 'articleinfo', 0)
         for value in articles:
             value.update({'tags': get_tags(value['tags'])})
         return jsonify({'code': 1, 'msg': 'success', 'data': articles})
@@ -2078,7 +2080,7 @@ def get_my_fans():
     db = Database()
     user = db.get({'token': token}, 'users')
     if user:
-        followers = db.get({'target': user['userID']}, 'followinfo')
+        followers = db.get({'target': user['userID']}, 'followinfo', 0)
         data = []
         for value in followers:
             data.append({
@@ -2103,7 +2105,7 @@ def get_order_list():
     db = Database()
     user = db.get({'token': token}, 'users')
     if user:
-        order = db.get({'target': user['userID']}, 'orderinfo')
+        order = db.get({'target': user['userID']}, 'orderinfo', 0)
         for value in order:
             value.update({'level': get_level(value['exp']), 'usergroup': get_group(value['usergroup'])})
         return jsonify({'code': 1, 'msg': 'success', 'data': order})
@@ -2250,7 +2252,7 @@ def get_my_demands():
     db = Database()
     user = db.get({'token': token}, 'users')
     if user:
-        demands = db.get({'userID': user['userID']}, 'demands_info')
+        demands = db.get({'userID': user['userID']}, 'demands_info', 0)
         return jsonify({'code': 1, 'msg': 'success', 'data': demands})
     return jsonify({'code': 0, 'msg': 'unexpected user'})
 
@@ -2266,7 +2268,7 @@ def get_signed_users():
     user = db.get({'token': token}, 'users')
     if user:
         demand_id = request.values.get('demand_id')
-        signed_list = db.get({'target': demand_id}, 'signed_demand_info')
+        signed_list = db.get({'target': demand_id}, 'signed_demand_info', 0)
         return jsonify({'code': 1, 'msg': 'success', 'data': signed_list})
     return jsonify({'code': 0, 'msg': 'unexpected user'})
 
@@ -2409,7 +2411,7 @@ def get_board_recommend():
         """
             没对接cf算法，到时候对接一下cf算法
         """
-        demand = db.get({'state': 0}, 'demands_info')
+        demand = db.get({'state': 0}, 'demands_info', 0)
         """
             对接处
         """
@@ -2430,7 +2432,7 @@ def get_board_category():
     :return:
     """
     db = Database()
-    tags = db.get({'type': 1}, 'tags')
+    tags = db.get({'type': 1}, 'tags', 0)
     data = []
     for value in tags:
         data.append({
@@ -2448,7 +2450,7 @@ def get_child_category():
     """
     db = Database()
     tag_id = request.values.get('tag_id')
-    tags = db.get({'father': tag_id}, 'tags')
+    tags = db.get({'father': tag_id}, 'tags', 0)
     data = []
     for value in tags:
         data.append({
@@ -2485,7 +2487,7 @@ def get_demands_by_tag():
     """
     tag_id = request.values.get('tag_id')
     db = Database()
-    demands = db.get({'state': 0}, 'demands_info')
+    demands = db.get({'state': 0}, 'demands_info', 0)
     data = []
     for value in demands:
         tags = get_tags(value['tags'])
@@ -2511,7 +2513,7 @@ def back_get_demands():
     db = Database()
     user = db.get({'token': token, 'usergroup': 0}, 'users')
     if user:
-        demands = db.get({}, 'demands_info')
+        demands = db.get({}, 'demands_info', 0)
         for value in demands:
             value.update({
                 'tags': get_tags(value['tags']),
@@ -2559,8 +2561,15 @@ def new_group():
     if user:
         name = request.form['name']
         description = request.form['description']
-        flag = db.insert({'name': name, 'description': description, 'userID': user['userID']}, 'groups')
+        head_portrait = request.form['head_portrait']
+        flag = db.insert(
+            {'name': name, 'description': description, 'userID': user['userID'], 'head_portrait': head_portrait},
+            'groups')
+
         if flag:
+            group = db.get({'userID': user['userID']}, 'groups', 0)
+            db.insert({'groupID': group[len(group) - 1]['groupID'], 'userID': user['userID'], 'state': 0},
+                      'group_members')
             return jsonify({'code': 1, 'msg': 'success'})
         return jsonify({'code': -1, 'msg': 'unable to create'})
     return jsonify({'code': 0, 'msg': 'unexpected user'})
@@ -2589,6 +2598,72 @@ def add_group_member():
                 return jsonify({'code': 1, 'msg': 'success'})
             return jsonify({'code': -1, 'msg': 'unable to add'})
         return jsonify({'code': 0, 'msg': 'unexpected user'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/group/confirm_invite')
+def confirm_invite():
+    """
+    确认加入群组
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        group_id = request.values.get('group_id')
+        flag = db.update({'groupID': group_id, 'userID': user['userID']}, {'state': 2}, 'group_members')
+        if flag:
+            return jsonify({'code': 1, 'msg': 'success'})
+        return jsonify({'code': -1, 'msg': 'unable to confirm'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/group/set_admin')
+def set_admin():
+    """
+    设置群管理员
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if not user:
+        return jsonify({'code': 0, 'msg': 'unexpected user'})
+    group_id = request.values.get('group_id')
+    if db.get({'userID': user['userID'], 'groupID': group_id}, 'groups'):
+        user_id = request.values.get('user_id')
+        member = db.get({'userID': user_id, 'groupID': group_id, 'state': 2}, 'group_members')
+        if member:
+            flag = db.update({'userID': user_id, 'groupID': group_id}, {'state': 1}, 'group_members')
+            if flag:
+                return jsonify({'code': 1, 'msg': 'success'})
+            return jsonify({'code': -1, 'msg': 'database problems'})
+        return jsonify({'code': -2, 'msg': 'unknown user'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/group/set_normal')
+def set_normal():
+    """
+    取消设置群管理员
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if not user:
+        return jsonify({'code': 0, 'msg': 'unexpected user'})
+    group_id = request.values.get('group_id')
+    if db.get({'userID': user['userID'], 'groupID': group_id}, 'groups'):
+        user_id = request.values.get('user_id')
+        member = db.get({'userID': user_id, 'groupID': group_id, 'state': 1}, 'group_members')
+        if member:
+            flag = db.update({'userID': user_id, 'groupID': group_id}, {'state': 2}, 'group_members')
+            if flag:
+                return jsonify({'code': 1, 'msg': 'success'})
+            return jsonify({'code': -1, 'msg': 'database problems'})
+        return jsonify({'code': -2, 'msg': 'unknown user'})
     return jsonify({'code': 0, 'msg': 'unexpected user'})
 
 
@@ -2754,8 +2829,10 @@ def send_group_message():
     """
     token = request.form['token']
     db = Database()
-    user = db.get({'token': token}, 'group')
+    user = db.get({'token': token}, 'users')
     group_id = request.form['group_id']
+    if not user:
+        return jsonify({'code': 0, 'msg': 'unexpected user'})
     member = db.sql(
         'SELECT * FROM group_members WHERE ( state= 0 OR state=1 OR state=2 ) AND userID = %s AND groupID = %s '
         'AND silent=0' % (user['userID'], group_id))
@@ -2781,7 +2858,7 @@ def get_group_message():
     if db.get({'userID': user['userID'], 'groupID': group_id}, 'group_members'):
         if not db.get({'groupID': group_id, 'state': 0}, 'groups'):
             return jsonify({'code': -1, 'msg': 'group is not available'})
-        message = db.get({'groupID': group_id}, 'group_message_info')
+        message = db.get({'groupID': group_id}, 'group_message_info', 0)
         for value in message:
             value.update({'usergroup': get_group(value['usergroup']), 'level': get_level(value['exp'])})
         return jsonify({'code': 1, 'msg': 'success', 'data': message})
@@ -2798,7 +2875,7 @@ def get_groups():
     db = Database()
     user = db.get({'token': token}, 'users')
     if user:
-        groups = db.get({'userID': user['userID'], 'group_state': 0}, 'group_members_info')
+        groups = db.get({'userID': user['userID'], 'group_state': 0}, 'group_members_info', 0)
         data = []
         for value in groups:
             message = db.get({'groupID': value['groupID']}, 'group_message_info')
@@ -2834,7 +2911,7 @@ def back_get_groups():
     db = Database()
     user = db.get({'token': token, 'usergroup': 0}, 'users')
     if user:
-        groups = db.get({}, 'groups')
+        groups = db.get({}, 'groups', 0)
         for value in groups:
             create = db.get({'userID': value['userID']}, 'users')
             if create:

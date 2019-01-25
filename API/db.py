@@ -116,7 +116,7 @@ class Database(object):
             with self.db.cursor() as cursor:
                 list1 = []
                 for key, values in where_list.items():
-                    list1.append(key + ' = "' + values + '"')
+                    list1.append(str(key) + ' = "' + str(values) + '"')
                 list2 = []
                 for key, values in data.items():
                     list2.append(key + ' = "' + str(values) + '"')
