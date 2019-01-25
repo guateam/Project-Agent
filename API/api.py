@@ -5,7 +5,7 @@ import string
 import time
 
 from CF.cf import item_cf
-from vague_search.vague_search import  similar
+from vague_search.vague_search import similar
 from API.OCR import ocr
 from flask import Flask, jsonify, request
 from flask_cors import CORS
@@ -22,7 +22,7 @@ CORS(app, supports_credentials=True)
     常量区
 """
 USER_GROUP = ['系统管理员', '从业者', '专家', '企业', '封禁', '待审核专家', '待审核企业']
-LEVEL_EXP = [100, 1000, 10000]
+LEVEL_EXP = [0,100, 1000, 10000, 100000, 1000000]
 
 
 @app.route("/")
@@ -2033,11 +2033,11 @@ def upload_identity_card():
         if front and back and allowed_pic(front.filename) and allowed_pic(back.filename):
             basepath = os.path.dirname(__file__)  # 当前文件所在路径
             # 正面的图片
-            front_filename = user['userID'] + '_front_' + front.filename.rsplit('.', 1)[1]
+            front_filename = str(user['userID']) + '_front.' + front.filename.rsplit('.', 1)[1]
             upload_path = os.path.join(basepath, 'identity_card', front_filename)  # 注意：没有的文件夹一定要先创建，不然会提示没有该路径
             front.save(upload_path)
             # 反面的图片
-            back_filename = user['userID'] + '_front_' + front.filename.rsplit('.', 1)[1]
+            back_filename = str(user['userID']) + '_back.' + back.filename.rsplit('.', 1)[1]
             upload_path_reverse = os.path.join(basepath, 'identity_card', back_filename)  # 注意：没有的文件夹一定要先创建，不然会提示没有该路径
             back.save(upload_path_reverse)
 
@@ -2126,6 +2126,7 @@ def vague_search_api():
     input_word = request.values.get('word')
     db = Database()
     word_bank = db.get()
+
 
 """
     专家接口
@@ -2298,7 +2299,7 @@ def request_upgrade():
         if specialist_license and allowed_pic(specialist_license.filename):
             basepath = os.path.dirname(__file__)  # 当前文件所在路径
             # 正面的图片
-            filename = user['userID'] + '_license' + specialist_license.filename.rsplit('.', 1)[1]
+            filename = str(user['userID']) + '_license' + specialist_license.filename.rsplit('.', 1)[1]
             upload_path = os.path.join(basepath, 'license', filename)  # 注意：没有的文件夹一定要先创建，不然会提示没有该路径
             specialist_license.save(upload_path)
             license_type = request.form['license_type']
@@ -2463,7 +2464,7 @@ def request_enterprise_upgrade():
         if specialist_license and allowed_pic(specialist_license.filename):
             basepath = os.path.dirname(__file__)  # 当前文件所在路径
             # 正面的图片
-            filename = user['userID'] + '_license' + specialist_license.filename.rsplit('.', 1)[1]
+            filename = str(user['userID']) + '_license' + specialist_license.filename.rsplit('.', 1)[1]
             upload_path = os.path.join(basepath, 'license', filename)  # 注意：没有的文件夹一定要先创建，不然会提示没有该路径
             specialist_license.save(upload_path)
             license_type = request.form['license_type']

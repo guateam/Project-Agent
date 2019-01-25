@@ -132,3 +132,4 @@ Word2Vec/word2vec\.vec
 API/static/uploads/
 
 .idea
+API/identity_card/
