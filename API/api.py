@@ -5,6 +5,7 @@ import string
 import time
 
 from CF.cf import item_cf
+from vague_search.vague_search import  similar
 from API.OCR import ocr
 from flask import Flask, jsonify, request
 from flask_cors import CORS
@@ -2023,6 +2024,12 @@ def build_article_rate_rect():
 
     return jsonify({"code": 1})
 
+
+@app.route('/api/algorithm/search')
+def vague_search_api():
+    input_word = request.values.get('word')
+    db = Database()
+    word_bank = db.get()
 
 """
     专家接口
