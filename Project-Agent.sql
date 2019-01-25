@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2019-01-24 13:16:34
+Date: 2019-01-25 15:04:03
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -197,6 +197,65 @@ CREATE TABLE `followuser` (
 INSERT INTO `followuser` VALUES ('1', '1', '2');
 
 -- ----------------------------
+-- Table structure for `groups`
+-- ----------------------------
+DROP TABLE IF EXISTS `groups`;
+CREATE TABLE `groups` (
+  `groupID` int(10) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) NOT NULL,
+  `description` text NOT NULL,
+  `userID` int(10) NOT NULL,
+  `head_portrait` text,
+  `state` int(2) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`groupID`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of groups
+-- ----------------------------
+INSERT INTO `groups` VALUES ('4', 'project-agent讨论群', '这是测试群', '1', 'http://img3.imgtn.bdimg.com/it/u=3524594933,3944395980&fm=214&gp=0.jpg', '0');
+
+-- ----------------------------
+-- Table structure for `group_members`
+-- ----------------------------
+DROP TABLE IF EXISTS `group_members`;
+CREATE TABLE `group_members` (
+  `id` int(20) NOT NULL AUTO_INCREMENT,
+  `groupID` int(20) NOT NULL,
+  `userID` int(10) NOT NULL,
+  `state` int(2) NOT NULL,
+  `silent` int(2) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of group_members
+-- ----------------------------
+INSERT INTO `group_members` VALUES ('2', '4', '1', '0', '0');
+INSERT INTO `group_members` VALUES ('3', '4', '2', '1', '0');
+
+-- ----------------------------
+-- Table structure for `group_message`
+-- ----------------------------
+DROP TABLE IF EXISTS `group_message`;
+CREATE TABLE `group_message` (
+  `id` int(20) NOT NULL AUTO_INCREMENT,
+  `content` text NOT NULL,
+  `userID` int(10) NOT NULL,
+  `groupID` int(10) NOT NULL,
+  `type` int(2) NOT NULL,
+  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of group_message
+-- ----------------------------
+INSERT INTO `group_message` VALUES ('1', '这是一个测试群，用于测试线上会议的功能', '1', '4', '0', '2019-01-25 14:00:29');
+INSERT INTO `group_message` VALUES ('2', '忘记写type=0了，哈哈哈', '1', '4', '0', '2019-01-25 14:07:52');
+INSERT INTO `group_message` VALUES ('3', '忘记写type=0了，哈哈哈', '2', '4', '0', '2019-01-25 14:26:09');
+
+-- ----------------------------
 -- Table structure for `messages`
 -- ----------------------------
 DROP TABLE IF EXISTS `messages`;
@@ -355,12 +414,15 @@ CREATE TABLE `sys_message` (
   `type` int(2) NOT NULL,
   `target` int(10) NOT NULL,
   PRIMARY KEY (`noticeID`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of sys_message
 -- ----------------------------
-INSERT INTO `sys_message` VALUES ('1', '系统通知啊，今天要例会', '1', '2018-12-29 10:58:21', '1', '0');
+INSERT INTO `sys_message` VALUES ('1', '系统通知啊，今天要例会', '1', '2019-01-25 14:29:09', '0', '0');
+INSERT INTO `sys_message` VALUES ('2', '您已被管理员邀请加入群聊 project-agent讨论群 ,请及时确认！', '1', '2019-01-25 13:52:22', '2', '2');
+INSERT INTO `sys_message` VALUES ('3', '明天要例会！请各位做好准备！', '1', '2019-01-25 14:33:22', '1', '2');
+INSERT INTO `sys_message` VALUES ('4', '明天要例会！请各位做好准备！', '1', '2019-01-25 14:33:31', '0', '0');
 
 -- ----------------------------
 -- Table structure for `tags`
@@ -508,6 +570,18 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 -- ----------------------------
 DROP VIEW IF EXISTS `followinfo`;
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `followinfo` AS select `followuser`.`idFollowUser` AS `idFollowUser`,`followuser`.`userID` AS `userID`,`followuser`.`target` AS `target`,`target`.`nickname` AS `target_nickname`,`target`.`headportrait` AS `target_headportrait`,`target`.`usergroup` AS `target_usergroup`,`target`.`exp` AS `target_exp`,`target`.`description` AS `target_description`,`follower`.`nickname` AS `follower_nickname`,`follower`.`headportrait` AS `follower_headportrait`,`follower`.`usergroup` AS `follower_usergroup`,`follower`.`exp` AS `follower_exp`,`follower`.`description` AS `follower_description` from ((`followuser` join `users` `follower`) join `users` `target`) where ((`followuser`.`userID` = `follower`.`userID`) and (`followuser`.`target` = `target`.`userID`)) ;
+
+-- ----------------------------
+-- View structure for `group_members_info`
+-- ----------------------------
+DROP VIEW IF EXISTS `group_members_info`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `group_members_info` AS select `group_members`.`id` AS `id`,`group_members`.`groupID` AS `groupID`,`group_members`.`userID` AS `userID`,`group_members`.`state` AS `state`,`group_members`.`silent` AS `silent`,`users`.`nickname` AS `nickname`,`users`.`headportrait` AS `headportrait`,`users`.`usergroup` AS `usergroup`,`users`.`exp` AS `exp`,`groups`.`name` AS `name`,`groups`.`description` AS `description`,`groups`.`head_portrait` AS `head_portrait`,`groups`.`state` AS `group_state` from ((`group_members` join `users`) join `groups`) where ((`group_members`.`groupID` = `groups`.`groupID`) and (`users`.`userID` = `group_members`.`userID`)) ;
+
+-- ----------------------------
+-- View structure for `group_message_info`
+-- ----------------------------
+DROP VIEW IF EXISTS `group_message_info`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `group_message_info` AS select `group_message`.`id` AS `id`,`group_message`.`content` AS `content`,`group_message`.`userID` AS `userID`,`group_message`.`groupID` AS `groupID`,`group_message`.`type` AS `type`,`group_message`.`time` AS `time`,`users`.`nickname` AS `nickname`,`users`.`headportrait` AS `headportrait`,`users`.`usergroup` AS `usergroup`,`users`.`exp` AS `exp` from (`group_message` join `users`) where (`group_message`.`userID` = `users`.`userID`) ;
 
 -- ----------------------------
 -- View structure for `orderinfo`
