@@ -11,7 +11,11 @@
  Target Server Version : 50553
  File Encoding         : 65001
 
+<<<<<<< HEAD
  Date: 25/01/2019 19:01:42
+=======
+Date: 2019-01-25 15:50:33
+>>>>>>> develop
 */
 
 SET NAMES utf8mb4;
@@ -472,21 +476,39 @@ CREATE TABLE `users`  (
   `address` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '地址',
   `description` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `state` int(2) NOT NULL,
+<<<<<<< HEAD
   `gender` varchar(1) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `number` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `real_name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `nationality` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `account_balance` int(255) NOT NULL DEFAULT 0 COMMENT '账户余额',
   `specialitst_license` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+=======
+  `gender` varchar(1) NOT NULL,
+  `number` varchar(45) NOT NULL,
+  `real_name` varchar(20) NOT NULL,
+  `nationality` varchar(20) NOT NULL,
+  `account_balance` int(255) NOT NULL DEFAULT '0' COMMENT '账户余额',
+  `specialitst_license` varchar(255) NOT NULL,
+  `license_type` int(2) NOT NULL,
+  `front_pic` text,
+  `back_pic` text,
+>>>>>>> develop
   PRIMARY KEY (`userID`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
+<<<<<<< HEAD
 INSERT INTO `users` VALUES (1, 'zhangyu199946@126.com', '拉拉人', 'ec847003d2eadc9baf60853e8391e167a292c21f01892fcb8bad0f4af6cd74a7', '', 0, 998, 'VHjWIO5Kp7So6uGxY4Fcbs3Jt', NULL, NULL, NULL, '弗兰秀秀牛逼', 0, '', '', '', '', 0, '');
 INSERT INTO `users` VALUES (2, 'yyz@126.com', '袁宜照', '317f16f4833885da6766e81b35c7258fe4451798600a1ad980babb9e9f412fc2', '', 0, 0, 'TNp6hR7ElkJK4Z5Xfte0VyqG3', NULL, NULL, NULL, '', 0, '', '', '', '', 0, '');
 INSERT INTO `users` VALUES (3, 'zyxiaohao@126.com', '', 'cb8f260c5b29ec2a17d662133ebcf99cd4594e29b0ffeb54599ffe5f3801c3ed', NULL, 0, 0, 'U3WieM95EkGpfXTwdohKFgnjv', NULL, NULL, NULL, '', 0, '', '', '', '', 0, '');
+=======
+INSERT INTO `users` VALUES ('1', 'zhangyu199946@126.com', '拉拉人', 'ec847003d2eadc9baf60853e8391e167a292c21f01892fcb8bad0f4af6cd74a7', '', '0', '998', 'VHjWIO5Kp7So6uGxY4Fcbs3Jt', null, null, null, '弗兰秀秀牛逼', '0', '', '', '', '', '0', '', '0', null, null);
+INSERT INTO `users` VALUES ('2', 'yyz@126.com', '袁宜照', '317f16f4833885da6766e81b35c7258fe4451798600a1ad980babb9e9f412fc2', '', '0', '0', 'TNp6hR7ElkJK4Z5Xfte0VyqG3', null, null, null, '', '0', '', '', '', '', '0', '', '0', null, null);
+INSERT INTO `users` VALUES ('3', 'zyxiaohao@126.com', '', 'cb8f260c5b29ec2a17d662133ebcf99cd4594e29b0ffeb54599ffe5f3801c3ed', null, '0', '0', 'U3WieM95EkGpfXTwdohKFgnjv', null, null, null, '', '0', '', '', '', '', '0', '', '0', null, null);
+>>>>>>> develop
 
 -- ----------------------------
 -- View structure for ac_at_info

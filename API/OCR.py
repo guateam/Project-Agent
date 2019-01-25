@@ -11,21 +11,26 @@ def ocr(source):
     :return: code:1-识别成功  0-识别失败
     """
     img = Image.open(source)
+    width,height = img.size
+    # 放大三倍
+    img = img.resize((width * 3, height * 3), Image.ANTIALIAS)
     # 灰度化
     img = img.convert('L')
-    # 以85阈值进行二值化
-    # threshold = 85
-    # table = []
-    # for i in range(256):
-    #     if i < threshold:
-    #         table.append(0)
-    #     else:
-    #         table.append(1)
-    # # 二值化
-    # img = img.point(table, '1')
-    # 显示图片，测试用，正式上线了注释掉
-    #img.show()
-    # 调用ocr识别
+    # 去除背景线条(实际上没去掉多少)
+    img = depoint(img)
+    # 获取边界
+    edge = pytesseract.image_to_boxes(img,lang="chi_sim")
+    edge = edge.split('\n')
+    for i in range(len(edge)):
+        edge[i] = edge[i].split(' ')
+    # 获取改变后的尺寸
+    width, height = img.size
+    region = (int(edge[0][1]) - 80, height - int(edge[0][4]) - 90, int(edge[0][3]) + width * 0.7,
+              height - int(edge[len(edge)-1][2]) + 50)
+    # 裁切身份证号码图片
+    img = img.crop(region)
+
+    img.show()
     res = pytesseract.image_to_string(img,lang="chi_sim")
     data = res.split('\n')
     # 删除无效行
@@ -59,4 +64,40 @@ def ocr(source):
                         address= address[len(address)-1]
                     if len(address) < 9:
                         address = ""
-    return {"name":name,"gender":gender,"birthday":birthday,"address":address}
+
+    return {"name": name, "gender": gender, "birthday": birthday, "address": address}
+
+
+def depoint(img):
+    pixdata = img.load()
+    w,h = img.size
+    for y in range(1,h-1):
+        for x in range(1,w-1):
+            count = 0
+            if pixdata[x,y-1] > 245:
+                count = count + 1
+            if pixdata[x,y+1] > 245:
+                count = count + 1
+            if pixdata[x-1,y] > 245:
+                count = count + 1
+            if pixdata[x+1,y] > 245:
+                count = count + 1
+            if count > 2:
+                pixdata[x,y] = 255
+    return img
+
+
+def binarizing(img, threshold):
+    pixdata = img.load()
+    w, h = img.size
+    for y in range(h):
+        for x in range(w):
+            if pixdata[x, y] < threshold:
+                pixdata[x, y] = 0
+            else:
+                pixdata[x, y] = 255
+    return img
+
+
+if __name__ == '__main__':
+    ocr('test.png')
