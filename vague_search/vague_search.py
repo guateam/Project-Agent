@@ -31,7 +31,7 @@ def count_contain(content,word):
     # 标点符号
     punctuation = ",./?;\'[]()\"\\!<>，。？“”：；:！"
     # 停用词
-    stopword = "的了呢啊哦地得了"
+    stopword = "的了呢啊哦地得了在是"
     # 用jieba将两个句子分词，获得迭代器
     a_word = jieba.cut(content, cut_all=False)
     # 计数器

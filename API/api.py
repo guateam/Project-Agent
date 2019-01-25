@@ -2111,9 +2111,17 @@ def tf_idf(word, content, type='question'):
     # 计算tf值
     tf = compute_tf(word, content)
     # 获取总问题数量或文章数量
-    total_item_number = db.count({}, 'questions')
-    # 获取包含该词语的文章数量
-    contain_word_number = db.count({'title': word, 'description': word}, 'questions') + 1
+    if type == 'question':
+        total_item_number = db.count({}, 'questions')
+    elif type == 'article':
+        total_item_number = db.count({}, 'article')
+
+    # 获取包含该词语的问题或文章数量
+    if type == 'question':
+        contain_word_number = db.count({'title': word, 'description': word}, 'questions') + 1
+    elif type == 'article':
+        contain_word_number = db.count({'title': word, 'content': word}, 'article') + 1
+
     # 计算idf值
     idf = total_item_number / contain_word_number
 
