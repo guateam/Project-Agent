@@ -258,7 +258,8 @@ def evaluate(model, sess, x_, y_):
 def train(cate=[]):
     """
     训练
-    :param cate: 要进行训练的categoryies数组
+    :param cate: 要进行训练的categoryies数组,本项目应该为 减震降噪  传感器  新材料应用  绿色能源  射频技术  人工智能
+                    流体机械  水处理技术  食品技术  制冷系统设计  燃烧技术  空气净化技术  机械结构设计  加热技术
     :return:
     """
     print("Configuring TensorBoard and Saver...")

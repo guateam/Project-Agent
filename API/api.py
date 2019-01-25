@@ -1575,36 +1575,53 @@ def get_recommend():
     当前没有cf算法以后要改
     :return:code(0=未知用户，1=成功)
     """
+    # 用户token
     token = request.values.get('token')
+    # 用于推荐的评分矩阵路径，以api.py所在目录为根目录的表示
+    rate_dir = request.values.get('rate_dir')
+    
+    # 获取用户信息
     db = Database()
     user = db.get({'token': token}, 'users')
     if user:
-        '''
-        这里是从数据库里拿东西
-        '''
-        questions = db.get({'state': 0}, 'questionsinfo', 0)
-        answers = db.get({'state': 0}, 'answersinfo', 0)
-        '''
-        到时候换成cf算法
-        '''
-        pattern = re.compile(r'<[Ii][Mm][Gg].+?/>')  # 正则表达匹配图片
-        for value1 in questions:
-            value1.update({
-                'type': 0,
-                'image': pattern.findall(value1['description']),
-                'follow': db.count({'targettype': 4, 'targetID': value1['questionID']}, 'useraction'),
-                'comment': db.count({'questionID': value1['questionID']}, 'questioncomments')
-            })
-        for value2 in answers:
-            value2.update({'type': 1, 'image': pattern.findall(value2['content'])})
-        data = [{'title': '震惊！这样可以测出你的血脂', 'type': 2}]  # 假装有广告
-        '''
-        这里是随机乱序假装这是推荐了
-        '''
-        for value in questions + answers:
-            value['edittime'] = get_formative_datetime(value['edittime'])  # 修改日期格式
-            position = int(random.random() * len(data))  # 随机插入位置
-            data.insert(position, value)
+
+        # 假装有广告,直接插入广告
+        data = [{'title': '震惊！这样可以测出你的血脂', 'type': 2}]
+        # 获取该用户最近的20条关于问题的行为和文章的行为
+        the_question_action = db.sql("select * from useraction where userID = '%s' "
+                                     "and targettype >=11 and targettype<=14 order by actiontime DESC limit 20" % user['userID'])
+        # 将最近一次行为的问题作为参考,进行item_cf推荐
+        target_question_id = the_question_action[0]['targetID']
+        # 获得相似度降序排列的问题序列
+        recommend_question_ids = item_cf_api(rate_dir, "../CF/similar_rect.txt", target_question_id, 3)
+        # 录入结果
+        for id in recommend_question_ids:
+            # 查询该id的问题信息
+            out = db.sql("select * from questionsinfo where questionID = '%s'" % id)
+            # 正则表达匹配图片
+            pattern = re.compile(r'<[Ii][Mm][Gg].+?/>')
+            # 进行格式的处理
+            for value1 in out:
+                value1.update({
+                    'type': 0,
+                    'image': pattern.findall(value1['description']),
+                    'follow': db.count({'targettype': 4, 'targetID': value1['questionID']}, 'useraction'),
+                    'comment': db.count({'questionID': value1['questionID']}, 'questioncomments')
+                })
+                # 修改日期格式
+                value1['edittime'] = get_formative_datetime(value1['edittime'])
+                # 录入推荐的问题
+                data.append(value1)
+            # 查询该ID下的问题，取最多3条,按赞同数降序排列
+            answers = db.sql("select * from answersinfo where questionID = '%s' order by agree DESC limit 3" % id)
+            # 进行格式处理
+            for value2 in answers:
+                value2.update({'type': 1, 'image': pattern.findall(value2['content'])})
+                # 修改日期格式
+                value2['edittime'] = get_formative_datetime(value2['edittime'])
+                # 录入推荐的回答
+                data.append(value2)
+
         return jsonify({'code': 1, 'msg': 'success', 'data': data})
     return jsonify({'code': 0, 'msg': 'unexpected user'})
 
@@ -2058,21 +2075,18 @@ def upload_identity_card():
 """
 
 
-@app.route('/api/algorithm/item_cf')
-def item_cf_api():
+def item_cf_api(dirs, simi, target, num):
     """
-    调用item cf算法推荐
-    :return: code:0-失败  1-成功  data:被推荐的物品ID
+    调用item_cf算法推荐
+    :param dirs: 评分矩阵所在的文件名
+    :param simi: 待创建的相似度矩阵文件名
+    :param target: 根据该ID进行相似推荐
+    :param num: 推荐数量
+    :return: ID序列
     """
-    # 评分矩阵文件
-    dirs = request.values.get('dir')
-    # 相似度矩阵文件
-    simi = request.values.get('similar_rect_dir')
-    # 要根据某个物品(文章或问题)的ID来进行相似推荐
-    target = request.values.get('target')
-    # 得到的推荐结果
-    result = item_cf(dirs, simi, target)
 
+    # 得到的推荐结果
+    result = item_cf(dirs, simi, target, num)
     return result
 
 
@@ -2082,13 +2096,12 @@ def build_article_rate_rect():
     建立文章的评分矩阵
     :return: code:0=失败 1=成功
     """
-    # 为文章或者问题建立评分矩阵，评分矩阵的某一行是
+    # 为文章建立评分矩阵，评分矩阵的某一行是
     # 所有用户对某一篇文章的行为进行权值计算后得到的一个向量,所有文章对应一个向量组合成矩阵
-    # chart的值目前只能为article 或 questions
     file_name = request.values.get("file_name")
     db = Database()
     # targettype 对应的评分
-    rate_dict = {21: 2, 22: 4, 23: 3, 24: -2, 25: 3}
+    rate_dict = {21: 2, 22: 4, 23: 3, 24: -2, 25: 3, 11: 1.5, 12: 3, 13: 4, 14: 2 }
     article = db.sql("select * from article")
     users = db.sql("select * from users order by userID ASC")
 
@@ -2110,7 +2123,7 @@ def build_article_rate_rect():
                 rates[users[j]['userID']] = rate
 
         keys = rates.keys()
-        with open("../CF/rate_rect/" + file_name, "w") as f:
+        with open("../CF/rate_rect/" + file_name, "a") as f:
             f.write("ID:" + str(article[i]['articleID']) + " rate:")
             rate_str = ""
             for key in keys:
@@ -2119,6 +2132,51 @@ def build_article_rate_rect():
             f.write(rate_str + "\n")
 
     return jsonify({"code": 1})
+
+
+@app.route('/api/algorithm/build_question_rate_rect')
+def build_question_rate_rect():
+    """
+    建立问题的评分矩阵
+    :return: code:0=失败 1=成功
+    """
+    # 为问题建立评分矩阵，评分矩阵的某一行是
+    # 所有用户对某一个问题的行为进行权值计算后得到的一个向量,所有问题对应一个向量组合成矩阵
+    file_name = request.values.get("file_name")
+    db = Database()
+    # targettype 对应的评分
+    rate_dict = {11: 1.5, 12: 3, 13: 4, 14: 2}
+    questions = db.sql("select * from questions")
+    users = db.sql("select * from users order by userID ASC")
+
+    for i in range(len(questions)):
+        # 对于第i篇文章的评分向量,没有参与的用户评分默认为1
+        rates = {}
+        for j in range(len(users)):
+            rates[users[j]['userID']] = 1
+            actions = db.sql(
+                "select * from useraction where targetID='%s' and userID='%s' and targettype>=11 and targettype <=14 "
+                "order by userID ASC" %
+                (questions[i]['questionID'], users[j]["userID"]))
+            # 该用户对这篇文章的总评分
+            rate = 0
+            if actions:
+                for k in range(len(actions)):
+                    rt = rate_dict[actions[k]["targettype"]]
+                    rate += rt
+                rates[users[j]['userID']] = rate
+
+        keys = rates.keys()
+        with open("../CF/rate_rect/" + file_name, "a") as f:
+            f.write("ID:" + str(questions[i]['questionID']) + " rate:")
+            rate_str = ""
+            for key in keys:
+                rate_str += str(key) + "-" + str(rates[key]) + "-"
+            rate_str = rate_str[:-1]
+            f.write(rate_str + "\n")
+
+    return jsonify({"code": 1})
+
 
 
 @app.route('/api/algorithm/before_search')
