@@ -16,9 +16,10 @@ def ocr(source):
     img = Image.open(source)
     width, height = img.size
     # 放大三倍
-    img = go_dark(img)
+    # img = go_dark(img)
+    img.show()
     img = delete(img)
-    # img.show()
+    img.show()
 
     img = img.resize((width * 3, height * 3), Image.ANTIALIAS)
     # 灰度化

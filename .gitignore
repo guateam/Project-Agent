@@ -133,3 +133,5 @@ API/static/uploads/
 
 .idea
 API/identity_card/
+
+identity_card_generater/output/
