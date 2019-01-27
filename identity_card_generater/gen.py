@@ -47,10 +47,16 @@ def generate(x):
             second = random.randint(0, len(area[first]) - 1)
             first_address = area[first][0]
             address = first_address[1]
+            temp = ''
             if second != 0:
-                temp = area[first][second]
-                address += temp[1]
-            address = address.replace('\n', '') + '\n'
+                temp = area[first][second][1]
+            if area[first][second][0][-2:] != '00':
+                for value in area[first]:
+                    code = area[first][second][0][0:4] + '00'
+                    if value[0] == code:
+                        address += value[1]
+            address += temp
+            address = address.replace('\n', '')
             address += street[random.randint(0, len(street) - 1)].replace('\n', '') + str(random.randint(0, 999)) + '号'
             number = str(area[first][second][0])
             year = random.randint(1970, 2019)
@@ -110,10 +116,10 @@ def generate(x):
 
 
 def print_pic(name, gender, nationality, number, address, year, month, day):
-    tip_tff = 'C:\\Windows\\Fonts\\simhei.ttf'
-    name_tff = 'C:\\Windows\\Fonts\\STHeiti.ttf'
-    number_tff = 'C:\\Windows\\Fonts\\OCR-B 10 BT.ttf'
-    birthday_tff = 'C:\\Windows\\Fonts\\fz-v4.0.TTF'
+    tip_tff = './font/simhei.ttf'
+    name_tff = './font/STHeiti.ttf'
+    number_tff = './font/OCR-B 10 BT.ttf'
+    birthday_tff = './font/fz-v4.0.TTF'
     tip_font = ImageFont.truetype(tip_tff, 30)
     name_font = ImageFont.truetype(name_tff, 45)
     birthday_font = ImageFont.truetype(birthday_tff, 33)
@@ -134,10 +140,27 @@ def print_pic(name, gender, nationality, number, address, year, month, day):
     draw.text((200, 230), gender, fill=(0, 0, 0), font=other_font)
     draw.text((410, 230), nationality, fill=(0, 0, 0), font=other_font)
     draw.text((200, 310), str(year), fill=(0, 0, 0), font=birthday_font)
-    draw.text((360, 310), str(int(month)), fill=(0, 0, 0), font=birthday_font)
-    draw.text((450, 310), str(int(day)), fill=(0, 0, 0), font=birthday_font)
-    draw.text((200, 390), address.split('\n')[0], fill=(0, 0, 0), font=other_font)
-    draw.text((200, 430), address.split('\n')[1], fill=(0, 0, 0), font=other_font)
+    if int(month) < 10:
+        draw.text((370, 310), str(int(month)), fill=(0, 0, 0), font=birthday_font)
+    else:
+        draw.text((360, 310), str(int(month)), fill=(0, 0, 0), font=birthday_font)
+    if int(day) < 10:
+        draw.text((460, 310), str(int(day)), fill=(0, 0, 0), font=birthday_font)
+    else:
+        draw.text((450, 310), str(int(day)), fill=(0, 0, 0), font=birthday_font)
+    if len(address) > 11:
+        count = 0
+        step = 0
+        while count < len(address):
+            address_list = address[count:count + 11]
+            l_step = 0
+            for value in address_list:
+                draw.text((200 + l_step, 390 + step * 40), value, fill=(0, 0, 0), font=other_font)
+                l_step += 36
+            count += 11
+            step += 1
+    else:
+        draw.text((200, 390), address, fill=(0, 0, 0), font=other_font)
     number_list = list(number)
     step = 0
     for value in number_list:
