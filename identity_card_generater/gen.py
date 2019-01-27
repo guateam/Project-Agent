@@ -41,78 +41,85 @@ def generate(x):
         nationality_list[len(nationality_list) - 1] = nationality_list[len(nationality_list) - 1].replace('\n', '')
 
     with open('./output/output.txt', 'w', encoding='utf-8') as file:
-        for i in range(x):
-            print('----------------------------')
-            first = random.randint(0, len(area) - 1)
-            second = random.randint(0, len(area[first]) - 1)
-            first_address = area[first][0]
-            address = first_address[1]
-            temp = ''
-            if second != 0:
-                temp = area[first][second][1]
-            if area[first][second][0][-2:] != '00':
-                for value in area[first]:
-                    code = area[first][second][0][0:4] + '00'
-                    if value[0] == code:
-                        address += value[1]
-            address += temp
-            address = address.replace('\n', '')
-            address += street[random.randint(0, len(street) - 1)].replace('\n', '') + str(random.randint(0, 999)) + '号'
-            number = str(area[first][second][0])
-            year = random.randint(1970, 2019)
-            month = random.randint(1, 12)
-            day = 0
-            big = [1, 3, 5, 7, 8, 10, 12]
-            if month in big:
-                day = random.randint(1, 31)
-            elif month == 2:
-                if (year % 4 == 0 and year % 100 != 0) or year % 400 == 0:
-                    day = random.randint(1, 29)
+        with open('./output/box.txt', 'w', encoding='utf-8') as box:
+            for i in range(x):
+                print('----------------------------')
+                first = random.randint(0, len(area) - 1)
+                second = random.randint(0, len(area[first]) - 1)
+                first_address = area[first][0]
+                address = first_address[1]
+                temp = ''
+                if second != 0:
+                    temp = area[first][second][1]
+                if area[first][second][0][-2:] != '00':
+                    for value in area[first]:
+                        code = area[first][second][0][0:4] + '00'
+                        if value[0] == code:
+                            address += value[1]
+                address += temp
+                address = address.replace('\n', '')
+                address += street[random.randint(0, len(street) - 1)].replace('\n', '') + str(
+                    random.randint(0, 999)) + '号'
+                number = str(area[first][second][0])
+                year = random.randint(1970, 2019)
+                month = random.randint(1, 12)
+                day = 0
+                big = [1, 3, 5, 7, 8, 10, 12]
+                if month in big:
+                    day = random.randint(1, 31)
+                elif month == 2:
+                    if (year % 4 == 0 and year % 100 != 0) or year % 400 == 0:
+                        day = random.randint(1, 29)
+                    else:
+                        day = random.randint(1, 28)
                 else:
-                    day = random.randint(1, 28)
-            else:
-                day = random.randint(1, 30)
-            if month < 10:
-                month = '0' + str(month)
-            if day < 10:
-                day = '0' + str(day)
-            number = number + str(year) + str(month) + str(day)
+                    day = random.randint(1, 30)
+                if month < 10:
+                    month = '0' + str(month)
+                if day < 10:
+                    day = '0' + str(day)
+                number = number + str(year) + str(month) + str(day)
 
-            random_code = random.randint(0, 9999)
-            gender = '男'
-            if random_code % 2 == 0:
-                gender = '女'
-            if random_code < 10:
-                random_code = '000' + str(random_code)
-            elif random_code < 100:
-                random_code = '00' + str(random_code)
-            elif random_code < 1000:
-                random_code = '0' + str(random_code)
-            else:
-                random_code = str(random_code)
-            number = number + random_code
-            weight = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2]
-            number_list = list(number)
-            count = 0
-            for j in range(len(weight)):
-                count += int(number_list[j]) * weight[j]
-            count = count % 11
-            if count == 10:
-                count = 'X'
-            number = number + str(count)
+                random_code = random.randint(0, 9999)
+                gender = '男'
+                if random_code % 2 == 0:
+                    gender = '女'
+                if random_code < 10:
+                    random_code = '000' + str(random_code)
+                elif random_code < 100:
+                    random_code = '00' + str(random_code)
+                elif random_code < 1000:
+                    random_code = '0' + str(random_code)
+                else:
+                    random_code = str(random_code)
+                number = number + random_code
+                weight = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2]
+                number_list = list(number)
+                count = 0
+                for j in range(len(weight)):
+                    count += int(number_list[j]) * weight[j]
+                count = count % 11
+                if count == 10:
+                    count = 'X'
+                number = number + str(count)
 
-            name = first_name[random.randint(0, len(first_name) - 1)] + second_name[
-                random.randint(0, len(second_name) - 1)]
-            name = name.replace('\n', '')
-            nationality = nationality_list[random.randint(0, len(nationality_list) - 1)]
-            print('姓名：' + str(name.replace('\n', '')))
-            print('性别：' + str(gender) + ' 民族：' + nationality)
-            print('地址：' + str(address))
-            print('身份证号码：' + number)
-            print_pic(name, gender, nationality, number, address, year, month, day)
-            file.write(name.replace('\n', '').replace(' ', '') + ' ' + gender + ' ' + nationality + ' ' + str(
-                year) + ' ' + str(int(month)) + ' ' + str(int(day)) + ' ' + address.replace('\n',
-                                                                                            '') + ' ' + number + '\n')
+                name = first_name[random.randint(0, len(first_name) - 1)] + second_name[
+                    random.randint(0, len(second_name) - 1)]
+                name = name.replace('\n', '')
+                nationality = nationality_list[random.randint(0, len(nationality_list) - 1)]
+                print('姓名：' + str(name.replace('\n', '')))
+                print('性别：' + str(gender) + ' 民族：' + nationality)
+                print('地址：' + str(address))
+                print('身份证号码：' + number)
+                print_pic(name, gender, nationality, number, address, year, month, day)
+                file.write(name.replace('\n', '').replace(' ', '') + ' ' + gender + ' ' + nationality + ' ' + str(
+                    year) + ' ' + str(int(month)) + ' ' + str(int(day)) + ' ' + address.replace('\n',
+                                                                                                '') + ' ' + number + '\n')
+                box_list = list('姓名') + list(name.replace('\n', '').replace(' ', '')) + list('性别') + list(
+                    gender) + list('名族') + list(nationality) + list('地址') + list(
+                    address.replace('\n', '').replace(' ', '')) + list('公民身份证号码') + list(number)
+                for value in box_list:
+                    box.write(value + '\n')
 
 
 def print_pic(name, gender, nationality, number, address, year, month, day):
