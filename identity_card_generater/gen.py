@@ -101,9 +101,9 @@ def generate(x):
                 count = 'X'
             number = number + str(count)
 
-            name = first_name[random.randint(0, len(first_name) - 1)] + ' ' + second_name[
+            name = first_name[random.randint(0, len(first_name) - 1)] + second_name[
                 random.randint(0, len(second_name) - 1)]
-
+            name = name.replace('\n', '')
             nationality = nationality_list[random.randint(0, len(nationality_list) - 1)]
             print('姓名：' + str(name.replace('\n', '')))
             print('性别：' + str(gender) + ' 民族：' + nationality)
@@ -125,7 +125,7 @@ def print_pic(name, gender, nationality, number, address, year, month, day):
     birthday_font = ImageFont.truetype(birthday_tff, 33)
     other_font = ImageFont.truetype(name_tff, 33)
     number_font = ImageFont.truetype(number_tff, 45)
-    img = Image.open('back_blank.jpg')
+    img = Image.open('./image/back_blank.jpg')
     draw = ImageDraw.Draw(img)
     draw.text((100, 150), '姓 名', fill=(90, 180, 210), font=tip_font)
     draw.text((100, 230), '性 别', fill=(90, 180, 210), font=tip_font)
@@ -136,7 +136,14 @@ def print_pic(name, gender, nationality, number, address, year, month, day):
     draw.text((320, 310), '年', fill=(90, 180, 210), font=tip_font)
     draw.text((410, 310), '月', fill=(90, 180, 210), font=tip_font)
     draw.text((500, 310), '日', fill=(90, 180, 210), font=tip_font)
-    draw.text((200, 140), name.replace('\n', ''), fill=(0, 0, 0), font=name_font)
+    name_list = list(name)
+    step = 0
+    for value in name_list:
+        draw.text((200 + step, 140), value, fill=(0, 0, 0), font=name_font)
+        if len(name_list) < 3:
+            step += 80
+        else:
+            step += 60
     draw.text((200, 230), gender, fill=(0, 0, 0), font=other_font)
     draw.text((410, 230), nationality, fill=(0, 0, 0), font=other_font)
     draw.text((200, 310), str(year), fill=(0, 0, 0), font=birthday_font)
@@ -167,7 +174,16 @@ def print_pic(name, gender, nationality, number, address, year, month, day):
         draw.text((360 + step, 570), value, fill=(0, 0, 0), font=number_font)
         step += 30
     # img.show()
-    img.save('./output/' + name.replace('\n', '').replace(' ', '') + '_' + number + '.jpg', 'jpeg')
+    man = ['man1.jpg', 'man2.jpg']
+    woman = ['woman1.png', 'woman2.jpg']
+    head = Image.open('./image/' + woman[random.randint(0, len(woman) - 1)])
+    if gender == '男':
+        head = Image.open('./image/' + man[random.randint(0, len(man) - 1)])
+    head.resize((300, 600))
+    head.thumbnail((300, 600))
+    img.paste(head, (670, 100))
+    # img.show()
+    img.save('./output/' + name.replace('\n', '').replace(' ', '') + '_' + number + '.tiff', 'tiff')
 
 
 if __name__ == '__main__':
