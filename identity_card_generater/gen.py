@@ -116,7 +116,7 @@ def generate(x):
                     year) + ' ' + str(int(month)) + ' ' + str(int(day)) + ' ' + address.replace('\n',
                                                                                                 '') + ' ' + number + '\n')
                 box_list = list('姓名') + list(name.replace('\n', '').replace(' ', '')) + list('性别') + list(
-                    gender) + list('名族') + list(nationality) + list('地址') + list(
+                    gender) + list('民族') + list(nationality) + list('地址') + list(
                     address.replace('\n', '').replace(' ', '')) + list('公民身份证号码') + list(number)
                 for value in box_list:
                     box.write(value + '\n')
@@ -139,7 +139,7 @@ def print_pic(name, gender, nationality, number, address, year, month, day):
     draw.text((100, 310), '出 生', fill=(90, 180, 210), font=tip_font)
     draw.text((100, 390), '地 址', fill=(90, 180, 210), font=tip_font)
     draw.text((100, 570), '公民身份证号码', fill=(90, 180, 210), font=tip_font)
-    draw.text((320, 230), '名 族', fill=(90, 180, 210), font=tip_font)
+    draw.text((320, 230), '民 族', fill=(90, 180, 210), font=tip_font)
     draw.text((320, 310), '年', fill=(90, 180, 210), font=tip_font)
     draw.text((410, 310), '月', fill=(90, 180, 210), font=tip_font)
     draw.text((500, 310), '日', fill=(90, 180, 210), font=tip_font)
