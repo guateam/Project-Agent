@@ -41,7 +41,7 @@ def generate(x):
         nationality_list[len(nationality_list) - 1] = nationality_list[len(nationality_list) - 1].replace('\n', '')
 
     with open('./output/output.txt', 'w', encoding='utf-8') as file:
-        with open('./output/box.txt', 'w', encoding='utf-8') as box:
+        with open('./output/id.normal.exp0.box', 'w', encoding='utf-8') as box:
             for i in range(x):
                 print('----------------------------')
                 first = random.randint(0, len(area) - 1)
@@ -111,18 +111,80 @@ def generate(x):
                 print('性别：' + str(gender) + ' 民族：' + nationality)
                 print('地址：' + str(address))
                 print('身份证号码：' + number)
-                print_pic(name, gender, nationality, number, address, year, month, day)
+                print_pic(name, gender, nationality, number, address, year, month, day, i)
                 file.write(name.replace('\n', '').replace(' ', '') + ' ' + gender + ' ' + nationality + ' ' + str(
                     year) + ' ' + str(int(month)) + ' ' + str(int(day)) + ' ' + address.replace('\n',
                                                                                                 '') + ' ' + number + '\n')
-                box_list = list('姓名') + list(name.replace('\n', '').replace(' ', '')) + list('性别') + list(
-                    gender) + list('民族') + list(nationality) + list('地址') + list(
-                    address.replace('\n', '').replace(' ', '')) + list('公民身份证号码') + list(number)
-                for value in box_list:
-                    box.write(value + '\n')
+                write(box, '姓', 100, 150, 30, 30, i)
+                write(box, '名', 147, 151, 30, 30, i)
+                step = 0
+                for value in list(name.replace('\n', '')):
+                    write(box, value, 200 + step, 155, 45, 45, i)
+                    if len(name.replace('\n', '')) < 3:
+                        step += 80
+                    else:
+                        step += 60
+                write(box, '性', 100, 230, 30, 30, i)
+                write(box, '别', 147, 230, 30, 30, i)
+                write(box, gender, 200, 230, 30, 30, i)
+                write(box, '民', 320, 230, 30, 30, i)
+                write(box, '族', 366, 230, 30, 30, i)
+                step = 0
+                for value in list(nationality):
+                    write(box, value, 410 + step, 230, 30, 30, i)
+                    step += 32
+                write(box, '出', 100, 310, 30, 30, i)
+                write(box, '生', 147, 310, 30, 30, i)
+                step = 0
+                for value in list(str(year)):
+                    write(box, value, 200 + step, 310, 18, 30, i)
+                    step += 18
+                write(box, '年', 320, 310, 30, 30, i)
+                if int(month) < 10:
+                    write(box, month, 370, 310, 18, 30, i)
+                else:
+                    step = 0
+                    for value in list(str(month)):
+                        write(box, value, 360 + step, 310, 18, 30, i)
+                        step += 18
+                write(box, '月', 410, 310, 30, 30, i)
+                if int(day) < 10:
+                    write(box, day, 460, 310, 19, 30, i)
+                else:
+                    step = 0
+                    for value in list(str(day)):
+                        write(box, value, 450 + step, 310, 18, 30, i)
+                        step += 18
+                write(box, '日', 500, 310, 30, 30, i)
+                write(box, '地', 100, 390, 30, 30, i)
+                write(box, '址', 147, 390, 30, 30, i)
+                if len(address) > 11:
+                    count = 0
+                    step = 0
+                    while count < len(address):
+                        address_list = address[count:count + 11]
+                        l_step = 0
+                        for value in address_list:
+                            write(box, value, 200 + l_step, 390 + step * 40, 30, 30, i)
+                            l_step += 36
+                        count += 11
+                        step += 1
+                else:
+                    step = 0
+                    for value in list(address):
+                        write(box, value, 200 + step, 390, 30, 30, i)
+                        step += 36
+                step = 0
+                for value in list('公民身份证号码'):
+                    write(box, value, 100 + step, 570, 30, 30, i)
+                    step += 30
+                step = 0
+                for value in list(number):
+                    write(box, value, 360 + step, 577, 25, 33, i)
+                    step += 30
 
 
-def print_pic(name, gender, nationality, number, address, year, month, day):
+def print_pic(name, gender, nationality, number, address, year, month, day, i):
     tip_tff = './font/simhei.ttf'
     name_tff = './font/STHeiti.ttf'
     number_tff = './font/OCR-B 10 BT.ttf'
@@ -174,7 +236,11 @@ def print_pic(name, gender, nationality, number, address, year, month, day):
             count += 11
             step += 1
     else:
-        draw.text((200, 390), address, fill=(0, 0, 0), font=other_font)
+        address_list = list(address)
+        l_step = 0
+        for value in address_list:
+            draw.text((200 + l_step, 390), value, fill=(0, 0, 0), font=other_font)
+            l_step += 36
     number_list = list(number)
     step = 0
     for value in number_list:
@@ -190,8 +256,13 @@ def print_pic(name, gender, nationality, number, address, year, month, day):
     head.thumbnail((300, 600))
     img.paste(head, (670, 100))
     # img.show()
-    img.save('./output/' + name.replace('\n', '').replace(' ', '') + '_' + number + '.tiff', 'tiff')
+    img.save('./output/' + str(i) + '.tiff', 'tiff')
+
+
+def write(file, name, x, y, w, h, i):
+    file.write(
+        name + ' ' + str(x) + ' ' + str(689 - y) + ' ' + str(x + w) + ' ' + str(689 - y + h) + ' ' + str(i) + '\n')
 
 
 if __name__ == '__main__':
-    generate(100)
+    generate(1000)
