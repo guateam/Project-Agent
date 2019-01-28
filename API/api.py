@@ -1579,7 +1579,7 @@ def get_recommend():
     token = request.values.get('token')
     # 用于推荐的评分矩阵路径，以api.py所在目录为根目录的表示
     rate_dir = request.values.get('rate_dir')
-    
+
     # 获取用户信息
     db = Database()
     user = db.get({'token': token}, 'users')
@@ -1587,7 +1587,7 @@ def get_recommend():
 
         # 假装有广告,直接插入广告
         data = [{'title': '震惊！这样可以测出你的血脂', 'type': 2}]
-        # 获取该用户最近的20条关于问题的行为和文章的行为
+        # 获取该用户最近的20条关于问题的行为
         the_question_action = db.sql("select * from useraction where userID = '%s' "
                                      "and targettype >=11 and targettype<=14 order by actiontime DESC limit 20" % user['userID'])
         # 将最近一次行为的问题作为参考,进行item_cf推荐

@@ -133,29 +133,52 @@ def generate(x):
                 for value in list(nationality):
                     write(box, value, 410 + step, 230, 30, 30, i)
                     step += 32
-                write(box, '出', 100, 310, 30, 30, i)
-                write(box, '生', 147, 310, 30, 30, i)
+                write(box, '出', 100, 308, 28, 28, i)
+                write(box, '生', 147, 308, 28, 26, i)
                 step = 0
                 for value in list(str(year)):
-                    write(box, value, 200 + step, 310, 18, 30, i)
+                    width = 16
+                    offset = 0
+                    if value == '1':
+                        width = 10
+                        offset = 2
+                    write(box, value, 200 + step + offset, 309, width, 24, i)
                     step += 18
                 write(box, '年', 320, 310, 30, 30, i)
                 if int(month) < 10:
-                    write(box, month, 370, 310, 18, 30, i)
+                    width = 16
+                    offset = 0
+                    if month == '1':
+                        width = 10
+                        offset = 2
+                    write(box, month, 370 + offset, 309, width, 24, i)
                 else:
                     step = 0
                     for value in list(str(month)):
-                        write(box, value, 360 + step, 310, 18, 30, i)
+                        width = 16
+                        offset = 0
+                        if value == '1':
+                            width = 10
+                            offset = 2
+                        write(box, value, 362 + step + offset, 309, width, 24, i)
                         step += 18
-                write(box, '月', 410, 310, 30, 30, i)
+                write(box, '月', 412, 308, 22, 25, i)
                 if int(day) < 10:
-                    write(box, day, 460, 310, 19, 30, i)
+                    width = 16
+                    if day == 1:
+                        width = 10
+                    write(box, day, 460, 309, width, 24, i)
                 else:
                     step = 0
                     for value in list(str(day)):
-                        write(box, value, 450 + step, 310, 18, 30, i)
+                        width = 16
+                        offset = 0
+                        if value == '1':
+                            width = 10
+                            offset = 2
+                        write(box, value, 450 + step + offset, 309, width, 24, i)
                         step += 18
-                write(box, '日', 500, 310, 30, 30, i)
+                write(box, '日', 504, 310, 23, 30, i)
                 write(box, '地', 100, 390, 30, 30, i)
                 write(box, '址', 147, 390, 30, 30, i)
                 if len(address) > 11:
@@ -165,7 +188,10 @@ def generate(x):
                         address_list = address[count:count + 11]
                         l_step = 0
                         for value in address_list:
-                            write(box, value, 200 + l_step, 390 + step * 40, 30, 30, i)
+                            if value >= '0' and value <= '9':
+                                write(box, value, 200 + l_step, 390 + step * 40 - 2, 16, 24, i)
+                            else:
+                                write(box, value, 200 + l_step, 390 + step * 40, 30, 30, i)
                             l_step += 36
                         count += 11
                         step += 1
@@ -176,11 +202,14 @@ def generate(x):
                         step += 36
                 step = 0
                 for value in list('公民身份证号码'):
-                    write(box, value, 100 + step, 570, 30, 30, i)
+                    write(box, value, 100 + step, 570, 27, 28, i)
                     step += 30
                 step = 0
                 for value in list(number):
-                    write(box, value, 360 + step, 577, 25, 33, i)
+                    width = 19
+                    if value == '1':
+                        width = 15
+                    write(box, value, 363 + step, 574, width, 29, i)
                     step += 30
 
 
@@ -265,4 +294,4 @@ def write(file, name, x, y, w, h, i):
 
 
 if __name__ == '__main__':
-    generate(1000)
+    generate(500)
