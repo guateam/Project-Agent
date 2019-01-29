@@ -97,7 +97,7 @@ class Database(object):
                 results = cursor.fetchall()
                 if len(results) == 1 and type == 1:
                     return results[0]  # 返回单个数组
-                if not results and type==0:
+                if not results and type == 0:
                     return []
                 return results  # 返回多个数组
         except pymysql.MySQLError as e:
@@ -116,7 +116,7 @@ class Database(object):
             with self.db.cursor() as cursor:
                 list1 = []
                 for key, values in where_list.items():
-                    list1.append(key + ' = "' + values + '"')
+                    list1.append(str(key) + ' = "' + str(values) + '"')
                 list2 = []
                 for key, values in data.items():
                     list2.append(key + ' = "' + str(values) + '"')
@@ -130,6 +130,31 @@ class Database(object):
         except pymysql.MySQLError as e:
             print(e.args)
             return []
+
+    def delete(self, where_list, table):
+        """
+        清除数据库数据
+        :param where_list: dist 需要更新的数据库所在
+        :param table: 目标表名
+        :return: boolean
+        """
+        try:
+            with self.db.cursor() as cursor:
+                list1 = []
+                for key, values in where_list.items():
+                    if values == self.MYSQL_NULL:
+                        list1.append(key + self.MYSQL_NULL)
+                    else:
+                        list1.append(key + '="' + str(values) + '"')
+                where = ' AND '.join(list1)
+                sql_query = 'DELETE FROM %s WHERE %s' % (table, where)  # 构造sql语句
+                sql_query.replace('\\', '\\\\')
+                cursor.execute(sql_query)
+                self.db.commit()
+                return True
+        except pymysql.MySQLError as e:
+            print(e.args)
+            return False  # 返回空数组
 
     def count(self, data, table):
         """
@@ -185,7 +210,7 @@ class Database(object):
             print(e.args)
             return []  # 报错
 
-    def sql(self, str, type = 0):
+    def sql(self, str, type=0):
         """
         直接运行sql语句
         :param str: sql语句
@@ -201,3 +226,41 @@ class Database(object):
         except pymysql.mySQLError as e:
             print(e.args)
             return []
+
+    def vague(self, data, table, type=0):
+        """
+        更加模糊的搜索
+        :param data: 模糊搜索数据
+        :param table: 目标表名
+        :return:
+        """
+        try:
+            with self.db.cursor() as cursor:
+                if not data:  # 判断data是否为空
+                    return self.get(data, table)
+                list1 = []
+                for key, values in data.items():
+                    if values == self.MYSQL_NULL:
+                        list1.append(key + self.MYSQL_NULL)
+                    else:
+                        if isinstance(values, str):
+                            str_use = ''
+                            if len(list1) == 0:
+                                str_use = (key + ' LIKE \'%')
+                            for single in values:
+                                str_use += single + '%'
+                            str_use +='\''
+                            list1.append(str_use)
+                        else:
+                            list1.append(key + ' LIKE \'%' + str(values) + '%\'')
+
+                where = ' AND '.join(list1)
+                sql_query = 'SELECT * FROM %s WHERE %s' % (table, where)  # 构造sql语句
+                cursor.execute(sql_query)
+                results = cursor.fetchall()
+                if len(results) == 1 and type == 1:
+                    return results[0]  # 返回单个数组
+                return results  # 返回多个数组
+        except pymysql.MySQLError as e:
+            print(e.args)
+            return []  # 报错

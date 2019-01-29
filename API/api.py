@@ -5,6 +5,7 @@ import string
 import time
 
 from CF.cf import item_cf
+from vague_search.vague_search import  select_by_similarity, compute_tf
 from API.OCR import ocr
 from flask import Flask, jsonify, request
 from flask_cors import CORS
@@ -20,8 +21,8 @@ CORS(app, supports_credentials=True)
 """
     常量区
 """
-USER_GROUP = ['管理员', '从业者', '专家', '企业', '封禁', '待审核专家', '待审核企业']
-LEVEL_EXP = [100, 1000, 10000]
+USER_GROUP = ['系统管理员', '从业者', '专家', '企业', '封禁', '待审核专家', '待审核企业']
+LEVEL_EXP = [0,100, 1000, 10000, 100000, 1000000]
 
 
 @app.route("/")
@@ -243,6 +244,62 @@ def set_user_action(user_id, target, action_type):
     return False
 
 
+@app.route('/api/account/set_verify_info', methods=['POST'])
+def set_verify_info():
+    """
+    上传实名信息
+    :return:
+    """
+    token = request.form['token']
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        real_name = request.form['real_name']
+        nationality = request.form['nationality']
+        address = request.form['address']
+        gender = request.form['gender']
+        number = request.form['number']
+        flag = db.update({'userID': user['userID']},
+                         {'real_name': real_name, 'nationality': nationality, 'address': address, 'gender': gender,
+                          'number': number, 'state': 1}, 'users')
+        if flag:
+            return jsonify({'code': 1, 'msg': 'success'})
+        return jsonify({'code': -1, 'msg': 'unable to set'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/account/get_verify_user')
+def get_verify_user():
+    """
+    获取待实名审核的用户
+    :return:
+    """
+    token = request.headers.get('X-Token')
+    db = Database()
+    user = db.get({'token': token, 'usergroup': 0}, 'users')
+    if user:
+        user_id = request.values.get('user_id')
+        user = db.get({'userID': user_id}, 'users')
+        if user:
+            data = {
+                'nickname': user['nickname'],
+                'group': get_group(user['usergroup']),
+                'level': get_level(user['exp']),
+                'headportrait': user['headportrait'],
+                'exp': user['exp'],
+                'real_name': user['real_name'],
+                'nationality': user['nationality'],
+                'number': user['number'],
+                'gender': user['gender'],
+                'front_pic': user['front_pic'],
+                'back_pic': user['back_pic'],
+                'address': user['address']
+            }
+            return jsonify({'code': 1, 'msg': 'success', 'data': data})
+        return jsonify({'code': -1, 'msg': 'unknown user'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
 @app.route('/api/account/verify', methods=['POST'])
 def verify():
     """
@@ -270,7 +327,7 @@ def verify():
             'state': 2
         }, 'users')
         set_user_action(user['userID'], user_id, 26)
-        set_sys_message(user['userID'], 2, '你的实名认证申请已通过！', user_id)
+        set_sys_message(user['userID'], 1, '你的实名认证申请已通过！', user_id)
         if flag:
             return jsonify({'code': 1, 'msg': 'success'})
         return jsonify({'code': -1, 'msg': 'unable to update'})
@@ -298,7 +355,7 @@ def not_verify():
             'state': 3
         }, 'users')
         set_user_action(user['userID'], user_id, 27)
-        set_sys_message(user['userID'], 2, '你的实名认证申请未通过！', user_id)
+        set_sys_message(user['userID'], 1, '你的实名认证申请未通过！', user_id)
         if flag:
             return jsonify({'code': 1, 'msg': 'success'})
         return jsonify({'code': -1, 'msg': 'unable to update'})
@@ -351,7 +408,7 @@ def back_get_users():
     db = Database()
     user = db.get({'token': token, 'usergroup': 0}, 'users')
     if user:
-        users = db.get({}, 'users')
+        users = db.get({}, 'users', 0)
         for value in users:
             value.update({
                 'group': get_group(value['usergroup']),
@@ -375,12 +432,12 @@ def back_get_normal_users():
     db = Database()
     user = db.get({'token': token, 'usergroup': 0}, 'users')
     if user:
-        users = db.get({'usergroup': 1}, 'users')
+        users = db.get({'usergroup': 1}, 'users', 0)
         wait = []
         confirm = []
         refuse = []
         un_identity = []
-        banned = db.get({'usergroup': 4}, 'users')
+        banned = db.get({'usergroup': 4}, 'users', 0)
         for value in users + banned:
             value.update({
                 'group': get_group(value['usergroup']),
@@ -390,6 +447,8 @@ def back_get_normal_users():
                 'follow': db.count({'userID': value['userID']}, 'followuser'),
                 'fans': db.count({'target': value['userID']}, 'followuser')
             })
+            if value['usergroup']['value'] == 4:
+                break
             if value['state'] == 0:
                 un_identity.append(value)
             elif value['state'] == 1:
@@ -416,8 +475,8 @@ def back_get_specialist_users():
     db = Database()
     user = db.get({'token': token, 'usergroup': 0}, 'users')
     if user:
-        confirm = db.get({'usergroup': 1}, 'users')
-        wait = db.get({'usergroup': 5}, 'users')
+        confirm = db.get({'usergroup': 1}, 'users', 0)
+        wait = db.get({'usergroup': 5}, 'users', 0)
         for value in confirm + wait:
             value.update({
                 'group': get_group(value['usergroup']),
@@ -443,8 +502,8 @@ def back_get_enterprise_users():
     db = Database()
     user = db.get({'token': token, 'usergroup': 0}, 'users')
     if user:
-        confirm = db.get({'usergroup': 2}, 'users')
-        wait = db.get({'usergroup': 6}, 'users')
+        confirm = db.get({'usergroup': 2}, 'users', 0)
+        wait = db.get({'usergroup': 6}, 'users', 0)
         for value in confirm + wait:
             value.update({
                 'group': get_group(value['usergroup']),
@@ -457,6 +516,38 @@ def back_get_enterprise_users():
 
         return jsonify({'code': 1, 'msg': 'success',
                         'data': {'all': confirm + wait, 'wait': wait, 'confirm': confirm}})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/account/get_specialist_info')
+def get_specialist_info():
+    """
+    获取专家申请人的个人消息
+    :return:
+    """
+    token = request.headers.get('X-Token')
+    db = Database()
+    user = db.get({'token': token, 'usergroup': 0}, 'users')
+    if user:
+        user_id = request.values.get('user_id')
+        user = db.get({'userID': user_id}, 'users')
+        if user:
+            data = {
+                'nickname': user['nickname'],
+                'group': get_group(user['usergroup']),
+                'level': get_level(user['exp']),
+                'headportrait': user['headportrait'],
+                'exp': user['exp'],
+                'specialitst_license': user['specialitst_license'],
+                'license_type': user['license_type'],
+                'real_name': user['real_name'],
+                'nationality': user['nationality'],
+                'number': user['number'],
+                'gender': user['gender'],
+                'address': user['address']
+            }
+            return jsonify({'code': 1, 'msg': 'success', 'data': data})
+        return jsonify({'code': -1, 'msg': 'unknown user'})
     return jsonify({'code': 0, 'msg': 'unexpected user'})
 
 
@@ -475,7 +566,7 @@ def confirm_specialist():
         if specialist:
             flag = db.update({'userID': user_id}, {'usergroup': 2}, 'users')
             set_user_action(user['userID'], user_id, 28)
-            set_sys_message(user['userID'], 2, '你的专家认证申请已通过！', user_id)
+            set_sys_message(user['userID'], 1, '你的专家认证申请已通过！', user_id)
             if flag:
                 return jsonify({'code': 1, 'msg': 'success'})
             return jsonify({'code': -1, 'msg': 'unable to upgrade'})
@@ -498,7 +589,7 @@ def refuse_specialist():
         if specialist:
             flag = db.update({'userID': user_id}, {'usergroup': 1}, 'users')
             set_user_action(user['userID'], user_id, 29)
-            set_sys_message(user['userID'], 2, '你的专家认证申请未通过！', user_id)
+            set_sys_message(user['userID'], 1, '你的专家认证申请未通过！', user_id)
             if flag:
                 return jsonify({'code': 1, 'msg': 'success'})
             return jsonify({'code': -1, 'msg': 'unable to upgrade'})
@@ -521,7 +612,7 @@ def confirm_enterprise():
         if specialist:
             flag = db.update({'userID': user_id}, {'usergroup': 3}, 'users')
             set_user_action(user['userID'], user_id, 30)
-            set_sys_message(user['userID'], 2, '你的企业认证申请已通过！', user_id)
+            set_sys_message(user['userID'], 1, '你的企业认证申请已通过！', user_id)
             if flag:
                 return jsonify({'code': 1, 'msg': 'success'})
             return jsonify({'code': -1, 'msg': 'unable to upgrade'})
@@ -544,7 +635,7 @@ def refuse_enterprise():
         if specialist:
             flag = db.update({'userID': user_id}, {'usergroup': 1}, 'users')
             set_user_action(user['userID'], user_id, 31)
-            set_sys_message(user['userID'], 2, '你的企业认证申请未通过！', user_id)
+            set_sys_message(user['userID'], 1, '你的企业认证申请未通过！', user_id)
             if flag:
                 return jsonify({'code': 1, 'msg': 'success'})
             return jsonify({'code': -1, 'msg': 'unable to upgrade'})
@@ -565,7 +656,7 @@ def delete_user():
         user_id = request.values.get('user_id')
         flag = db.update({'userID': user_id}, {'usergroup': 4}, 'users')
         set_user_action(user['userID'], user_id, 32)
-        set_sys_message(user['userID'], 2, '你已被管理员封禁！', user_id)
+        set_sys_message(user['userID'], 1, '你已被管理员封禁！', user_id)
         if flag:
             return jsonify({'code': 1, 'msg': 'success'})
         return jsonify({'code': -1, 'msg': 'unable to delete'})
@@ -788,7 +879,7 @@ def get_questions():
     :return:code(0=未知用户，-1=无法添加问题，1=成功)
     """
     db = Database()
-    data = db.get({'state': 0}, 'questionsinfo')
+    data = db.get({'state': 0}, 'questionsinfo', 0)
     return jsonify({'code': 0, 'msg': '', 'data': data})
 
 
@@ -924,7 +1015,8 @@ def pay_question():
         return jsonify({'code': 0, 'msg': 'there are something wrong when paying'})
     # 支付成功，生成支付记录
     elif result == 1:
-        res = db.insert({'from': user['userID'], 'receive': question_id, 'amount': question['price'], 'type': 1})
+        res = db.insert({'from': user['userID'], 'receive': question_id, 'amount': question['price'], 'type': 1},
+                        'pay_history')
         if not res:
             # 若创建支付记录失败，视为支付失败，将钱退还
             return_money = change_account_balance(question['price'], user_token)
@@ -1010,7 +1102,7 @@ def back_get_questions():
     db = Database()
     user = db.get({'token': token, 'usergroup': 0}, 'users')
     if user:
-        questions = db.get({}, 'questionsinfo')
+        questions = db.get({}, 'questionsinfo', 0)
         data = []
         for value in questions:
             data.append({
@@ -1041,7 +1133,7 @@ def delete_question():
         flag = db.update({'questionID': question_id}, {'state': -1}, 'questions')
         if flag:
             set_user_action(user['userID'], question_id, 34)
-            set_sys_message(user['userID'], 2, '您发布的问题 ' + flag['title'] + ' 已被管理员清除！', flag['userID'])
+            set_sys_message(user['userID'], 1, '您发布的问题 ' + flag['title'] + ' 已被管理员清除！', flag['userID'])
             return jsonify({'code': 1, 'msg': 'success'})
         return jsonify({'code': -1, 'msg': 'unable to delete'})
     return jsonify({'code': 0, 'msg': 'unexpected user'})
@@ -1322,7 +1414,7 @@ def back_get_answers():
     db = Database()
     user = db.get({'token': token, 'usergroup': 0}, 'users')
     if user:
-        answers = db.get({}, 'answersinfo')
+        answers = db.get({}, 'answersinfo', 0)
         for value in answers:
             value.update({'tags': get_tags(value['tags'])})
         return jsonify({'code': 1, 'msg': 'success', 'data': answers})
@@ -1345,7 +1437,7 @@ def delete_answer():
             set_user_action(user['userID'], answer_id, 35)
             question = db.get({'questionID': flag['questionID']}, 'questions')
             if question:
-                set_sys_message(user['userID'], 2, '您在 ' + question['title'] + ' 下的回答已被管理员清除！', flag['userID'])
+                set_sys_message(user['userID'], 1, '您在 ' + question['title'] + ' 下的回答已被管理员清除！', flag['userID'])
             return jsonify({'code': 1, 'msg': 'success'})
         return jsonify({'code': -1, 'msg': 'unable to delete'})
     return jsonify({'code': 0, 'msg': 'unexpected user'})
@@ -1443,7 +1535,7 @@ def back_get_articles():
     db = Database()
     user = db.get({'token': token, 'usergroup': 0}, 'users')
     if user:
-        article = db.get({}, 'articleinfo')
+        article = db.get({}, 'articleinfo', 0)
         for value in article:
             value.update({'tags': get_tags(value['tags'])})
         return jsonify({'code': 1, 'msg': 'success', 'data': article})
@@ -1464,7 +1556,7 @@ def delete_article():
         article = db.update({'articleID': article_id}, {'state': -1}, 'article')
         if article:
             set_user_action(user['userID'], article_id, 36)
-            set_sys_message(user['userID'], 2, '您发布的文章 ' + article['title'] + ' 已被管理员清除！', article['userID'])
+            set_sys_message(user['userID'], 1, '您发布的文章 ' + article['title'] + ' 已被管理员清除！', article['userID'])
             return jsonify({'code': 1, 'msg': 'success'})
         return jsonify({'code': -1, 'msg': 'unable to delete'})
     return jsonify({'code': 0, 'msg': 'unexpected user'})
@@ -1481,38 +1573,59 @@ def get_recommend():
     根据用户推荐首页内容
     type=1 回答，0 提问，2 广告
     当前没有cf算法以后要改
-    :return:code(0=未知用户，1=成功)
+    :return:code(-1=评分矩阵不存在 0=未知用户，1=成功)
     """
+    # 用户token
     token = request.values.get('token')
+    # 用于推荐的评分矩阵路径，以api.py所在目录为根目录的表示
+    rate_dir = request.values.get('rate_dir')
+
+    # 获取用户信息
     db = Database()
     user = db.get({'token': token}, 'users')
     if user:
-        '''
-        这里是从数据库里拿东西
-        '''
-        questions = db.get({'state': 0}, 'questionsinfo', 0)
-        answers = db.get({'state': 0}, 'answersinfo', 0)
-        '''
-        到时候换成cf算法
-        '''
-        pattern = re.compile(r'<[Ii][Mm][Gg].+?/>')  # 正则表达匹配图片
-        for value1 in questions:
-            value1.update({
-                'type': 0,
-                'image': pattern.findall(value1['description']),
-                'follow': db.count({'targettype': 4, 'targetID': value1['questionID']}, 'useraction'),
-                'comment': db.count({'questionID': value1['questionID']}, 'questioncomments')
-            })
-        for value2 in answers:
-            value2.update({'type': 1, 'image': pattern.findall(value2['content'])})
-        data = [{'title': '震惊！这样可以测出你的血脂', 'type': 2}]  # 假装有广告
-        '''
-        这里是随机乱序假装这是推荐了
-        '''
-        for value in questions + answers:
-            value['edittime'] = get_formative_datetime(value['edittime'])  # 修改日期格式
-            position = int(random.random() * len(data))  # 随机插入位置
-            data.insert(position, value)
+
+        # 假装有广告,直接插入广告
+        data = [{'title': '震惊！这样可以测出你的血脂', 'type': 2}]
+        # 获取该用户最近的20条关于问题的行为
+        the_question_action = db.sql("select * from useraction where userID = '%s' "
+                                     "and targettype >=11 and targettype<=14 order by actiontime DESC limit 20" % user['userID'])
+        # 将最近一次行为的问题作为参考,进行item_cf推荐
+        target_question_id = the_question_action[0]['targetID']
+        # 判断评分矩阵是否存在
+        if not os.path.exists(rate_dir):
+            return jsonify({'code': -1, 'msg': 'the rate rectangle is not exist,please'
+                                          ' build it by function build_questoin_rate_rect'})
+        # 获得相似度降序排列的问题序列
+        recommend_question_ids = item_cf_api(rate_dir, "../CF/similar_rect/question_similar_rect.txt", target_question_id, 3)
+        # 录入结果
+        for id in recommend_question_ids:
+            # 查询该id的问题信息
+            out = db.sql("select * from questionsinfo where questionID = '%s'" % id)
+            # 正则表达匹配图片
+            pattern = re.compile(r'<[Ii][Mm][Gg].+?/>')
+            # 进行格式的处理
+            for value1 in out:
+                value1.update({
+                    'type': 0,
+                    'image': pattern.findall(value1['description']),
+                    'follow': db.count({'targettype': 4, 'targetID': value1['questionID']}, 'useraction'),
+                    'comment': db.count({'questionID': value1['questionID']}, 'questioncomments')
+                })
+                # 修改日期格式
+                value1['edittime'] = get_formative_datetime(value1['edittime'])
+                # 录入推荐的问题
+                data.append(value1)
+            # 查询该ID下的问题，取最多3条,按赞同数降序排列
+            answers = db.sql("select * from answersinfo where questionID = '%s' order by agree DESC limit 3" % id)
+            # 进行格式处理
+            for value2 in answers:
+                value2.update({'type': 1, 'image': pattern.findall(value2['content'])})
+                # 修改日期格式
+                value2['edittime'] = get_formative_datetime(value2['edittime'])
+                # 录入推荐的回答
+                data.append(value2)
+
         return jsonify({'code': 1, 'msg': 'success', 'data': data})
     return jsonify({'code': 0, 'msg': 'unexpected user'})
 
@@ -1524,7 +1637,7 @@ def get_category():
     :return:code(1=成功)
     """
     db = Database()
-    tags = db.get({'type': 1}, 'tags')
+    tags = db.get({'type': 1}, 'tags', 0)
     data = []
     for value in tags:
         data.append({
@@ -1685,18 +1798,18 @@ def get_agree_list():
         """
             获取所有的用户行为
         """
-        comment1 = db.get({'userID': user['userID']}, 'answercomments')
+        comment1 = db.get({'userID': user['userID']}, 'answercomments', 0)
         user_action = []
         for value in comment1:
             action = db.get({'targettype': 3, 'targetID': value['acommentID']}, 'useraction', 0)
             if action:
                 user_action = user_action + action
-        comment2 = db.get({'userID': user['userID']}, 'questioncomments')
+        comment2 = db.get({'userID': user['userID']}, 'questioncomments', 0)
         for value in comment2:
             action = db.get({'targettype': 5, 'targetID': value['qcommentID']}, 'useraction', 0)
             if action:
                 user_action = user_action + action
-        answer = db.get({'userID': user['userID']}, 'answers')
+        answer = db.get({'userID': user['userID']}, 'answers', 0)
         for value in answer:
             action1 = db.get({'targettype': 1, 'targetID': value['answerID']}, 'useraction', 0)
             action2 = db.get({'targettype': 2, 'targetID': value['answerID']}, 'useraction', 0)
@@ -1836,7 +1949,7 @@ def set_sys_message(user_id, sys_type, content, target):
     """
     发送系统消息（内部接口）
     :param user_id: 用户id
-    :param type: 消息类型
+    :param sys_type: 消息类型
     :param content: 内容
     :param target: 目标
     :return: boolean
@@ -1858,10 +1971,14 @@ def get_sys_message():
     db = Database()
     user = db.get({'token': token}, 'users')
     if user:
-        all = db.get({'type': 1}, 'sys_message')
-        personal = db.get({'type': 2, 'target': user['userID']}, 'sys_message')
-        data = all + personal
-        sorted(data, key=lambda x: x['createtime'], reverse=True)
+        all_message = db.get({'type': 0}, 'sys_message', 0)
+        personal = db.get({'type': 1, 'target': user['userID']}, 'sys_message', 0)
+        group = db.get({'type': 2, 'target': user['userID']}, 'sys_message', 0)
+        data = {
+            'all': all_message,
+            'personal': personal,
+            'group': group
+        }
         return jsonify({'code': 1, 'msg': 'success', 'data': data})
     return jsonify({'code': 0, 'msg': 'unexpected user'})
 
@@ -1937,18 +2054,19 @@ def upload_identity_card():
         if front and back and allowed_pic(front.filename) and allowed_pic(back.filename):
             basepath = os.path.dirname(__file__)  # 当前文件所在路径
             # 正面的图片
-            front_filename = user['userID'] + '_front_' + front.filename.rsplit('.', 1)[1]
+            front_filename = str(user['userID']) + '_front.' + front.filename.rsplit('.', 1)[1]
             upload_path = os.path.join(basepath, 'identity_card', front_filename)  # 注意：没有的文件夹一定要先创建，不然会提示没有该路径
             front.save(upload_path)
             # 反面的图片
-            back_filename = user['userID'] + '_front_' + front.filename.rsplit('.', 1)[1]
-            upload_path_reverse = os.path.join(basepath, 'identity_card/', back_filename)  # 注意：没有的文件夹一定要先创建，不然会提示没有该路径
+            back_filename = str(user['userID']) + '_back.' + back.filename.rsplit('.', 1)[1]
+            upload_path_reverse = os.path.join(basepath, 'identity_card', back_filename)  # 注意：没有的文件夹一定要先创建，不然会提示没有该路径
             back.save(upload_path_reverse)
 
             # 调用ocr进行反面识别文字信息(反面是有个人信息的那一面)
             info_reverse = ocr(upload_path_reverse)
 
-            flag = db.update({'userID': user['userID']}, {'state': 1}, 'users')
+            flag = db.update({'userID': user['userID']}, {'front_pic': upload_path, 'back_pic': upload_path_reverse},
+                             'users')
             if flag:
                 return jsonify({'code': 1, 'msg': 'success', 'data': info_reverse})
             return jsonify({'code': -2, 'msg': 'unable to identify'})
@@ -1961,21 +2079,18 @@ def upload_identity_card():
 """
 
 
-@app.route('/api/algorithm/item_cf')
-def item_cf_api():
+def item_cf_api(dirs, simi, target, num):
     """
-    调用item cf算法推荐
-    :return: code:0-失败  1-成功  data:被推荐的物品ID
+    调用item_cf算法推荐
+    :param dirs: 评分矩阵所在的文件名
+    :param simi: 待创建的相似度矩阵文件名
+    :param target: 根据该ID进行相似推荐
+    :param num: 推荐数量
+    :return: ID序列
     """
-    # 评分矩阵文件
-    dirs = request.values.get('dir')
-    # 相似度矩阵文件
-    simi = request.values.get('similar_rect_dir')
-    # 要根据某个物品(文章或问题)的ID来进行相似推荐
-    target = request.values.get('target')
-    # 得到的推荐结果
-    result = item_cf(dirs, simi, target)
 
+    # 得到的推荐结果
+    result = item_cf(dirs, simi, target, num)
     return result
 
 
@@ -1985,10 +2100,13 @@ def build_article_rate_rect():
     建立文章的评分矩阵
     :return: code:0=失败 1=成功
     """
-    # 为文章或者问题建立评分矩阵，评分矩阵的某一行是
+    # 为文章建立评分矩阵，评分矩阵的某一行是
     # 所有用户对某一篇文章的行为进行权值计算后得到的一个向量,所有文章对应一个向量组合成矩阵
-    # chart的值目前只能为article 或 questions
-    file_name = request.values.get("file_name")
+    #file_name = request.values.get("file_name")
+    file_name = "article_rate_rect.txt"
+    # 重置文件内容
+    with open("../CF/rate_rect/" + file_name, "w") as f:
+        pass
     db = Database()
     # targettype 对应的评分
     rate_dict = {21: 2, 22: 4, 23: 3, 24: -2, 25: 3}
@@ -2013,7 +2131,7 @@ def build_article_rate_rect():
                 rates[users[j]['userID']] = rate
 
         keys = rates.keys()
-        with open("../CF/rate_rect/" + file_name, "w") as f:
+        with open("../CF/rate_rect/" + file_name, "a+") as f:
             f.write("ID:" + str(article[i]['articleID']) + " rate:")
             rate_str = ""
             for key in keys:
@@ -2022,6 +2140,150 @@ def build_article_rate_rect():
             f.write(rate_str + "\n")
 
     return jsonify({"code": 1})
+
+
+@app.route('/api/algorithm/build_question_rate_rect')
+def build_question_rate_rect():
+    """
+    建立问题的评分矩阵
+    :return: code:0=失败 1=成功
+    """
+    # 为问题建立评分矩阵，评分矩阵的某一行是
+    # 所有用户对某一个问题的行为进行权值计算后得到的一个向量,所有问题对应一个向量组合成矩阵
+    #file_name = request.values.get("file_name")
+    file_name = "question_rate_rect.txt"
+    # 重置文件内容
+    with open("../CF/rate_rect/" + file_name, "w") as f:
+        pass
+    db = Database()
+    # targettype 对应的评分
+    rate_dict = {11: 1.5, 12: 3, 13: 4, 14: 2}
+    questions = db.sql("select * from questions")
+    users = db.sql("select * from users order by userID ASC")
+
+    for i in range(len(questions)):
+        # 对于第i篇文章的评分向量,没有参与的用户评分默认为1
+        rates = {}
+        for j in range(len(users)):
+            rates[users[j]['userID']] = 1
+            actions = db.sql(
+                "select * from useraction where targetID='%s' and userID='%s' and targettype>=11 and targettype <=14 "
+                "order by userID ASC" %
+                (questions[i]['questionID'], users[j]["userID"]))
+            # 该用户对这篇文章的总评分
+            rate = 0
+            if actions:
+                for k in range(len(actions)):
+                    rt = rate_dict[actions[k]["targettype"]]
+                    rate += rt
+                rates[users[j]['userID']] = rate
+
+        keys = rates.keys()
+        with open("../CF/rate_rect/" + file_name, "a+") as f:
+            f.write("ID:" + str(questions[i]['questionID']) + " rate:")
+            rate_str = ""
+            for key in keys:
+                rate_str += str(key) + "-" + str(rates[key]) + "-"
+            rate_str = rate_str[:-1]
+            f.write(rate_str + "\n")
+
+    return jsonify({"code": 1})
+
+
+@app.route('/api/algorithm/before_search')
+def before_vague_search_api():
+    """
+    根据输入的内容模糊匹配待选搜索项
+    例如：输入框内输入 王刚 ，则弹出 王刚，美食作家王刚，王**刚**等待选项，根据相似度和搜索热度排序
+    用户便可以选择待选项进行搜索
+    :return: code: 0-失败  1-成功
+    """
+    # 获取输入的内容
+    input_word = request.values.get('word')
+    db = Database()
+    # 获取模糊匹配的热搜项
+    word_bank = db.vague({"content":input_word}, "search_word")
+    #  根据热搜项和输入内容的相似度进行排序，若相似度都小于等于0，则按照搜索热度排序
+    rank = select_by_similarity(input_word, word_bank)
+
+    return jsonify({"code": 1, "msg": "success", "data":rank})
+
+
+@app.route('/api/algorithm/search')
+def vague_search_api():
+    # 获取输入内容
+    input_word = request.values.get('word')
+    # 搜索什么内容  question-搜索问题  article-搜索文章
+    search_type = request.values.get('type')
+
+    # 以下内容为根据当前搜索内容更新搜索表里面相印搜索项的热度
+
+    # 获取该输入内容是否存在与热搜项
+    db = Database()
+    word = db.get({'content': input_word}, 'search_word')
+    # 若存在，则搜索次数增加一次
+    if word:
+        db.update({'content': input_word}, {'time': word['time']+1}, 'search_word')
+    #  否则根据相似度进行处理
+    else:
+        # 获取所有热搜项
+        word_bank = db.vague({"content":input_word}, "search_word")
+        # 将输入内容和热搜项进行相似度计算，相似度低于0.5的不计入处理
+        result = select_by_similarity(input_word, word_bank, 0.5)
+        # 若存在相似度高于0.5的项，则认为输入项和该热搜项是完全相同的含义，可以视为热搜项的搜索次数+1
+        if result:
+            db.update({'content': result[0]['content']}, {'time': result[0]['time']+1}, 'search_word')
+        # 否则认为该输入项为一个新的搜索项，加入搜索表中
+        else:
+            db.insert({'content':input_word})
+
+    # 以下为根据搜索项模糊搜索对应文章或问题
+    data = []
+    output = []
+    # 根据搜索类型不同进行区分处理
+    if search_type == 'question':
+        # 找到包含输入词语的问题
+        data = db.like({'title': input_word}, 'questions')
+        # 将问题题目和描述作为文本，输入词语作为关键词计算每一个问题的tfidf值
+        for each in data:
+            tfidf = tf_idf(input_word, each['title'] + ',' + each['description'])
+            each.update({'tfidf': tfidf})
+            output.append(each)
+    elif search_type == 'article':
+        # 找到包含输入词语的文章
+        data = db.like({'title': input_word, 'content': input_word}, 'article')
+        # 将文章内容作为文本，输入词语作为关键词计算每一篇文章的tfidf值
+        for each in data:
+            tfidf = tf_idf(input_word, each['content'])
+            each.update({'tfidf': tfidf})
+            output.append(each)
+
+    # 按照tfidf值降序排列，值越高，文章或问题和输入词语关联越大
+    output.sort(key=lambda it: it['tfidf'], reverse=True)
+
+    return jsonify({'code': 1, 'msg': 'success', 'data': output})
+
+
+def tf_idf(word, content, type='question'):
+    db = Database()
+    # 计算tf值
+    tf = compute_tf(word, content)
+    # 获取总问题数量或文章数量
+    if type == 'question':
+        total_item_number = db.count({}, 'questions')
+    elif type == 'article':
+        total_item_number = db.count({}, 'article')
+
+    # 获取包含该词语的问题或文章数量
+    if type == 'question':
+        contain_word_number = db.count({'title': word, 'description': word}, 'questions') + 1
+    elif type == 'article':
+        contain_word_number = db.count({'title': word, 'content': word}, 'article') + 1
+
+    # 计算idf值
+    idf = total_item_number / contain_word_number
+
+    return tf*idf
 
 
 """
@@ -2039,7 +2301,7 @@ def get_my_answers():
     db = Database()
     user = db.get({'token': token}, 'users')
     if user:
-        answers = db.get({'userID': user['userID']}, 'answersinfo')
+        answers = db.get({'userID': user['userID']}, 'answersinfo', 0)
         for value in answers:
             value.update({'tags': get_tags(value['tags'])})
         return jsonify({'code': 1, 'msg': 'success', 'data': answers})
@@ -2056,7 +2318,7 @@ def get_my_articles():
     db = Database()
     user = db.get({'token': token}, 'users')
     if user:
-        articles = db.get({'userID': user['userID']}, 'articleinfo')
+        articles = db.get({'userID': user['userID']}, 'articleinfo', 0)
         for value in articles:
             value.update({'tags': get_tags(value['tags'])})
         return jsonify({'code': 1, 'msg': 'success', 'data': articles})
@@ -2073,7 +2335,7 @@ def get_my_fans():
     db = Database()
     user = db.get({'token': token}, 'users')
     if user:
-        followers = db.get({'target': user['userID']}, 'followinfo')
+        followers = db.get({'target': user['userID']}, 'followinfo', 0)
         data = []
         for value in followers:
             data.append({
@@ -2098,7 +2360,7 @@ def get_order_list():
     db = Database()
     user = db.get({'token': token}, 'users')
     if user:
-        order = db.get({'target': user['userID']}, 'orderinfo')
+        order = db.get({'target': user['userID']}, 'orderinfo', 0)
         for value in order:
             value.update({'level': get_level(value['exp']), 'usergroup': get_group(value['usergroup'])})
         return jsonify({'code': 1, 'msg': 'success', 'data': order})
@@ -2195,10 +2457,12 @@ def request_upgrade():
         if specialist_license and allowed_pic(specialist_license.filename):
             basepath = os.path.dirname(__file__)  # 当前文件所在路径
             # 正面的图片
-            filename = user['userID'] + '_license' + specialist_license.filename.rsplit('.', 1)[1]
+            filename = str(user['userID']) + '_license' + specialist_license.filename.rsplit('.', 1)[1]
             upload_path = os.path.join(basepath, 'license', filename)  # 注意：没有的文件夹一定要先创建，不然会提示没有该路径
             specialist_license.save(upload_path)
-            flag = db.update({'userID': user['userID']}, {'usergroup': 5}, 'users')
+            license_type = request.form['license_type']
+            flag = db.update({'userID': user['userID']},
+                             {'usergroup': 5, 'license_type': license_type, 'specialist_license': upload_path}, 'users')
             if flag:
                 return jsonify({'code': 1, 'msg': 'success'})
             return jsonify({'code': -1, 'msg': 'unable to request'})
@@ -2245,7 +2509,7 @@ def get_my_demands():
     db = Database()
     user = db.get({'token': token}, 'users')
     if user:
-        demands = db.get({'userID': user['userID']}, 'demands_info')
+        demands = db.get({'userID': user['userID']}, 'demands_info', 0)
         return jsonify({'code': 1, 'msg': 'success', 'data': demands})
     return jsonify({'code': 0, 'msg': 'unexpected user'})
 
@@ -2261,7 +2525,7 @@ def get_signed_users():
     user = db.get({'token': token}, 'users')
     if user:
         demand_id = request.values.get('demand_id')
-        signed_list = db.get({'target': demand_id}, 'signed_demand_info')
+        signed_list = db.get({'target': demand_id}, 'signed_demand_info', 0)
         return jsonify({'code': 1, 'msg': 'success', 'data': signed_list})
     return jsonify({'code': 0, 'msg': 'unexpected user'})
 
@@ -2280,7 +2544,7 @@ def confirm_signed_user():
         target = request.values.get('target')
         flag = db.update({'userID': user_id, 'target': target}, {'state': 1}, 'sign_demand')
         demand = db.get({'demandID': target}, 'demands')
-        set_sys_message(user['userID'], 2, '您之前报名的' + demand['title'] + '已由企业审核通过，您现在是该需求的参与者了！', user_id)
+        set_sys_message(user['userID'], 1, '您之前报名的' + demand['title'] + '已由企业审核通过，您现在是该需求的参与者了！', user_id)
         if flag:
             return jsonify({'code': 1, 'msg': 'success'})
         return jsonify({'code': -1, 'msg': 'unable to confirm'})
@@ -2301,7 +2565,7 @@ def refuse_signed_user():
         target = request.values.get('target')
         flag = db.update({'userID': user_id, 'target': target}, {'state': -1}, 'sign_demand')
         demand = db.get({'demandID': target}, 'demands')
-        set_sys_message(user['userID'], 2, '您之前报名的 ' + demand['title'] + ' 申请未通过！', user_id)
+        set_sys_message(user['userID'], 1, '您之前报名的 ' + demand['title'] + ' 申请未通过！', user_id)
         if flag:
             return jsonify({'code': 1, 'msg': 'success'})
         return jsonify({'code': -1, 'msg': 'unable to refuse'})
@@ -2358,10 +2622,12 @@ def request_enterprise_upgrade():
         if specialist_license and allowed_pic(specialist_license.filename):
             basepath = os.path.dirname(__file__)  # 当前文件所在路径
             # 正面的图片
-            filename = user['userID'] + '_license' + specialist_license.filename.rsplit('.', 1)[1]
+            filename = str(user['userID']) + '_license' + specialist_license.filename.rsplit('.', 1)[1]
             upload_path = os.path.join(basepath, 'license', filename)  # 注意：没有的文件夹一定要先创建，不然会提示没有该路径
             specialist_license.save(upload_path)
-            flag = db.update({'userID': user['userID']}, {'usergroup': 6}, 'users')
+            license_type = request.form['license_type']
+            flag = db.update({'userID': user['userID']},
+                             {'usergroup': 6, 'license_type': license_type, 'specialist_license': upload_path}, 'users')
             if flag:
                 return jsonify({'code': 1, 'msg': 'success'})
             return jsonify({'code': -1, 'msg': 'unable to request'})
@@ -2404,7 +2670,7 @@ def get_board_recommend():
         """
             没对接cf算法，到时候对接一下cf算法
         """
-        demand = db.get({'state': 0}, 'demands_info')
+        demand = db.get({'state': 0}, 'demands_info', 0)
         """
             对接处
         """
@@ -2425,7 +2691,7 @@ def get_board_category():
     :return:
     """
     db = Database()
-    tags = db.get({'type': 1}, 'tags')
+    tags = db.get({'type': 1}, 'tags', 0)
     data = []
     for value in tags:
         data.append({
@@ -2443,7 +2709,7 @@ def get_child_category():
     """
     db = Database()
     tag_id = request.values.get('tag_id')
-    tags = db.get({'father': tag_id}, 'tags')
+    tags = db.get({'father': tag_id}, 'tags', 0)
     data = []
     for value in tags:
         data.append({
@@ -2480,7 +2746,7 @@ def get_demands_by_tag():
     """
     tag_id = request.values.get('tag_id')
     db = Database()
-    demands = db.get({'state': 0}, 'demands_info')
+    demands = db.get({'state': 0}, 'demands_info', 0)
     data = []
     for value in demands:
         tags = get_tags(value['tags'])
@@ -2506,7 +2772,7 @@ def back_get_demands():
     db = Database()
     user = db.get({'token': token, 'usergroup': 0}, 'users')
     if user:
-        demands = db.get({}, 'demands_info')
+        demands = db.get({}, 'demands_info', 0)
         for value in demands:
             value.update({
                 'tags': get_tags(value['tags']),
@@ -2531,7 +2797,590 @@ def delete_demand():
         flag = db.update({'demandID': demand_id}, {'state': -1}, 'demands')
         if flag:
             set_user_action(user['userID'], demand_id, 33)
-            set_sys_message(user['userID'], 2, '您发布的需求 ' + flag['title'] + ' 已被管理员清除！', flag['userID'])
+            set_sys_message(user['userID'], 1, '您发布的需求 ' + flag['title'] + ' 已被管理员清除！', flag['userID'])
+            return jsonify({'code': 1, 'msg': 'success'})
+        return jsonify({'code': -1, 'msg': 'unable to delete'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+"""
+    学院接口
+"""
+
+
+@app.route('/api/school/get_free_article')
+def get_free_article():
+    """
+    获取所有免费文章
+    :return:code:0=没有文章  1=成功
+    """
+    db = Database()
+    # 免费并且没有被清除的文章
+    article = db.sql("select * from article where free=1 and state=0")
+    if article:
+        return jsonify({'code': 1, 'msg': 'success', 'data': article})
+    return jsonify({'code': 0, 'msg': 'no article'})
+
+
+@app.route('/api/school/get_charge_article')
+def get_charge_article():
+    """
+    获取所有收费文章
+    :return:code:0=没有文章  1=成功
+    """
+    db = Database()
+    # 收费并且没有被清除的文章
+    article = db.sql("select * from article where free=0 and state=0")
+    if article:
+        return jsonify({'code': 1, 'msg': 'success', 'data': article})
+    return jsonify({'code': 0, 'msg': 'no article'})
+
+
+@app.route('/api/school/get_user_article')
+def get_user_article():
+    """
+    获取某个用户在学院内发表的文章
+    :return:code:-1=用户不存在 0=没有文章  1=成功
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    # 若用户存在则继续处理
+    if user:
+        # 某个用户发表的，并且没有被清除的文章
+        article = db.get({'userID': user['userID'], 'state': 0}, 'article')
+        if article:
+            return jsonify({'code': 1, 'msg': 'success', 'data': article})
+        return jsonify({'code': 0, 'msg': 'no article'})
+    return jsonify({'code': -1, 'msg': 'the user is not exist'})
+
+
+@app.route('/api/school/get_article_by_tag')
+def get_article_by_tag():
+    """
+    根据tag查找文章
+    :return:code:0=没有符合条件的文章  1=成功
+    """
+    tag_id = request.values.get('tag_id')
+    db = Database()
+    # 先获取所有未清除的文章
+    article = db.sql({'state': 0}, 'article')
+    # 存放返回的数据
+    data = []
+    # 遍历所有文章
+    for it in article:
+        # 获取这篇文章的tag列表
+        tags = get_tags(it['tags'])
+        # 遍历并判断每一项tag是否符合搜索项
+        for tg in tags:
+            # 若符合，则加入返回容器中
+            if tg == tag_id:
+                it.update({'tags':tags})
+                data.append(it)
+                break
+    if data:
+        return jsonify({'code': 1, 'msg': 'success', 'data': data})
+    return jsonify({'code': 0, 'msg': 'no article'})
+
+
+@app.route('/api/school/get_similar_article')
+def get_similar_article():
+    """
+    根据某一篇文章进行相似文章推荐
+    :return:
+    """
+    article_id = request.values.get('article_id')
+    rate_dir = '../CF/rate_rect/article_rate_rect.txt'
+    # 判断评分矩阵是否存在
+    if not os.path.exists(rate_dir):
+        return jsonify({'code': 0, 'msg': 'the rate rectangle is not exist,please'
+                                          ' build it by function build_article_rate_rect'})
+    # 推荐的文章id,最多3条，相似度降序排列
+    recommend_article = item_cf_api(rate_dir, "../CF/similar_rect/article_similar_rect.txt", article_id, 3)
+
+    return jsonify({'code': 1, 'msg': 'success', 'data': recommend_article})
+
+
+@app.route('/api/school/get_recommend_article')
+def get_recommend_article():
+    """
+    根据用户最近浏览的文章进行推荐
+    :return:code:-1=评分矩阵未建立  0=用户不存在  1=成功
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    rate_dir = '../CF/rate_rect/article_rate_rect.txt'
+    if not user:
+        return jsonify({'code': 0, 'msg': 'user is not exist'})
+    # 判断评分矩阵是否存在
+    if not os.path.exists(rate_dir):
+        return jsonify({'code': -1, 'msg': 'the rate rectangle is not exist,please'
+                                              ' build it by function build_article_rate_rect'})
+    # 查找该用户最近浏览的最多3篇文章
+    action = db.sql("select targetID from useraction where userID='%s' and targettype >=21 and targettype<=25 limit"
+                    "3 order by actiontime DESC group by targetID ")
+    # 推荐结果容器
+    recommend_article = []
+    # 推荐的文章id,最多3条，相似度降序排列
+    for each in action:
+        ids = item_cf_api(rate_dir, "../CF/similar_rect/article_similar_rect.txt", each['targetID'], 3)
+        for id in ids:
+            article = db.get({'articleID': id}, 'article')
+            recommend_article += article
+    # 若action为空，则随机推荐
+    if not action:
+        recommend_article = db.sql("select * from article order by edittime DESC limit 10")
+
+    return jsonify({'code': 1, 'msg': 'success', 'data': recommend_article})
+
+
+"""
+    群聊接口
+"""
+
+
+@app.route('/api/group/new_group', methods=['POST'])
+def new_group():
+    """
+    新建群组
+    :return:
+    """
+    token = request.form['token']
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        name = request.form['name']
+        description = request.form['description']
+        head_portrait = request.form['head_portrait']
+        flag = db.insert(
+            {'name': name, 'description': description, 'userID': user['userID'], 'head_portrait': head_portrait},
+            'groups')
+
+        if flag:
+            group = db.get({'userID': user['userID']}, 'groups', 0)
+            db.insert({'groupID': group[len(group) - 1]['groupID'], 'userID': user['userID'], 'state': 0},
+                      'group_members')
+            return jsonify({'code': 1, 'msg': 'success'})
+        return jsonify({'code': -1, 'msg': 'unable to create'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/group/add_group_member')
+def add_group_member():
+    """
+    添加组员
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        group_id = request.values.get('group_id')
+        group_member1 = db.get({'groupID': group_id, 'userID': user['userID'], 'state': 0}, 'group_members')
+        group_member2 = db.get({'groupID': group_id, 'userID': user['userID'], 'state': 1}, 'group_members')
+        if group_member1 or group_member2:
+            user_id = request.values.get('user_id')
+            flag = db.insert({'userID': user_id, 'groupID': group_id, 'state': 3}, 'group_members')
+            group = db.get({'groupID': group_id}, 'groups')
+            if group:
+                set_sys_message(user['userID'], 2, '您已被管理员邀请加入群聊 ' + group['name'] + ' ,请及时确认！', user_id)
+            if flag:
+                return jsonify({'code': 1, 'msg': 'success'})
+            return jsonify({'code': -1, 'msg': 'unable to add'})
+        return jsonify({'code': 0, 'msg': 'unexpected user'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/group/confirm_invite')
+def confirm_invite():
+    """
+    确认加入群组
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        group_id = request.values.get('group_id')
+        flag = db.update({'groupID': group_id, 'userID': user['userID']}, {'state': 2}, 'group_members')
+        if flag:
+            return jsonify({'code': 1, 'msg': 'success'})
+        return jsonify({'code': -1, 'msg': 'unable to confirm'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/group/set_admin')
+def set_admin():
+    """
+    设置群管理员
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if not user:
+        return jsonify({'code': 0, 'msg': 'unexpected user'})
+    group_id = request.values.get('group_id')
+    if db.get({'userID': user['userID'], 'groupID': group_id}, 'groups'):
+        user_id = request.values.get('user_id')
+        member = db.get({'userID': user_id, 'groupID': group_id, 'state': 2}, 'group_members')
+        if member:
+            flag = db.update({'userID': user_id, 'groupID': group_id}, {'state': 1}, 'group_members')
+            if flag:
+                return jsonify({'code': 1, 'msg': 'success'})
+            return jsonify({'code': -1, 'msg': 'database problems'})
+        return jsonify({'code': -2, 'msg': 'unknown user'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/group/set_normal')
+def set_normal():
+    """
+    取消设置群管理员
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if not user:
+        return jsonify({'code': 0, 'msg': 'unexpected user'})
+    group_id = request.values.get('group_id')
+    if db.get({'userID': user['userID'], 'groupID': group_id}, 'groups'):
+        user_id = request.values.get('user_id')
+        member = db.get({'userID': user_id, 'groupID': group_id, 'state': 1}, 'group_members')
+        if member:
+            flag = db.update({'userID': user_id, 'groupID': group_id}, {'state': 2}, 'group_members')
+            if flag:
+                return jsonify({'code': 1, 'msg': 'success'})
+            return jsonify({'code': -1, 'msg': 'database problems'})
+        return jsonify({'code': -2, 'msg': 'unknown user'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+def call_group_members(state, content, group_id):
+    """
+    呼叫所有成员
+    :param state: 成员等级
+    :param content: 内容
+    :param group_id: 群号
+    :return:
+    """
+    db = Database()
+    group_members = db.get({'groupID': group_id, 'state': state}, 'group_members')
+    for value in group_members:
+        set_sys_message(0, 2, content, value['userID'])
+
+
+@app.route('/api/group/join_group')
+def join_group():
+    """
+    加入群聊
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        group_id = request.values.get('group_id')
+        flag = db.insert({'groupID': group_id, 'userID': user['userID'], 'state': 4}, 'group_members')
+        if flag:
+            group = db.get({'groupID': group_id}, 'groups')
+            if group:
+                call_group_members(0, '用户 ' + user['nickname'] + ' 申请加入 ' +
+                                   group['name'] + ' 请尽快审核', group_id)
+                call_group_members(1, '用户 ' + user['nickname'] + ' 申请加入 ' +
+                                   group['name'] + ' 请尽快审核', group_id)
+                return jsonify({'code': 1, 'msg': 'success'})
+            return jsonify({'code': -1, 'msg': 'unable to join'})
+        return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/group/confirm_join')
+def confirm_join():
+    """
+    确认加群申请
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        group_id = request.values.get('group_id')
+        group_member1 = db.get({'groupID': group_id, 'userID': user['userID'], 'state': 0}, 'group_members')
+        group_member2 = db.get({'groupID': group_id, 'userID': user['userID'], 'state': 1}, 'group_members')
+        if group_member1 or group_member2:
+            user_id = request.values.get('user_id')
+            flag = db.update({'userID': user_id, 'groupID': group_id}, {'state': 2}, 'group_members')
+            group = db.get({'groupID': group_id}, 'groups')
+            if group:
+                set_sys_message(user['userID'], 2, '您加入的群聊 ' + group['name'] + ' 的申请已被管理员通过！', user_id)
+            if flag:
+                return jsonify({'code': 1, 'msg': 'success'})
+            return jsonify({'code': -1, 'msg': 'unable to add'})
+        return jsonify({'code': 0, 'msg': 'unexpected user'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/group/refuse_join')
+def refuse_join():
+    """
+    确认加群申请
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        group_id = request.values.get('group_id')
+        group_member1 = db.get({'groupID': group_id, 'userID': user['userID'], 'state': 0}, 'group_members')
+        group_member2 = db.get({'groupID': group_id, 'userID': user['userID'], 'state': 1}, 'group_members')
+        if group_member1 or group_member2:
+            user_id = request.values.get('user_id')
+            flag = db.delete({'userID': user_id, 'groupID': group_id}, 'group_members')
+            group = db.get({'groupID': group_id}, 'groups')
+            if group:
+                set_sys_message(user['userID'], 2, '您加入的群聊 ' + group['name'] + ' 的申请已被管理员拒绝！', user_id)
+            if flag:
+                return jsonify({'code': 1, 'msg': 'success'})
+            return jsonify({'code': -1, 'msg': 'unable to add'})
+        return jsonify({'code': 0, 'msg': 'unexpected user'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/group/silent_user')
+def silent_user():
+    """
+    禁言某个群员
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        group_id = request.values.get('group_id')
+        group_member1 = db.get({'groupID': group_id, 'userID': user['userID'], 'state': 0}, 'group_members')
+        group_member2 = db.get({'groupID': group_id, 'userID': user['userID'], 'state': 1}, 'group_members')
+        if group_member1:
+            user_id = request.values.get('user_id')
+            flag = db.update({'userID': user_id, 'groupID': group_id}, {'silent': 1}, 'group_members')
+            if flag:
+                return jsonify({'code': 1, 'msg': 'success'})
+            return jsonify({'code': -1, 'msg': 'unable to add'})
+        elif group_member2:
+            user_id = request.values.get('user_id')
+            group_member = db.get({'groupID': group_id, 'userID': user_id}, 'group_members')
+            if group_member['state'] <= group_member2['state']:
+                return jsonify({'code': 0, 'msg': 'unexpected user'})
+            flag = db.update({'userID': user_id, 'groupID': group_id}, {'silent': 1}, 'group_members')
+            if flag:
+                return jsonify({'code': 1, 'msg': 'success'})
+            return jsonify({'code': -1, 'msg': 'unable to add'})
+        return jsonify({'code': 0, 'msg': 'unexpected user'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/group/un_silent_user')
+def un_silent_user():
+    """
+    解除禁言某个群员
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        group_id = request.values.get('group_id')
+        group_member1 = db.get({'groupID': group_id, 'userID': user['userID'], 'state': 0}, 'group_members')
+        group_member2 = db.get({'groupID': group_id, 'userID': user['userID'], 'state': 1}, 'group_members')
+        if group_member1:
+            user_id = request.values.get('user_id')
+            flag = db.update({'userID': user_id, 'groupID': group_id}, {'silent': 0}, 'group_members')
+            if flag:
+                return jsonify({'code': 1, 'msg': 'success'})
+            return jsonify({'code': -1, 'msg': 'unable to add'})
+        elif group_member2:
+            user_id = request.values.get('user_id')
+            group_member = db.get({'groupID': group_id, 'userID': user_id}, 'group_members')
+            if group_member['state'] <= group_member2['state']:
+                return jsonify({'code': 0, 'msg': 'unexpected user'})
+            flag = db.update({'userID': user_id, 'groupID': group_id}, {'silent': 0}, 'group_members')
+            if flag:
+                return jsonify({'code': 1, 'msg': 'success'})
+            return jsonify({'code': -1, 'msg': 'unable to add'})
+        return jsonify({'code': 0, 'msg': 'unexpected user'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/group/send_group_message', methods=['POST'])
+def send_group_message():
+    """
+    发送消息
+    :return:
+    """
+    token = request.form['token']
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    group_id = request.form['group_id']
+    if not user:
+        return jsonify({'code': 0, 'msg': 'unexpected user'})
+    member = db.sql(
+        'SELECT * FROM group_members WHERE ( state= 0 OR state=1 OR state=2 ) AND userID = %s AND groupID = %s '
+        'AND silent=0' % (user['userID'], group_id))
+    if member:
+        content = request.form['content']
+        flag = db.insert({'userID': user['userID'], 'groupID': group_id, 'content': content}, 'group_message')
+        if flag:
+            return jsonify({'code': 1, 'msg': 'success'})
+        return jsonify({'code': -1, 'msg': 'unable to send'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/group/get_group_message')
+def get_group_message():
+    """
+    获取群聊消息
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    group_id = request.values.get('group_id')
+    user = db.get({'token': token}, 'users')
+    if db.get({'userID': user['userID'], 'groupID': group_id}, 'group_members'):
+        if not db.get({'groupID': group_id, 'state': 0}, 'groups'):
+            return jsonify({'code': -1, 'msg': 'group is not available'})
+        message = db.get({'groupID': group_id}, 'group_message_info', 0)
+        for value in message:
+            value.update({'usergroup': get_group(value['usergroup']), 'level': get_level(value['exp'])})
+        return jsonify({'code': 1, 'msg': 'success', 'data': message})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/group/get_groups')
+def get_groups():
+    """
+    获取所有群组
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        groups = db.get({'userID': user['userID'], 'group_state': 0}, 'group_members_info', 0)
+        data = []
+        for value in groups:
+            message = db.get({'groupID': value['groupID']}, 'group_message_info')
+            last = {
+                'nickname': '',
+                'content': "",
+                'time': ''
+            }
+            if message:
+                last = message[len(message) - 1]
+            data.append({
+                'id': value['groupID'],
+                'head_portrait': value['head_portrait'],
+                'name': value['name'],
+                'description': value['description'],
+                'last_message': {
+                    'nickname': last['nickname'],
+                    'content': last['content'],
+                    'time': last['time']
+                }
+            })
+        return jsonify({'code': 1, 'msg': 'success', 'data': data})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/group/get_group_members')
+def get_group_members():
+    """
+    获取当前群组的成员列表
+    :return:
+    """
+    group_id = request.values.get('group_id')
+    db = Database()
+    members = db.get({'groupID': group_id}, 'group_members_info', 0)
+    for value in members:
+        value.update({
+            'usergroup': get_group(value['usergroup']),
+            'level': get_level(value['exp'])
+        })
+    return jsonify({'code': 1, 'msg': 'success', 'data': members})
+
+
+@app.route('/api/group/ban_user')
+def ban_user():
+    """
+    封禁用户
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        group_id = request.values.get('group_id')
+        member = db.get({'userID': user['userID'], 'groupID': group_id}, 'group_members')
+        user_id = request.values.get('user_id')
+        if member['state'] == 0:
+            flag = db.update({'userID': user_id, 'groupID': group_id}, {'state': 5}, 'group_members')
+            if flag:
+                group = db.get({'groupID': group_id}, 'groups')
+                if group:
+                    set_sys_message(user['userID'], 2, '您已被管理员 ' + user['nickname'] + ' 踢出群组 ' + group['name'] + ' !',
+                                    user_id)
+                return jsonify({'code': 1, 'msg': 'success'})
+            return jsonify({'code': -1, 'msg': 'unable to ban user'})
+        elif member['state'] == 1:
+            member1 = db.get({'userID': user_id, 'groupID': group_id}, 'group_members')
+            if member1['state'] > member['state']:
+                flag = db.update({'userID': user_id, 'groupID': group_id}, {'state': 5}, 'group_members')
+                if flag:
+                    group = db.get({'groupID': group_id}, 'groups')
+                    if group:
+                        set_sys_message(user['userID'], 2,
+                                        '您已被管理员 ' + user['nickname'] + ' 踢出群组 ' + group['name'] + ' !', user_id)
+                    return jsonify({'code': 1, 'msg': 'success'})
+                return jsonify({'code': -1, 'msg': 'unable to ban user'})
+            return jsonify({'code': 0, 'msg': 'unexpected user'})
+        return jsonify({'code': 0, 'msg': 'unexpected user'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/group/back_get_groups')
+def back_get_groups():
+    """
+    后台获取群聊
+    :return:
+    """
+    token = request.headers.get('X-Token')
+    db = Database()
+    user = db.get({'token': token, 'usergroup': 0}, 'users')
+    if user:
+        groups = db.get({}, 'groups', 0)
+        for value in groups:
+            create = db.get({'userID': value['userID']}, 'users')
+            if create:
+                value.update({'nickname': create['nickname']})
+        return jsonify({'code': 1, 'msg': 'success', 'data': groups})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/group/delete_group')
+def delete_group():
+    """
+    清除群聊
+    :return:
+    """
+    token = request.headers.get('X-Token')
+    db = Database()
+    user = db.get({'token': token, 'usergroup': 0}, 'users')
+    if user:
+        group_id = request.values.get('group_id')
+        flag = db.update({'groupID': group_id}, {'state': -1}, 'groups')
+        if flag:
+            set_user_action(user['userID'], group_id, 36)
+            set_sys_message(user['userID'], 1, '您创建的群组 ' + flag['name'] + ' 已被管理员解散！', flag['userID'])
             return jsonify({'code': 1, 'msg': 'success'})
         return jsonify({'code': -1, 'msg': 'unable to delete'})
     return jsonify({'code': 0, 'msg': 'unexpected user'})
