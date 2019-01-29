@@ -1573,7 +1573,7 @@ def get_recommend():
     根据用户推荐首页内容
     type=1 回答，0 提问，2 广告
     当前没有cf算法以后要改
-    :return:code(0=未知用户，1=成功)
+    :return:code(-1=评分矩阵不存在 0=未知用户，1=成功)
     """
     # 用户token
     token = request.values.get('token')
@@ -1592,8 +1592,12 @@ def get_recommend():
                                      "and targettype >=11 and targettype<=14 order by actiontime DESC limit 20" % user['userID'])
         # 将最近一次行为的问题作为参考,进行item_cf推荐
         target_question_id = the_question_action[0]['targetID']
+        # 判断评分矩阵是否存在
+        if not os.path.exists(rate_dir):
+            return jsonify({'code': -1, 'msg': 'the rate rectangle is not exist,please'
+                                          ' build it by function build_questoin_rate_rect'})
         # 获得相似度降序排列的问题序列
-        recommend_question_ids = item_cf_api(rate_dir, "../CF/similar_rect.txt", target_question_id, 3)
+        recommend_question_ids = item_cf_api(rate_dir, "../CF/similar_rect/question_similar_rect.txt", target_question_id, 3)
         # 录入结果
         for id in recommend_question_ids:
             # 查询该id的问题信息
@@ -2098,10 +2102,14 @@ def build_article_rate_rect():
     """
     # 为文章建立评分矩阵，评分矩阵的某一行是
     # 所有用户对某一篇文章的行为进行权值计算后得到的一个向量,所有文章对应一个向量组合成矩阵
-    file_name = request.values.get("file_name")
+    #file_name = request.values.get("file_name")
+    file_name = "article_rate_rect.txt"
+    # 重置文件内容
+    with open("../CF/rate_rect/" + file_name, "w") as f:
+        pass
     db = Database()
     # targettype 对应的评分
-    rate_dict = {21: 2, 22: 4, 23: 3, 24: -2, 25: 3, 11: 1.5, 12: 3, 13: 4, 14: 2 }
+    rate_dict = {21: 2, 22: 4, 23: 3, 24: -2, 25: 3}
     article = db.sql("select * from article")
     users = db.sql("select * from users order by userID ASC")
 
@@ -2123,7 +2131,7 @@ def build_article_rate_rect():
                 rates[users[j]['userID']] = rate
 
         keys = rates.keys()
-        with open("../CF/rate_rect/" + file_name, "a") as f:
+        with open("../CF/rate_rect/" + file_name, "a+") as f:
             f.write("ID:" + str(article[i]['articleID']) + " rate:")
             rate_str = ""
             for key in keys:
@@ -2142,7 +2150,11 @@ def build_question_rate_rect():
     """
     # 为问题建立评分矩阵，评分矩阵的某一行是
     # 所有用户对某一个问题的行为进行权值计算后得到的一个向量,所有问题对应一个向量组合成矩阵
-    file_name = request.values.get("file_name")
+    #file_name = request.values.get("file_name")
+    file_name = "question_rate_rect.txt"
+    # 重置文件内容
+    with open("../CF/rate_rect/" + file_name, "w") as f:
+        pass
     db = Database()
     # targettype 对应的评分
     rate_dict = {11: 1.5, 12: 3, 13: 4, 14: 2}
@@ -2167,7 +2179,7 @@ def build_question_rate_rect():
                 rates[users[j]['userID']] = rate
 
         keys = rates.keys()
-        with open("../CF/rate_rect/" + file_name, "a") as f:
+        with open("../CF/rate_rect/" + file_name, "a+") as f:
             f.write("ID:" + str(questions[i]['questionID']) + " rate:")
             rate_str = ""
             for key in keys:
@@ -2176,7 +2188,6 @@ def build_question_rate_rect():
             f.write(rate_str + "\n")
 
     return jsonify({"code": 1})
-
 
 
 @app.route('/api/algorithm/before_search')
@@ -2790,6 +2801,138 @@ def delete_demand():
             return jsonify({'code': 1, 'msg': 'success'})
         return jsonify({'code': -1, 'msg': 'unable to delete'})
     return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+"""
+    学院接口
+"""
+
+
+@app.route('/api/school/get_free_article')
+def get_free_article():
+    """
+    获取所有免费文章
+    :return:code:0=没有文章  1=成功
+    """
+    db = Database()
+    # 免费并且没有被清除的文章
+    article = db.sql("select * from article where free=1 and state=0")
+    if article:
+        return jsonify({'code': 1, 'msg': 'success', 'data': article})
+    return jsonify({'code': 0, 'msg': 'no article'})
+
+
+@app.route('/api/school/get_charge_article')
+def get_charge_article():
+    """
+    获取所有收费文章
+    :return:code:0=没有文章  1=成功
+    """
+    db = Database()
+    # 收费并且没有被清除的文章
+    article = db.sql("select * from article where free=0 and state=0")
+    if article:
+        return jsonify({'code': 1, 'msg': 'success', 'data': article})
+    return jsonify({'code': 0, 'msg': 'no article'})
+
+
+@app.route('/api/school/get_user_article')
+def get_user_article():
+    """
+    获取某个用户在学院内发表的文章
+    :return:code:-1=用户不存在 0=没有文章  1=成功
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    # 若用户存在则继续处理
+    if user:
+        # 某个用户发表的，并且没有被清除的文章
+        article = db.get({'userID': user['userID'], 'state': 0}, 'article')
+        if article:
+            return jsonify({'code': 1, 'msg': 'success', 'data': article})
+        return jsonify({'code': 0, 'msg': 'no article'})
+    return jsonify({'code': -1, 'msg': 'the user is not exist'})
+
+
+@app.route('/api/school/get_article_by_tag')
+def get_article_by_tag():
+    """
+    根据tag查找文章
+    :return:code:0=没有符合条件的文章  1=成功
+    """
+    tag_id = request.values.get('tag_id')
+    db = Database()
+    # 先获取所有未清除的文章
+    article = db.sql({'state': 0}, 'article')
+    # 存放返回的数据
+    data = []
+    # 遍历所有文章
+    for it in article:
+        # 获取这篇文章的tag列表
+        tags = get_tags(it['tags'])
+        # 遍历并判断每一项tag是否符合搜索项
+        for tg in tags:
+            # 若符合，则加入返回容器中
+            if tg == tag_id:
+                it.update({'tags':tags})
+                data.append(it)
+                break
+    if data:
+        return jsonify({'code': 1, 'msg': 'success', 'data': data})
+    return jsonify({'code': 0, 'msg': 'no article'})
+
+
+@app.route('/api/school/get_similar_article')
+def get_similar_article():
+    """
+    根据某一篇文章进行相似文章推荐
+    :return:
+    """
+    article_id = request.values.get('article_id')
+    rate_dir = '../CF/rate_rect/article_rate_rect.txt'
+    # 判断评分矩阵是否存在
+    if not os.path.exists(rate_dir):
+        return jsonify({'code': 0, 'msg': 'the rate rectangle is not exist,please'
+                                          ' build it by function build_article_rate_rect'})
+    # 推荐的文章id,最多3条，相似度降序排列
+    recommend_article = item_cf_api(rate_dir, "../CF/similar_rect/article_similar_rect.txt", article_id, 3)
+
+    return jsonify({'code': 1, 'msg': 'success', 'data': recommend_article})
+
+
+@app.route('/api/school/get_recommend_article')
+def get_recommend_article():
+    """
+    根据用户最近浏览的文章进行推荐
+    :return:code:-1=评分矩阵未建立  0=用户不存在  1=成功
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    rate_dir = '../CF/rate_rect/article_rate_rect.txt'
+    if not user:
+        return jsonify({'code': 0, 'msg': 'user is not exist'})
+    # 判断评分矩阵是否存在
+    if not os.path.exists(rate_dir):
+        return jsonify({'code': -1, 'msg': 'the rate rectangle is not exist,please'
+                                              ' build it by function build_article_rate_rect'})
+    # 查找该用户最近浏览的最多3篇文章
+    action = db.sql("select targetID from useraction where userID='%s' and targettype >=21 and targettype<=25 limit"
+                    "3 order by actiontime DESC group by targetID ")
+    # 推荐结果容器
+    recommend_article = []
+    # 推荐的文章id,最多3条，相似度降序排列
+    for each in action:
+        ids = item_cf_api(rate_dir, "../CF/similar_rect/article_similar_rect.txt", each['targetID'], 3)
+        for id in ids:
+            article = db.get({'articleID': id}, 'article')
+            recommend_article += article
+    # 若action为空，则随机推荐
+    if not action:
+        recommend_article = db.sql("select * from article order by edittime DESC limit 10")
+
+    return jsonify({'code': 1, 'msg': 'success', 'data': recommend_article})
 
 
 """
