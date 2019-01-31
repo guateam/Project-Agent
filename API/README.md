@@ -1620,50 +1620,346 @@ Format:
      ```
 
 2. ##### 获取自己的文章 get_my_articles
+   - 接口 `/api/specialist/get_my_articles()`
 
+   - 参数 `token`-token
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # 0=用户不存在 1=成功
+         msg: msg,      # 信息
+         data: data     # 文章列表
+     }
+     ```
 3. ##### 获取自己的粉丝列表 get_my_fans
+   - 接口 `/api/specialist/get_my_fans()`
 
+   - 参数 `token`-token
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # 0=用户不存在 1=成功
+         msg: msg,      # 信息
+         data: data     # 粉丝列表
+     }
+     ```
 4. ##### 获取付费预约的列表 get_order_list
+   - 接口 `/api/specialist/get_order_list()`
 
+   - 参数 `token`-token
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # 0=用户不存在 1=成功
+         msg: msg,      # 信息
+         data: data     # 预约列表
+     }
+     ```
 5. ##### 确认预约 confirm_order
+   - 接口 `/api/specialist/confirm_order()`
 
+   - 参数 `token`-token
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # -1=预约订单不存在或者用户不匹配 
+                        # 0=用户不存在 1=成功
+         msg: msg,      # 信息
+     }
+     ```
 6. ##### 拒绝预约 refuse_order
+   - 接口 `/api/specialist/refuse_order()`
 
+   - 参数 `token`-token
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # -1=预约订单不存在或者用户不匹配 
+                        # 0=用户不存在 1=成功
+         msg: msg,      # 信息
+     }
+     ```
 7. ##### 获取点击量图表 get_click_info
 
 8. ##### 获取关注量增减图表 get_fans_info
 
 9. ##### 预约付费咨询 add_order
+   - 接口 `/api/specialist/add_order()`
 
+   - 参数 `token`-token
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # -1=无法添加 0=用户不存在 1=成功
+         msg: msg,      # 信息
+     }
+     ```
 10. ##### 申请升级为专家 request_upgrade
+   - 接口 `/api/specialist/request_upgrade()`
 
+   - 参数 `token`-token
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # -1=无法申请 0=用户不存在 1=成功
+         msg: msg,      # 信息
+     }
+     ```
 11. 
 
 #### Enterprise 企业
 
 1. ##### 添加需求 add_demand
+   - 接口 `/api/enterprise/add_demand()`
+
+   - 参数 `token`-token
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # -1=无法添加 0=用户不存在 1=成功
+         msg: msg,      # 信息
+     }
+     ```
 
 2. ##### 获取自己的需求列表 get_my_demands
+   - 接口 `/api/enterprise/get_my_demands()`
+
+   - 参数 `token`-token
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # 0=用户不存在 1=成功
+         msg: msg,      # 信息
+         data:data,     # 需求列表
+     }
+     ```
 
 3. ##### 获取报名该需求的用户列表 get_signed_users
+   - 接口 `/api/enterprise/get_signed_users()`
+
+   - 参数 `token`-token
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # 0=用户不存在 1=成功
+         msg: msg,      # 信息
+         data:data,     # 用户列表
+     }
+     ```
 
 4. ##### 确认报名的用户 confirm_signed_user
+   - 接口 `/api/enterprise/confirm_signed_user()`
+
+   - 参数 `token`-token
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # -1=确认失败 0=用户不存在 1=成功
+         msg: msg,      # 信息
+     }
+     ```
 
 5. ##### 拒绝报名的用户 refuse_signed_user
+   - 接口 `/api/enterprise/refuse_signed_user()`
+
+   - 参数 `token`-token
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # -1=拒绝失败 0=用户不存在 1=成功
+         msg: msg,      # 信息
+     }
+     ```
 
 6. ##### 结束需求 close_demand
+   - 接口 `/api/enterprise/close_demand()`
+
+   - 参数 `token`-token
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # -1=关闭失败或用户不匹配 0=用户不存在 1=成功
+         msg: msg,      # 信息
+     }
+     ```
 
 7. ##### 开始需求 start_demand
+   - 接口 `/api/enterprise/start_demand()`
+
+   - 参数 `token`-token
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # -1=开始失败或用户不匹配 0=用户不存在 1=成功
+         msg: msg,      # 信息
+     }
+     ```
 
 8. ##### 申请升级为企业账户 request_enterprise_upgrade
+   - 接口 `/api/enterprise/request_enterprise_upgrade()`
+
+   - 参数 `token`-token
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # -1=申请失败 0=用户不存在 1=成功
+         msg: msg,      # 信息
+     }
+     ```
 
 9. 
 
 #### Board 告示板
 
 1. ##### 报名需求 sign_to_demand
+   - 接口 `/api/board/sign_to_demand()`
 
-2. 
+   - 参数 `token`-token
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # -1=报名失败 0=用户不存在 1=成功
+         msg: msg,      # 信息
+     }
+     ```
+
+2. ##### 获取需求推荐 get_board_recommend
+   - 接口 `/api/board/get_board_recommend()`
+
+   - 参数 `token`-token
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # 0=用户不存在 1=成功
+         msg: msg,      # 信息
+         data: data     # 需求列表
+     }
+     ```
+
+3. ##### 获取告示板分类 get_board_category
+    - 接口 `/api/board/get_board_category()`
+
+   - 参数 
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # 1=成功
+         msg: msg,      # 信息
+         data: data     # 分类信息
+     }
+     ```
+
+4. ##### 获取父级标签下的子集标签 get_child_category
+   - 接口 `/api/board/get_child_category()`
+
+   - 参数 `tag_id`-父级标签的ID
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # 0=父级标签不存在 1=成功
+         msg: msg,      # 信息
+         data: data     # 子集标签
+     }
+     ```
+
+5. ##### 获取需求信息 get_demand
+   - 接口 `/api/board/get_demand()`
+
+   - 参数 `demand_id`-需求的ID
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # 0=需求不存在 1=成功
+         msg: msg,      # 信息
+         data: data     # 需求信息
+     }
+     ```
+
+6. ##### 获取该tag下的所有需求 get_demands_by_tag
+   - 接口 `/api/board/get_demands_by_tag()`
+
+   - 参数 `tag_id`-标签的ID
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # 1=成功
+         msg: msg,      # 信息
+         data: data     # 需求列表
+     }
+     ```
+7. ##### 后台获取需求列表 back_get_demands
+   - 接口 `/api/board/back_get_demands()`
+
+   - 参数 `X-Token`-X-Token
+  
+   - 返回值
+
+     ```python
+     {
+         code: code,    # 0=用户不存在 1=成功
+         msg: msg,      # 信息
+         data: data     # 需求列表
+     }
+     ```
+8. ##### 清除需求 delete_demand
+   - 接口 `/api/board/delete_demand()`
+
+   - 参数 `X-Token`-X-token
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # -1=删除失败 0=用户不存在 1=成功
+         msg: msg,      # 信息
+         data: data     # 需求列表
+     }
+     ```
+#### 学院接口 school
+
+#### 群聊接口 group
 
 ## 数据库 DataBase
 
