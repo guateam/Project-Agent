@@ -916,11 +916,11 @@ def follow_question():
     关注某个问题
     :return: code:-1 = 问题不存在, -2 = 用户不存在, 0 = 关注失败, 1 = 关注成功
     """
-    user_id = request.values.get('user_id')
+    token = request.values.get('token')
     question_id = request.values.get('question_id')
 
     db = Database()
-    user = db.get({'userID': user_id}, 'users')
+    user = db.get({'token': token}, 'users')
     question = db.get({'questionID': question_id}, 'questions')
 
     if not question:
@@ -928,6 +928,7 @@ def follow_question():
     if not user:
         return jsonify({'code': -2, 'msg': "the user is not exist"})
 
+    user_id = user['userID']
     success = db.insert({'userID': user_id, 'target': question_id}, 'followtopic')
     if success:
         return jsonify({'code': 1, 'msg': "follow success"})
@@ -1253,11 +1254,11 @@ def collect_answer():
     关注某个回答
     :return: code:-1 = 回答不存在, -2 = 用户不存在, 0 = 关注失败, 1 = 关注成功
     """
-    user_id = request.values.get('user_id')
+    token = request.values.get('token')
     answer_id = request.values.get('answer_id')
 
     db = Database()
-    user = db.get({'userID': user_id}, 'users')
+    user = db.get({'token': token}, 'users')
     answer = db.get({'answerID': answer_id}, 'answers')
 
     if not answer:
@@ -1265,6 +1266,7 @@ def collect_answer():
     if not user:
         return jsonify({'code': -2, 'msg': "the user is not exist"})
 
+    user_id = user['userID']
     success = db.insert({'userID': user_id, 'answerID': answer_id}, 'collectanswer')
     if success:
         return jsonify({'code': 1, 'msg': "collect success"})
@@ -1508,16 +1510,18 @@ def collect_article():
     :return: code:0=收藏失败 1=收藏成功 -1=文章不存在 -2=用户不存在
     """
     article_id = request.values.get("article_id")
-    user_id = request.values.get("user_id")
+    token = request.values.get("token")
 
     db = Database()
     article = db.get({'articleID': article_id}, 'article')
+    user = db.get({'token': token}, 'users')
 
     if not article:
         return jsonify({'code': -1, 'msg': 'the article is not exist'})
-    if not article:
+    if not user:
         return jsonify({'code': -2, 'msg': 'the user is not exist'})
 
+    user_id = user['userID']
     success = db.insert({'userID': user_id, 'articleID': article_id}, 'collectarticle')
     if success:
         return jsonify({'code': 1, 'msg': 'collect success'})
@@ -2710,6 +2714,10 @@ def get_child_category():
     db = Database()
     tag_id = request.values.get('tag_id')
     tags = db.get({'father': tag_id}, 'tags', 0)
+
+    if not tags:
+        return jsonify({'code': 0, 'msg': 'tag is not exist'})
+
     data = []
     for value in tags:
         data.append({
