@@ -34,7 +34,7 @@
                         v-for="item in items"
                         :key="item.title"
                         avatar
-                        @click="$router.push({name: 'settings'})"
+                        @click="$router.push(item.name)"
                 >
                     <v-list-tile-avatar>
                         <!--图片和icon都应该改一下，先做完懒得去找icon-->
@@ -66,10 +66,10 @@
                 valueDeterminate: 50,  // 经验等级进度条
                 group: '未知',
                 items: [
-                    {active: true, title: '我发布的', avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg'},
-                    {active: true, title: '我的收藏', avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg'},
-                    {title: '我的钱包', avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg'},
-                    {title: '设置', avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg'}
+                    {active: true, title: '我发布的', avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg', name:'oldpost'},
+                    {active: true, title: '我的收藏', avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg', name:'collection'},
+                    {active: true, title: '我的钱包', avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg', name:'wallet'},
+                    {active: true, title: '设置', avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg', name:'settings'}
                 ],
             }
         },

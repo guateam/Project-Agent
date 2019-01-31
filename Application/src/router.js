@@ -22,7 +22,26 @@ Vue.use(Router);
 
 export default new Router({
     routes: [
-        { path: '/settings', name: 'settings', component: view('Settings') },
+        {
+            path: '/settings',
+            name: 'settings',
+            component: view('Settings')
+        },
+        {
+            path: '/collection',
+            name: 'collection',
+            component: view('collection')
+        },
+        {
+            path: '/oldpost',
+            name: 'oldpost',
+            component: view('oldpost')
+        },
+        {
+            path: '/wallet',
+            name: 'wallet',
+            component: view('wallet')
+        },
         {
             path: '/',
             redirect: '/home'

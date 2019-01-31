@@ -287,7 +287,7 @@
         height: 100%;
         outline: #EBEBEB;
     }
-    img {
-        width: 100%;
-    }
+    /*img {*/
+        /*width: 100%;*/
+    /*}*/
 </style>
