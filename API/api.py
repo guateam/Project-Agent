@@ -2714,6 +2714,10 @@ def get_child_category():
     db = Database()
     tag_id = request.values.get('tag_id')
     tags = db.get({'father': tag_id}, 'tags', 0)
+
+    if not tags:
+        return jsonify({'code': 0, 'msg': 'tag is not exist'})
+
     data = []
     for value in tags:
         data.append({
