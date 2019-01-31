@@ -1,5 +1,14 @@
 <template>
-    <div>
+    <div class="bigbox">
+        <v-toolbar color="white" flat>
+            <v-btn icon light @click="$router.push({name: 'myself'})">
+                <v-icon color="grey darken-2">arrow_back</v-icon>
+            </v-btn>
+
+            <v-toolbar-title class="grey--text text--darken-4">我的收藏</v-toolbar-title>
+        </v-toolbar>
+
+        <v-divider></v-divider>
         <v-tabs
                 v-model="active"
                 color="cyan"
@@ -112,4 +121,15 @@
 </script>
 
 <style scoped>
+    .bigbox {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        z-index: 200;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: white;
+    }
 </style>
