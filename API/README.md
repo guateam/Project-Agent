@@ -664,14 +664,65 @@ Format:
     ```
 
 22. ##### 获取钱包余额 get_account_balance
+    - 接口 `/api/account/get_account_balance()`
+
+    - 参数 `token`-token 
+
+    - 返回值
+
+    ```python
+    {
+        code: code,         # 0=未知用户 1=成功
+        msg: msg,           # 信息
+        data: data          # 余额
+    }
+    ```
 
 23. ##### 增加钱包余额 add_account_balance
+    - 接口 `/api/account/add_account_balance()`
+
+    - 参数 `num`-增加量 `token`-token 
+
+    - 返回值
+
+    ```python
+    {
+        code: code,         # -2=用户不存在 0=数据库操作失败 1=成功
+        msg: msg,           # 信息
+    }
+    ```
 
 24. ##### 减少钱包余额 minus_account_balance
+    - 接口 `/api/account/minus_account_balance()`
+
+    - 参数 `num`-减少量 `token`-token 
+
+    - 返回值
+
+    ```python
+    {
+        code: code,         # -2=用户不存在 -1=余额不足 
+                            #  0=数据库操作失败 1=成功
+        msg: msg,           # 信息
+    }
+    ```
 
 25. ##### 获取用户支付记录 history_pay
+    - 接口 `/api/account/history_pay()`
 
-26. 
+    - 参数 `token`-token 
+
+    - 返回值
+
+    ```python
+    {
+        code: code,         # 0=用户不存在 1=成功
+        msg: msg,           # 信息
+        data: data,         # 支付记录
+    }
+    ```
+
+
 #### Question 问题
 
 1. ##### 添加问题 add_question
@@ -837,10 +888,50 @@ Format:
     ```
 
 9. ##### 关注问题 follow_question
+    - 接口 `/api/questions/follow_question()`
+
+    - 参数 `question_id`-问题的id `token`-token 
+
+    - 返回值
+
+    ```python
+    {
+        code: code,         # -2=用户不存在 -1=问题不存在  0=关注失败
+                            # 1=成功
+        msg: msg,           # 信息
+    }
+    ```
 
 10. ##### 获取付费问题回答列表 get_priced_answer_list
+    - 接口 `/api/questions/add_priced_answer_list()`
+
+    - 参数 `question_id`-问题ID  `token`-token 
+
+    - 返回值
+
+    ```python
+    {
+        code: code,         # -2=问题不存在 -1=用户不存在 
+                            # 0=数据库操作失败 1=成功
+        msg: msg,           # 信息
+    }
+    ```
 
 11. ##### 为查看付费问题付费 pay_question
+    - 接口 `/api/questions/pay_question()`
+
+    - 参数 `question_id`-问题ID  `token`-token 
+
+    - 返回值
+
+    ```python
+    {
+        code: code,         # -5=退钱失败   -4=创建支付记录失败
+                            # -3=问题不存在 -2=用户不存在 
+                            # -1=余额不足   0 =支付失败         1=成功
+        msg: msg,           # 信息
+    }
+    ```
 
 12. ##### 赞同问题的评论 agree_question_comment
     - 接口 `/api/questions/agree_question_comment()`
@@ -1034,8 +1125,33 @@ Format:
      ```
 
 8. ##### 收藏回答 collect_answer
+    - 接口 `/api/answer/collect_answer()`
+
+    - 参数 `answer_id`-回答ID  `token`-token 
+
+    - 返回值
+
+    ```python
+    {
+        code: code,         # -1=回答不存在 -2=用户不存在 
+                            # 0=关注失败 1=成功
+        msg: msg,           # 信息
+    }
+    ```
 
 9. ##### 编辑回答 edit_answer
+    - 接口 `/api/answer/edit_answer()`
+
+    - 参数 `answer_id`-回答ID  `content`-修改的内容
+
+    - 返回值
+
+    ```python
+    {
+        code: code,         # -1=回答不存在 0=编辑失败  1=成功 
+        msg: msg,           # 信息
+    }
+    ```
 
 10. ##### 举报回答 complain
 
@@ -1092,10 +1208,49 @@ Format:
 #### Article 文章
 
 1. ##### 添加文章 add_article
+    - 接口 `/api/article/add_article()`
+
+    - 参数 `token`-token  `content`-文章内容  `title`-文章标题
+
+    - 返回值
+
+    ```python
+    {
+        code: code,         # -1=未知用户 0=添加失败 1=成功
+        msg: msg,           # 信息
+       
+    }
+    ```
 
 2. ##### 编辑文章 edit_article
+    - 接口 `/api/article/edit_article()`
+
+    - 参数 `token`-token  `content`-文章内容  `title`-文章标题  `article_id`-文章ID
+
+    - 返回值
+
+    ```python
+    {
+        code: code,         # -1=文章不存在 0=修改失败 1=成功
+        msg: msg,           # 信息
+       
+    }
+    ```
 
 3. ##### 收藏文章 collect_article
+    - 接口 `/api/article/collect_article()`
+
+    - 参数 `token`-token  `article_id`-文章内容 
+
+    - 返回值
+
+    ```python
+    {
+        code: code,         # -2=用户不存在 -1=文章不存在 0=收藏失败 1=成功
+        msg: msg,           # 信息
+       
+    }
+    ```
 
 4. ##### 后台获取文章 back_get_articles
      - 接口 `/api/article/back_get_articles()`
@@ -1249,17 +1404,89 @@ Format:
      ```
 
 4. ##### 获取好友列表 get_friend_list
+   - 接口 `/api/message/get_friend_list()`
+
+   - 参数 `token`-token  
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # 0=未知用户 1=成功
+         msg: msg,      # 信息
+         data: data     # 好友列表
+     }
+     ```
 
 5. ##### 获取点赞列表 get_agree_list
+   - 接口 `/api/message/get_agree_list()`
 
+   - 参数 `token`-token  
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # 0=未知用户 1=成功
+         msg: msg,      # 信息
+         data: data     # 点赞列表
+     }
+     ```
 6. ##### 获取@列表 get_at_list
+   - 接口 `/api/message/get_at_list()`
 
+   - 参数 `token`-token  
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # 0=未知用户 1=成功
+         msg: msg,      # 信息
+         data: data     # @列表
+     }
+     ```
 7. ##### 发送系统通知 add_sys_notice
+   - 接口 `/api/message/add_sys_notice()`
 
+   - 参数 `token`-token  `content`-内容  `type`-类型  `target`-目标
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # -2=无法添加 -1=权限不足 0=未知用户 1=成功
+         msg: msg,      # 信息
+     }
+     ```
 8. ##### 获取系统消息 get_sys_message
+   - 接口 `/api/message/get_sys_message()`
 
+   - 参数 `token`-token  
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # 0=未知用户 1=成功
+         msg: msg,      # 信息
+         data: data     # 系统消息
+     }
+     ```
 9. ##### 获取某用户的私信 get_message
+   - 接口 `/api/message/get_message()`
 
+   - 参数 `token`-token  
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # -1=获取失败 0=未知用户 1=成功
+         msg: msg,      # 信息
+         list: list     # 私信列表
+     }
+     ```
 10. 
 
 #### Upload 上传
@@ -1281,17 +1508,81 @@ Format:
      ```
 
 2. ##### 上传身份证 upload_identity_card
+   - 接口 `/api/upload/upload_identity_card()`
 
+   - 参数 `front`-正面照片  `back`-背面照片  `token`-token
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # -2=无法自动识别 -1=文件格式不正确 
+                        # 0=未知用户 1=成功
+         msg: msg,      # 信息
+         data:data      # 文件上传路径
+     }
+     ```
 3. 
 
 #### Algorithm 算法
 
-1. ##### 调用item cf算法推荐 item_cf_api
+1. ##### 建立文章的评分矩阵 build_article_rate_rect
+   - 接口 `/api/algorithm/build_article_rate_rect()`
 
-2. ##### 建立文章的评分矩阵 build_article_rate_rect
+   - 参数 
 
-3. 
+   - 返回值
 
+     ```python
+     {
+         code: code,    # 0=失败 1=成功
+         msg: msg,      # 信息
+     }
+     ```
+
+2. ##### 建立问题的评分矩阵 build_question_rate_rect
+   - 接口 `/api/algorithm/build_question_rate_rect()`
+
+   - 参数 
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # 0=失败 1=成功
+         msg: msg,      # 信息
+     }
+     ```
+
+3. #### 模糊匹配待选搜索项 before_vague_search_api
+   - 接口 `/api/algorithm/before_vague_search_api()`
+
+   - 参数 `word`-搜索词
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # 0=失败 1=成功
+         msg: msg,      # 信息
+         data: data     # 推荐的搜索项
+     }
+     ```
+
+4. #### 模糊搜索 search
+   - 接口 `/api/algorithm/search()`
+
+   - 参数 `word`-搜索词  `type`-搜索内容 question=问题 article=文章
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # 0=失败 1=成功
+         msg: msg,      # 信息
+         data: data     # 搜索结果
+     }
+     ```
 #### Specialist 专家
 
 1. ##### 获取自己的回答 get_my_answers
