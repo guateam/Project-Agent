@@ -11,11 +11,7 @@
  Target Server Version : 50553
  File Encoding         : 65001
 
-<<<<<<< HEAD
- Date: 25/01/2019 19:01:42
-=======
-Date: 2019-01-25 15:50:33
->>>>>>> develop
+ Date: 29/01/2019 14:04:55
 */
 
 SET NAMES utf8mb4;
@@ -81,8 +77,18 @@ CREATE TABLE `article`  (
   `userID` int(10) NOT NULL,
   `tags` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `state` int(2) NOT NULL DEFAULT 0,
+  `free` int(1) UNSIGNED NOT NULL DEFAULT 1 COMMENT '是否免费   0-不是  1-是',
   PRIMARY KEY (`articleID`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of article
+-- ----------------------------
+INSERT INTO `article` VALUES (1, '第一篇文章，文章文章文章文章，要火要火要火要火要火要火要火要火要火要火要火要火要火要火要火要火要火要火要火要火要火要火要火要火要火要火要火要火要火要火要火要火要火要火要火要火要火要火要火要火要火要火要火要火要火要火要火要火要火要火要火要火要火要火要火要火要火要火要火要火要火要火', '文章要火', '2019-01-29 13:54:03', 1, '', 0, 1);
+INSERT INTO `article` VALUES (2, '第二篇文章，啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊', '再次发表', '2019-01-29 13:54:41', 1, '', 0, 1);
+INSERT INTO `article` VALUES (3, '我的研究报告内容为：如何熟练运用查克拉进行车床加工', '查克拉与车床', '2019-01-29 13:56:02', 2, '', 0, 1);
+INSERT INTO `article` VALUES (4, '猪脑内的电波经过放大后可以利用在大型发电机上，这可能是能源危机的新突破口，量产猪脑等同于量产电池', '猪脑与能源的关联', '2019-01-29 13:58:08', 3, '', 0, 1);
+INSERT INTO `article` VALUES (5, '高考带给学生的压力经过提取后可以用在高压水刀上，这将进一步提高水刀的切割效率和准度，大面积推广高压教育有利于国内加工业的飞速发展', '高压水刀改经建议', '2019-01-29 14:00:15', 2, '', 0, 1);
 
 -- ----------------------------
 -- Table structure for collectanswer
@@ -448,7 +454,7 @@ CREATE TABLE `useraction`  (
   `targettype` int(11) NOT NULL COMMENT '行为类型',
   `actiontime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '行为发生时间',
   PRIMARY KEY (`actionID`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户行为表\n' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户行为表\n' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of useraction
@@ -457,6 +463,21 @@ INSERT INTO `useraction` VALUES (1, 2, 1, 1, '2018-12-25 14:43:45');
 INSERT INTO `useraction` VALUES (2, 1, 1, 1, '2018-12-29 11:14:26');
 INSERT INTO `useraction` VALUES (3, 1, 1, 3, '2018-12-29 11:15:40');
 INSERT INTO `useraction` VALUES (4, 1, 1, 2, '2018-12-29 11:17:17');
+INSERT INTO `useraction` VALUES (5, 1, 1, 11, '2019-01-25 22:06:34');
+INSERT INTO `useraction` VALUES (6, 1, 2, 11, '2019-01-25 22:06:44');
+INSERT INTO `useraction` VALUES (7, 1, 3, 11, '2019-01-25 22:07:02');
+INSERT INTO `useraction` VALUES (8, 1, 5, 11, '2019-01-25 22:07:07');
+INSERT INTO `useraction` VALUES (9, 1, 2, 12, '2019-01-25 22:07:20');
+INSERT INTO `useraction` VALUES (10, 1, 3, 12, '2019-01-25 22:07:25');
+INSERT INTO `useraction` VALUES (11, 1, 3, 13, '2019-01-25 22:07:29');
+INSERT INTO `useraction` VALUES (12, 2, 1, 11, '2019-01-25 22:08:06');
+INSERT INTO `useraction` VALUES (13, 2, 2, 11, '2019-01-25 22:08:11');
+INSERT INTO `useraction` VALUES (14, 2, 3, 11, '2019-01-25 22:08:18');
+INSERT INTO `useraction` VALUES (15, 2, 3, 12, '2019-01-25 22:08:23');
+INSERT INTO `useraction` VALUES (16, 3, 2, 11, '2019-01-25 22:08:48');
+INSERT INTO `useraction` VALUES (17, 3, 5, 11, '2019-01-25 22:08:51');
+INSERT INTO `useraction` VALUES (18, 3, 6, 11, '2019-01-25 22:08:55');
+INSERT INTO `useraction` VALUES (19, 3, 6, 13, '2019-01-25 22:09:02');
 
 -- ----------------------------
 -- Table structure for users
@@ -476,39 +497,21 @@ CREATE TABLE `users`  (
   `address` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '地址',
   `description` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `state` int(2) NOT NULL,
-<<<<<<< HEAD
   `gender` varchar(1) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `number` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `real_name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `nationality` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `account_balance` int(255) NOT NULL DEFAULT 0 COMMENT '账户余额',
   `specialitst_license` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-=======
-  `gender` varchar(1) NOT NULL,
-  `number` varchar(45) NOT NULL,
-  `real_name` varchar(20) NOT NULL,
-  `nationality` varchar(20) NOT NULL,
-  `account_balance` int(255) NOT NULL DEFAULT '0' COMMENT '账户余额',
-  `specialitst_license` varchar(255) NOT NULL,
-  `license_type` int(2) NOT NULL,
-  `front_pic` text,
-  `back_pic` text,
->>>>>>> develop
   PRIMARY KEY (`userID`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-<<<<<<< HEAD
 INSERT INTO `users` VALUES (1, 'zhangyu199946@126.com', '拉拉人', 'ec847003d2eadc9baf60853e8391e167a292c21f01892fcb8bad0f4af6cd74a7', '', 0, 998, 'VHjWIO5Kp7So6uGxY4Fcbs3Jt', NULL, NULL, NULL, '弗兰秀秀牛逼', 0, '', '', '', '', 0, '');
 INSERT INTO `users` VALUES (2, 'yyz@126.com', '袁宜照', '317f16f4833885da6766e81b35c7258fe4451798600a1ad980babb9e9f412fc2', '', 0, 0, 'TNp6hR7ElkJK4Z5Xfte0VyqG3', NULL, NULL, NULL, '', 0, '', '', '', '', 0, '');
 INSERT INTO `users` VALUES (3, 'zyxiaohao@126.com', '', 'cb8f260c5b29ec2a17d662133ebcf99cd4594e29b0ffeb54599ffe5f3801c3ed', NULL, 0, 0, 'U3WieM95EkGpfXTwdohKFgnjv', NULL, NULL, NULL, '', 0, '', '', '', '', 0, '');
-=======
-INSERT INTO `users` VALUES ('1', 'zhangyu199946@126.com', '拉拉人', 'ec847003d2eadc9baf60853e8391e167a292c21f01892fcb8bad0f4af6cd74a7', '', '0', '998', 'VHjWIO5Kp7So6uGxY4Fcbs3Jt', null, null, null, '弗兰秀秀牛逼', '0', '', '', '', '', '0', '', '0', null, null);
-INSERT INTO `users` VALUES ('2', 'yyz@126.com', '袁宜照', '317f16f4833885da6766e81b35c7258fe4451798600a1ad980babb9e9f412fc2', '', '0', '0', 'TNp6hR7ElkJK4Z5Xfte0VyqG3', null, null, null, '', '0', '', '', '', '', '0', '', '0', null, null);
-INSERT INTO `users` VALUES ('3', 'zyxiaohao@126.com', '', 'cb8f260c5b29ec2a17d662133ebcf99cd4594e29b0ffeb54599ffe5f3801c3ed', null, '0', '0', 'U3WieM95EkGpfXTwdohKFgnjv', null, null, null, '', '0', '', '', '', '', '0', '', '0', null, null);
->>>>>>> develop
 
 -- ----------------------------
 -- View structure for ac_at_info
