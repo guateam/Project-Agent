@@ -15,6 +15,7 @@ import Approval from './components/approval/approval'
 import Notice from './components/notice/notice'
 import Reply from './components/reply/reply'
 import Callme from './components/callme/callme'
+import SchoolDetail from './views/schoolDetail'
 
 
 const view = name => () => import(`./views/${name}`);
@@ -23,58 +24,106 @@ Vue.use(Router);
 export default new Router({
     routes: [
         {
-            path: '/settings',
-            name: 'settings',
-            component: view('Settings')
-        },
-        {
-            path: '/collection',
-            name: 'collection',
-            component: view('collection')
-        },
-        {
-            path: '/oldpost',
-            name: 'oldpost',
-            component: view('oldpost')
-        },
-        {
-            path: '/wallet',
-            name: 'wallet',
-            component: view('wallet')
-        },
-        {
             path: '/',
-            redirect: '/home'
-        },
-        {
-            path: '/topic/:id',
-            name: 'topic',
-            component: Topic,
-        },
-        {
-            path: '/answer-detail/:id',
-            name: 'answer-detail',
-            component: AnswerDetail,
-        },
-        {
-            path: '/comment/:id',
-            name: 'comment',
-            component: Comment
-        },
-        {
-            path: '/school',
-            name: 'school',
-            component: School,
+            redirect: '/home',
         },
         {
             path: '/home',
             name: 'home',
             component: Home,
+            children: [
+                {
+                    path: '/answer-detail/:id',
+                    name: 'answer-detail',
+                    component: AnswerDetail,
+                },
+                {
+                    path: '/topic/:id',
+                    name: 'topic',
+                    component: Topic,
+                },
+                {
+                    path: '/comment/:id',
+                    name: 'comment',
+                    component: Comment
+                },
+            ]
+        },
+        {
+            path: '/school',
+            name: 'school',
+            component: School,
+            children: [
+                {
+                    path: '/schooldetail',
+                    name: 'schooldetail',
+                    component: SchoolDetail,
+                },
+            ]
+        },
+        {
+            path: '/message',
+            name: 'message',
+            component: Message,
+            children: [
+                {
+                    path: '/chat',
+                    name: 'chat',
+                    component: Chat,
+                },
+                {
+                    path: '/chatSetting',
+                    name: 'chatSetting',
+                    component: ChatSetting,
+                },
+                {
+                    path: '/approval',
+                    name: 'approval',
+                    component: Approval,
+                },
+                {
+                    path: '/notice',
+                    name: 'notice',
+                    component: Notice,
+                },
+                {
+                    path: '/reply',
+                    name: 'reply',
+                    component: Reply,
+                },
+                {
+                    path: '/callme',
+                    name: 'callme',
+                    component: Callme,
+                },
+            ]
         },
         {
             path: '/myself',
             name: 'myself',
             component: Myself,
+            children:[
+                {
+                    path: '/settings',
+                    name: 'settings',
+                    component: view('Settings')
+                },
+                {
+                    path: '/collection',
+                    name: 'collection',
+                    component: view('collection')
+                },
+                {
+                    path: '/oldpost',
+                    name: 'oldpost',
+                    component: view('oldpost')
+                },
+                {
+                    path: '/wallet',
+                    name: 'wallet',
+                    component: view('wallet')
+                },
+            ]
         },
         {
             path: '/login',
@@ -85,53 +134,6 @@ export default new Router({
             path: '/register',
             name: 'register',
             component: Register
-        },
-        {
-            path: '/answer-detail',
-            name: 'answer-detail',
-            component: AnswerDetail
-        },
-        {
-            path: '/comment',
-            name: 'comment',
-            component: Comment
-        },
-        {
-            path: '/message',
-            name: 'message',
-            component: Message,
-            children: [
-            ]
-        },
-        {
-            path: '/chat',
-            name: 'chat',
-            component: Chat,
-        },
-        {
-            path: '/chatSetting',
-            name: 'chatSetting',
-            component: ChatSetting,
-        },
-        {
-            path: '/approval',
-            name: 'approval',
-            component: Approval,
-        },
-        {
-            path: '/notice',
-            name: 'notice',
-            component: Notice,
-        },
-        {
-            path: '/reply',
-            name: 'reply',
-            component: Reply,
-        },
-        {
-            path: '/callme',
-            name: 'callme',
-            component: Callme,
         },
     ]
 })

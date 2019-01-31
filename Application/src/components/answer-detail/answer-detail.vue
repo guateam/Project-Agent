@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="bigbox">
 
         <!--顶部话题描述-->
 
@@ -24,7 +24,8 @@
                         </div>
                     </div>
                     <div style="display: flex;flex-direction: column;justify-content: space-between;">
-                        <h2 style="margin-top: 8px;">{{ nickname }}<span style="color: #ffcc00">&nbsp;&nbsp;{{ group.text }}</span></h2>
+                        <h2 style="margin-top: 8px;">{{ nickname }}<span style="color: #ffcc00">&nbsp;&nbsp;{{ group.text }}</span>
+                        </h2>
                         <p style="margin-bottom: 8px;"><span>{{ desc }}</span></p>
                     </div>
                 </div>
@@ -63,7 +64,8 @@
                         <div class="comment-like">赞同 {{ comment.agree }}</div>
                     </div>
                     <div>
-                        <p>{{ comment.content.length > 20 ? comment.content.substring(0, 20) + '...' : comment.content }}</p>
+                        <p>{{ comment.content.length > 20 ? comment.content.substring(0, 20) + '...' : comment.content
+                            }}</p>
                     </div>
                 </div>
             </router-link>
@@ -205,6 +207,17 @@
 </script>
 
 <style>
+    .bigbox {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        z-index: 200;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: white;
+    }
 
     * {
         line-height: 1.5;
@@ -287,7 +300,8 @@
         height: 100%;
         outline: #EBEBEB;
     }
+
     /*img {*/
-        /*width: 100%;*/
+    /*width: 100%;*/
     /*}*/
 </style>
