@@ -81,7 +81,8 @@ def login():
             'fans': db.count({'target': user['userID']}, 'followuser')
         }
         result = db.update({'email': username, 'password': generate_password(password)},
-                           {'token': new_token()},
+                           {'token': new_token(),
+                            'last_login': time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))},
                            'users')  # 更新token
         if result:
             return jsonify(
@@ -101,9 +102,14 @@ def register():
     db = Database()
     email_check = db.get({'email': email}, 'users')
     if not email_check:
+        nick_name_list = random.sample('zyxwvutsrqponmlkjihgfedcba1234567890', 10)
+        nickname = ''
+        for value in nick_name_list:
+            nickname += value
         flag = db.insert({
             'email': email,
-            'password': generate_password(password)
+            'password': generate_password(password),
+            'nickname': '用户 ' + nickname
         }, 'users')
         if flag:
             return jsonify({'code': 1, 'msg': 'success'})  # 成功返回
@@ -301,13 +307,42 @@ def get_verify_user():
     return jsonify({'code': 0, 'msg': 'unexpected user'})
 
 
+@app.route('/api/account/get_verify_list')
+def get_verify_list():
+    """
+    获取实名制的列表
+    :return:
+    """
+    token = request.headers.get('X-Token')
+    db = Database()
+    user = db.get({'token': token, 'usergroup': 0}, 'users')
+    if user:
+        users = db.get({}, 'users')
+        wait = []
+        confirm = []
+        refuse = []
+        for value in users:
+            value.update({
+                'create_time': value['create_time'].strftime('%Y-%m-%d %H:%M:%S'),
+                'last_login': value['last_login'].strftime('%Y-%m-%d %H:%M:%S')
+            })
+            if value['state'] == 1:
+                wait.append(value)
+            elif value['state'] == 2:
+                confirm.append(value)
+            elif value['state'] == 3:
+                refuse.append(value)
+        return jsonify({'code': 1, 'msg': 'success', 'data': {'wait': wait, 'confirm': confirm, 'refuse': refuse}})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
 @app.route('/api/account/verify', methods=['POST'])
 def verify():
     """
     实名认证
     :return:
     """
-    token = request.form['token']
+    token = request.headers.get('X-Token')
     user_id = request.form['user_id']
     real_name = request.form['real_name']
     birthday = request.form['birthday']
@@ -341,7 +376,7 @@ def not_verify():
     实名认证不通过
     :return:
     """
-    token = request.form['token']
+    token = request.headers.get('X-Token')
     user_id = request.form['user_id']
     db = Database()
     user = db.get({'token': token, 'usergroup': 0}, 'users')
@@ -439,29 +474,37 @@ def back_get_normal_users():
         refuse = []
         un_identity = []
         banned = db.get({'usergroup': 4}, 'users', 0)
-        for value in users + banned:
+        all = users + banned
+        for value in all:
             value.update({
                 'group': get_group(value['usergroup']),
                 'level': get_level(value['exp']),
                 'exp': {'value': value['exp'], 'percent': value['exp'] / LEVEL_EXP[get_level(value['exp'])] * 100},
                 'answer': db.count({'userID': value['userID']}, 'answers'),
                 'follow': db.count({'userID': value['userID']}, 'followuser'),
-                'fans': db.count({'target': value['userID']}, 'followuser')
+                'fans': db.count({'target': value['userID']}, 'followuser'),
+                'create_time': value['create_time'].strftime('%Y-%m-%d %H:%M:%S'),
+                'last_login': value['last_login'].strftime('%Y-%m-%d %H:%M:%S')
             })
-            if value['usergroup']['value'] == 4:
-                break
             if value['state'] == 0:
+                value.update({'status': '未实名'})
                 un_identity.append(value)
             elif value['state'] == 1:
+                value.update({'status': '审核中'})
                 wait.append(value)
             elif value['state'] == 2:
+                value.update({'status': '已通过'})
                 confirm.append(value)
             elif value['state'] == 3:
+                value.update({'status': '已拒绝'})
                 refuse.append(value)
             else:
                 pass
+            if value['usergroup'] == 4:
+                value.update({'status': '已封禁'})
         return jsonify({'code': 1, 'msg': 'success',
-                        'data': {'all': users, 'un_identity': un_identity, 'confirm': confirm, 'refuse': refuse,
+                        'data': {'all': users + banned, 'un_identity': un_identity, 'wait': wait, 'confirm': confirm,
+                                 'refuse': refuse,
                                  'banned': banned}})
     return jsonify({'code': 0, 'msg': 'unexpected user'})
 
@@ -476,7 +519,7 @@ def back_get_specialist_users():
     db = Database()
     user = db.get({'token': token, 'usergroup': 0}, 'users')
     if user:
-        confirm = db.get({'usergroup': 1}, 'users', 0)
+        confirm = db.get({'usergroup': 2}, 'users', 0)
         wait = db.get({'usergroup': 5}, 'users', 0)
         for value in confirm + wait:
             value.update({
@@ -485,9 +528,14 @@ def back_get_specialist_users():
                 'exp': {'value': value['exp'], 'percent': value['exp'] / LEVEL_EXP[get_level(value['exp'])] * 100},
                 'answer': db.count({'userID': value['userID']}, 'answers'),
                 'follow': db.count({'userID': value['userID']}, 'followuser'),
-                'fans': db.count({'target': value['userID']}, 'followuser')
+                'fans': db.count({'target': value['userID']}, 'followuser'),
+                'create_time': value['create_time'].strftime('%Y-%m-%d %H:%M:%S'),
+                'last_login': value['last_login'].strftime('%Y-%m-%d %H:%M:%S')
             })
-
+            if value['usergroup'] == 2:
+                value.update({'status': '已审核'})
+            elif value['usergroup'] == 5:
+                value.update({'status': '待审核'})
         return jsonify({'code': 1, 'msg': 'success',
                         'data': {'all': confirm + wait, 'wait': wait, 'confirm': confirm}})
     return jsonify({'code': 0, 'msg': 'unexpected user'})
@@ -503,7 +551,7 @@ def back_get_enterprise_users():
     db = Database()
     user = db.get({'token': token, 'usergroup': 0}, 'users')
     if user:
-        confirm = db.get({'usergroup': 2}, 'users', 0)
+        confirm = db.get({'usergroup': 3}, 'users', 0)
         wait = db.get({'usergroup': 6}, 'users', 0)
         for value in confirm + wait:
             value.update({
@@ -512,9 +560,14 @@ def back_get_enterprise_users():
                 'exp': {'value': value['exp'], 'percent': value['exp'] / LEVEL_EXP[get_level(value['exp'])] * 100},
                 'answer': db.count({'userID': value['userID']}, 'answers'),
                 'follow': db.count({'userID': value['userID']}, 'followuser'),
-                'fans': db.count({'target': value['userID']}, 'followuser')
+                'fans': db.count({'target': value['userID']}, 'followuser'),
+                'create_time': value['create_time'].strftime('%Y-%m-%d %H:%M:%S'),
+                'last_login': value['last_login'].strftime('%Y-%m-%d %H:%M:%S')
             })
-
+            if value['usergroup'] == 3:
+                value.update({'status': '已审核'})
+            elif value['usergroup'] == 6:
+                value.update({'status': '待审核'})
         return jsonify({'code': 1, 'msg': 'success',
                         'data': {'all': confirm + wait, 'wait': wait, 'confirm': confirm}})
     return jsonify({'code': 0, 'msg': 'unexpected user'})
@@ -2147,17 +2200,19 @@ def upload_identity_card():
             basepath = os.path.dirname(__file__)  # 当前文件所在路径
             # 正面的图片
             front_filename = str(user['userID']) + '_front.' + front.filename.rsplit('.', 1)[1]
-            upload_path = os.path.join(basepath, 'identity_card', front_filename)  # 注意：没有的文件夹一定要先创建，不然会提示没有该路径
+            upload_path = os.path.join(basepath, 'static/identity_card', front_filename)  # 注意：没有的文件夹一定要先创建，不然会提示没有该路径
             front.save(upload_path)
             # 反面的图片
             back_filename = str(user['userID']) + '_back.' + back.filename.rsplit('.', 1)[1]
-            upload_path_reverse = os.path.join(basepath, 'identity_card', back_filename)  # 注意：没有的文件夹一定要先创建，不然会提示没有该路径
+            upload_path_reverse = os.path.join(basepath, 'static/identity_card',
+                                               back_filename)  # 注意：没有的文件夹一定要先创建，不然会提示没有该路径
             back.save(upload_path_reverse)
 
             # 调用ocr进行反面识别文字信息(反面是有个人信息的那一面)
             info_reverse = ocr(upload_path_reverse)
 
-            flag = db.update({'userID': user['userID']}, {'front_pic': upload_path, 'back_pic': upload_path_reverse},
+            flag = db.update({'userID': user['userID']}, {'front_pic': '/static/identity_card/' + front_filename,
+                                                          'back_pic': '/static/identity_card/' + back_filename},
                              'users')
             if flag:
                 return jsonify({'code': 1, 'msg': 'success', 'data': info_reverse})
