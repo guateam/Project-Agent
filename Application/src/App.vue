@@ -15,7 +15,7 @@
                 <!--</v-container>-->
             </v-content>
 
-            <div :style="{ marginBottom: '2em' }"></div>
+            <!--<div :style="{ marginBottom: '2em' }"></div>-->
 
             <v-footer app>
                 <bottom-nav></bottom-nav>
