@@ -1666,7 +1666,7 @@ def get_recommend():
     # 用户token
     token = request.values.get('token')
     # 用于推荐的评分矩阵路径，以api.py所在目录为根目录的表示
-    rate_dir = request.values.get('rate_dir')
+    rate_dir = "../CF/rate_rect/question_rate_rect.txt"
 
     # 获取用户信息
     db = Database()
