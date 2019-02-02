@@ -1957,10 +1957,332 @@ Format:
          data: data     # 需求列表
      }
      ```
+
 #### 学院接口 school
+1. ##### 获取免费文章 get_free_article
+   - 接口 `/api/school/get_free_article()`
+
+   - 参数 
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # 0=无文章 1=成功
+         msg: msg,      # 信息
+         data: data     # 文章列表
+     }
+     ```
+2. ##### 获取收费文章 get_charge_article
+   - 接口 `/api/school/get_charge_article()`
+
+   - 参数 
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # 0=无文章 1=成功
+         msg: msg,      # 信息
+         data: data     # 文章列表
+     }
+     ```
+3. ##### 获取某用户发表的文章 get_user_article
+   - 接口 `/api/school/get_user_article()`
+
+   - 参数 `token`-token
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # -1=用户不存在 0=无文章 1=成功
+         msg: msg,      # 信息
+         data: data     # 文章列表
+     }
+     ```
+4. ##### 根据tag查找文章 get_article_by_tag
+   - 接口 `/api/school/get_article_by_tag()`
+
+   - 参数 `tag_id`-标签的ID
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # 0=无文章 1=成功
+         msg: msg,      # 信息
+         data: data     # 文章列表
+     }
+     ```
+5. ##### 推荐相似文章 get_similar_article
+   - 接口 `/api/school/get_similar_article()`
+
+   - 参数 `article_id`-文章的ID
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # 0=评分矩阵不存在 1=成功
+         msg: msg,      # 信息
+         data: data     # 文章列表
+     }
+     ```
+6. ##### 根据用户最近浏览进行文章推荐 get_recommend_article
+   - 接口 `/api/school/get_recommend_article()`
+
+   - 参数 `token`-token
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # -1=评分矩阵未建立 0=无文章 1=成功
+         msg: msg,      # 信息
+         data: data     # 文章列表
+     }
+     ```
 
 #### 群聊接口 group
+1. ##### 新建群组 new_group
+   - 接口 `/api/group/new_group()`
 
+   - 参数 `token`-token `name`-群名称 `description`-群简介                        `head_portrait`-群肖像 
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # -1=新建失败 0=用户不存在 1=成功
+         msg: msg,      # 信息
+     }
+     ```
+2. ##### 添加组员 add_group_member
+   - 接口 `/api/group/add_group_member()`
+
+   - 参数 `token`-token `group_id`-群ID `user_id`-用户ID
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # -1=添加失败 0=用户不存在 1=成功
+         msg: msg,      # 信息
+     }
+     ```
+3. ##### 确认加入群组 confirm_invite
+   - 接口 `/api/group/confirm_invite()`
+
+   - 参数 `token`-token `group_id`-群ID 
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # -1=确认失败 0=用户不存在 1=成功
+         msg: msg,      # 信息
+     }
+     ```
+4. ##### 设置群管理员 set_admin
+   - 接口 `/api/group/set_admin()`
+
+   - 参数 `token`-token `group_id`-群ID `user_id`-用户ID
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # -2=群内未知用户 -1=设置失败 0=用户不存在 1=成功
+         msg: msg,      # 信息
+     }
+     ```
+5. ##### 取消设置群管理员 set_normal
+   - 接口 `/api/group/set_normal()`
+
+   - 参数 `token`-token `group_id`-群ID `user_id`-用户ID
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # -2=群内未知用户 -1=设置失败 0=用户不存在 1=成功
+         msg: msg,      # 信息
+     }
+     ```
+6. ##### 加入群聊 join_group
+   - 接口 `/api/group/join_group()`
+
+   - 参数 `token`-token `group_id`-群ID
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # -1=加入失败 0=用户不存在 1=成功
+         msg: msg,      # 信息
+     }
+     ```
+7. ##### 同意加群申请 confirm_join
+   - 接口 `/api/group/confirm_join()`
+
+   - 参数 `token`-token `group_id`-群ID `user_id`-用户ID
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # -1=同意失败 0=用户不存在 1=成功
+         msg: msg,      # 信息
+     }
+     ```
+8. ##### 拒接加群申请 refuse_join
+   - 接口 `/api/group/refuse_join()`
+
+   - 参数 `token`-token `group_id`-群ID `user_id`-用户ID
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # -1=拒绝失败 0=用户不存在 1=成功
+         msg: msg,      # 信息
+     }
+     ```
+9.  ##### 禁言某成员 silent_user
+   - 接口 `/api/group/silent_user()`
+
+   - 参数 `token`-token `group_id`-群ID `user_id`-用户ID
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # -1=禁言失败 0=用户不存在 1=成功
+         msg: msg,      # 信息
+     }
+     ```
+
+10. ##### 解除禁言某群员 un_silent_user
+   - 接口 `/api/group/un_silent_user()`
+
+   - 参数 `token`-token `group_id`-群ID `user_id`-用户ID
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # -1=解除失败 0=用户不存在 1=成功
+         msg: msg,      # 信息
+     }
+     ```
+
+11. ##### 发送消息 send_group_message
+   - 接口 `/api/group/send_group_message()`
+
+   - 参数 `token`-token `group_id`-群ID `content`-消息内容
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # -1=发送失败 0=用户不存在 1=成功
+         msg: msg,      # 信息
+     }
+     ```
+
+12. ##### 获取群聊消息 get_group_message
+   - 接口 `/api/group/get_group_message()`
+
+   - 参数 `token`-token `group_id`-群ID 
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # -1=群组不可访问 0=用户不存在 1=成功
+         msg: msg,      # 信息
+         data: data,    # 群聊消息列表
+     }
+     ```
+13. ##### 获取某用户的所有群组 get_groups
+   - 接口 `/api/group/get_groups()`
+
+   - 参数 `token`-token
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # 0=用户不存在 1=成功
+         msg: msg,      # 信息
+         data: {[
+             id:groupID,                #群组ID
+             head_portrait:head_portrait,#群组头像
+             name:name,                 #群名称
+             description:description,   #群简介
+             last_message:{
+                 nickname:nickname,     #最近一条信息的发送者昵称
+                 content:content,       #内容
+                 time:time              #发送时间
+             }
+        ]}
+     }
+     ```
+14. ##### 获取某群组的成员列表 get_group_members
+   - 接口 `/api/group/get_group_members()`
+
+   - 参数 `group_id`-群ID 
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # 1=成功
+         msg: msg,      # 信息
+         data: data,    # 成员列表
+     }
+     ```
+15. ##### 封禁用户 ban_user
+   - 接口 `/api/group/ban_user()`
+
+   - 参数 `token`-token `group_id`-群ID `user_id`-用户ID
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # -1=封禁失败 0=用户不存在 1=成功
+         msg: msg,      # 信息
+     }
+     ```
+16. ##### 后台获取群聊 back_get_groups
+   - 接口 `/api/group/back_get_groups()`
+
+   - 参数 `X-Token`-X-Token
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # 0=用户不存在 1=成功
+         msg: msg,      # 信息
+     }
+     ```
+17. ##### 清除群聊 delete_group
+   - 接口 `/api/group/delete_group()`
+
+   - 参数 `X-Token`-X-Token `group_id`-群ID
+
+   - 返回值
+
+     ```python
+     {
+         code: code,    # -1=清除失败 0=用户不存在 1=成功
+         msg: msg,      # 信息
+     }
+     ```
+    
 ## 数据库 DataBase
 
 ### 类型约定 Format
