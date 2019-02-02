@@ -62,12 +62,15 @@
                                 v-for="subItem in item.items"
                                 :key="subItem.nickname"
                         >
+                            <v-list-tile-avatar>
+                                <img :src="subItem.headportrait">
+                            </v-list-tile-avatar>
                             <v-list-tile-content>
                                 <v-list-tile-title>{{ subItem.nickname }}</v-list-tile-title>
                             </v-list-tile-content>
 
                             <!--<v-list-tile-action>-->
-                                <!--<v-icon>{{ subItem.action }}</v-icon>-->
+                            <!--<v-icon>{{ subItem.action }}</v-icon>-->
                             <!--</v-list-tile-action>-->
                         </v-list-tile>
                     </v-list-group>
@@ -80,7 +83,7 @@
                             {{ item.header }}
                         </v-subheader>
                         <v-divider v-else-if="item.divider" :inset="item.inset" :key="index"></v-divider>
-                        <v-list-tile v-else :key="item.title" avatar  @click="$router.push('./approval')">
+                        <v-list-tile v-else :key="item.title" avatar @click="$router.push('./approval')">
                             <v-list-tile-avatar>
                                 <img :src="item.avatar">
                             </v-list-tile-avatar>
@@ -100,7 +103,7 @@
                             {{ item.header }}
                         </v-subheader>
                         <v-divider v-else-if="item.divider" :inset="item.inset" :key="index"></v-divider>
-                        <v-list-tile v-else :key="item.title" avatar  @click="$router.push('./callme')">
+                        <v-list-tile v-else :key="item.title" avatar @click="$router.push('./callme')">
                             <v-list-tile-avatar>
                                 <img :src="item.avatar">
                             </v-list-tile-avatar>
@@ -151,7 +154,7 @@
                         title: '分组一',
                         active: true,
                         items: [
-                            { nickname: '赵一', user_id: -1, },
+                            {nickname: '赵一', user_id: -1,},
                         ]
                     },
                 ],
@@ -202,9 +205,43 @@
                     })
                 })
             },
+            get_message_list() {
+                import('js-cookie').then((Cookies) => {
+                    import('axios').then((axios) => {
+                        axios.get('http://localhost:5000/api/message/get_message_list', {
+                            responseType: 'json',
+                            params: {
+                                token: Cookies.get('token'),
+                            }
+                        }).then((data) => {
+                            if (data.data.code === 1) {
+                                data = data.data.data;
+                                console.info('code1');
+                                let date = new Date();
+                                let items = [];
+                                items.push({header: date.Format('MM-dd')});
+                                data.forEach((value) => {
+                                    let new_date = new Date(value['post_time'] + ' 00:00:00');
+                                    if (new_date < date) {
+                                        items.push({header: new_date.Format('MM-dd')});
+                                    }
+                                    items.push({
+                                        avatar: value['headportrait'],
+                                        title: value['nickname'],
+                                        subtitle: value['content']
+                                    });
+                                    items.push({divider: true, inset: true})
+                                });
+                                this.items1 = items
+                            }
+                        })
+                    })
+                })
+            }
         },
         mounted() {
             this.get_friend_list();
+            this.get_message_list();
             // import('js-cookie').then((Cookies) => {
             //     import('axios').then((axios) => {
             //         axios.get('http://127.0.0.1:5000/api/message/get_message_list', {
