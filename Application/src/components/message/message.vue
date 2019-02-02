@@ -216,7 +216,6 @@
                         }).then((data) => {
                             if (data.data.code === 1) {
                                 data = data.data.data;
-                                console.info('code1');
                                 let date = new Date();
                                 let items = [];
                                 items.push({header: date.Format('MM-dd')});

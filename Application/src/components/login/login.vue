@@ -66,10 +66,13 @@
                     }
                 }).then((response) => {
                     // 把token写入cookies
-                    import('js-cookie').then((Cookies) => {
-                        Cookies.set('token', response.data.data.token);
-                    });
-                    this.$router.push({name: 'myself'});
+                    if (response.data.code === 1) {
+                        import('js-cookie').then((Cookies) => {
+                            Cookies.set('token', response.data.data.token);
+                            Cookies.set('user_group', response.data.data.data.group.value)
+                        });
+                        this.$router.push({name: 'myself'});
+                    }
                 })
             }
         }
@@ -77,11 +80,12 @@
 </script>
 
 <style scoped>
-    a{
+    a {
         text-decoration: none;
         outline: none;
         color: black;
     }
+
     .title {
         height: 3em;
         width: 100%;
