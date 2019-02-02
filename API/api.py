@@ -5,7 +5,7 @@ import string
 import time
 
 from CF.cf import item_cf
-from vague_search.vague_search import  select_by_similarity, compute_tf
+from vague_search.vague_search import select_by_similarity, compute_tf
 from API.OCR import ocr
 from flask import Flask, jsonify, request
 from flask_cors import CORS
@@ -22,7 +22,8 @@ CORS(app, supports_credentials=True)
     常量区
 """
 USER_GROUP = ['系统管理员', '从业者', '专家', '企业', '封禁', '待审核专家', '待审核企业']
-LEVEL_EXP = [0,100, 1000, 10000, 100000, 1000000]
+LEVEL_EXP = [0, 100, 1000, 10000, 100000, 1000000]
+ARTICLE_ALLOWED_GROUP = [0, 2, 3]
 
 
 @app.route("/")
@@ -930,6 +931,7 @@ def follow_question():
 
     user_id = user['userID']
     success = db.insert({'userID': user_id, 'target': question_id}, 'followtopic')
+    set_user_action(user_id, question_id, 12)
     if success:
         return jsonify({'code': 1, 'msg': "follow success"})
     else:
@@ -1140,6 +1142,25 @@ def delete_question():
     return jsonify({'code': 0, 'msg': 'unexpected user'})
 
 
+@app.route('/api/questions/get_my_questions')
+def get_my_questions():
+    """
+    获取自己的问题
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        questions = db.get({'userID': user['userID']}, 'questions', 0)
+        for value in questions:
+            value.update({'tags': get_tags(value['tags']),
+                          'follow': db.count({'targetID': value['questionID'], 'targettype': 12}, 'useraction'),
+                          'comments': db.count({'questionID': value['questionID']}, 'questioncomments')})
+        return jsonify({'code': 1, 'msg': 'success', 'data': questions})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
 """
     答案接口
 """
@@ -1176,14 +1197,16 @@ def get_tags(tags):
     :param tags:字符串
     :return: 标签列表
     """
-    tag_list = tags.split(',')
-    db = Database()
-    data = []
-    for value in tag_list:
-        tag = db.get({'id': value}, 'tags')
-        if tag:
-            data.append({'text': tag['name'], 'id': value})
-    return data
+    if tags:
+        tag_list = tags.split(',')
+        db = Database()
+        data = []
+        for value in tag_list:
+            tag = db.get({'id': value}, 'tags')
+            if tag:
+                data.append({'text': tag['name'], 'id': value})
+        return data
+    return ''
 
 
 @app.route('/api/answer/get_answer')
@@ -1268,6 +1291,7 @@ def collect_answer():
 
     user_id = user['userID']
     success = db.insert({'userID': user_id, 'answerID': answer_id}, 'collectanswer')
+    set_user_action(user_id, answer_id, 37)
     if success:
         return jsonify({'code': 1, 'msg': "collect success"})
     else:
@@ -1445,6 +1469,31 @@ def delete_answer():
     return jsonify({'code': 0, 'msg': 'unexpected user'})
 
 
+@app.route('/api/answer/get_user_answers')
+def get_user_answers():
+    """
+    获取我的回答
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        questions = db.get({'userID': user['userID']}, 'answers', 0)
+        for value in questions:
+            value.update({
+                'follow': db.count({'targetID': value['answerID'], 'targettype': 37}, 'useraction'),
+                'comments': db.count({'answerID': value['answerID']}, 'answercomments')
+            })
+            question = db.get({'questionID': value['questionID']}, 'questions')
+            if question:
+                value.update({'title': question['title']})
+            else:
+                value.update({'title': '未知问题'})
+        return jsonify({'code': 1, 'msg': 'success', 'data': questions})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
 """
     文章接口
 """
@@ -1566,6 +1615,41 @@ def delete_article():
     return jsonify({'code': 0, 'msg': 'unexpected user'})
 
 
+@app.route('/api/article/get_article_allowed_group')
+def get_article_allowed_group():
+    """
+    确认用户是否有文章编辑权限
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        if user['usergroup'] in ARTICLE_ALLOWED_GROUP:
+            return jsonify({'code': 1, 'msg': 'success'})
+        return jsonify({'code': -1, 'msg': 'not allowed'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/article/get_user_articles')
+def get_user_articles():
+    """
+    获取我的文章
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        articles = db.get({'userID': user['userID']}, 'article', 0)
+        for value in articles:
+            value.update({
+                'follow': db.count({'articleID': value['articleID']}, 'collectarticle')
+            })
+        return jsonify({'code': 1, 'msg': 'success', 'data': articles})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
 """
     首页接口
 """
@@ -1593,15 +1677,17 @@ def get_recommend():
         data = [{'title': '震惊！这样可以测出你的血脂', 'type': 2}]
         # 获取该用户最近的20条关于问题的行为
         the_question_action = db.sql("select * from useraction where userID = '%s' "
-                                     "and targettype >=11 and targettype<=14 order by actiontime DESC limit 20" % user['userID'])
+                                     "and targettype >=11 and targettype<=14 order by actiontime DESC limit 20" % user[
+                                         'userID'])
         # 将最近一次行为的问题作为参考,进行item_cf推荐
         target_question_id = the_question_action[0]['targetID']
         # 判断评分矩阵是否存在
         if not os.path.exists(rate_dir):
             return jsonify({'code': -1, 'msg': 'the rate rectangle is not exist,please'
-                                          ' build it by function build_questoin_rate_rect'})
+                                               ' build it by function build_questoin_rate_rect'})
         # 获得相似度降序排列的问题序列
-        recommend_question_ids = item_cf_api(rate_dir, "../CF/similar_rect/question_similar_rect.txt", target_question_id, 3)
+        recommend_question_ids = item_cf_api(rate_dir, "../CF/similar_rect/question_similar_rect.txt",
+                                             target_question_id, 3)
         # 录入结果
         for id in recommend_question_ids:
             # 查询该id的问题信息
@@ -1715,8 +1801,10 @@ def add_message():
     db = Database()
     user = db.get({'token': token}, 'users')
     if user:
-        flag = db.insert({'receiver': receiver, 'content': content, 'type': message_type, 'poster': user['userID']},
-                         'messages')
+        flag = db.insert(
+            {'receiver': receiver, 'content': content,
+             'type': message_type, 'poster': user['userID']},
+            'messages')
         if flag:
             return jsonify({'code': 1, 'msg': 'success'})
         return jsonify({'code': -1, 'msg': 'unable to insert'})
@@ -2106,7 +2194,7 @@ def build_article_rate_rect():
     """
     # 为文章建立评分矩阵，评分矩阵的某一行是
     # 所有用户对某一篇文章的行为进行权值计算后得到的一个向量,所有文章对应一个向量组合成矩阵
-    #file_name = request.values.get("file_name")
+    # file_name = request.values.get("file_name")
     file_name = "article_rate_rect.txt"
     # 重置文件内容
     with open("../CF/rate_rect/" + file_name, "w") as f:
@@ -2154,7 +2242,7 @@ def build_question_rate_rect():
     """
     # 为问题建立评分矩阵，评分矩阵的某一行是
     # 所有用户对某一个问题的行为进行权值计算后得到的一个向量,所有问题对应一个向量组合成矩阵
-    #file_name = request.values.get("file_name")
+    # file_name = request.values.get("file_name")
     file_name = "question_rate_rect.txt"
     # 重置文件内容
     with open("../CF/rate_rect/" + file_name, "w") as f:
@@ -2206,11 +2294,11 @@ def before_vague_search_api():
     input_word = request.values.get('word')
     db = Database()
     # 获取模糊匹配的热搜项
-    word_bank = db.vague({"content":input_word}, "search_word")
+    word_bank = db.vague({"content": input_word}, "search_word")
     #  根据热搜项和输入内容的相似度进行排序，若相似度都小于等于0，则按照搜索热度排序
     rank = select_by_similarity(input_word, word_bank)
 
-    return jsonify({"code": 1, "msg": "success", "data":rank})
+    return jsonify({"code": 1, "msg": "success", "data": rank})
 
 
 @app.route('/api/algorithm/search')
@@ -2227,19 +2315,19 @@ def vague_search_api():
     word = db.get({'content': input_word}, 'search_word')
     # 若存在，则搜索次数增加一次
     if word:
-        db.update({'content': input_word}, {'time': word['time']+1}, 'search_word')
+        db.update({'content': input_word}, {'time': word['time'] + 1}, 'search_word')
     #  否则根据相似度进行处理
     else:
         # 获取所有热搜项
-        word_bank = db.vague({"content":input_word}, "search_word")
+        word_bank = db.vague({"content": input_word}, "search_word")
         # 将输入内容和热搜项进行相似度计算，相似度低于0.5的不计入处理
         result = select_by_similarity(input_word, word_bank, 0.5)
         # 若存在相似度高于0.5的项，则认为输入项和该热搜项是完全相同的含义，可以视为热搜项的搜索次数+1
         if result:
-            db.update({'content': result[0]['content']}, {'time': result[0]['time']+1}, 'search_word')
+            db.update({'content': result[0]['content']}, {'time': result[0]['time'] + 1}, 'search_word')
         # 否则认为该输入项为一个新的搜索项，加入搜索表中
         else:
-            db.insert({'content':input_word})
+            db.insert({'content': input_word})
 
     # 以下为根据搜索项模糊搜索对应文章或问题
     data = []
@@ -2287,7 +2375,7 @@ def tf_idf(word, content, type='question'):
     # 计算idf值
     idf = total_item_number / contain_word_number
 
-    return tf*idf
+    return tf * idf
 
 
 """
@@ -2883,7 +2971,7 @@ def get_article_by_tag():
         for tg in tags:
             # 若符合，则加入返回容器中
             if tg == tag_id:
-                it.update({'tags':tags})
+                it.update({'tags': tags})
                 data.append(it)
                 break
     if data:
@@ -2924,7 +3012,7 @@ def get_recommend_article():
     # 判断评分矩阵是否存在
     if not os.path.exists(rate_dir):
         return jsonify({'code': -1, 'msg': 'the rate rectangle is not exist,please'
-                                              ' build it by function build_article_rate_rect'})
+                                           ' build it by function build_article_rate_rect'})
     # 查找该用户最近浏览的最多3篇文章
     action = db.sql("select targetID from useraction where userID='%s' and targettype >=21 and targettype<=25 limit"
                     "3 order by actiontime DESC group by targetID ")

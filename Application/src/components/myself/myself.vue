@@ -1,56 +1,60 @@
 <template>
-    <div class="myself">
-        <div class="head" @click="$router.push('/login')">
-            <div class="head-main">
-                <div class="head-items">
-                    <div class="pic">
-                        <img :src="head_portrait" alt="">
-                    </div>
-                    <div style="display: flex;justify-content: space-between;flex-direction: column;">
-                        <div style="margin-left: 0.8em">
-                            <span style="font-size: 1.5em;font-weight: 600">{{nickname}}</span>
-                            <span style="border: 2px solid black;border-radius: 5px;padding: 0.3em;margin-left: 0.5em">{{ group }}</span>
+    <div>
+        <div class="myself">
+            <div class="head" @click="go_to_login">
+                <div class="head-main">
+                    <div class="head-items">
+                        <div class="pic">
+                            <img :src="head_portrait" alt="">
                         </div>
-                        <div style="margin-left: 0.8em;display: flex;align-items: center">
-                            <span style="font-size: 1.3em;font-weight: 600;position: absolute;width: 2.5em">lv.1</span>
-                            <v-progress-linear style="margin-left: 3em" v-model="valueDeterminate" color="#F93E2C"
-                                               height="10"></v-progress-linear>
+                        <div style="display: flex;justify-content: space-between;flex-direction: column;">
+                            <div style="margin-left: 0.8em">
+                                <span style="font-size: 1.5em;font-weight: 600">{{nickname}}</span>
+                                <span style="border: 2px solid black;border-radius: 5px;padding: 0.3em;margin-left: 0.5em">{{ group }}</span>
+                            </div>
+                            <div style="margin-left: 0.8em;display: flex;align-items: center">
+                                <span style="font-size: 1.3em;font-weight: 600;position: absolute;width: 2.5em">lv.1</span>
+                                <v-progress-linear style="margin-left: 3em" v-model="valueDeterminate" color="#F93E2C"
+                                                   height="10"></v-progress-linear>
+                            </div>
                         </div>
                     </div>
+                    <div style="font-size: 2.5em"> ></div>
                 </div>
-                <div style="font-size: 2.5em"> ></div>
+            </div>
+            <div class="box">
+                <div class="box-main">
+                    <div class="box-main-items" style="border-right: 2px black solid;">关注 <span
+                            class="box-number">22</span>
+                    </div>
+                    <div class="box-main-items">粉丝 <span class="box-number">3</span></div>
+                </div>
+            </div>
+            <div class="main">
+                <v-list three-line>
+                    <v-list-tile
+                            v-for="item in items"
+                            :key="item.title"
+                            avatar
+                            @click="$router.push(item.name)"
+                    >
+                        <v-list-tile-avatar>
+                            <!--图片和icon都应该改一下，先做完懒得去找icon-->
+                            <img :src="item.avatar">
+                        </v-list-tile-avatar>
+
+                        <v-list-tile-content>
+                            <v-list-tile-title v-html="item.title"></v-list-tile-title>
+                        </v-list-tile-content>
+
+                        <v-list-tile-action>
+                            <v-icon :color="item.active ? 'teal' : 'grey'">chat_bubble</v-icon>
+                        </v-list-tile-action>
+                    </v-list-tile>
+                </v-list>
             </div>
         </div>
-        <div class="box">
-            <div class="box-main">
-                <div class="box-main-items" style="border-right: 2px black solid;">关注 <span class="box-number">22</span>
-                </div>
-                <div class="box-main-items">粉丝 <span class="box-number">3</span></div>
-            </div>
-        </div>
-        <div class="main">
-            <v-list three-line>
-                <v-list-tile
-                        v-for="item in items"
-                        :key="item.title"
-                        avatar
-                        @click="$router.push({name: 'settings'})"
-                >
-                    <v-list-tile-avatar>
-                        <!--图片和icon都应该改一下，先做完懒得去找icon-->
-                        <img :src="item.avatar">
-                    </v-list-tile-avatar>
-
-                    <v-list-tile-content>
-                        <v-list-tile-title v-html="item.title"></v-list-tile-title>
-                    </v-list-tile-content>
-
-                    <v-list-tile-action>
-                        <v-icon :color="item.active ? 'teal' : 'grey'">chat_bubble</v-icon>
-                    </v-list-tile-action>
-                </v-list-tile>
-            </v-list>
-        </div>
+        <router-view></router-view>
     </div>
 </template>
 
@@ -66,10 +70,30 @@
                 valueDeterminate: 50,  // 经验等级进度条
                 group: '未知',
                 items: [
-                    {active: true, title: '我发布的', avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg'},
-                    {active: true, title: '我的收藏', avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg'},
-                    {title: '我的钱包', avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg'},
-                    {title: '设置', avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg'}
+                    {
+                        active: true,
+                        title: '我发布的',
+                        avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
+                        name: 'oldpost'
+                    },
+                    {
+                        active: true,
+                        title: '我的收藏',
+                        avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
+                        name: 'collection'
+                    },
+                    {
+                        active: true,
+                        title: '我的钱包',
+                        avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
+                        name: 'wallet'
+                    },
+                    {
+                        active: true,
+                        title: '设置',
+                        avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg',
+                        name: 'settings'
+                    }
                 ],
             }
         },
@@ -94,6 +118,15 @@
                         this.group = group[user_info['user_group']];
                     });
                 });
+            },
+            go_to_login(){
+                import('js-cookie').then((Cookies) => {
+                    if(Cookies.get('token')){
+
+                    }else {
+                        this.$router.push('/login')
+                    }
+                })
             }
         },
         mounted() {

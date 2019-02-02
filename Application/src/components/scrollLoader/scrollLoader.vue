@@ -88,7 +88,7 @@
 <style scoped>
     .container-main {margin: 0 auto; overflow: auto; overflow-x: hidden; padding: 0;}
     .loading{ width: 100%; height: 40px; position: relative; overflow: hidden; text-align: center; margin: 5px 0 ; color: #999; font-size: 13px;}
-    .loading-icon{color: #707070;};
+    .loading-icon{color: #707070;}
     .loader {
         font-size: 10px;
         margin: 8px auto;

@@ -1933,7 +1933,7 @@ Format:
    - 接口 `/api/board/back_get_demands()`
 
    - 参数 `X-Token`-X-Token
-  
+    
    - 返回值
 
      ```python
@@ -1993,6 +1993,7 @@ Format:
 | 34 | 管理员清除问题 | |
 | 35 | 管理员清除回答 | |
 | 36 | 管理员清除群聊 | |
+| 37 | 关注问题 | |
 
 #### 问题回答等状态类型约定 StateFormat
 | 代码 | 释义 | 备注 |

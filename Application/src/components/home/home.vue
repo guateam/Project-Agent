@@ -3,7 +3,9 @@
 
         <v-toolbar color="white" tabs>
             <!--搜索栏-->
-            <v-autocomplete full-width append-icon="mic" :loading="loading" :items="items" :search-input.sync="search" v-model="select" cache-items class="mx-3" flat hide-no-data hide-details label="搜索你想要的信息" prepend-inner-icon="search" solo-inverted ></v-autocomplete>
+            <v-autocomplete full-width append-icon="mic" :loading="loading" :items="items" :search-input.sync="search"
+                            v-model="select" cache-items class="mx-3" flat hide-no-data hide-details label="搜索你想要的信息"
+                            prepend-inner-icon="search" solo-inverted></v-autocomplete>
             <!--<v-text-field append-icon="mic" class="mx-3" flat label="Search" prepend-inner-icon="search" solo-inverted></v-text-field>-->
             <!--<v-spacer></v-spacer>-->
             <!--<v-icon>widgets</v-icon>-->
@@ -16,28 +18,33 @@
         </v-toolbar>
 
         <v-tabs-items v-model="tabs">
-        <v-tab-item :key="1">
-            <question-card @click.native="view_detail(question.questionID)" v-for="question in question_list" :key="question.questionID" v-bind="question"></question-card>
-        </v-tab-item>
+            <v-tab-item :key="1">
+                <question-card @click.native="view_detail(question.questionID)" v-for="question in question_list"
+                               :key="question.questionID" v-bind="question"></question-card>
+            </v-tab-item>
 
-        <v-tab-item :key="2">
-            <question-card @click.native="view_detail(question.questionID)" v-for="question in question_list" :key="question.questionID" v-bind="question"></question-card>
-        </v-tab-item>
+            <v-tab-item :key="2">
+                <question-card @click.native="view_detail(question.questionID)" v-for="question in question_list"
+                               :key="question.questionID" v-bind="question"></question-card>
+            </v-tab-item>
 
-        <v-tab-item :key="3">
-            <question-card @click.native="view_detail(question.questionID)" v-for="question in question_list" :key="question.questionID" v-bind="question"></question-card>
-        </v-tab-item>
+            <v-tab-item :key="3">
+                <question-card @click.native="view_detail(question.questionID)" v-for="question in question_list"
+                               :key="question.questionID" v-bind="question"></question-card>
+            </v-tab-item>
 
-        <v-tab-item :key="4">
-            <question-card @click.native="view_detail(question.questionID)" v-for="question in question_list" :key="question.questionID" v-bind="question"></question-card>
-        </v-tab-item>
+            <v-tab-item :key="4">
+                <question-card @click.native="view_detail(question.questionID)" v-for="question in question_list"
+                               :key="question.questionID" v-bind="question"></question-card>
+            </v-tab-item>
 
-        <v-tab-item :key="5">
-            <question-card @click.native="view_detail(question.questionID)" v-for="question in question_list" :key="question.questionID" v-bind="question"></question-card>
-        </v-tab-item>
+            <v-tab-item :key="5">
+                <question-card @click.native="view_detail(question.questionID)" v-for="question in question_list"
+                               :key="question.questionID" v-bind="question"></question-card>
+            </v-tab-item>
 
-    </v-tabs-items>
-
+        </v-tabs-items>
+        <router-view></router-view>
     </div>
 </template>
 
@@ -115,7 +122,7 @@
             ],
         }),
         watch: {
-            search (val) {
+            search(val) {
                 val && val !== this.select && this.querySelections(val);
             }
         },
@@ -126,7 +133,7 @@
                     import('axios').then((axios) => {
                         axios.get('http://127.0.0.1:5000/api/homepage/get_recommend', {
                             responseType: 'json',
-                            params: { token: Cookies.get('token') }
+                            params: {token: Cookies.get('token')}
                         }).then((response) => {
                             let data_list = response.data.data;
                             this.question_list = [];
@@ -150,7 +157,7 @@
                     })
                 })
             },
-            querySelections (v) {
+            querySelections(v) {
                 this.loading = true;
                 // Simulated ajax query
                 setTimeout(() => {
@@ -188,13 +195,16 @@
         top: 0;
         border: 1px solid #eee;
     }
-    .search{
+
+    .search {
         margin: 0 auto;
     }
+
     .cardtitle {
         font-size: 20px;
     }
-    .v-toolbar__content{
+
+    .v-toolbar__content {
         height: 5em;
     }
 </style>
