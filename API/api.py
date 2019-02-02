@@ -3195,7 +3195,7 @@ def join_group():
 @app.route('/api/group/confirm_join')
 def confirm_join():
     """
-    确认加群申请
+    同意加群申请
     :return:
     """
     token = request.values.get('token')
@@ -3221,7 +3221,7 @@ def confirm_join():
 @app.route('/api/group/refuse_join')
 def refuse_join():
     """
-    确认加群申请
+    拒绝加群申请
     :return:
     """
     token = request.values.get('token')
@@ -3271,7 +3271,7 @@ def silent_user():
             flag = db.update({'userID': user_id, 'groupID': group_id}, {'silent': 1}, 'group_members')
             if flag:
                 return jsonify({'code': 1, 'msg': 'success'})
-            return jsonify({'code': -1, 'msg': 'unable to add'})
+            return jsonify({'code': -1, 'msg': 'unable to silent'})
         return jsonify({'code': 0, 'msg': 'unexpected user'})
     return jsonify({'code': 0, 'msg': 'unexpected user'})
 
@@ -3355,7 +3355,7 @@ def get_group_message():
 @app.route('/api/group/get_groups')
 def get_groups():
     """
-    获取所有群组
+    获取用户的所有群组
     :return:
     """
     token = request.values.get('token')
