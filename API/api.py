@@ -23,6 +23,7 @@ CORS(app, supports_credentials=True)
 """
 USER_GROUP = ['系统管理员', '从业者', '专家', '企业', '封禁', '待审核专家', '待审核企业']
 LEVEL_EXP = [0, 100, 1000, 10000, 100000, 1000000]
+ARTICLE_ALLOWED_GROUP = [0, 2, 3]
 
 
 @app.route("/")
@@ -930,6 +931,7 @@ def follow_question():
 
     user_id = user['userID']
     success = db.insert({'userID': user_id, 'target': question_id}, 'followtopic')
+    set_user_action(user_id, question_id, 12)
     if success:
         return jsonify({'code': 1, 'msg': "follow success"})
     else:
@@ -1140,6 +1142,25 @@ def delete_question():
     return jsonify({'code': 0, 'msg': 'unexpected user'})
 
 
+@app.route('/api/questions/get_my_questions')
+def get_my_questions():
+    """
+    获取自己的问题
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        questions = db.get({'userID': user['userID']}, 'questions', 0)
+        for value in questions:
+            value.update({'tags': get_tags(value['tags']),
+                          'follow': db.count({'targetID': value['questionID'], 'targettype': 12}, 'useraction'),
+                          'comments': db.count({'questionID': value['questionID']}, 'questioncomments')})
+        return jsonify({'code': 1, 'msg': 'success', 'data': questions})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
 """
     答案接口
 """
@@ -1176,14 +1197,16 @@ def get_tags(tags):
     :param tags:字符串
     :return: 标签列表
     """
-    tag_list = tags.split(',')
-    db = Database()
-    data = []
-    for value in tag_list:
-        tag = db.get({'id': value}, 'tags')
-        if tag:
-            data.append({'text': tag['name'], 'id': value})
-    return data
+    if tags:
+        tag_list = tags.split(',')
+        db = Database()
+        data = []
+        for value in tag_list:
+            tag = db.get({'id': value}, 'tags')
+            if tag:
+                data.append({'text': tag['name'], 'id': value})
+        return data
+    return ''
 
 
 @app.route('/api/answer/get_answer')
@@ -1268,6 +1291,7 @@ def collect_answer():
 
     user_id = user['userID']
     success = db.insert({'userID': user_id, 'answerID': answer_id}, 'collectanswer')
+    set_user_action(user_id, answer_id, 37)
     if success:
         return jsonify({'code': 1, 'msg': "collect success"})
     else:
@@ -1445,6 +1469,31 @@ def delete_answer():
     return jsonify({'code': 0, 'msg': 'unexpected user'})
 
 
+@app.route('/api/answer/get_user_answers')
+def get_user_answers():
+    """
+    获取我的回答
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        questions = db.get({'userID': user['userID']}, 'answers', 0)
+        for value in questions:
+            value.update({
+                'follow': db.count({'targetID': value['answerID'], 'targettype': 37}, 'useraction'),
+                'comments': db.count({'answerID': value['answerID']}, 'answercomments')
+            })
+            question = db.get({'questionID': value['questionID']}, 'questions')
+            if question:
+                value.update({'title': question['title']})
+            else:
+                value.update({'title': '未知问题'})
+        return jsonify({'code': 1, 'msg': 'success', 'data': questions})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
 """
     文章接口
 """
@@ -1563,6 +1612,41 @@ def delete_article():
             set_sys_message(user['userID'], 1, '您发布的文章 ' + article['title'] + ' 已被管理员清除！', article['userID'])
             return jsonify({'code': 1, 'msg': 'success'})
         return jsonify({'code': -1, 'msg': 'unable to delete'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/article/get_article_allowed_group')
+def get_article_allowed_group():
+    """
+    确认用户是否有文章编辑权限
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        if user['usergroup'] in ARTICLE_ALLOWED_GROUP:
+            return jsonify({'code': 1, 'msg': 'success'})
+        return jsonify({'code': -1, 'msg': 'not allowed'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/article/get_user_articles')
+def get_user_articles():
+    """
+    获取我的文章
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        articles = db.get({'userID': user['userID']}, 'article', 0)
+        for value in articles:
+            value.update({
+                'follow': db.count({'articleID': value['articleID']}, 'collectarticle')
+            })
+        return jsonify({'code': 1, 'msg': 'success', 'data': articles})
     return jsonify({'code': 0, 'msg': 'unexpected user'})
 
 
