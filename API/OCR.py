@@ -17,9 +17,9 @@ def ocr(source):
     width, height = img.size
     # 放大三倍
     # img = go_dark(img)
-    img.show()
+    # img.show()
     img = delete(img)
-    img.show()
+    # img.show()
 
     img = img.resize((width * 3, height * 3), Image.ANTIALIAS)
     # 灰度化
@@ -40,16 +40,6 @@ def ocr(source):
     # img = del_edge(img)
     # 截取边界 但是坏掉了
     # img.show()
-    img1=img.copy()
-    img1=img1.crop((0,0,width*2,height*2))
-    img1.show()
-    img2=img.copy()
-    img2=img2.crop((width,height*2,width*3,height*3))
-    res2=pytesseract.image_to_string(img2,lang='eng')
-    res = pytesseract.image_to_string(img1, lang='chi_sim')
-    print(res2)
-    print(res)
-    return
     edge = pytesseract.image_to_boxes(img, lang="chi_sim")
     edge = edge.split('\n')
     for i in range(len(edge)):
@@ -60,7 +50,7 @@ def ocr(source):
               height - int(edge[len(edge) - 1][2]) + 50)
     # 裁切身份证号码图片
     img = img.crop(region)
-    img.show()
+    # img.show()
     res = pytesseract.image_to_string(img, lang="chi_sim")
     print(res)
     data = res.split('\n')
