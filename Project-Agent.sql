@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2019-02-02 22:13:32
+Date: 2019-02-03 12:54:34
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -401,7 +401,7 @@ INSERT INTO `questions` VALUES ('2', '程序员是如何看待「祖传代码」
 INSERT INTO `questions` VALUES ('3', '为什么总是有人说 Java 啰嗦，却没人说 C++ 啰嗦？', '哈哈哈哈哈哈', '2018-12-15 18:47:38', '1', null, '0', '0', '0', null);
 INSERT INTO `questions` VALUES ('4', '有哪些让你目瞪口呆的 bug？', '', '2018-12-15 18:49:52', '1', null, '0', '0', '0', null);
 INSERT INTO `questions` VALUES ('5', '互联网行业的裁员潮是否已经开始了？', '【此为2018年的提问】\n\n看到媒体也开始说这件事了……普通员工如何扛过去呢？', '2018-12-15 18:51:16', '1', null, '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('6', '@测试提问', '【此为2018年的提问】\n@拉拉人 \n看到媒体也开始说这件事了……普通员工如何扛过去呢？', '2018-12-29 10:35:05', '1', null, '0', '0', '0', null);
+INSERT INTO `questions` VALUES ('6', '@测试提问', '【此为2018年的提问】\n@拉拉人 \n看到媒体也开始说这件事了……普通员工如何扛过去呢？', '2018-12-29 10:35:05', '1', null, '-1', '0', '0', null);
 
 -- ----------------------------
 -- Table structure for `search_word`
@@ -444,32 +444,44 @@ CREATE TABLE `sign_demand` (
 DROP TABLE IF EXISTS `sys_message`;
 CREATE TABLE `sys_message` (
   `noticeID` int(10) NOT NULL AUTO_INCREMENT,
-  `content` text NOT NULL,
+  `name` text NOT NULL,
   `userID` int(10) NOT NULL,
   `createtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `type` int(2) NOT NULL,
   `target` int(10) NOT NULL,
+  `content` text NOT NULL,
   PRIMARY KEY (`noticeID`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of sys_message
 -- ----------------------------
-INSERT INTO `sys_message` VALUES ('1', '系统通知啊，今天要例会', '1', '2019-01-25 14:29:09', '0', '0');
-INSERT INTO `sys_message` VALUES ('2', '您已被管理员邀请加入群聊 project-agent讨论群 ,请及时确认！', '1', '2019-01-25 13:52:22', '2', '2');
-INSERT INTO `sys_message` VALUES ('3', '明天要例会！请各位做好准备！', '1', '2019-01-25 14:33:22', '1', '2');
-INSERT INTO `sys_message` VALUES ('4', '明天要例会！请各位做好准备！', '1', '2019-01-25 14:33:31', '0', '0');
-INSERT INTO `sys_message` VALUES ('5', '你的实名认证申请未通过！', '1', '2019-02-02 21:49:36', '1', '4');
-INSERT INTO `sys_message` VALUES ('6', '你的实名认证申请未通过！', '1', '2019-02-02 21:50:38', '1', '5');
-INSERT INTO `sys_message` VALUES ('7', '你的实名认证申请未通过！', '1', '2019-02-02 21:50:49', '1', '7');
-INSERT INTO `sys_message` VALUES ('8', '你的实名认证申请未通过！', '1', '2019-02-02 21:54:56', '1', '6');
-INSERT INTO `sys_message` VALUES ('9', '你的实名认证申请未通过！', '1', '2019-02-02 21:55:06', '1', '6');
-INSERT INTO `sys_message` VALUES ('10', '你的实名认证申请未通过！', '1', '2019-02-02 21:55:29', '1', '6');
-INSERT INTO `sys_message` VALUES ('11', '你的实名认证申请未通过！', '1', '2019-02-02 21:57:01', '1', '4');
-INSERT INTO `sys_message` VALUES ('12', '你的实名认证申请未通过！', '1', '2019-02-02 21:57:49', '1', '4');
-INSERT INTO `sys_message` VALUES ('13', '你的实名认证申请未通过！', '1', '2019-02-02 21:59:58', '1', '5');
-INSERT INTO `sys_message` VALUES ('14', '你的实名认证申请未通过！', '1', '2019-02-02 22:11:18', '1', '6');
-INSERT INTO `sys_message` VALUES ('15', '你的实名认证申请未通过！', '1', '2019-02-02 22:11:23', '1', '7');
+INSERT INTO `sys_message` VALUES ('1', '系统通知啊，今天要例会', '1', '2019-01-25 14:29:09', '0', '0', '');
+INSERT INTO `sys_message` VALUES ('2', '您已被管理员邀请加入群聊 project-agent讨论群 ,请及时确认！', '1', '2019-01-25 13:52:22', '2', '2', '');
+INSERT INTO `sys_message` VALUES ('3', '明天要例会！请各位做好准备！', '1', '2019-01-25 14:33:22', '1', '2', '');
+INSERT INTO `sys_message` VALUES ('4', '明天要例会！请各位做好准备！', '1', '2019-01-25 14:33:31', '0', '0', '');
+INSERT INTO `sys_message` VALUES ('5', '你的实名认证申请未通过！', '1', '2019-02-02 21:49:36', '1', '4', '');
+INSERT INTO `sys_message` VALUES ('6', '你的实名认证申请未通过！', '1', '2019-02-02 21:50:38', '1', '5', '');
+INSERT INTO `sys_message` VALUES ('7', '你的实名认证申请未通过！', '1', '2019-02-02 21:50:49', '1', '7', '');
+INSERT INTO `sys_message` VALUES ('8', '你的实名认证申请未通过！', '1', '2019-02-02 21:54:56', '1', '6', '');
+INSERT INTO `sys_message` VALUES ('9', '你的实名认证申请未通过！', '1', '2019-02-02 21:55:06', '1', '6', '');
+INSERT INTO `sys_message` VALUES ('10', '你的实名认证申请未通过！', '1', '2019-02-02 21:55:29', '1', '6', '');
+INSERT INTO `sys_message` VALUES ('11', '你的实名认证申请未通过！', '1', '2019-02-02 21:57:01', '1', '4', '');
+INSERT INTO `sys_message` VALUES ('12', '你的实名认证申请未通过！', '1', '2019-02-02 21:57:49', '1', '4', '');
+INSERT INTO `sys_message` VALUES ('13', '你的实名认证申请未通过！', '1', '2019-02-02 21:59:58', '1', '5', '');
+INSERT INTO `sys_message` VALUES ('14', '你的实名认证申请未通过！', '1', '2019-02-02 22:11:18', '1', '6', '');
+INSERT INTO `sys_message` VALUES ('15', '你的实名认证申请未通过！', '1', '2019-02-02 22:11:23', '1', '7', '');
+INSERT INTO `sys_message` VALUES ('16', '你的实名认证申请未通过！', '1', '2019-02-02 22:17:41', '1', '4', '');
+INSERT INTO `sys_message` VALUES ('17', '你的实名认证申请未通过！', '1', '2019-02-02 22:18:06', '1', '8', '');
+INSERT INTO `sys_message` VALUES ('18', '你的实名认证申请未通过！', '1', '2019-02-03 10:58:11', '1', '4', '');
+INSERT INTO `sys_message` VALUES ('19', '你的实名认证申请未通过！', '1', '2019-02-03 11:00:01', '1', '5', '');
+INSERT INTO `sys_message` VALUES ('20', '你的实名认证申请未通过！', '1', '2019-02-03 11:04:06', '1', '6', '');
+INSERT INTO `sys_message` VALUES ('21', '你的实名认证申请已通过！', '1', '2019-02-03 11:08:36', '1', '4', '');
+INSERT INTO `sys_message` VALUES ('22', '你的实名认证申请已通过！', '1', '2019-02-03 11:10:20', '1', '5', '');
+INSERT INTO `sys_message` VALUES ('23', '你的实名认证申请已通过！', '1', '2019-02-03 11:11:25', '1', '6', '');
+INSERT INTO `sys_message` VALUES ('24', '您发布的问题 @测试提问 已被管理员清除！', '1', '2019-02-03 11:44:26', '1', '1', '');
+INSERT INTO `sys_message` VALUES ('25', 'FirstCry！！！', '1', '2019-02-03 12:45:01', '0', '0', '');
+INSERT INTO `sys_message` VALUES ('26', '测试！', '1', '2019-02-03 12:48:00', '0', '0', '啦啦啦');
 
 -- ----------------------------
 -- Table structure for `tags`
@@ -514,7 +526,7 @@ CREATE TABLE `useraction` (
   `targettype` int(11) NOT NULL COMMENT '行为类型',
   `actiontime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '行为发生时间',
   PRIMARY KEY (`actionID`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='用户行为表\n';
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='用户行为表\n';
 
 -- ----------------------------
 -- Records of useraction
@@ -549,6 +561,15 @@ INSERT INTO `useraction` VALUES ('27', '1', '4', '27', '2019-02-02 21:57:49');
 INSERT INTO `useraction` VALUES ('28', '1', '5', '27', '2019-02-02 21:59:58');
 INSERT INTO `useraction` VALUES ('29', '1', '6', '27', '2019-02-02 22:11:18');
 INSERT INTO `useraction` VALUES ('30', '1', '7', '27', '2019-02-02 22:11:23');
+INSERT INTO `useraction` VALUES ('31', '1', '4', '27', '2019-02-02 22:17:41');
+INSERT INTO `useraction` VALUES ('32', '1', '8', '27', '2019-02-02 22:18:06');
+INSERT INTO `useraction` VALUES ('33', '1', '4', '27', '2019-02-03 10:58:11');
+INSERT INTO `useraction` VALUES ('34', '1', '5', '27', '2019-02-03 11:00:01');
+INSERT INTO `useraction` VALUES ('35', '1', '6', '27', '2019-02-03 11:04:06');
+INSERT INTO `useraction` VALUES ('36', '1', '4', '26', '2019-02-03 11:08:36');
+INSERT INTO `useraction` VALUES ('37', '1', '5', '26', '2019-02-03 11:10:16');
+INSERT INTO `useraction` VALUES ('38', '1', '6', '26', '2019-02-03 11:11:25');
+INSERT INTO `useraction` VALUES ('39', '1', '6', '34', '2019-02-03 11:44:26');
 
 -- ----------------------------
 -- Table structure for `users`
@@ -584,14 +605,14 @@ CREATE TABLE `users` (
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES ('1', 'zhangyu199946@126.com', '拉拉人', 'ec847003d2eadc9baf60853e8391e167a292c21f01892fcb8bad0f4af6cd74a7', 'https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1549078352&di=0e4e5ee31b005f20859bdb1a0f4ebf58&src=http://s2.sinaimg.cn/mw690/005LKisygy722sIQw2B41&690', '0', '998', 'ZRzl6KMt2bqvSkBJHUIC4XTx8', null, null, null, '弗兰秀秀牛逼', '0', '', '', '德玛西亚', '', '0', '', '2019-02-02 19:52:42', '2019-02-02 19:52:42', null, null);
+INSERT INTO `users` VALUES ('1', 'zhangyu199946@126.com', '拉拉人', 'ec847003d2eadc9baf60853e8391e167a292c21f01892fcb8bad0f4af6cd74a7', 'https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1549078352&di=0e4e5ee31b005f20859bdb1a0f4ebf58&src=http://s2.sinaimg.cn/mw690/005LKisygy722sIQw2B41&690', '0', '998', 'cqG1S5nbMDLdjIJ0Wsy2vkHhg', null, null, null, '弗兰秀秀牛逼', '0', '', '', '德玛西亚', '', '0', '', '2019-02-03 12:01:14', '2019-02-03 12:01:14', null, null);
 INSERT INTO `users` VALUES ('2', 'yyz@126.com', '袁宜照', '317f16f4833885da6766e81b35c7258fe4451798600a1ad980babb9e9f412fc2', 'https://cdn.vuetifyjs.com/images/lists/1.jpg', '0', '0', 'TNp6hR7ElkJK4Z5Xfte0VyqG3', null, null, null, '', '0', '', '', '啦啦啦', '', '0', '', '2019-02-02 19:52:52', '2019-02-02 19:52:52', null, null);
 INSERT INTO `users` VALUES ('3', 'zyxiaohao@126.com', '张煜', 'cb8f260c5b29ec2a17d662133ebcf99cd4594e29b0ffeb54599ffe5f3801c3ed', 'https://cdn.vuetifyjs.com/images/lists/3.jpg', '1', '0', 'moLsBPX7rCzIa6QJARxibW4u3', null, null, null, '', '2', '', '', '光头', '', '0', '', '2019-02-02 19:53:15', '2019-02-02 19:53:15', null, null);
-INSERT INTO `users` VALUES ('4', 'user1@user1.com', '用户1', '599e60bc4121595f91c6a775e0154e75244f755e51bebbfa8cf66a9f25746f24', null, '1', '0', '2223', '0000-00-00 00:00:00', null, '', '', '3', '', '', '', '', '0', '', '2019-02-02 21:57:49', '2019-02-02 21:57:49', '/static/identity_card/4_front.jpg', '/static/identity_card/4_back.jpg');
-INSERT INTO `users` VALUES ('5', 'user2@user1.com', '用户2', '1deb094bf4c7f0553293603f3a0efb369b087ec9983c1b459517011c90e52305', null, '1', '0', '1', '0000-00-00 00:00:00', null, '', '', '3', '', '', '', '', '0', '', '2019-02-02 21:59:58', '2019-02-02 21:59:58', '/static/identity_card/5_front.jpg', '/static/identity_card/5_back.jpg');
-INSERT INTO `users` VALUES ('6', 'user3@user1.com', '用户3', 'b98ebb15f80a708f355c1112d670c2392b26c2a6be69b0c5197eceaea09b0b2d', null, '1', '0', '', '0000-00-00 00:00:00', null, '', '', '3', '', '', '', '', '0', '', '2019-02-02 22:11:18', '2019-02-02 22:11:18', null, null);
-INSERT INTO `users` VALUES ('7', 'user4@user1.com', '用户4', 'a6c5766422cff52dd8dd3998d36dea4ebd881c9778383a0cdd4ee3c3aeda9dba', null, '1', '0', '', '0000-00-00 00:00:00', null, '', '', '3', '', '', '', '', '0', '', '2019-02-02 22:11:23', '2019-02-02 22:11:23', null, null);
-INSERT INTO `users` VALUES ('8', 'user5@user1.com', '用户5', 'ba64da7a2dcf7fb416e94fbe6baa90a1c30b8d920750eba2f86b6545fe63df69', null, '1', '0', '', null, null, null, '', '1', '', '', '', '', '0', '', '2019-02-02 21:57:35', '2019-02-02 21:57:35', null, null);
+INSERT INTO `users` VALUES ('4', 'user1@user1.com', '用户1', '599e60bc4121595f91c6a775e0154e75244f755e51bebbfa8cf66a9f25746f24', null, '1', '0', '2223', '0000-00-00 00:00:00', null, '德莉莎', '', '2', '二', '没有', '傻缺', '和', '0', '', '2019-02-03 11:08:36', '2019-02-03 11:08:36', '/static/identity_card/4_front.jpg', '/static/identity_card/4_back.jpg');
+INSERT INTO `users` VALUES ('5', 'user2@user1.com', '用户2', '1deb094bf4c7f0553293603f3a0efb369b087ec9983c1b459517011c90e52305', null, '1', '0', '1', '0000-00-00 00:00:00', null, '', '', '2', '', '', '', '', '0', '', '2019-02-03 11:10:15', '2019-02-03 11:10:15', '/static/identity_card/5_front.jpg', '/static/identity_card/5_back.jpg');
+INSERT INTO `users` VALUES ('6', 'user3@user1.com', '用户3', 'b98ebb15f80a708f355c1112d670c2392b26c2a6be69b0c5197eceaea09b0b2d', null, '1', '0', '', '0000-00-00 00:00:00', null, '日内二', '', '2', '女', '002022020', '呼啦啦啦', '和', '0', '', '2019-02-03 11:11:25', '2019-02-03 11:11:25', null, null);
+INSERT INTO `users` VALUES ('7', 'user4@user1.com', '用户4', 'a6c5766422cff52dd8dd3998d36dea4ebd881c9778383a0cdd4ee3c3aeda9dba', null, '1', '0', '', '0000-00-00 00:00:00', null, '', '', '1', '', '', '', '', '0', '', '2019-02-03 10:57:52', '2019-02-03 10:57:52', null, null);
+INSERT INTO `users` VALUES ('8', 'user5@user1.com', '用户5', 'ba64da7a2dcf7fb416e94fbe6baa90a1c30b8d920750eba2f86b6545fe63df69', null, '1', '0', '', '0000-00-00 00:00:00', null, '', '', '1', '', '', '', '', '0', '', '2019-02-03 10:57:53', '2019-02-03 10:57:53', null, null);
 INSERT INTO `users` VALUES ('9', 'user6@user1.com', '用户6', '5aa5290b481b19e12888d7ac0e5a30dbd8146b87f5162c1455b2a7d8e6710d03', null, '1', '0', '', null, null, null, '', '0', '', '', '', '', '0', '', '2019-02-02 18:39:27', '2019-02-02 18:39:27', null, null);
 INSERT INTO `users` VALUES ('10', 'user7@user1.com', '用户7', 'aa44de99891cb179b3f46785aff02751d28d333f85b04b278858c6834819487d', null, '1', '0', '', null, null, null, '', '0', '', '', '', '', '0', '', '2019-02-02 18:39:28', '2019-02-02 18:39:28', null, null);
 INSERT INTO `users` VALUES ('11', 'user8@user1.com', '用户8', '0b5288355eebc89ca2bfc46c90339dda6a0f3ce4128b4c9e15090c25a9c2f5fe', null, '1', '0', '', null, null, null, '', '0', '', '', '', '', '0', '', '2019-02-02 18:39:29', '2019-02-02 18:39:29', null, null);
