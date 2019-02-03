@@ -1944,7 +1944,7 @@ Format:
    - 接口 `/api/board/back_get_demands()`
 
    - 参数 `X-Token`-X-Token
-    
+   
    - 返回值
 
      ```python
@@ -2293,7 +2293,7 @@ Format:
          msg: msg,      # 信息
      }
      ```
-    
+
 ## 数据库 DataBase
 
 ### 类型约定 Format
@@ -2338,8 +2338,7 @@ Format:
 | 代码 | 释义 | 备注 |
 | ---- | ---- | ---- |
 | 0   | 正常  |      |
-| 1   | 举报审核中  |      |
-| 2   | 违规  |      |
+| 1 | 待审核 | |
 
 #### 付费咨询预约类型约定 OrderStateFormat
 
