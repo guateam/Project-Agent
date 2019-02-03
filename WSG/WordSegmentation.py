@@ -161,7 +161,7 @@ class TCNNConfig(object):
 
     embedding_dim = 64  # 词向量维度
     seq_length = 600  # 序列长度
-    num_classes = 10  # 类别数
+    num_classes = 14  # 类别数
     num_filters = 256  # 卷积核数目
     kernel_size = 5  # 卷积核尺寸
     vocab_size = 5000  # 词汇表达小
@@ -215,7 +215,8 @@ class TextCNN(object):
             fc = tf.nn.relu(fc)
             # 分类器
             self.logits = tf.layers.dense(fc, self.config.num_classes, name='fc2')
-            self.y_pred_cls = tf.argmax(tf.nn.softmax(self.logits), 1)  # 预测类别
+            # 预测类别
+            self.y_pred_cls = tf.argmax(tf.nn.softmax(self.logits), 1)
 
         with tf.name_scope("optimize"):
             # 损失函数，交叉熵
