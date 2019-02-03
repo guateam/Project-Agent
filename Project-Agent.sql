@@ -11,7 +11,7 @@
  Target Server Version : 50553
  File Encoding         : 65001
 
- Date: 29/01/2019 14:04:55
+ Date: 03/02/2019 17:22:10
 */
 
 SET NAMES utf8mb4;
@@ -28,16 +28,17 @@ CREATE TABLE `answercomments`  (
   `agree` int(11) NOT NULL COMMENT '赞同数',
   `createtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
   `answerID` int(11) NOT NULL COMMENT '对应答案ID',
+  `state` int(1) UNSIGNED ZEROFILL NOT NULL DEFAULT 0 COMMENT '状态  0-正常  1-举报审核中  2-违规',
   PRIMARY KEY (`acommentID`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '回答评论表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of answercomments
 -- ----------------------------
-INSERT INTO `answercomments` VALUES (1, 1, '这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论', 1, '2018-12-29 11:15:40', 1);
-INSERT INTO `answercomments` VALUES (2, 1, '这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论', 0, '2018-12-15 19:08:09', 1);
-INSERT INTO `answercomments` VALUES (3, 1, '这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论', 0, '2018-12-15 19:08:36', 1);
-INSERT INTO `answercomments` VALUES (4, 1, '@拉拉人 疯狂@拉拉人', 0, '2018-12-29 10:35:57', 1);
+INSERT INTO `answercomments` VALUES (1, 1, '这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论', 1, '2018-12-29 11:15:40', 1, 0);
+INSERT INTO `answercomments` VALUES (2, 1, '这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论', 0, '2018-12-15 19:08:09', 1, 0);
+INSERT INTO `answercomments` VALUES (3, 1, '这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论', 0, '2018-12-15 19:08:36', 1, 0);
+INSERT INTO `answercomments` VALUES (4, 1, '@拉拉人 疯狂@拉拉人', 0, '2018-12-29 10:35:57', 1, 0);
 
 -- ----------------------------
 -- Table structure for answers
@@ -53,7 +54,7 @@ CREATE TABLE `answers`  (
   `answertype` int(11) NOT NULL COMMENT '答案类型',
   `questionID` int(11) NOT NULL COMMENT '对应问题ID\n',
   `tags` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `state` int(2) NOT NULL DEFAULT 0,
+  `state` int(1) NOT NULL DEFAULT 0 COMMENT '0-正常  1-被举报 2-违规',
   PRIMARY KEY (`answerID`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '答案' ROW_FORMAT = Compact;
 
@@ -489,7 +490,7 @@ CREATE TABLE `users`  (
   `nickname` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '昵称',
   `password` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '密码',
   `headportrait` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '头像',
-  `usergroup` int(11) NOT NULL DEFAULT 0 COMMENT '用户组',
+  `usergroup` int(11) NOT NULL DEFAULT 1 COMMENT '用户组',
   `exp` bigint(20) NOT NULL DEFAULT 0 COMMENT '积分/等级',
   `token` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
   `birthday` datetime NULL DEFAULT NULL COMMENT '生日',
