@@ -1514,7 +1514,7 @@ def agree_complain_comment():
         return jsonify({'code': -1, 'msg': 'the comment is not exist'})
 
     # 更新评论状态
-    result = db.update({'acommentID': id}, {'state': 2}, 'answercomments')
+    result = db.update({'acommentID': id}, {'state': -1}, 'answercomments')
     if not result:
         return jsonify({'code': -2, 'msg': 'error when update the data'})
 
@@ -1568,7 +1568,7 @@ def agree_complain_answer():
         return jsonify({'code': -1, 'msg': 'the answer is not exist'})
 
     # 更新回答状态
-    result = db.update({'answerID': id}, {'state': 2}, 'answers')
+    result = db.update({'answerID': id}, {'state': -1}, 'answers')
     if not result:
         return jsonify({'code': -2, 'msg': 'error when update the data'})
 
@@ -1873,7 +1873,7 @@ def agree_complain_article():
         return jsonify({'code': -1, 'msg': 'the article is not exist'})
 
     # 更新评论状态
-    result = db.update({'articleID': id}, {'state': 2}, 'article')
+    result = db.update({'articleID': id}, {'state': -1}, 'article')
     if not result:
         return jsonify({'code': -2, 'msg': 'error when update the data'})
 
