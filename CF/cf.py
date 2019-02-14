@@ -115,9 +115,9 @@ def most_similar(simi_vec, item_ids, id, num=1):
     # 遍历该物品的每个相似度，i的值也是该位置的物品在item_ids里面对应位置
     for i in range(len(simi_vec[idx])):
         most_idx = i
-        for j in range(i+1,len(simi_vec[idx])):
+        for j in range(i + 1, len(simi_vec[idx])):
             if (abs(simi_vec[idx][most_idx] - 1) > abs(simi_vec[idx][j] - 1)):
-                    most_idx = j
+                most_idx = j
         if most_idx != i:
             temp = simi_vec[idx][i]
             simi_vec[idx][i] = simi_vec[idx][most_idx]
@@ -126,9 +126,10 @@ def most_similar(simi_vec, item_ids, id, num=1):
             temp = item_ids[i]
             item_ids[i] = item_ids[most_idx]
             item_ids[most_idx] = temp
-    if num > len(item_ids)-1:
-        num = len(item_ids)-1
-    return item_ids[1:num+1]
+    if num > len(item_ids) - 1:
+        num = len(item_ids) - 1
+    return item_ids[1:num + 1]
+
 
 def most_interest(similar_vec, rate_vec, k=1, m=1):
     """
@@ -215,6 +216,7 @@ def item_cf(rate_dir, dirs, target, num):
     idx = most_similar(simi_vec, item_ids, target, num)
     return idx
 
+
 # 以下为基于用户的使用样例
 
 # 用户id列表
@@ -246,4 +248,4 @@ def item_cf(rate_dir, dirs, target, num):
 #
 # print(read_similarity_vec())
 if __name__ == '__main__':
-    set_similarity_vec('question_rate_rect.txt')
+    set_similarity_vec('./rate_rect/question_rate_rect.txt')

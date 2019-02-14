@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="myself">
-            <div class="head" @click="$router.push('/login')">
+            <div class="head" @click="go_to_login">
                 <div class="head-main">
                     <div class="head-items">
                         <div class="pic">
@@ -118,6 +118,15 @@
                         this.group = group[user_info['user_group']];
                     });
                 });
+            },
+            go_to_login(){
+                import('js-cookie').then((Cookies) => {
+                    if(Cookies.get('token')){
+
+                    }else {
+                        this.$router.push('/login')
+                    }
+                })
             }
         },
         mounted() {

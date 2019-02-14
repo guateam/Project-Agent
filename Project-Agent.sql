@@ -11,7 +11,7 @@
  Target Server Version : 50553
  File Encoding         : 65001
 
- Date: 29/01/2019 14:04:55
+ Date: 03/02/2019 17:33:12
 */
 
 SET NAMES utf8mb4;
@@ -28,16 +28,17 @@ CREATE TABLE `answercomments`  (
   `agree` int(11) NOT NULL COMMENT '赞同数',
   `createtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
   `answerID` int(11) NOT NULL COMMENT '对应答案ID',
+  `state` int(1) UNSIGNED ZEROFILL NOT NULL DEFAULT 0 COMMENT '状态  0-正常  1-举报审核中  -1-违规',
   PRIMARY KEY (`acommentID`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '回答评论表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of answercomments
 -- ----------------------------
-INSERT INTO `answercomments` VALUES (1, 1, '这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论', 1, '2018-12-29 11:15:40', 1);
-INSERT INTO `answercomments` VALUES (2, 1, '这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论', 0, '2018-12-15 19:08:09', 1);
-INSERT INTO `answercomments` VALUES (3, 1, '这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论', 0, '2018-12-15 19:08:36', 1);
-INSERT INTO `answercomments` VALUES (4, 1, '@拉拉人 疯狂@拉拉人', 0, '2018-12-29 10:35:57', 1);
+INSERT INTO `answercomments` VALUES (1, 1, '这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论', 1, '2018-12-29 11:15:40', 1, 0);
+INSERT INTO `answercomments` VALUES (2, 1, '这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论', 0, '2018-12-15 19:08:09', 1, 0);
+INSERT INTO `answercomments` VALUES (3, 1, '这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论', 0, '2018-12-15 19:08:36', 1, 0);
+INSERT INTO `answercomments` VALUES (4, 1, '@拉拉人 疯狂@拉拉人', 0, '2018-12-29 10:35:57', 1, 0);
 
 -- ----------------------------
 -- Table structure for answers
@@ -53,7 +54,7 @@ CREATE TABLE `answers`  (
   `answertype` int(11) NOT NULL COMMENT '答案类型',
   `questionID` int(11) NOT NULL COMMENT '对应问题ID\n',
   `tags` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `state` int(2) NOT NULL DEFAULT 0,
+  `state` int(1) NOT NULL DEFAULT 0 COMMENT '0-正常  1-被举报 -1-违规',
   PRIMARY KEY (`answerID`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '答案' ROW_FORMAT = Compact;
 
@@ -173,12 +174,15 @@ CREATE TABLE `followuser`  (
   `userID` int(11) NOT NULL COMMENT '用户ID',
   `target` int(11) NOT NULL COMMENT '目标 用户ID',
   PRIMARY KEY (`idFollowUser`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户-用户 关注关系映射表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户-用户 关注关系映射表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of followuser
 -- ----------------------------
 INSERT INTO `followuser` VALUES (1, 1, 2);
+INSERT INTO `followuser` VALUES (2, 2, 1);
+INSERT INTO `followuser` VALUES (3, 1, 3);
+INSERT INTO `followuser` VALUES (4, 3, 1);
 
 -- ----------------------------
 -- Table structure for group_members
@@ -251,7 +255,7 @@ CREATE TABLE `messages`  (
   `type` int(2) NOT NULL,
   `post_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`messageID`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of messages
@@ -262,8 +266,16 @@ INSERT INTO `messages` VALUES (3, 'still crying', 1, 2, 0, '2018-12-15 20:26:31'
 INSERT INTO `messages` VALUES (4, 'de order', 1, 2, 0, '2018-12-15 20:29:27');
 INSERT INTO `messages` VALUES (5, 'emojixe6xb5x8bxe8xafx95xf0x9fx98x80', 1, 2, 0, '2018-12-20 18:56:19');
 INSERT INTO `messages` VALUES (6, 'b\'emojixe6xb5x8bxe8xafx95xf0x9fx98x80\'', 1, 2, 0, '2018-12-20 18:48:52');
-INSERT INTO `messages` VALUES (7, 'emoji\\u6d4b\\u8bd5\\U0001f600', 1, 2, 0, '2018-12-20 18:56:26');
+INSERT INTO `messages` VALUES (7, 'emoji\\u6d4b\\u8bd5\\u0001f600', 1, 2, 0, '2019-02-02 11:38:02');
 INSERT INTO `messages` VALUES (8, 'emoji测试????略略略', 3, 2, 0, '2019-01-07 18:44:56');
+INSERT INTO `messages` VALUES (9, 'emoji测试????略略略', 3, 3, 0, '2019-02-02 11:24:07');
+INSERT INTO `messages` VALUES (10, 'emoji测试????略略略', 1, 3, 0, '2019-02-02 11:25:52');
+INSERT INTO `messages` VALUES (11, 'b\'emojixe6xb5x8bxe8xafx95xf0x9fx98x80xe7x95xa5xe7x95xa5xe7x95xa5\'', 1, 2, 0, '2019-02-02 11:40:13');
+INSERT INTO `messages` VALUES (12, 'b\'emoji\\u6d4b\\u8bd5\\U0001f600\\u7565\\u7565\\u7565\'', 1, 2, 0, '2019-02-02 11:44:53');
+INSERT INTO `messages` VALUES (13, 'emoji \\u6d4\\u8d5\\U0001f600\\u7565\\u7565\\u7565', 1, 2, 0, '2019-02-02 11:56:33');
+INSERT INTO `messages` VALUES (14, '\\uf602', 1, 3, 0, '2019-02-02 12:00:17');
+INSERT INTO `messages` VALUES (15, '\\u6d4\\u8d5\\u4e00\\u4e0\\u7f16\\u7801\\u529f\\u80fd', 1, 3, 0, '2019-02-02 11:57:00');
+INSERT INTO `messages` VALUES (16, 'Unicode编码失败', 1, 3, 0, '2019-02-02 12:01:33');
 
 -- ----------------------------
 -- Table structure for orders
@@ -356,7 +368,7 @@ INSERT INTO `questions` VALUES (2, '程序员是如何看待「祖传代码」�
 INSERT INTO `questions` VALUES (3, '为什么总是有人说 Java 啰嗦，却没人说 C++ 啰嗦？', '哈哈哈哈哈哈', '2018-12-15 18:47:38', 1, NULL, 0, 0, 0, NULL);
 INSERT INTO `questions` VALUES (4, '有哪些让你目瞪口呆的 bug？', '', '2018-12-15 18:49:52', 1, NULL, 0, 0, 0, NULL);
 INSERT INTO `questions` VALUES (5, '互联网行业的裁员潮是否已经开始了？', '【此为2018年的提问】\n\n看到媒体也开始说这件事了……普通员工如何扛过去呢？', '2018-12-15 18:51:16', 1, NULL, 0, 0, 0, NULL);
-INSERT INTO `questions` VALUES (6, '@测试提问', '【此为2018年的提问】\n@拉拉人 \n看到媒体也开始说这件事了……普通员工如何扛过去呢？', '2018-12-29 10:35:05', 1, NULL, 0, 0, 0, NULL);
+INSERT INTO `questions` VALUES (6, '@测试提问', '【此为2018年的提问】\n@拉拉人 \n看到媒体也开始说这件事了……普通员工如何扛过去呢？', '2018-12-29 10:35:05', 1, NULL, -1, 0, 0, NULL);
 
 -- ----------------------------
 -- Table structure for search_word
@@ -395,21 +407,44 @@ CREATE TABLE `sign_demand`  (
 DROP TABLE IF EXISTS `sys_message`;
 CREATE TABLE `sys_message`  (
   `noticeID` int(10) NOT NULL AUTO_INCREMENT,
-  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `name` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `userID` int(10) NOT NULL,
   `createtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `type` int(2) NOT NULL,
   `target` int(10) NOT NULL,
+  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`noticeID`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 27 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of sys_message
 -- ----------------------------
-INSERT INTO `sys_message` VALUES (1, '系统通知啊，今天要例会', 1, '2019-01-25 14:29:09', 0, 0);
-INSERT INTO `sys_message` VALUES (2, '您已被管理员邀请加入群聊 project-agent讨论群 ,请及时确认！', 1, '2019-01-25 13:52:22', 2, 2);
-INSERT INTO `sys_message` VALUES (3, '明天要例会！请各位做好准备！', 1, '2019-01-25 14:33:22', 1, 2);
-INSERT INTO `sys_message` VALUES (4, '明天要例会！请各位做好准备！', 1, '2019-01-25 14:33:31', 0, 0);
+INSERT INTO `sys_message` VALUES (1, '系统通知啊，今天要例会', 1, '2019-01-25 14:29:09', 0, 0, '');
+INSERT INTO `sys_message` VALUES (2, '您已被管理员邀请加入群聊 project-agent讨论群 ,请及时确认！', 1, '2019-01-25 13:52:22', 2, 2, '');
+INSERT INTO `sys_message` VALUES (3, '明天要例会！请各位做好准备！', 1, '2019-01-25 14:33:22', 1, 2, '');
+INSERT INTO `sys_message` VALUES (4, '明天要例会！请各位做好准备！', 1, '2019-01-25 14:33:31', 0, 0, '');
+INSERT INTO `sys_message` VALUES (5, '你的实名认证申请未通过！', 1, '2019-02-02 21:49:36', 1, 4, '');
+INSERT INTO `sys_message` VALUES (6, '你的实名认证申请未通过！', 1, '2019-02-02 21:50:38', 1, 5, '');
+INSERT INTO `sys_message` VALUES (7, '你的实名认证申请未通过！', 1, '2019-02-02 21:50:49', 1, 7, '');
+INSERT INTO `sys_message` VALUES (8, '你的实名认证申请未通过！', 1, '2019-02-02 21:54:56', 1, 6, '');
+INSERT INTO `sys_message` VALUES (9, '你的实名认证申请未通过！', 1, '2019-02-02 21:55:06', 1, 6, '');
+INSERT INTO `sys_message` VALUES (10, '你的实名认证申请未通过！', 1, '2019-02-02 21:55:29', 1, 6, '');
+INSERT INTO `sys_message` VALUES (11, '你的实名认证申请未通过！', 1, '2019-02-02 21:57:01', 1, 4, '');
+INSERT INTO `sys_message` VALUES (12, '你的实名认证申请未通过！', 1, '2019-02-02 21:57:49', 1, 4, '');
+INSERT INTO `sys_message` VALUES (13, '你的实名认证申请未通过！', 1, '2019-02-02 21:59:58', 1, 5, '');
+INSERT INTO `sys_message` VALUES (14, '你的实名认证申请未通过！', 1, '2019-02-02 22:11:18', 1, 6, '');
+INSERT INTO `sys_message` VALUES (15, '你的实名认证申请未通过！', 1, '2019-02-02 22:11:23', 1, 7, '');
+INSERT INTO `sys_message` VALUES (16, '你的实名认证申请未通过！', 1, '2019-02-02 22:17:41', 1, 4, '');
+INSERT INTO `sys_message` VALUES (17, '你的实名认证申请未通过！', 1, '2019-02-02 22:18:06', 1, 8, '');
+INSERT INTO `sys_message` VALUES (18, '你的实名认证申请未通过！', 1, '2019-02-03 10:58:11', 1, 4, '');
+INSERT INTO `sys_message` VALUES (19, '你的实名认证申请未通过！', 1, '2019-02-03 11:00:01', 1, 5, '');
+INSERT INTO `sys_message` VALUES (20, '你的实名认证申请未通过！', 1, '2019-02-03 11:04:06', 1, 6, '');
+INSERT INTO `sys_message` VALUES (21, '你的实名认证申请已通过！', 1, '2019-02-03 11:08:36', 1, 4, '');
+INSERT INTO `sys_message` VALUES (22, '你的实名认证申请已通过！', 1, '2019-02-03 11:10:20', 1, 5, '');
+INSERT INTO `sys_message` VALUES (23, '你的实名认证申请已通过！', 1, '2019-02-03 11:11:25', 1, 6, '');
+INSERT INTO `sys_message` VALUES (24, '您发布的问题 @测试提问 已被管理员清除！', 1, '2019-02-03 11:44:26', 1, 1, '');
+INSERT INTO `sys_message` VALUES (25, 'FirstCry！！！', 1, '2019-02-03 12:45:01', 0, 0, '');
+INSERT INTO `sys_message` VALUES (26, '测试！', 1, '2019-02-03 12:48:00', 0, 0, '啦啦啦');
 
 -- ----------------------------
 -- Table structure for tags
@@ -454,7 +489,7 @@ CREATE TABLE `useraction`  (
   `targettype` int(11) NOT NULL COMMENT '行为类型',
   `actiontime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '行为发生时间',
   PRIMARY KEY (`actionID`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户行为表\n' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 40 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户行为表\n' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of useraction
@@ -478,6 +513,26 @@ INSERT INTO `useraction` VALUES (16, 3, 2, 11, '2019-01-25 22:08:48');
 INSERT INTO `useraction` VALUES (17, 3, 5, 11, '2019-01-25 22:08:51');
 INSERT INTO `useraction` VALUES (18, 3, 6, 11, '2019-01-25 22:08:55');
 INSERT INTO `useraction` VALUES (19, 3, 6, 13, '2019-01-25 22:09:02');
+INSERT INTO `useraction` VALUES (20, 1, 4, 27, '2019-02-02 21:49:36');
+INSERT INTO `useraction` VALUES (21, 1, 5, 27, '2019-02-02 21:50:38');
+INSERT INTO `useraction` VALUES (22, 1, 7, 27, '2019-02-02 21:50:49');
+INSERT INTO `useraction` VALUES (23, 1, 6, 27, '2019-02-02 21:54:56');
+INSERT INTO `useraction` VALUES (24, 1, 6, 27, '2019-02-02 21:55:06');
+INSERT INTO `useraction` VALUES (25, 1, 6, 27, '2019-02-02 21:55:29');
+INSERT INTO `useraction` VALUES (26, 1, 4, 27, '2019-02-02 21:57:01');
+INSERT INTO `useraction` VALUES (27, 1, 4, 27, '2019-02-02 21:57:49');
+INSERT INTO `useraction` VALUES (28, 1, 5, 27, '2019-02-02 21:59:58');
+INSERT INTO `useraction` VALUES (29, 1, 6, 27, '2019-02-02 22:11:18');
+INSERT INTO `useraction` VALUES (30, 1, 7, 27, '2019-02-02 22:11:23');
+INSERT INTO `useraction` VALUES (31, 1, 4, 27, '2019-02-02 22:17:41');
+INSERT INTO `useraction` VALUES (32, 1, 8, 27, '2019-02-02 22:18:06');
+INSERT INTO `useraction` VALUES (33, 1, 4, 27, '2019-02-03 10:58:11');
+INSERT INTO `useraction` VALUES (34, 1, 5, 27, '2019-02-03 11:00:01');
+INSERT INTO `useraction` VALUES (35, 1, 6, 27, '2019-02-03 11:04:06');
+INSERT INTO `useraction` VALUES (36, 1, 4, 26, '2019-02-03 11:08:36');
+INSERT INTO `useraction` VALUES (37, 1, 5, 26, '2019-02-03 11:10:16');
+INSERT INTO `useraction` VALUES (38, 1, 6, 26, '2019-02-03 11:11:25');
+INSERT INTO `useraction` VALUES (39, 1, 6, 34, '2019-02-03 11:44:26');
 
 -- ----------------------------
 -- Table structure for users
@@ -489,7 +544,7 @@ CREATE TABLE `users`  (
   `nickname` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '昵称',
   `password` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '密码',
   `headportrait` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '头像',
-  `usergroup` int(11) NOT NULL DEFAULT 0 COMMENT '用户组',
+  `usergroup` int(11) NOT NULL DEFAULT 1 COMMENT '用户组',
   `exp` bigint(20) NOT NULL DEFAULT 0 COMMENT '积分/等级',
   `token` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
   `birthday` datetime NULL DEFAULT NULL COMMENT '生日',
@@ -503,15 +558,46 @@ CREATE TABLE `users`  (
   `nationality` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `account_balance` int(255) NOT NULL DEFAULT 0 COMMENT '账户余额',
   `specialitst_license` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `back_pic` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+  `front_pic` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+  `last_login` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`userID`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 31 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES (1, 'zhangyu199946@126.com', '拉拉人', 'ec847003d2eadc9baf60853e8391e167a292c21f01892fcb8bad0f4af6cd74a7', '', 0, 998, 'VHjWIO5Kp7So6uGxY4Fcbs3Jt', NULL, NULL, NULL, '弗兰秀秀牛逼', 0, '', '', '', '', 0, '');
-INSERT INTO `users` VALUES (2, 'yyz@126.com', '袁宜照', '317f16f4833885da6766e81b35c7258fe4451798600a1ad980babb9e9f412fc2', '', 0, 0, 'TNp6hR7ElkJK4Z5Xfte0VyqG3', NULL, NULL, NULL, '', 0, '', '', '', '', 0, '');
-INSERT INTO `users` VALUES (3, 'zyxiaohao@126.com', '', 'cb8f260c5b29ec2a17d662133ebcf99cd4594e29b0ffeb54599ffe5f3801c3ed', NULL, 0, 0, 'U3WieM95EkGpfXTwdohKFgnjv', NULL, NULL, NULL, '', 0, '', '', '', '', 0, '');
+INSERT INTO `users` VALUES (1, 'zhangyu199946@126.com', '拉拉人', 'ec847003d2eadc9baf60853e8391e167a292c21f01892fcb8bad0f4af6cd74a7', 'https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1549078352&di=0e4e5ee31b005f20859bdb1a0f4ebf58&src=http://s2.sinaimg.cn/mw690/005LKisygy722sIQw2B41&690', 0, 998, 'cqG1S5nbMDLdjIJ0Wsy2vkHhg', NULL, NULL, NULL, '弗兰秀秀牛逼', 0, '', '', '德玛西亚', '', 0, '', '2019-02-03 12:01:14', '2019-02-03 12:01:14', '2019-02-03 17:30:49', '2019-02-03 17:30:49');
+INSERT INTO `users` VALUES (2, 'yyz@126.com', '袁宜照', '317f16f4833885da6766e81b35c7258fe4451798600a1ad980babb9e9f412fc2', 'https://cdn.vuetifyjs.com/images/lists/1.jpg', 0, 0, 'TNp6hR7ElkJK4Z5Xfte0VyqG3', NULL, NULL, NULL, '', 0, '', '', '啦啦啦', '', 0, '', '2019-02-02 19:52:52', '2019-02-02 19:52:52', '2019-02-03 17:30:49', '2019-02-03 17:30:49');
+INSERT INTO `users` VALUES (3, 'zyxiaohao@126.com', '张煜', 'cb8f260c5b29ec2a17d662133ebcf99cd4594e29b0ffeb54599ffe5f3801c3ed', 'https://cdn.vuetifyjs.com/images/lists/3.jpg', 1, 0, 'moLsBPX7rCzIa6QJARxibW4u3', NULL, NULL, NULL, '', 2, '', '', '光头', '', 0, '', '2019-02-02 19:53:15', '2019-02-02 19:53:15', '2019-02-03 17:30:49', '2019-02-03 17:30:49');
+INSERT INTO `users` VALUES (4, 'user1@user1.com', '用户1', '599e60bc4121595f91c6a775e0154e75244f755e51bebbfa8cf66a9f25746f24', NULL, 1, 0, '2223', '0000-00-00 00:00:00', NULL, '德莉莎', '', 2, '二', '没有', '傻缺', '和', 0, '', '2019-02-03 11:08:36', '2019-02-03 11:08:36', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `users` VALUES (5, 'user2@user1.com', '用户2', '1deb094bf4c7f0553293603f3a0efb369b087ec9983c1b459517011c90e52305', NULL, 1, 0, '1', '0000-00-00 00:00:00', NULL, '', '', 2, '', '', '', '', 0, '', '2019-02-03 11:10:15', '2019-02-03 11:10:15', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `users` VALUES (6, 'user3@user1.com', '用户3', 'b98ebb15f80a708f355c1112d670c2392b26c2a6be69b0c5197eceaea09b0b2d', NULL, 1, 0, '', '0000-00-00 00:00:00', NULL, '日内二', '', 2, '女', '002022020', '呼啦啦啦', '和', 0, '', '2019-02-03 11:11:25', '2019-02-03 11:11:25', '2019-02-03 17:30:49', '2019-02-03 17:30:49');
+INSERT INTO `users` VALUES (7, 'user4@user1.com', '用户4', 'a6c5766422cff52dd8dd3998d36dea4ebd881c9778383a0cdd4ee3c3aeda9dba', NULL, 1, 0, '', '0000-00-00 00:00:00', NULL, '', '', 1, '', '', '', '', 0, '', '2019-02-03 10:57:52', '2019-02-03 10:57:52', '2019-02-03 17:30:49', '2019-02-03 17:30:49');
+INSERT INTO `users` VALUES (8, 'user5@user1.com', '用户5', 'ba64da7a2dcf7fb416e94fbe6baa90a1c30b8d920750eba2f86b6545fe63df69', NULL, 1, 0, '', '0000-00-00 00:00:00', NULL, '', '', 1, '', '', '', '', 0, '', '2019-02-03 10:57:53', '2019-02-03 10:57:53', '2019-02-03 17:30:49', '2019-02-03 17:30:49');
+INSERT INTO `users` VALUES (9, 'user6@user1.com', '用户6', '5aa5290b481b19e12888d7ac0e5a30dbd8146b87f5162c1455b2a7d8e6710d03', NULL, 1, 0, '', NULL, NULL, NULL, '', 0, '', '', '', '', 0, '', '2019-02-02 18:39:27', '2019-02-02 18:39:27', '2019-02-03 17:30:49', '2019-02-03 17:30:49');
+INSERT INTO `users` VALUES (10, 'user7@user1.com', '用户7', 'aa44de99891cb179b3f46785aff02751d28d333f85b04b278858c6834819487d', NULL, 1, 0, '', NULL, NULL, NULL, '', 0, '', '', '', '', 0, '', '2019-02-02 18:39:28', '2019-02-02 18:39:28', '2019-02-03 17:30:49', '2019-02-03 17:30:49');
+INSERT INTO `users` VALUES (11, 'user8@user1.com', '用户8', '0b5288355eebc89ca2bfc46c90339dda6a0f3ce4128b4c9e15090c25a9c2f5fe', NULL, 1, 0, '', NULL, NULL, NULL, '', 0, '', '', '', '', 0, '', '2019-02-02 18:39:29', '2019-02-02 18:39:29', '2019-02-03 17:30:49', '2019-02-03 17:30:49');
+INSERT INTO `users` VALUES (12, 'user9@user1.com', '用户9', '41eea4cac48e52661ed0328a2e6f47f877146dc12597dd72133ce4c6afb1ba5e', NULL, 1, 0, '', NULL, NULL, NULL, '', 0, '', '', '', '', 0, '', '2019-02-02 18:39:30', '2019-02-02 18:39:30', '2019-02-03 17:30:49', '2019-02-03 17:30:49');
+INSERT INTO `users` VALUES (13, 'user10@user1.com', '用户10', '382e1656c9c69a7adf041f52f16f1b43256a070ab24bece0e5455ef76935b216', NULL, 1, 0, '', NULL, NULL, NULL, '', 0, '', '', '', '', 0, '', '2019-02-02 18:39:31', '2019-02-02 18:39:31', '2019-02-03 17:30:49', '2019-02-03 17:30:49');
+INSERT INTO `users` VALUES (14, 'ban1@ban1.com', '封禁账户1', 'dea695d9c9da21db93bf86d05774b3866807df5ac187142d71ba5e2da48e3b98', NULL, 4, 0, '', NULL, NULL, NULL, '', 0, '', '', '', '', 0, '', '2019-02-02 18:44:39', '2019-02-02 18:44:39', '2019-02-03 17:30:49', '2019-02-03 17:30:49');
+INSERT INTO `users` VALUES (15, 'ban2@ban1.com', '封禁账户2', 'b2a4d7a43e26c71e62a6dc6d585cf19029896ca35b2de2f212bd1572f28b1603', NULL, 4, 0, '', NULL, NULL, NULL, '', 0, '', '', '', '', 0, '', '2019-02-02 18:44:45', '2019-02-02 18:44:45', '2019-02-03 17:30:49', '2019-02-03 17:30:49');
+INSERT INTO `users` VALUES (16, 'ban3@ban1.com', '封禁账户3', '7c0aa756166b96ee6eafb773fc85a1f86b75ce3ee203386888a5bf747de1c07e', NULL, 4, 0, '', NULL, NULL, NULL, '', 0, '', '', '', '', 0, '', '2019-02-02 18:44:50', '2019-02-02 18:44:50', '2019-02-03 17:30:49', '2019-02-03 17:30:49');
+INSERT INTO `users` VALUES (17, 'exp1@exp1.com', '专家1', '60c12cd0e12d466232d362730bc1cdc19962a796e6c2a699956707706082c380', NULL, 2, 0, '', NULL, NULL, NULL, '', 0, '', '', '', '', 0, '', '2019-02-02 19:11:39', '2019-02-02 19:11:39', '2019-02-03 17:30:49', '2019-02-03 17:30:49');
+INSERT INTO `users` VALUES (18, 'exp2@exp1.com', '专家2', 'bccb210bbefdafdf3ee67959db70a7ae3f93e7dcc666289000917d432dffdaac', NULL, 2, 0, '', NULL, NULL, NULL, '', 0, '', '', '', '', 0, '', '2019-02-02 19:11:42', '2019-02-02 19:11:42', '2019-02-03 17:30:49', '2019-02-03 17:30:49');
+INSERT INTO `users` VALUES (19, 'exp3@exp1.com', '专家3', '36bf74d7c2fa7ff3c6293f49130c6c8b9a1f9afc764f82d185fda271f478cfc1', NULL, 2, 0, '', NULL, NULL, NULL, '', 0, '', '', '', '', 0, '', '2019-02-02 19:11:47', '2019-02-02 19:11:47', '2019-02-03 17:30:49', '2019-02-03 17:30:49');
+INSERT INTO `users` VALUES (20, 'exp4@exp1.com', '专家4', '4a25e59f2c9682d39089fcfc3ad94ff54a92b0c6e71a8e2ba9ec87f45fe68274', NULL, 2, 0, '', NULL, NULL, NULL, '', 0, '', '', '', '', 0, '', '2019-02-02 19:11:53', '2019-02-02 19:11:53', '2019-02-03 17:30:49', '2019-02-03 17:30:49');
+INSERT INTO `users` VALUES (21, 'exp5@exp1.com', '专家5', '72fdde7c00b5a1125aa3530635a477a12e3cbf162a45d536755162672743e6de', NULL, 5, 0, '', NULL, NULL, NULL, '', 0, '', '', '', '', 0, '', '2019-02-02 19:11:58', '2019-02-02 19:11:58', '2019-02-03 17:30:49', '2019-02-03 17:30:49');
+INSERT INTO `users` VALUES (22, 'exp6@exp1.com', '专家6', '22a222e334d73ecb10cf87920fe18fd2c6f084069f0b38828e3cdf097e335b84', NULL, 5, 0, '', NULL, NULL, NULL, '', 0, '', '', '', '', 0, '', '2019-02-02 19:12:05', '2019-02-02 19:12:05', '2019-02-03 17:30:49', '2019-02-03 17:30:49');
+INSERT INTO `users` VALUES (23, 'exp7@exp1.com', '专家7', 'd2771ab82602cf02c2b6ce82375a55328a2535400bc280cf9e0fa3657b58781e', NULL, 5, 0, '', NULL, NULL, NULL, '', 0, '', '', '', '', 0, '', '2019-02-02 19:12:09', '2019-02-02 19:12:09', '2019-02-03 17:30:49', '2019-02-03 17:30:49');
+INSERT INTO `users` VALUES (24, 'com1@com1.com', '用户 \'s\' \'e\' \'t\' \'o\' \'x\' \'f\' \'k\' \'b\' \'w\' \'j\'', '26aa9d860feebfa628cbd59b0e30d0d6562542b0c26414549ba555340c73ab7a', NULL, 3, 0, '', NULL, NULL, NULL, '', 0, '', '', '', '', 0, '', '2019-02-02 19:26:10', '2019-02-02 19:26:10', '2019-02-03 17:30:49', '2019-02-03 17:30:49');
+INSERT INTO `users` VALUES (25, 'com2@com1.com', '用户 0qz947vpau', '1f8112d3e2f439f746176dea19db4ad616122829316183fc29d25722654400ae', NULL, 3, 0, '', NULL, NULL, NULL, '', 0, '', '', '', '', 0, '', '2019-02-02 19:26:12', '2019-02-02 19:26:12', '2019-02-03 17:30:49', '2019-02-03 17:30:49');
+INSERT INTO `users` VALUES (26, 'com3@com1.com', '用户 gusjt78zfn', 'ff26e0b1616d84dc64eebd048b12a76e92498a41c19323695611dec2fa55a7cd', NULL, 3, 0, '', NULL, NULL, NULL, '', 0, '', '', '', '', 0, '', '2019-02-02 19:26:14', '2019-02-02 19:26:14', '2019-02-03 17:30:49', '2019-02-03 17:30:49');
+INSERT INTO `users` VALUES (27, 'com4@com1.com', '用户 cjeu5tq427', '1a7c6535bcdbe5820194b39c0eeae738e3aa7c549dd62b6c15e33d592abee55d', NULL, 3, 0, '', NULL, NULL, NULL, '', 0, '', '', '', '', 0, '', '2019-02-02 19:26:16', '2019-02-02 19:26:16', '2019-02-03 17:30:49', '2019-02-03 17:30:49');
+INSERT INTO `users` VALUES (28, 'com5@com1.com', '用户 yg7m8rhwz1', '3aad5c958caa869dcaa2402edf2fe71b7f286d79903bb77eb6d14b40e16d6a0d', NULL, 6, 0, '', NULL, NULL, NULL, '', 0, '', '', '', '', 0, '', '2019-02-02 19:26:17', '2019-02-02 19:26:17', '2019-02-03 17:30:49', '2019-02-03 17:30:49');
+INSERT INTO `users` VALUES (29, 'com6@com1.com', '用户 8wei1lspy9', '9e0e546f766d888da7c46848989f56c62e60aa45dd81019c1bbaed114252754d', NULL, 6, 0, '', NULL, NULL, NULL, '', 0, '', '', '', '', 0, '', '2019-02-02 19:26:18', '2019-02-02 19:26:18', '2019-02-03 17:30:49', '2019-02-03 17:30:49');
+INSERT INTO `users` VALUES (30, 'com7@com1.com', '用户 io69u3s5lc', 'e95aba424cce4a1fe53902c62ca0fa0ecf09b8c7112cde86a94f089790a68502', NULL, 6, 0, '', NULL, NULL, NULL, '', 0, '', '', '', '', 0, '', '2019-02-02 19:26:20', '2019-02-02 19:26:20', '2019-02-03 17:30:49', '2019-02-03 17:30:49');
 
 -- ----------------------------
 -- View structure for ac_at_info
