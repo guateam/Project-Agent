@@ -23,14 +23,14 @@
 
             </v-tab>
             <v-tab-item
-                    v-for="n in 4"
+                    v-for="n in tabs.length"
                     :key="n"
             >
                 <v-layout row>
                     <v-flex xs12 sm6 offset-sm3>
                         <v-card>
                             <v-list two-line>
-                                <template v-for="(item, index) in items">
+                                <template v-for="(item, index) in items[n-1]">
                                     <v-list-tile
                                             :key="item.title"
                                             avatar
@@ -85,38 +85,34 @@
                     {title:'回答'},
                     {title:'提问'},
                     {title:'文章'},
-                    {title:'专栏'},
                 ],
                 selected: [0,1,2,3],
                 items: [
-                    {
-                        action: '15 min',
-                        headline: '去你大爷的你才是非酋非酋非酋非酋非酋非酋非酋非酋非酋非酋非酋非酋非酋非酋非酋非酋非酋非酋非酋非酋非酋非酋非酋非酋非酋非酋非酋',
-                        title: '为什么有些非洲人就是不愿意承认自己的血统？',
-                        subtitle: "3赞同  ·  4评论"
-                    },
-                    {
-                        action: '2 hr',
-                        headline: '',
-                        title: '请问什么姿势才能捞到闪电然后单抽出紫雨心？',
-                        subtitle: "8回答  ·  4评论"
-                    },
-                    {
-                        action: '6 hr',
-                        headline: '这里应该是文章的内容吧emmm这里应该是文章的内容吧emmm这里应该是文章的内容吧emmm',
-                        title: '假装这里是一篇文章',
-                        subtitle: '4赞同  ·  4评论'
-                    },
-                    {
-                        action: '12 hr',
-                        headline: '不然太像知乎了',
-                        title: '专栏？应该没有这玩意',
-                        subtitle: '3订阅  ·  9评论'
-                    }
+                    [],[],[]
                 ]
             }
         },
-        methods: {}
+        methods: {
+            getCollections(){
+                import('axios').then(axios => {
+                    import('js-cookie').then((Cookies) => {
+                        axios.get('http://localhost:5000/api/account/get_collections', {
+                            responseType: 'json',
+                            params: {
+                                token:Cookies.get('token')
+                            }
+                        }).then(res => {
+                            if (res.data.code === 1) {
+                                this.items=res.data.data;
+                            }
+                        })
+                    })
+                })
+            }
+        },
+        mounted() {
+            this.getCollections()
+        }
     }
 </script>
 
