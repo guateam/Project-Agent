@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="bigbox">
         <div class="myself">
             <div class="head" @click="go_to_login">
                 <div class="head-main">
@@ -84,6 +84,12 @@
                     },
                     {
                         active: true,
+                        title: '数据中心',
+                        avatar: 'https://cdn.vuetifyjs.com/images/lists/5.jpg',
+                        name: 'dataCenter'
+                    },
+                    {
+                        active: true,
                         title: '我的钱包',
                         avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
                         name: 'wallet'
@@ -136,6 +142,9 @@
 </script>
 
 <style scoped>
+    .bigbox{
+        width: 100%;
+    }
     .myself {
         width: 100%;
         height: 100%;

@@ -13,6 +13,7 @@
                 <v-flex d-flex xs12 order-xs5>
                     <v-layout column>
                         <v-flex d-flex>
+                            <!--主讲人信息，先搭框框懒得写就一个用户名，对接的时候后台直接把头像标签啥的信息全传过来吧-->
                             <v-card color="blue-grey" dark tile flat>
                                 <v-card-text>大漠孤烟</v-card-text>
                             </v-card>
