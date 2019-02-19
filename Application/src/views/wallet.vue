@@ -86,7 +86,7 @@
                 import('js-cookie').then((Cookies) => {
                     axios({
                         method: 'post',
-                        url: 'http://localhost:5000/api/account/get_account_balance',
+                        url: 'http://'+this.GLOBAL.host+'/api/account/get_account_balance',
                         responseType: 'json',
                         data: {
                             token: Cookies.get('token')

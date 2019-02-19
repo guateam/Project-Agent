@@ -150,7 +150,7 @@
             get_category() {
                 // 获取分类
                 import('axios').then((axios) => {
-                    axios.get('http://localhost:5000/api/homepage/get_category', {
+                    axios.get('http://'+this.GLOBAL.host+'/api/homepage/get_category', {
                         responseType: 'json'
                     }).then((res) => {
                         this.category = res.data.data;

@@ -193,7 +193,7 @@
                 // 获取好友列表
                 import('js-cookie').then((Cookies) => {
                     import('axios').then((axios) => {
-                        axios.get('http://localhost:5000/api/message/get_friend_list', {
+                        axios.get('http://'+this.GLOBAL.host+'/api/message/get_friend_list', {
                             responseType: 'json',
                             params: {
                                 token: Cookies.get('token'),
@@ -208,7 +208,7 @@
             get_message_list() {
                 import('js-cookie').then((Cookies) => {
                     import('axios').then((axios) => {
-                        axios.get('http://localhost:5000/api/message/get_message_list', {
+                        axios.get('http://'+this.GLOBAL.host+'/api/message/get_message_list', {
                             responseType: 'json',
                             params: {
                                 token: Cookies.get('token'),

@@ -76,7 +76,7 @@
                 window.console.log('start register');
                 axios({
                     method: 'post',
-                    url: 'http://localhost:5000/api/account/register',
+                    url: 'http://'+this.GLOBAL.host+'/api/account/register',
                     data: {
                         email: this.email,  // 用户名
                         password: this.psw,  // 密码

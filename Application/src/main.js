@@ -4,6 +4,9 @@ import router from './router'
 import store from './store'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
+import global_ from './components/global/Global'
+
+Vue.prototype.GLOBAL = global_;
 
 Vue.use(Vuetify);
 
