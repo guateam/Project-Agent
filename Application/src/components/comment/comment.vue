@@ -56,7 +56,7 @@
             // Request comments
             getComments() {
                 import('axios').then(axios => {
-                    axios.get('http://localhost:5000/api/get_answer_comment_list', {
+                    axios.get('http://'+this.GLOBAL.host+'/api/get_answer_comment_list', {
                         responseType: 'json',
                         params: {
                             answer_id: this.$route.params.id
