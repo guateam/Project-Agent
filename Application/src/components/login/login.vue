@@ -48,7 +48,7 @@
             submit() {
                 axios({
                     method: 'post',
-                    url: 'https://'+this.GLOBAL.host+'/api/account/login',
+                    url: 'https://' + this.GLOBAL.host + '/api/account/login',
                     data: {
                         username: this.email,  // 用户名
                         password: this.psw,  // 密码
@@ -67,13 +67,50 @@
                 }).then((response) => {
                     // 把token写入cookies
                     if (response.data.code === 1) {
-                        this.$cookie.set('token',response.data.data.token,30,'/','localhost');
-                        this.$cookie.set('user_group',response.data.data.group.value,30,'/','localhost');
-                        this.GLOBAL.token=response.data.data.token;
-                        this.GLOBAL.user_group=response.data.data.data.group.value;
+                        this.DB({
+                            id:1,
+                            token: response.data.data.token,
+                            user_group: response.data.data.data.group.value
+                        });
+                        this.GLOBAL.token = response.data.data.token;
+                        this.GLOBAL.user_group = response.data.data.data.group.value;
                         this.$router.push({name: 'myself'});
                     }
                 })
+            },
+            DB(data) {
+                let myDB = {
+                    name: "project-agent", version: 1, db: null
+                };
+
+                function openDB(name) {
+                    let version = 1;
+                    let request = window.indexedDB.open(name, version);
+                    request.onerror = function (e) {
+                        console.log(e.currentTarget.error.message);
+                    };
+                    request.onsuccess = function (e) {
+                        myDB.db = e.target.result;
+                    };
+                    request.onupgradeneeded = function (e) {
+                        let db = e.target.result;
+                        if (!db.objectStoreNames.contains("user")) {
+                            db.createObjectStore("user", {keyPath:'id',autoIncrement: true});
+                        }
+                        console.log('DB version changed to ' + version);
+                    };
+                }
+
+                function addData(db, storeName, data) {
+                    let transaction = db.transaction(storeName, 'readwrite');
+                    let store = transaction.objectStore(storeName);
+                    store.put(data)
+                }
+
+                openDB('user');
+                setTimeout(function () {
+                    addData(myDB.db, "user", data);
+                }, 1000);
             }
         }
     }

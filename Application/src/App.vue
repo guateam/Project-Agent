@@ -34,11 +34,54 @@
             // MyHeader,
             BottomNav,
         },
-        created() {
-            import('js-cookie').then(Cookies=>{
-                this.GLOBAL.token=Cookies.get('token');
-                this.GLOBAL.user_group=Cookies.get('user_group')
-            })
+        methods: {
+            DB() {
+                let that=this;
+                let myDB = {
+                    name: "project-agent", version: 1, db: null
+                };
+
+                function openDB(name) {
+                    let version = 1;
+                    let request = window.indexedDB.open(name, version);
+                    request.onerror = function (e) {
+                        console.log(e.currentTarget.error.message);
+                    };
+                    request.onsuccess = function (e) {
+                        myDB.db = e.target.result;
+                    };
+                    request.onupgradeneeded = function (e) {
+                        let db = e.target.result;
+                        if (!db.objectStoreNames.contains("user")) {
+                            db.createObjectStore("user", {keyPath:'id',autoIncrement: true});
+                        }
+                        console.log('DB version changed to ' + version);
+                    };
+                }
+
+                function getDataByKey(db, storeName, value) {
+                    let transaction = db.transaction(storeName, 'readwrite');
+                    let store = transaction.objectStore(storeName);
+                    let request = store.get(value);
+                    request.onsuccess = function (e) {
+                        let data = e.target.result;
+                        console.info(data);
+                        that.GLOBAL.token=data.token;
+                        that.GLOBAL.user_group=data.user_group;
+                    };
+                }
+
+                openDB('user');
+                setTimeout(function () {
+                    getDataByKey(myDB.db,'user',1)
+                }, 1000);
+                setTimeout(function () {
+
+                },1000)
+            }
+        },
+        mounted() {
+            this.DB()
         }
     }
 </script>

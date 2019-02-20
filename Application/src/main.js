@@ -5,8 +5,6 @@ import store from './store'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 import global_ from './components/global/Global'
-import VueCookies from 'vue-cookie'
-Vue.use(VueCookies);
 
 Vue.prototype.GLOBAL = global_;
 
