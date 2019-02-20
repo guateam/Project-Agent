@@ -96,7 +96,7 @@
             getCollections(){
                 import('axios').then(axios => {
                     import('js-cookie').then((Cookies) => {
-                        axios.get('http://'+this.GLOBAL.host+'/api/account/get_collections', {
+                        axios.get('https://'+this.GLOBAL.host+'/api/account/get_collections', {
                             responseType: 'json',
                             params: {
                                 token:Cookies.get('token')

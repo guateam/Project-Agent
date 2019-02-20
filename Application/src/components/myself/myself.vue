@@ -101,7 +101,7 @@
             get_user_info() {
                 import('js-cookie').then((Cookies) => {
                     let token = Cookies.get('token');
-                    axios.get('http://127.0.0.1:5000/api/account/get_user_by_token', {
+                    axios.get('https://'+this.GLOBAL.host+'api/account/get_user_by_token', {
                         responseType: 'json',
                         params: {
                             token: token,
