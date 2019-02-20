@@ -67,10 +67,10 @@
                 }).then((response) => {
                     // 把token写入cookies
                     if (response.data.code === 1) {
-                        import('js-cookie').then((Cookies) => {
-                            Cookies.set('token', response.data.data.token);
-                            Cookies.set('user_group', response.data.data.data.group.value)
-                        });
+                        this.$cookie.set('token',response.data.data.token,30,'/','localhost');
+                        this.$cookie.set('user_group',response.data.data.group.value,30,'/','localhost');
+                        this.GLOBAL.token=response.data.data.token;
+                        this.GLOBAL.user_group=response.data.data.data.group.value;
                         this.$router.push({name: 'myself'});
                     }
                 })

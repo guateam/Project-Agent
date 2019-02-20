@@ -34,6 +34,12 @@
             // MyHeader,
             BottomNav,
         },
+        created() {
+            import('js-cookie').then(Cookies=>{
+                this.GLOBAL.token=Cookies.get('token');
+                this.GLOBAL.user_group=Cookies.get('user_group')
+            })
+        }
     }
 </script>
 

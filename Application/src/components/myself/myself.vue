@@ -100,8 +100,8 @@
         methods: {
             get_user_info() {
                 import('js-cookie').then((Cookies) => {
-                    let token = Cookies.get('token');
-                    axios.get('https://'+this.GLOBAL.host+'api/account/get_user_by_token', {
+                    let token = this.GLOBAL.token;
+                    axios.get('https://'+this.GLOBAL.host+'/api/account/get_user_by_token', {
                         responseType: 'json',
                         params: {
                             token: token,
@@ -121,7 +121,7 @@
             },
             go_to_login(){
                 import('js-cookie').then((Cookies) => {
-                    if(Cookies.get('token')){
+                    if(this.GLOBAL.token){
 
                     }else {
                         this.$router.push('/login')

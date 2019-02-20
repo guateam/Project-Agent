@@ -15,7 +15,7 @@
                     axios.get('https://'+this.GLOBAL.host+'/api/message/get_message_list', {
                         responseType: 'json',
                         params: {
-                            token: Cookies.get('token'),
+                            token: this.GLOBAL.token,
                         }
                     }).then((response) => {
                         window.console.log(response);

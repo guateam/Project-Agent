@@ -133,7 +133,7 @@
                     import('axios').then((axios) => {
                         axios.get('https://'+this.GLOBAL.host+'/api/homepage/get_recommend', {
                             responseType: 'json',
-                            params: {token: Cookies.get('token')}
+                            params: {token: this.GLOBAL.token}
                         }).then((response) => {
                             let data_list = response.data.data;
                             this.question_list = [];
