@@ -16,6 +16,7 @@ import Notice from './components/notice/notice'
 import Reply from './components/reply/reply'
 import Callme from './components/callme/callme'
 import SchoolDetail from './views/schoolDetail'
+import dataCenter from './views/dataCenter'
 
 
 const view = name => () => import(`./views/${name}`);
@@ -112,6 +113,11 @@ export default new Router({
                     path: '/collection',
                     name: 'collection',
                     component: view('collection')
+                },
+                {
+                    path: '/dataCenter',
+                    name: 'dataCenter',
+                    component: view('dataCenter')
                 },
                 {
                     path: '/oldpost',
