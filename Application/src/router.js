@@ -17,6 +17,7 @@ import Reply from './components/reply/reply'
 import Callme from './components/callme/callme'
 import SchoolDetail from './views/schoolDetail'
 import dataCenter from './views/dataCenter'
+import publish from './views/publish'
 
 
 const view = name => () => import(`./views/${name}`);
@@ -108,6 +109,11 @@ export default new Router({
                     path: '/settings',
                     name: 'settings',
                     component: view('Settings')
+                },
+                {
+                    path: '/publish',
+                    name: 'publish',
+                    component: view('publish')
                 },
                 {
                     path: '/collection',
