@@ -137,3 +137,5 @@ API/identity_card/
 identity_card_generater/output/
 
 identity_card_generater/output\.rar
+
+project-agent.log

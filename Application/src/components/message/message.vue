@@ -193,10 +193,10 @@
                 // 获取好友列表
                 import('js-cookie').then((Cookies) => {
                     import('axios').then((axios) => {
-                        axios.get('http://localhost:5000/api/message/get_friend_list', {
+                        axios.get('https://'+this.GLOBAL.host+'/api/message/get_friend_list', {
                             responseType: 'json',
                             params: {
-                                token: Cookies.get('token'),
+                                token: this.GLOBAL.token,
                             }
                         }).then((response) => {
                             window.console.log(this.friendList[0]);
@@ -208,10 +208,10 @@
             get_message_list() {
                 import('js-cookie').then((Cookies) => {
                     import('axios').then((axios) => {
-                        axios.get('http://localhost:5000/api/message/get_message_list', {
+                        axios.get('https://'+this.GLOBAL.host+'/api/message/get_message_list', {
                             responseType: 'json',
                             params: {
-                                token: Cookies.get('token'),
+                                token: this.GLOBAL.token,
                             }
                         }).then((data) => {
                             if (data.data.code === 1) {
@@ -245,7 +245,7 @@
             //     import('axios').then((axios) => {
             //         axios.get('http://127.0.0.1:5000/api/message/get_message_list', {
             //             responseType: 'json',
-            //             params: { token: Cookies.get('token') }
+            //             params: { token: this.GLOBAL.token }
             //         }).then((response) => {
             //             let data_list = response.data.data;
             //             window.console.log(data_list);

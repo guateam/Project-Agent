@@ -86,10 +86,10 @@
                 import('js-cookie').then((Cookies) => {
                     axios({
                         method: 'post',
-                        url: 'http://localhost:5000/api/account/get_account_balance',
+                        url: 'https://'+this.GLOBAL.host+'/api/account/get_account_balance',
                         responseType: 'json',
                         data: {
-                            token: Cookies.get('token')
+                            token: this.GLOBAL.token
                         },
                         transformRequest: [function (data) {
                             // Do whatever you want to transform the data

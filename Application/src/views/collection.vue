@@ -96,10 +96,10 @@
             getCollections(){
                 import('axios').then(axios => {
                     import('js-cookie').then((Cookies) => {
-                        axios.get('http://localhost:5000/api/account/get_collections', {
+                        axios.get('https://'+this.GLOBAL.host+'/api/account/get_collections', {
                             responseType: 'json',
                             params: {
-                                token:Cookies.get('token')
+                                token:this.GLOBAL.token
                             }
                         }).then(res => {
                             if (res.data.code === 1) {
