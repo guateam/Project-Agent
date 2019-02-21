@@ -72,6 +72,12 @@
                 items: [
                     {
                         active: true,
+                        title: '文章发布',
+                        avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
+                        name: 'publish'
+                    },
+                    {
+                        active: true,
                         title: '我发布的',
                         avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
                         name: 'oldpost'
