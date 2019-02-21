@@ -1,1 +1,50 @@
-<!DOCTYPE html><html lang=en><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1"><link rel=icon href=favicon.ico><link href="https://fonts.googleapis.com/css?family=Material+Icons" rel=stylesheet><link rel=stylesheet href=https://use.fontawesome.com/releases/v5.6.1/css/all.css integrity=sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP crossorigin=anonymous><title>Application</title><link href=static/css/chunk-3ff8bd2a.css rel=prefetch><link href=static/css/chunk-505dfca3.css rel=prefetch><link href=static/css/chunk-afa7c36e.css rel=prefetch><link href=static/css/chunk-f69ebade.css rel=prefetch><link href=static/js/chunk-2d208e99.js rel=prefetch><link href=static/js/chunk-3ff8bd2a.js rel=prefetch><link href=static/js/chunk-505dfca3.js rel=prefetch><link href=static/js/chunk-afa7c36e.js rel=prefetch><link href=static/js/chunk-f69ebade.js rel=prefetch><link href=static/css/app.css rel=preload as=style><link href=static/css/chunk-vendors.css rel=preload as=style><link href=static/js/app.js rel=preload as=script><link href=static/js/chunk-vendors.js rel=preload as=script><link href=static/css/chunk-vendors.css rel=stylesheet><link href=static/css/app.css rel=stylesheet></head><body><noscript><strong>We're sorry but Application doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id=app></div><script src=static/js/chunk-vendors.js></script><script src=static/js/app.js></script></body></html>
+<!DOCTYPE html><html lang=en><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1"><link rel=icon href=favicon.ico><link href="https://fonts.googleapis.com/css?family=Material+Icons" rel=stylesheet><link rel=stylesheet href=https://use.fontawesome.com/releases/v5.6.1/css/all.css integrity=sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP crossorigin=anonymous><script src=js/update.js></script><script>var plusReady = function (callback) {
+            if (window.plus) {
+                callback();
+            } else {
+                document.addEventListener('plusready', callback);
+            }
+        };
+
+        plusReady(function () {
+            var firstBack = 0;
+            var handleBack = function () {
+                var currentWebview = plus.webview.currentWebview();
+                var topWebview = plus.webview.getTopWebview();
+                var now = Date.now || function () {
+                    return new Date().getTime();
+                };
+
+                currentWebview.canBack(function (evt) {
+                    /**
+                     * 有可后退的历史记录，则后退。
+                     * 否则，关闭当前窗口。
+                     * 如果当前窗口是入口页，那么执行退出的逻辑。
+                     */
+                    if (currentWebview.id === plus.runtime.appid) {
+                        if (window.location.href.search(/#\/home|school|message|myself$/)!==-1) {
+                            if (!firstBack) {
+                                firstBack = now();
+                                plus.nativeUI.toast('再按一次退出应用');
+
+                                setTimeout(function () {
+                                    firstBack = 0;
+                                }, 2000);
+                            } else if (now() - firstBack < 2000) {
+                                plus.runtime.quit();
+                            }
+                        }else {
+                            history.go(-1);
+                        }
+                    } else {
+                        if (evt.canBack) {
+                            history.back();
+                        } else {
+                            currentWebview.close('auto');
+                        }
+                    }
+                });
+            };
+
+            plus.key.addEventListener('backbutton', handleBack);
+        });</script><title>Application</title><link href=static/css/chunk-3ff8bd2a.css rel=prefetch><link href=static/css/chunk-505dfca3.css rel=prefetch><link href=static/css/chunk-afa7c36e.css rel=prefetch><link href=static/css/chunk-f69ebade.css rel=prefetch><link href=static/js/chunk-2d208e99.js rel=prefetch><link href=static/js/chunk-3ff8bd2a.js rel=prefetch><link href=static/js/chunk-505dfca3.js rel=prefetch><link href=static/js/chunk-afa7c36e.js rel=prefetch><link href=static/js/chunk-f69ebade.js rel=prefetch><link href=static/css/app.css rel=preload as=style><link href=static/css/chunk-vendors.css rel=preload as=style><link href=static/js/app.js rel=preload as=script><link href=static/js/chunk-vendors.js rel=preload as=script><link href=static/css/chunk-vendors.css rel=stylesheet><link href=static/css/app.css rel=stylesheet></head><body><noscript><strong>We're sorry but Application doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id=app></div><script src=static/js/chunk-vendors.js></script><script src=static/js/app.js></script></body></html>
