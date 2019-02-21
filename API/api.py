@@ -852,8 +852,8 @@ def get_collections():
                 'headline': value['content'],
                 'action': '',
                 'subtitle': str(db.count({'targettype': 1, 'targetID': value['answerID']},
-                                       'useraction')) + ' 评论 · ' + str(db.count({'answerID': value['answerID']},
-                                                                                'answercomments')) + ' 评论',
+                                         'useraction')) + ' 评论 · ' + str(db.count({'answerID': value['answerID']},
+                                                                                  'answercomments')) + ' 评论',
                 'id': value['answerID']
             })
         questions = db.get({'userID': user['userID']}, 'followquestion_info', 0)
@@ -863,10 +863,11 @@ def get_collections():
                 'title': value['title'],
                 'headline': value['description'],
                 'action': '',
-                'subtitle': str(db.count({'questionID':value['target']},'answers'))+' 回答 · '+str(db.count({'questionID': value['target']}, 'questioncomments')) + ' 评论',
+                'subtitle': str(db.count({'questionID': value['target']}, 'answers')) + ' 回答 · ' + str(
+                    db.count({'questionID': value['target']}, 'questioncomments')) + ' 评论',
                 'id': value['target']
             })
-        articles = db.get({'userID': user['userID']}, 'collect_article_info',0)
+        articles = db.get({'userID': user['userID']}, 'collect_article_info', 0)
         articles_data = []
         for value in articles:
             articles_data.append({
@@ -1791,7 +1792,7 @@ def get_user_answers():
 """
 
 
-@app.route('/api/article/add_article')
+@app.route('/api/article/add_article', methods=['POST'])
 def add_article():
     """
     新建文章
@@ -3870,4 +3871,5 @@ if __name__ == '__main__':
     # with open('static\\upload\\36.txt', 'rb') as file:
     #     result = pred(file.read())
     #     print(result[0])
-    app.run(host='0.0.0.0',port=5000,debug=False,ssl_context=('/etc/letsencrypt/live/hanerx.tk/fullchain.pem', '/etc/letsencrypt/live/hanerx.tk/privkey.pem'))
+    app.run(host='0.0.0.0', port=5000, debug=False, ssl_context=(
+    '/etc/letsencrypt/live/hanerx.tk/fullchain.pem', '/etc/letsencrypt/live/hanerx.tk/privkey.pem'))

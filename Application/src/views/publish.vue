@@ -1,14 +1,14 @@
 <template>
-<div class="bigbox">
-    <v-toolbar color="white" flat>
-        <v-btn icon light @click="$router.push({name: 'myself'})">
-            <v-icon color="grey darken-2">arrow_back</v-icon>
-        </v-btn>
+    <div class="bigbox">
+        <v-toolbar color="white" flat>
+            <v-btn icon light @click="$router.push({name: 'myself'})">
+                <v-icon color="grey darken-2">arrow_back</v-icon>
+            </v-btn>
 
-        <v-toolbar-title class="grey--text text--darken-4">发布文章</v-toolbar-title>
-    </v-toolbar>
+            <v-toolbar-title class="grey--text text--darken-4">发布文章</v-toolbar-title>
+        </v-toolbar>
 
-    <v-divider></v-divider>
+        <v-divider></v-divider>
 
         <v-card
                 class="mx-auto"
@@ -20,23 +20,21 @@
                     class="pa-3 pt-4"
             >
                 <v-text-field
-                        v-model="password"
+                        v-model="title"
                         box
                         color="deep-purple"
-                        counter="6"
+                        counter="30"
                         label="文章标题"
                         style="min-height: 96px"
-                        type="password"
                 ></v-text-field>
                 <v-text-field
-                        v-model="phone"
+                        v-model="description"
                         box
                         color="deep-purple"
                         label="内容简介"
-                        mask="phone"
                 ></v-text-field>
                 <v-textarea
-                        v-model="bio"
+                        v-model="content"
                         auto-grow
                         box
                         color="deep-purple"
@@ -59,24 +57,27 @@
                         class="white--text"
                         color="deep-purple accent-4"
                         depressed
-                >确认</v-btn>
+                        @click="send()"
+                >确认
+                </v-btn>
             </v-card-actions>
         </v-card>
-</div>
+    </div>
 </template>
 
 <script>
+    import axios from 'axios';
 
     export default {
         name: "publish",
         data: () => ({
             agreement: false,
-            bio: '正文内容',
+            content: '',
             dialog: false,
             form: false,
             isLoading: false,
-            password: undefined,
-            phone: undefined,
+            title: undefined,
+            description: undefined,
             rules: {
                 // email: v => (v || '').match(/@/) || 'Please enter a valid email',
                 // length: len => v => (v || '').length >= len || `Invalid character length, required ${len}`,
@@ -84,13 +85,42 @@
                 //     'Password must contain an upper case letter, a numeric character, and a special character',
                 // required: v => !!v || 'This field is required'
             }
-        })
-
+        }),
+        methods: {
+            send() {
+                axios({
+                    method: 'post',
+                    url: 'https://' + this.GLOBAL.host + '/api/article/add_article',
+                    data: {
+                        token: this.GLOBAL.token,
+                        title: this.title,
+                        content: this.content
+                    },
+                    transformRequest: [function (data) {
+                        // Do whatever you want to transform the data
+                        let ret = '';
+                        for (let it in data) {
+                            ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+                        }
+                        return ret
+                    }],
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    }
+                }).then((response) => {
+                    // 把token写入cookies
+                    if (response.data.code === 1) {
+                        console.info('success');
+                        this.$router.push({name: 'myself'});
+                    }
+                })
+            }
+        }
     }
 </script>
 
 <style scoped>
-    .bigbox{
+    .bigbox {
         position: absolute;
         width: 100%;
         height: 100%;

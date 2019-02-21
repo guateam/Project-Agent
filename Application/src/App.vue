@@ -75,9 +75,6 @@
                 setTimeout(function () {
                     getDataByKey(myDB.db,'user',1)
                 }, 1000);
-                setTimeout(function () {
-
-                },1000)
             }
         },
         mounted() {
