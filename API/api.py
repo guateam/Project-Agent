@@ -1435,6 +1435,58 @@ def collect_answer():
         return jsonify({'code': 0, 'msg': "there are something wrong when inserted the data into database"})
 
 
+@app.route('/api/answer/un_collect_answer')
+def un_collect_answer():
+    """
+    取消收藏
+    :return:
+    """
+    token = request.values.get('token')
+    answer_id = request.values.get('answer_id')
+
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    answer = db.get({'answerID': answer_id}, 'answers')
+
+    if not answer:
+        return jsonify({'code': -1, 'msg': "the answer is not exist"})
+    if not user:
+        return jsonify({'code': -2, 'msg': "the user is not exist"})
+
+    user_id = user['userID']
+    success = db.delete({'userID': user_id, 'answerID': answer_id}, 'collectanswer')
+    if success:
+        return jsonify({'code': 1, 'msg': "collect success"})
+    else:
+        return jsonify({'code': 0, 'msg': "there are something wrong when inserted the data into database"})
+
+
+@app.route('/api/answer/get_collect_state')
+def get_collect_answer_state():
+    """
+    获取是否已收藏
+    :return:
+    """
+    token = request.values.get('token')
+    answer_id = request.values.get('answer_id')
+
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    answer = db.get({'answerID': answer_id}, 'answers')
+
+    if not answer:
+        return jsonify({'code': -1, 'msg': "the answer is not exist"})
+    if not user:
+        return jsonify({'code': -2, 'msg': "the user is not exist"})
+
+    user_id = user['userID']
+    success = db.get({'userID': user_id, 'answerID': answer_id}, 'collectanswer')
+    if success:
+        return jsonify({'code': 1, 'msg': "collect success"})
+    else:
+        return jsonify({'code': 0, 'msg': "there are something wrong when inserted the data into database"})
+
+
 @app.route('/api/answer/edit_answer')
 def edit_answer():
     """
@@ -2064,7 +2116,7 @@ def get_recommend():
     # 用户token
     token = request.values.get('token')
     # 用于推荐的评分矩阵路径，以api.py所在目录为根目录的表示
-    rate_dir = "../CF/rate_rect/question_rate_rect.txt"
+    rate_dir = "/etc/project-agent/CF/rate_rect/question_rate_rect.txt"
 
     # 获取用户信息
     db = Database()
@@ -2084,8 +2136,8 @@ def get_recommend():
             return jsonify({'code': -1, 'msg': 'the rate rectangle is not exist,please'
                                                ' build it by function build_questoin_rate_rect'})
         # 获得相似度降序排列的问题序列
-        recommend_question_ids = item_cf_api(rate_dir, "../CF/similar_rect/question_similar_rect.txt",
-                                             target_question_id, 3)
+        recommend_question_ids = item_cf_api(rate_dir, "/etc/project-agent/CF/similar_rect/question_similar_rect.txt",
+                                             target_question_id, 13)
         # 录入结果
         for id in recommend_question_ids:
             # 查询该id的问题信息
@@ -2098,7 +2150,8 @@ def get_recommend():
                     'type': 0,
                     'image': pattern.findall(value1['description']),
                     'follow': db.count({'targettype': 12, 'targetID': value1['questionID']}, 'useraction'),
-                    'comment': db.count({'questionID': value1['questionID']}, 'questioncomments')
+                    'comment': db.count({'questionID': value1['questionID']}, 'questioncomments'),
+                    'tags': get_tags(value1['tags'])
                 })
                 # 修改日期格式
                 value1['edittime'] = get_formative_datetime(value1['edittime'])
@@ -2600,7 +2653,7 @@ def build_article_rate_rect():
     # file_name = request.values.get("file_name")
     file_name = "article_rate_rect.txt"
     # 重置文件内容
-    with open("../CF/rate_rect/" + file_name, "w") as f:
+    with open("/etc/project-agent/CF/rate_rect/" + file_name, "w") as f:
         pass
     db = Database()
     # targettype 对应的评分
@@ -2626,7 +2679,7 @@ def build_article_rate_rect():
                 rates[users[j]['userID']] = rate
 
         keys = rates.keys()
-        with open("../CF/rate_rect/" + file_name, "a+") as f:
+        with open("/etc/project-agent/CF/rate_rect/" + file_name, "a+") as f:
             f.write("ID:" + str(article[i]['articleID']) + " rate:")
             rate_str = ""
             for key in keys:
@@ -2648,7 +2701,7 @@ def build_question_rate_rect():
     # file_name = request.values.get("file_name")
     file_name = "question_rate_rect.txt"
     # 重置文件内容
-    with open("../CF/rate_rect/" + file_name, "w") as f:
+    with open("/etc/project-agent/CF/rate_rect/" + file_name, "w") as f:
         pass
     db = Database()
     # targettype 对应的评分
@@ -2674,7 +2727,7 @@ def build_question_rate_rect():
                 rates[users[j]['userID']] = rate
 
         keys = rates.keys()
-        with open("../CF/rate_rect/" + file_name, "a+") as f:
+        with open("/etc/project-agent/CF/rate_rect/" + file_name, "a+") as f:
             f.write("ID:" + str(questions[i]['questionID']) + " rate:")
             rate_str = ""
             for key in keys:
@@ -3389,13 +3442,14 @@ def get_similar_article():
     :return:
     """
     article_id = request.values.get('article_id')
-    rate_dir = '../CF/rate_rect/article_rate_rect.txt'
+    rate_dir = '/etc/project-agent/CF/rate_rect/article_rate_rect.txt'
     # 判断评分矩阵是否存在
     if not os.path.exists(rate_dir):
         return jsonify({'code': 0, 'msg': 'the rate rectangle is not exist,please'
                                           ' build it by function build_article_rate_rect'})
     # 推荐的文章id,最多3条，相似度降序排列
-    recommend_article = item_cf_api(rate_dir, "../CF/similar_rect/article_similar_rect.txt", article_id, 3)
+    recommend_article = item_cf_api(rate_dir, "/etc/project-agent/CF/similar_rect/article_similar_rect.txt", article_id,
+                                    3)
 
     return jsonify({'code': 1, 'msg': 'success', 'data': recommend_article})
 
@@ -3409,7 +3463,7 @@ def get_recommend_article():
     token = request.values.get('token')
     db = Database()
     user = db.get({'token': token}, 'users')
-    rate_dir = '../CF/rate_rect/article_rate_rect.txt'
+    rate_dir = '/etc/project-agent/CF/rate_rect/article_rate_rect.txt'
     if not user:
         return jsonify({'code': 0, 'msg': 'user is not exist'})
     # 判断评分矩阵是否存在
@@ -3423,7 +3477,7 @@ def get_recommend_article():
     recommend_article = []
     # 推荐的文章id,最多3条，相似度降序排列
     for each in action:
-        ids = item_cf_api(rate_dir, "../CF/similar_rect/article_similar_rect.txt", each['targetID'], 3)
+        ids = item_cf_api(rate_dir, "/etc/project-agent/CF/similar_rect/article_similar_rect.txt", each['targetID'], 3)
         for id in ids:
             article = db.get({'articleID': id}, 'article')
             recommend_article += article
