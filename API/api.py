@@ -1001,12 +1001,32 @@ def get_question():
                 'user_headportrait': user['headportrait'],
                 'title': question['title'],
                 'description': question['description'],
-                'tags': question['tags'],
-                'question_type': question['question_type']
+                'tags': get_tags(question['tags']),
+                'question_type': question['question_type'],
+                'follow': db.count({'target': question_id}, 'followtopic'),
+                'comment': db.count({'questionID': question_id}, 'questioncomments'),
             }
             return jsonify({'code': 1, 'msg': 'success', 'data': data})
         return jsonify({'code': -1, 'msg': 'unknown user'})
     return jsonify({'code': 0, 'msg': 'unknown question'})
+
+
+@app.route('/api/questions/get_follow')
+def get_follow_question():
+    """
+    获取问题是否被收藏
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        question_id = request.values.get('question_id')
+        follow = db.get({'userID': user['userID'], 'target': question_id}, 'followtopic')
+        if follow:
+            return jsonify({'code': 1, 'msg': 'success'})
+        return jsonify({'code': -1, 'msg': 'unfollowed'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
 
 
 @app.route('/api/questions/follow_question')
@@ -1051,6 +1071,8 @@ def get_answer_list():
             {'questionID': question_id, 'state': 1}, 'answersinfo', 0)
         for answer in answer_list:
             answer['edittime'] = get_formative_datetime(answer['edittime'])
+            pattern = re.compile(r'<[Ii][Mm][Gg].+?/>')
+            answer.update({'image': pattern.findall(answer['content'])})
         return jsonify({'code': 1, 'msg': 'success', 'data': answer_list})
     return jsonify({'code': 0, 'msg': 'unknown question'})
 
@@ -1358,7 +1380,7 @@ def get_answer():
     return jsonify({'code': 0, 'msg': 'unknown answer'})
 
 
-@app.route('/api/get_answer_comment_list')
+@app.route('/api/answer/get_answer_comment_list')
 def get_answer_comment_list():
     """
     获取评论列表（倒序）
@@ -2075,7 +2097,7 @@ def get_recommend():
                 value1.update({
                     'type': 0,
                     'image': pattern.findall(value1['description']),
-                    'follow': db.count({'targettype': 4, 'targetID': value1['questionID']}, 'useraction'),
+                    'follow': db.count({'targettype': 12, 'targetID': value1['questionID']}, 'useraction'),
                     'comment': db.count({'questionID': value1['questionID']}, 'questioncomments')
                 })
                 # 修改日期格式
@@ -3872,4 +3894,4 @@ if __name__ == '__main__':
     #     result = pred(file.read())
     #     print(result[0])
     app.run(host='0.0.0.0', port=5000, debug=False, ssl_context=(
-    '/etc/letsencrypt/live/hanerx.tk/fullchain.pem', '/etc/letsencrypt/live/hanerx.tk/privkey.pem'))
+        '/etc/letsencrypt/live/hanerx.tk/fullchain.pem', '/etc/letsencrypt/live/hanerx.tk/privkey.pem'))

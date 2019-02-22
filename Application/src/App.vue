@@ -29,6 +29,16 @@
     // import MyHeader from './components/my-header/my-header'
     import BottomNav from './components/bottom-nav/bottom-nav'
 
+    // var plusReady = function (callback) {
+    //     if (window.plus) {
+    //         callback();
+    //     } else {
+    //         document.addEventListener('plusready', callback);
+    //     }
+    // };
+    // plusReady(function () {
+    //
+    // });
     export default {
         components: {
             // MyHeader,
@@ -36,7 +46,7 @@
         },
         methods: {
             DB() {
-                let that=this;
+                let that = this;
                 let myDB = {
                     name: "project-agent", version: 1, db: null
                 };
@@ -53,7 +63,7 @@
                     request.onupgradeneeded = function (e) {
                         let db = e.target.result;
                         if (!db.objectStoreNames.contains("user")) {
-                            db.createObjectStore("user", {keyPath:'id',autoIncrement: true});
+                            db.createObjectStore("user", {keyPath: 'id', autoIncrement: true});
                         }
                         console.log('DB version changed to ' + version);
                     };
@@ -66,14 +76,14 @@
                     request.onsuccess = function (e) {
                         let data = e.target.result;
                         console.info(data);
-                        that.GLOBAL.token=data.token;
-                        that.GLOBAL.user_group=data.user_group;
+                        that.GLOBAL.token = data.token;
+                        that.GLOBAL.user_group = data.user_group;
                     };
                 }
 
                 openDB('user');
                 setTimeout(function () {
-                    getDataByKey(myDB.db,'user',1)
+                    getDataByKey(myDB.db, 'user', 1)
                 }, 1000);
             }
         },
