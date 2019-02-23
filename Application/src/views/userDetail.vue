@@ -23,12 +23,27 @@
         </div>
         <v-divider></v-divider>
         <div class="box">
-            <div>一句话描述</div>
+            <div>手机号</div>
+            <div>13336333333</div>
+        </div>
+        <v-divider></v-divider>
+        <div class="box">
+            <div>邮箱</div>
+            <div>lalala@gmail.com</div>
+        </div>
+        <v-divider></v-divider>
+        <div class="box">
+            <div>实名认证</div>
+            <div>未认证</div>
+        </div>
+        <v-divider></v-divider>
+        <div class="box">
+            <div>签名</div>
             <div>这个人很懒什么也没留下</div>
         </div>
         <v-divider></v-divider>
         <div class="box">
-            <div>密码修改</div>
+            <div>修改密码</div>
         </div>
         <v-divider></v-divider>
         <div class="box">

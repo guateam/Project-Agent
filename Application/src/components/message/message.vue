@@ -116,7 +116,25 @@
                 </v-list>
             </v-tab-item>
             <v-tab-item :key="4">
-                44444
+                <v-card>
+                    <v-list two-line>
+                        <template v-for="(item, index) in items1">
+                            <v-subheader v-if="item.header" :key="item.header">
+                                {{ item.header }}
+                            </v-subheader>
+                            <v-divider v-else-if="item.divider" :inset="item.inset" :key="index"></v-divider>
+                            <v-list-tile v-else :key="item.title" avatar @click="$router.push('./chat')">
+                                <v-list-tile-avatar>
+                                    <img :src="item.avatar">
+                                </v-list-tile-avatar>
+                                <v-list-tile-content>
+                                    <v-list-tile-title v-html="item.title"></v-list-tile-title>
+                                    <v-list-tile-sub-title v-html="item.subtitle"></v-list-tile-sub-title>
+                                </v-list-tile-content>
+                            </v-list-tile>
+                        </template>
+                    </v-list>
+                </v-card>
             </v-tab-item>
         </v-tabs-items>
 
@@ -133,20 +151,20 @@
                     {header: '今天'},
                     {
                         avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
-                        title: 'Brunch this weekend?',
-                        subtitle: "I'll be in your neighborhood doing errands this weekend. Do you want to hang out?"
+                        title: '张教授',
+                        subtitle: "关于这个问题还请查阅《的速度还是看电视剧的》及《的两款手机都是大家》"
                     },
                     {divider: true, inset: true},
                     {
                         avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
-                        title: 'Summer BBQ',
-                        subtitle: "Wish I could come, but I'm out of town this weekend."
+                        title: '赵四四',
+                        subtitle: "好的麻烦了，谢谢"
                     },
                     {divider: true, inset: true},
                     {
                         avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
-                        title: 'Oui oui',
-                        subtitle: "Do you have Paris recommendations? Have you ever been?"
+                        title: '张三三',
+                        subtitle: "[图片]"
                     },
                 ],
                 friendList: [
@@ -155,6 +173,15 @@
                         active: true,
                         items: [
                             {nickname: '赵一', user_id: -1,},
+                        ]
+                    },
+                    {
+                        title: '分组二',
+                        active: true,
+                        items: [
+                            {nickname: '张三', user_id: -1,},
+                            {nickname: '满莫安', user_id: -1,},
+                            {nickname: '张飒飒', user_id: -1,},
                         ]
                     },
                 ],
@@ -185,6 +212,26 @@
                         title: '@我的',
                         subtitle: "用户123@了你"
                     }
+                ],
+                items5: [
+                    {header: '今天'},
+                    {
+                        avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
+                        title: '秃头猿之家',
+                        subtitle: "尤雨溪：[图片]"
+                    },
+                    {divider: true, inset: true},
+                    {
+                        avatar: 'https://cdn.vuetifyjs.com/images/lists/5.jpg',
+                        title: '正经群聊',
+                        subtitle: "大漠孤烟：我觉得OK"
+                    },
+                    {divider: true, inset: true},
+                    {
+                        avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg',
+                        title: '群聊二',
+                        subtitle: "张三三：聊啥啊"
+                    },
                 ],
             }
         },

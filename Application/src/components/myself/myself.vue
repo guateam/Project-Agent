@@ -48,7 +48,7 @@
                         </v-list-tile-content>
 
                         <v-list-tile-action>
-                            <v-icon :color="item.active ? 'teal' : 'grey'">chat_bubble</v-icon>
+                            <v-icon :color="item.active ? 'teal' : 'grey'">fas fa-angle-right</v-icon>
                         </v-list-tile-action>
                     </v-list-tile>
                 </v-list>
