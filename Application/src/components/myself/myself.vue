@@ -23,7 +23,7 @@
                 </div>
             </div>
             <div class="box">
-                <div class="box-main">
+                <div class="box-main" @click="$router.push('fanList')">
                     <div class="box-main-items" style="border-right: 2px black solid;">关注 <span
                             class="box-number">22</span>
                     </div>
