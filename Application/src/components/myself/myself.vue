@@ -1,7 +1,7 @@
 <template>
     <div class="bigbox">
         <div class="myself">
-            <div class="head" @click="go_to_login">
+            <div class="head" @click="$router.push('userDetail')">
                 <div class="head-main">
                     <div class="head-items">
                         <div class="pic">
