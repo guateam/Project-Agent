@@ -852,8 +852,8 @@ def get_collections():
                 'headline': value['content'],
                 'action': '',
                 'subtitle': str(db.count({'targettype': 1, 'targetID': value['answerID']},
-                                       'useraction')) + ' 评论 · ' + str(db.count({'answerID': value['answerID']},
-                                                                                'answercomments')) + ' 评论',
+                                         'useraction')) + ' 评论 · ' + str(db.count({'answerID': value['answerID']},
+                                                                                  'answercomments')) + ' 评论',
                 'id': value['answerID']
             })
         questions = db.get({'userID': user['userID']}, 'followquestion_info', 0)
@@ -863,10 +863,11 @@ def get_collections():
                 'title': value['title'],
                 'headline': value['description'],
                 'action': '',
-                'subtitle': str(db.count({'questionID':value['target']},'answers'))+' 回答 · '+str(db.count({'questionID': value['target']}, 'questioncomments')) + ' 评论',
+                'subtitle': str(db.count({'questionID': value['target']}, 'answers')) + ' 回答 · ' + str(
+                    db.count({'questionID': value['target']}, 'questioncomments')) + ' 评论',
                 'id': value['target']
             })
-        articles = db.get({'userID': user['userID']}, 'collect_article_info',0)
+        articles = db.get({'userID': user['userID']}, 'collect_article_info', 0)
         articles_data = []
         for value in articles:
             articles_data.append({
@@ -1000,12 +1001,32 @@ def get_question():
                 'user_headportrait': user['headportrait'],
                 'title': question['title'],
                 'description': question['description'],
-                'tags': question['tags'],
-                'question_type': question['question_type']
+                'tags': get_tags(question['tags']),
+                'question_type': question['question_type'],
+                'follow': db.count({'target': question_id}, 'followtopic'),
+                'comment': db.count({'questionID': question_id}, 'questioncomments'),
             }
             return jsonify({'code': 1, 'msg': 'success', 'data': data})
         return jsonify({'code': -1, 'msg': 'unknown user'})
     return jsonify({'code': 0, 'msg': 'unknown question'})
+
+
+@app.route('/api/questions/get_follow')
+def get_follow_question():
+    """
+    获取问题是否被收藏
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        question_id = request.values.get('question_id')
+        follow = db.get({'userID': user['userID'], 'target': question_id}, 'followtopic')
+        if follow:
+            return jsonify({'code': 1, 'msg': 'success'})
+        return jsonify({'code': -1, 'msg': 'unfollowed'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
 
 
 @app.route('/api/questions/follow_question')
@@ -1050,6 +1071,8 @@ def get_answer_list():
             {'questionID': question_id, 'state': 1}, 'answersinfo', 0)
         for answer in answer_list:
             answer['edittime'] = get_formative_datetime(answer['edittime'])
+            pattern = re.compile(r'<[Ii][Mm][Gg].+?/>')
+            answer.update({'image': pattern.findall(answer['content'])})
         return jsonify({'code': 1, 'msg': 'success', 'data': answer_list})
     return jsonify({'code': 0, 'msg': 'unknown question'})
 
@@ -1357,7 +1380,7 @@ def get_answer():
     return jsonify({'code': 0, 'msg': 'unknown answer'})
 
 
-@app.route('/api/get_answer_comment_list')
+@app.route('/api/answer/get_answer_comment_list')
 def get_answer_comment_list():
     """
     获取评论列表（倒序）
@@ -1406,6 +1429,58 @@ def collect_answer():
     user_id = user['userID']
     success = db.insert({'userID': user_id, 'answerID': answer_id}, 'collectanswer')
     set_user_action(user_id, answer_id, 37)
+    if success:
+        return jsonify({'code': 1, 'msg': "collect success"})
+    else:
+        return jsonify({'code': 0, 'msg': "there are something wrong when inserted the data into database"})
+
+
+@app.route('/api/answer/un_collect_answer')
+def un_collect_answer():
+    """
+    取消收藏
+    :return:
+    """
+    token = request.values.get('token')
+    answer_id = request.values.get('answer_id')
+
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    answer = db.get({'answerID': answer_id}, 'answers')
+
+    if not answer:
+        return jsonify({'code': -1, 'msg': "the answer is not exist"})
+    if not user:
+        return jsonify({'code': -2, 'msg': "the user is not exist"})
+
+    user_id = user['userID']
+    success = db.delete({'userID': user_id, 'answerID': answer_id}, 'collectanswer')
+    if success:
+        return jsonify({'code': 1, 'msg': "collect success"})
+    else:
+        return jsonify({'code': 0, 'msg': "there are something wrong when inserted the data into database"})
+
+
+@app.route('/api/answer/get_collect_state')
+def get_collect_answer_state():
+    """
+    获取是否已收藏
+    :return:
+    """
+    token = request.values.get('token')
+    answer_id = request.values.get('answer_id')
+
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    answer = db.get({'answerID': answer_id}, 'answers')
+
+    if not answer:
+        return jsonify({'code': -1, 'msg': "the answer is not exist"})
+    if not user:
+        return jsonify({'code': -2, 'msg': "the user is not exist"})
+
+    user_id = user['userID']
+    success = db.get({'userID': user_id, 'answerID': answer_id}, 'collectanswer')
     if success:
         return jsonify({'code': 1, 'msg': "collect success"})
     else:
@@ -1791,7 +1866,7 @@ def get_user_answers():
 """
 
 
-@app.route('/api/article/add_article')
+@app.route('/api/article/add_article', methods=['POST'])
 def add_article():
     """
     新建文章
@@ -2041,7 +2116,7 @@ def get_recommend():
     # 用户token
     token = request.values.get('token')
     # 用于推荐的评分矩阵路径，以api.py所在目录为根目录的表示
-    rate_dir = "../CF/rate_rect/question_rate_rect.txt"
+    rate_dir = "/etc/project-agent/CF/rate_rect/question_rate_rect.txt"
 
     # 获取用户信息
     db = Database()
@@ -2061,8 +2136,8 @@ def get_recommend():
             return jsonify({'code': -1, 'msg': 'the rate rectangle is not exist,please'
                                                ' build it by function build_questoin_rate_rect'})
         # 获得相似度降序排列的问题序列
-        recommend_question_ids = item_cf_api(rate_dir, "../CF/similar_rect/question_similar_rect.txt",
-                                             target_question_id, 3)
+        recommend_question_ids = item_cf_api(rate_dir, "/etc/project-agent/CF/similar_rect/question_similar_rect.txt",
+                                             target_question_id, 13)
         # 录入结果
         for id in recommend_question_ids:
             # 查询该id的问题信息
@@ -2074,8 +2149,9 @@ def get_recommend():
                 value1.update({
                     'type': 0,
                     'image': pattern.findall(value1['description']),
-                    'follow': db.count({'targettype': 4, 'targetID': value1['questionID']}, 'useraction'),
-                    'comment': db.count({'questionID': value1['questionID']}, 'questioncomments')
+                    'follow': db.count({'targettype': 12, 'targetID': value1['questionID']}, 'useraction'),
+                    'comment': db.count({'questionID': value1['questionID']}, 'questioncomments'),
+                    'tags': get_tags(value1['tags'])
                 })
                 # 修改日期格式
                 value1['edittime'] = get_formative_datetime(value1['edittime'])
@@ -2577,7 +2653,7 @@ def build_article_rate_rect():
     # file_name = request.values.get("file_name")
     file_name = "article_rate_rect.txt"
     # 重置文件内容
-    with open("../CF/rate_rect/" + file_name, "w") as f:
+    with open("/etc/project-agent/CF/rate_rect/" + file_name, "w") as f:
         pass
     db = Database()
     # targettype 对应的评分
@@ -2603,7 +2679,7 @@ def build_article_rate_rect():
                 rates[users[j]['userID']] = rate
 
         keys = rates.keys()
-        with open("../CF/rate_rect/" + file_name, "a+") as f:
+        with open("/etc/project-agent/CF/rate_rect/" + file_name, "a+") as f:
             f.write("ID:" + str(article[i]['articleID']) + " rate:")
             rate_str = ""
             for key in keys:
@@ -2625,7 +2701,7 @@ def build_question_rate_rect():
     # file_name = request.values.get("file_name")
     file_name = "question_rate_rect.txt"
     # 重置文件内容
-    with open("../CF/rate_rect/" + file_name, "w") as f:
+    with open("/etc/project-agent/CF/rate_rect/" + file_name, "w") as f:
         pass
     db = Database()
     # targettype 对应的评分
@@ -2651,7 +2727,7 @@ def build_question_rate_rect():
                 rates[users[j]['userID']] = rate
 
         keys = rates.keys()
-        with open("../CF/rate_rect/" + file_name, "a+") as f:
+        with open("/etc/project-agent/CF/rate_rect/" + file_name, "a+") as f:
             f.write("ID:" + str(questions[i]['questionID']) + " rate:")
             rate_str = ""
             for key in keys:
@@ -3366,13 +3442,14 @@ def get_similar_article():
     :return:
     """
     article_id = request.values.get('article_id')
-    rate_dir = '../CF/rate_rect/article_rate_rect.txt'
+    rate_dir = '/etc/project-agent/CF/rate_rect/article_rate_rect.txt'
     # 判断评分矩阵是否存在
     if not os.path.exists(rate_dir):
         return jsonify({'code': 0, 'msg': 'the rate rectangle is not exist,please'
                                           ' build it by function build_article_rate_rect'})
     # 推荐的文章id,最多3条，相似度降序排列
-    recommend_article = item_cf_api(rate_dir, "../CF/similar_rect/article_similar_rect.txt", article_id, 3)
+    recommend_article = item_cf_api(rate_dir, "/etc/project-agent/CF/similar_rect/article_similar_rect.txt", article_id,
+                                    3)
 
     return jsonify({'code': 1, 'msg': 'success', 'data': recommend_article})
 
@@ -3386,7 +3463,7 @@ def get_recommend_article():
     token = request.values.get('token')
     db = Database()
     user = db.get({'token': token}, 'users')
-    rate_dir = '../CF/rate_rect/article_rate_rect.txt'
+    rate_dir = '/etc/project-agent/CF/rate_rect/article_rate_rect.txt'
     if not user:
         return jsonify({'code': 0, 'msg': 'user is not exist'})
     # 判断评分矩阵是否存在
@@ -3400,7 +3477,7 @@ def get_recommend_article():
     recommend_article = []
     # 推荐的文章id,最多3条，相似度降序排列
     for each in action:
-        ids = item_cf_api(rate_dir, "../CF/similar_rect/article_similar_rect.txt", each['targetID'], 3)
+        ids = item_cf_api(rate_dir, "/etc/project-agent/CF/similar_rect/article_similar_rect.txt", each['targetID'], 3)
         for id in ids:
             article = db.get({'articleID': id}, 'article')
             recommend_article += article
@@ -3870,4 +3947,5 @@ if __name__ == '__main__':
     # with open('static\\upload\\36.txt', 'rb') as file:
     #     result = pred(file.read())
     #     print(result[0])
-    app.run(host='0.0.0.0',port=5000,debug=False,ssl_context=('/etc/letsencrypt/live/hanerx.tk/fullchain.pem', '/etc/letsencrypt/live/hanerx.tk/privkey.pem'))
+    app.run(host='0.0.0.0', port=5000, debug=False, ssl_context=(
+        '/etc/letsencrypt/live/hanerx.tk/fullchain.pem', '/etc/letsencrypt/live/hanerx.tk/privkey.pem'))
