@@ -131,9 +131,9 @@
                 // 获取问题列表
                 import('js-cookie').then((Cookies) => {
                     import('axios').then((axios) => {
-                        axios.get('http://127.0.0.1:5000/api/homepage/get_recommend', {
+                        axios.get('https://' + this.GLOBAL.host + '/api/homepage/get_recommend', {
                             responseType: 'json',
-                            params: {token: Cookies.get('token')}
+                            params: {token: this.GLOBAL.token}
                         }).then((response) => {
                             let data_list = response.data.data;
                             this.question_list = [];
@@ -150,7 +150,7 @@
             get_category() {
                 // 获取分类
                 import('axios').then((axios) => {
-                    axios.get('http://localhost:5000/api/homepage/get_category', {
+                    axios.get('https://' + this.GLOBAL.host + '/api/homepage/get_category', {
                         responseType: 'json'
                     }).then((res) => {
                         this.category = res.data.data;
@@ -173,8 +173,11 @@
             },
         },
         mounted() {
-            this.get_category();
-            this.get_question_list();
+            let that=this;
+            that.get_category();
+            setTimeout(function () {
+                that.get_question_list();
+            }, 1000)
         },
     }
 </script>

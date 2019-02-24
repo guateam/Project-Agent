@@ -84,7 +84,7 @@
             get_message(token, receiver) {
                 // 获取消息记录
                 import('axios').then((axios) => {
-                    axios.get('http://127.0.0.1:5000/api/message/get_chat_box', {
+                    axios.get('https://'+this.GLOBAL.host+'/api/message/get_chat_box', {
                         responseType: 'json',
                         params: {
                             token: token,
