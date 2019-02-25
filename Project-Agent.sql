@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost_3306
-Source Server Version : 50717
-Source Host           : localhost:3306
+Source Server         : 搬瓦工
+Source Server Version : 50725
+Source Host           : hanerx.tk:3306
 Source Database       : project-agent
 
 Target Server Type    : MYSQL
-Target Server Version : 50717
+Target Server Version : 50725
 File Encoding         : 65001
 
-Date: 2019-02-19 21:58:55
+Date: 2019-02-24 20:56:11
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -73,11 +73,11 @@ CREATE TABLE `article` (
   `title` varchar(50) NOT NULL,
   `edittime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `userID` int(10) NOT NULL,
-  `tags` varchar(45) NOT NULL,
+  `tags` varchar(45) NOT NULL DEFAULT '',
   `state` int(2) NOT NULL DEFAULT '0',
   `free` int(1) unsigned NOT NULL DEFAULT '1' COMMENT '是否免费   0-不是  1-是',
   PRIMARY KEY (`articleID`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of article
@@ -87,6 +87,7 @@ INSERT INTO `article` VALUES ('2', '第二篇文章，啊啊啊啊啊啊啊啊�
 INSERT INTO `article` VALUES ('3', '我的研究报告内容为：如何熟练运用查克拉进行车床加工', '查克拉与车床', '2019-01-29 13:56:02', '2', '', '0', '1');
 INSERT INTO `article` VALUES ('4', '猪脑内的电波经过放大后可以利用在大型发电机上，这可能是能源危机的新突破口，量产猪脑等同于量产电池', '猪脑与能源的关联', '2019-01-29 13:58:08', '3', '', '0', '1');
 INSERT INTO `article` VALUES ('5', '高考带给学生的压力经过提取后可以用在高压水刀上，这将进一步提高水刀的切割效率和准度，大面积推广高压教育有利于国内加工业的飞速发展', '高压水刀改经建议', '2019-01-29 14:00:15', '2', '', '0', '1');
+INSERT INTO `article` VALUES ('6', '丢，yyz好像没写好', '这个文章是什么回事', '2019-02-21 06:48:08', '1', '', '0', '1');
 
 -- ----------------------------
 -- Table structure for `collectanswer`
@@ -97,12 +98,11 @@ CREATE TABLE `collectanswer` (
   `userID` int(11) NOT NULL,
   `answerID` int(11) NOT NULL,
   PRIMARY KEY (`idCollectAnswer`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='收藏：用户-答案映射';
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='收藏：用户-答案映射';
 
 -- ----------------------------
 -- Records of collectanswer
 -- ----------------------------
-INSERT INTO `collectanswer` VALUES ('1', '1', '1');
 
 -- ----------------------------
 -- Table structure for `collectarticle`
@@ -113,12 +113,11 @@ CREATE TABLE `collectarticle` (
   `userID` int(11) NOT NULL,
   `articleID` int(11) NOT NULL,
   PRIMARY KEY (`idCollectArticle`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='收藏：用户-文章映射';
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='收藏：用户-文章映射';
 
 -- ----------------------------
 -- Records of collectarticle
 -- ----------------------------
-INSERT INTO `collectarticle` VALUES ('1', '1', '1');
 
 -- ----------------------------
 -- Table structure for `demands`
@@ -182,12 +181,12 @@ CREATE TABLE `followtopic` (
   `userID` int(11) NOT NULL COMMENT '用户ID',
   `target` int(11) NOT NULL COMMENT '目标 话题ID',
   PRIMARY KEY (`idFollowTopic`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='用户-话题 关注关系映射表';
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='用户-话题 关注关系映射表';
 
 -- ----------------------------
 -- Records of followtopic
 -- ----------------------------
-INSERT INTO `followtopic` VALUES ('1', '1', '1');
+
 
 -- ----------------------------
 -- Table structure for `followuser`
@@ -198,7 +197,7 @@ CREATE TABLE `followuser` (
   `userID` int(11) NOT NULL COMMENT '用户ID',
   `target` int(11) NOT NULL COMMENT '目标 用户ID',
   PRIMARY KEY (`idFollowUser`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='用户-用户 关注关系映射表';
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='用户-用户 关注关系映射表';
 
 -- ----------------------------
 -- Records of followuser
@@ -207,25 +206,11 @@ INSERT INTO `followuser` VALUES ('1', '1', '2');
 INSERT INTO `followuser` VALUES ('2', '2', '1');
 INSERT INTO `followuser` VALUES ('3', '1', '3');
 INSERT INTO `followuser` VALUES ('4', '3', '1');
-
--- ----------------------------
--- Table structure for `groups`
--- ----------------------------
-DROP TABLE IF EXISTS `groups`;
-CREATE TABLE `groups` (
-  `groupID` int(10) NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) NOT NULL,
-  `description` text NOT NULL,
-  `userID` int(10) NOT NULL,
-  `head_portrait` text,
-  `state` int(2) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`groupID`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;
-
--- ----------------------------
--- Records of groups
--- ----------------------------
-INSERT INTO `groups` VALUES ('4', 'project-agent讨论群', '这是测试群', '1', 'http://img3.imgtn.bdimg.com/it/u=3524594933,3944395980&fm=214&gp=0.jpg', '0');
+INSERT INTO `followuser` VALUES ('5', '4', '1');
+INSERT INTO `followuser` VALUES ('6', '5', '1');
+INSERT INTO `followuser` VALUES ('7', '6', '1');
+INSERT INTO `followuser` VALUES ('8', '7', '1');
+INSERT INTO `followuser` VALUES ('9', '1', '3');
 
 -- ----------------------------
 -- Table structure for `group_members`
@@ -266,6 +251,25 @@ CREATE TABLE `group_message` (
 INSERT INTO `group_message` VALUES ('1', '这是一个测试群，用于测试线上会议的功能', '1', '4', '0', '2019-01-25 14:00:29');
 INSERT INTO `group_message` VALUES ('2', '忘记写type=0了，哈哈哈', '1', '4', '0', '2019-01-25 14:07:52');
 INSERT INTO `group_message` VALUES ('3', '忘记写type=0了，哈哈哈', '2', '4', '0', '2019-01-25 14:26:09');
+
+-- ----------------------------
+-- Table structure for `groups`
+-- ----------------------------
+DROP TABLE IF EXISTS `groups`;
+CREATE TABLE `groups` (
+  `groupID` int(10) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) NOT NULL,
+  `description` text NOT NULL,
+  `userID` int(10) NOT NULL,
+  `head_portrait` text,
+  `state` int(2) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`groupID`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;
+
+-- ----------------------------
+-- Records of groups
+-- ----------------------------
+INSERT INTO `groups` VALUES ('4', 'project-agent讨论群', '这是测试群', '1', 'http://img3.imgtn.bdimg.com/it/u=3524594933,3944395980&fm=214&gp=0.jpg', '0');
 
 -- ----------------------------
 -- Table structure for `messages`
@@ -394,17 +398,12 @@ CREATE TABLE `questions` (
   `price` int(255) NOT NULL DEFAULT '0',
   `allowed_user` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`questionID`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='问题\r\n';
+) ENGINE=InnoDB AUTO_INCREMENT=208 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='问题\r\n';
 
 -- ----------------------------
 -- Records of questions
 -- ----------------------------
-INSERT INTO `questions` VALUES ('1', '刚刚研制成功的世界首台分辨力最高紫外超分辨光刻装备意味着什么？对国内芯片行业有何影响？', '这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述', '2018-12-17 21:00:38', '1', null, '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('2', '程序员是如何看待「祖传代码」的？', '说明一下……此处「祖传代码」与百度搜索「祖传代码」词条出现的某直播平台后缀无关……\n\n几位答主提到祖传代码不仅游戏领域有，其他领域也存在，所以删除了游戏标签，问题修改为作为程序员对于「祖传代码」这种说法或其本身有什么看法吐槽。\n\n对码农一无所知，提问的初衷大概是为了爱与和平。\n\n感谢扫盲_(:з」∠)_', '2018-12-15 18:46:54', '1', null, '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('3', '为什么总是有人说 Java 啰嗦，却没人说 C++ 啰嗦？', '哈哈哈哈哈哈', '2018-12-15 18:47:38', '1', null, '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('4', '有哪些让你目瞪口呆的 bug？', '', '2018-12-15 18:49:52', '1', null, '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('5', '互联网行业的裁员潮是否已经开始了？', '【此为2018年的提问】\n\n看到媒体也开始说这件事了……普通员工如何扛过去呢？', '2018-12-15 18:51:16', '1', null, '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('6', '@测试提问', '【此为2018年的提问】\n@拉拉人 \n看到媒体也开始说这件事了……普通员工如何扛过去呢？', '2018-12-29 10:35:05', '1', null, '-1', '0', '0', null);
+
 
 -- ----------------------------
 -- Table structure for `search_word`
@@ -451,10 +450,10 @@ CREATE TABLE `sys_message` (
   `userID` int(10) NOT NULL,
   `createtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `type` int(2) NOT NULL,
-  `target` int(10) NOT NULL,
+  `target` int(10) NOT NULL DEFAULT '0',
   `content` text NOT NULL,
   PRIMARY KEY (`noticeID`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of sys_message
@@ -485,6 +484,10 @@ INSERT INTO `sys_message` VALUES ('23', '你的实名认证申请已通过！', 
 INSERT INTO `sys_message` VALUES ('24', '您发布的问题 @测试提问 已被管理员清除！', '1', '2019-02-03 11:44:26', '1', '1', '');
 INSERT INTO `sys_message` VALUES ('25', 'FirstCry！！！', '1', '2019-02-03 12:45:01', '0', '0', '');
 INSERT INTO `sys_message` VALUES ('26', '测试！', '1', '2019-02-03 12:48:00', '0', '0', '啦啦啦');
+INSERT INTO `sys_message` VALUES ('27', '测试！', '1', '2019-02-21 03:36:01', '0', '0', '点对点');
+INSERT INTO `sys_message` VALUES ('28', '测试！', '1', '2019-02-21 06:44:32', '0', '0', '测试！');
+INSERT INTO `sys_message` VALUES ('29', '测试！', '1', '2019-02-21 06:44:48', '0', '0', '测试！');
+INSERT INTO `sys_message` VALUES ('30', '测试！', '1', '2019-02-21 06:45:09', '0', '0', '测试！');
 
 -- ----------------------------
 -- Table structure for `tags`
@@ -529,50 +532,12 @@ CREATE TABLE `useraction` (
   `targettype` int(11) NOT NULL COMMENT '行为类型',
   `actiontime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '行为发生时间',
   PRIMARY KEY (`actionID`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='用户行为表\n';
+) ENGINE=InnoDB AUTO_INCREMENT=2267 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='用户行为表\n';
 
 -- ----------------------------
 -- Records of useraction
 -- ----------------------------
-INSERT INTO `useraction` VALUES ('1', '2', '1', '1', '2018-12-25 14:43:45');
-INSERT INTO `useraction` VALUES ('2', '1', '1', '1', '2018-12-29 11:14:26');
-INSERT INTO `useraction` VALUES ('3', '1', '1', '3', '2018-12-29 11:15:40');
-INSERT INTO `useraction` VALUES ('4', '1', '1', '2', '2018-12-29 11:17:17');
-INSERT INTO `useraction` VALUES ('5', '1', '1', '11', '2019-01-25 22:06:34');
-INSERT INTO `useraction` VALUES ('6', '1', '2', '11', '2019-01-25 22:06:44');
-INSERT INTO `useraction` VALUES ('7', '1', '3', '11', '2019-01-25 22:07:02');
-INSERT INTO `useraction` VALUES ('8', '1', '5', '11', '2019-01-25 22:07:07');
-INSERT INTO `useraction` VALUES ('9', '1', '2', '12', '2019-01-25 22:07:20');
-INSERT INTO `useraction` VALUES ('10', '1', '3', '12', '2019-01-25 22:07:25');
-INSERT INTO `useraction` VALUES ('11', '1', '3', '13', '2019-01-25 22:07:29');
-INSERT INTO `useraction` VALUES ('12', '2', '1', '11', '2019-01-25 22:08:06');
-INSERT INTO `useraction` VALUES ('13', '2', '2', '11', '2019-01-25 22:08:11');
-INSERT INTO `useraction` VALUES ('14', '2', '3', '11', '2019-01-25 22:08:18');
-INSERT INTO `useraction` VALUES ('15', '2', '3', '12', '2019-01-25 22:08:23');
-INSERT INTO `useraction` VALUES ('16', '3', '2', '11', '2019-01-25 22:08:48');
-INSERT INTO `useraction` VALUES ('17', '3', '5', '11', '2019-01-25 22:08:51');
-INSERT INTO `useraction` VALUES ('18', '3', '6', '11', '2019-01-25 22:08:55');
-INSERT INTO `useraction` VALUES ('19', '3', '6', '13', '2019-01-25 22:09:02');
-INSERT INTO `useraction` VALUES ('20', '1', '4', '27', '2019-02-02 21:49:36');
-INSERT INTO `useraction` VALUES ('21', '1', '5', '27', '2019-02-02 21:50:38');
-INSERT INTO `useraction` VALUES ('22', '1', '7', '27', '2019-02-02 21:50:49');
-INSERT INTO `useraction` VALUES ('23', '1', '6', '27', '2019-02-02 21:54:56');
-INSERT INTO `useraction` VALUES ('24', '1', '6', '27', '2019-02-02 21:55:06');
-INSERT INTO `useraction` VALUES ('25', '1', '6', '27', '2019-02-02 21:55:29');
-INSERT INTO `useraction` VALUES ('26', '1', '4', '27', '2019-02-02 21:57:01');
-INSERT INTO `useraction` VALUES ('27', '1', '4', '27', '2019-02-02 21:57:49');
-INSERT INTO `useraction` VALUES ('28', '1', '5', '27', '2019-02-02 21:59:58');
-INSERT INTO `useraction` VALUES ('29', '1', '6', '27', '2019-02-02 22:11:18');
-INSERT INTO `useraction` VALUES ('30', '1', '7', '27', '2019-02-02 22:11:23');
-INSERT INTO `useraction` VALUES ('31', '1', '4', '27', '2019-02-02 22:17:41');
-INSERT INTO `useraction` VALUES ('32', '1', '8', '27', '2019-02-02 22:18:06');
-INSERT INTO `useraction` VALUES ('33', '1', '4', '27', '2019-02-03 10:58:11');
-INSERT INTO `useraction` VALUES ('34', '1', '5', '27', '2019-02-03 11:00:01');
-INSERT INTO `useraction` VALUES ('35', '1', '6', '27', '2019-02-03 11:04:06');
-INSERT INTO `useraction` VALUES ('36', '1', '4', '26', '2019-02-03 11:08:36');
-INSERT INTO `useraction` VALUES ('37', '1', '5', '26', '2019-02-03 11:10:16');
-INSERT INTO `useraction` VALUES ('38', '1', '6', '26', '2019-02-03 11:11:25');
-INSERT INTO `useraction` VALUES ('39', '1', '6', '34', '2019-02-03 11:44:26');
+
 
 -- ----------------------------
 -- Table structure for `users`
@@ -590,25 +555,25 @@ CREATE TABLE `users` (
   `birthday` datetime DEFAULT NULL COMMENT '生日',
   `phonenumber` varchar(45) DEFAULT NULL COMMENT '电话号码',
   `address` varchar(256) DEFAULT NULL COMMENT '地址',
-  `description` text NOT NULL,
+  `description` text,
   `state` int(2) NOT NULL DEFAULT '1',
-  `gender` varchar(1) NOT NULL,
-  `number` varchar(45) NOT NULL,
-  `real_name` varchar(20) NOT NULL,
-  `nationality` varchar(20) NOT NULL,
+  `gender` varchar(1) NOT NULL DEFAULT '',
+  `number` varchar(45) NOT NULL DEFAULT '',
+  `real_name` varchar(20) NOT NULL DEFAULT '',
+  `nationality` varchar(20) NOT NULL DEFAULT '',
   `account_balance` int(255) NOT NULL DEFAULT '0' COMMENT '账户余额',
-  `specialitst_license` varchar(255) NOT NULL,
+  `specialitst_license` varchar(255) NOT NULL DEFAULT '',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `last_login` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `front_pic` text,
   `back_pic` text,
   PRIMARY KEY (`userID`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='用户表';
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='用户表';
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES ('1', 'zhangyu199946@126.com', '拉拉人', 'ec847003d2eadc9baf60853e8391e167a292c21f01892fcb8bad0f4af6cd74a7', 'https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1549078352&di=0e4e5ee31b005f20859bdb1a0f4ebf58&src=http://s2.sinaimg.cn/mw690/005LKisygy722sIQw2B41&690', '0', '998', 'R6Ezqj08kIxYlL1UnMZw3eosP', null, null, null, '弗兰秀秀牛逼', '0', '', '', '德玛西亚', '', '999', '', '2019-02-18 20:06:58', '2019-02-18 20:06:58', null, null);
+INSERT INTO `users` VALUES ('1', 'zhangyu199946@126.com', '拉拉人', 'ec847003d2eadc9baf60853e8391e167a292c21f01892fcb8bad0f4af6cd74a7', 'https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1549078352&di=0e4e5ee31b005f20859bdb1a0f4ebf58&src=http://s2.sinaimg.cn/mw690/005LKisygy722sIQw2B41&690', '0', '199998', 'euacRJZ12izLS6khAt0MDBwUI', null, null, null, '弗兰秀秀牛逼', '0', '', '', '德玛西亚', '', '999', '', '2019-02-24 07:16:40', '2019-02-24 07:16:40', null, null);
 INSERT INTO `users` VALUES ('2', 'yyz@126.com', '袁宜照', '317f16f4833885da6766e81b35c7258fe4451798600a1ad980babb9e9f412fc2', 'https://cdn.vuetifyjs.com/images/lists/1.jpg', '0', '0', 'TNp6hR7ElkJK4Z5Xfte0VyqG3', null, null, null, '', '0', '', '', '啦啦啦', '', '0', '', '2019-02-02 19:52:52', '2019-02-02 19:52:52', null, null);
 INSERT INTO `users` VALUES ('3', 'zyxiaohao@126.com', '张煜', 'cb8f260c5b29ec2a17d662133ebcf99cd4594e29b0ffeb54599ffe5f3801c3ed', 'https://cdn.vuetifyjs.com/images/lists/3.jpg', '1', '0', 'moLsBPX7rCzIa6QJARxibW4u3', null, null, null, '', '2', '', '', '光头', '', '0', '', '2019-02-02 19:53:15', '2019-02-02 19:53:15', null, null);
 INSERT INTO `users` VALUES ('4', 'user1@user1.com', '用户1', '599e60bc4121595f91c6a775e0154e75244f755e51bebbfa8cf66a9f25746f24', null, '1', '0', '2223', null, null, '德莉莎', '', '2', '二', '没有', '傻缺', '和', '0', '', '2019-02-03 11:08:36', '2019-02-03 11:08:36', '/static/identity_card/4_front.jpg', '/static/identity_card/4_back.jpg');
@@ -638,6 +603,12 @@ INSERT INTO `users` VALUES ('27', 'com4@com1.com', '用户 cjeu5tq427', '1a7c653
 INSERT INTO `users` VALUES ('28', 'com5@com1.com', '用户 yg7m8rhwz1', '3aad5c958caa869dcaa2402edf2fe71b7f286d79903bb77eb6d14b40e16d6a0d', null, '6', '0', '', null, null, null, '', '0', '', '', '', '', '0', '', '2019-02-02 19:26:17', '2019-02-02 19:26:17', null, null);
 INSERT INTO `users` VALUES ('29', 'com6@com1.com', '用户 8wei1lspy9', '9e0e546f766d888da7c46848989f56c62e60aa45dd81019c1bbaed114252754d', null, '6', '0', '', null, null, null, '', '0', '', '', '', '', '0', '', '2019-02-02 19:26:18', '2019-02-02 19:26:18', null, null);
 INSERT INTO `users` VALUES ('30', 'com7@com1.com', '用户 io69u3s5lc', 'e95aba424cce4a1fe53902c62ca0fa0ecf09b8c7112cde86a94f089790a68502', null, '6', '0', '', null, null, null, '', '0', '', '', '', '', '0', '', '2019-02-02 19:26:20', '2019-02-02 19:26:20', null, null);
+
+-- ----------------------------
+-- View structure for `a_at_info`
+-- ----------------------------
+DROP VIEW IF EXISTS `a_at_info`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `a_at_info` AS select `users`.`nickname` AS `nickname`,`users`.`headportrait` AS `headportrait`,`users`.`usergroup` AS `usergroup`,`users`.`exp` AS `exp`,`answers`.`answerID` AS `answerID`,`answers`.`edittime` AS `edittime`,`answers`.`content` AS `content`,`answers`.`userID` AS `userID` from (`users` join `answers`) where (`users`.`userID` = `answers`.`userID`) ;
 
 -- ----------------------------
 -- View structure for `ac_at_info`
@@ -674,12 +645,6 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 -- ----------------------------
 DROP VIEW IF EXISTS `articleinfo`;
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `articleinfo` AS select `article`.`articleID` AS `articleID`,`article`.`content` AS `content`,`article`.`title` AS `title`,`article`.`edittime` AS `edittime`,`article`.`userID` AS `userID`,`article`.`tags` AS `tags`,`users`.`nickname` AS `nickname`,`users`.`headportrait` AS `headportrait`,`users`.`usergroup` AS `usergroup`,`users`.`exp` AS `exp`,`article`.`state` AS `state` from (`article` join `users`) where (`article`.`userID` = `users`.`userID`) ;
-
--- ----------------------------
--- View structure for `a_at_info`
--- ----------------------------
-DROP VIEW IF EXISTS `a_at_info`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `a_at_info` AS select `users`.`nickname` AS `nickname`,`users`.`headportrait` AS `headportrait`,`users`.`usergroup` AS `usergroup`,`users`.`exp` AS `exp`,`answers`.`answerID` AS `answerID`,`answers`.`edittime` AS `edittime`,`answers`.`content` AS `content`,`answers`.`userID` AS `userID` from (`users` join `answers`) where (`users`.`userID` = `answers`.`userID`) ;
 
 -- ----------------------------
 -- View structure for `chat_box`
@@ -736,16 +701,16 @@ DROP VIEW IF EXISTS `orderinfo`;
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `orderinfo` AS select `orders`.`orderID` AS `orderID`,`orders`.`userID` AS `userID`,`orders`.`target` AS `target`,`orders`.`start_time` AS `start_time`,`orders`.`content` AS `content`,`orders`.`end_time` AS `end_time`,`users`.`nickname` AS `nickname`,`users`.`headportrait` AS `headportrait`,`users`.`usergroup` AS `usergroup`,`users`.`exp` AS `exp`,`users`.`description` AS `description`,`orders`.`state` AS `state` from (`users` join `orders`) where (`users`.`userID` = `orders`.`userID`) ;
 
 -- ----------------------------
+-- View structure for `q_at_info`
+-- ----------------------------
+DROP VIEW IF EXISTS `q_at_info`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `q_at_info` AS select `questions`.`questionID` AS `questionID`,`questions`.`title` AS `title`,`questions`.`description` AS `description`,`questions`.`userID` AS `userID`,`users`.`nickname` AS `nickname`,`users`.`headportrait` AS `headportrait`,`users`.`usergroup` AS `usergroup`,`users`.`exp` AS `exp`,`questions`.`edittime` AS `edittime` from (`questions` join `users`) where (`questions`.`userID` = `users`.`userID`) ;
+
+-- ----------------------------
 -- View structure for `qc_at_info`
 -- ----------------------------
 DROP VIEW IF EXISTS `qc_at_info`;
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `qc_at_info` AS select `questioncomments`.`userID` AS `userID`,`questioncomments`.`qcommentID` AS `qcommentID`,`questioncomments`.`content` AS `content`,`users`.`nickname` AS `nickname`,`users`.`headportrait` AS `headportrait`,`users`.`usergroup` AS `usergroup`,`users`.`exp` AS `exp`,`questioncomments`.`createtime` AS `createtime` from (`questioncomments` join `users`) where (`questioncomments`.`userID` = `users`.`userID`) ;
-
--- ----------------------------
--- View structure for `questionsinfo`
--- ----------------------------
-DROP VIEW IF EXISTS `questionsinfo`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `questionsinfo` AS select `questions`.`questionID` AS `questionID`,`questions`.`title` AS `title`,`questions`.`description` AS `description`,`questions`.`edittime` AS `edittime`,`questions`.`userID` AS `userID`,`questions`.`tags` AS `tags`,`users`.`nickname` AS `nickname`,`users`.`headportrait` AS `headportrait`,`users`.`usergroup` AS `usergroup`,`users`.`exp` AS `exp`,`questions`.`state` AS `state` from (`questions` join `users`) where (`questions`.`userID` = `users`.`userID`) ;
 
 -- ----------------------------
 -- View structure for `question_comments_info`
@@ -754,10 +719,10 @@ DROP VIEW IF EXISTS `question_comments_info`;
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `question_comments_info` AS select `questioncomments`.`qcommentID` AS `qcommentID`,`questioncomments`.`userID` AS `userID`,`questioncomments`.`content` AS `content`,`questioncomments`.`agree` AS `agree`,`questioncomments`.`createtime` AS `createtime`,`questioncomments`.`questionID` AS `questionID`,`users`.`nickname` AS `nickname`,`users`.`headportrait` AS `headportrait`,`users`.`usergroup` AS `usergroup`,`users`.`exp` AS `exp` from (`questioncomments` join `users`) where (`questioncomments`.`userID` = `users`.`userID`) ;
 
 -- ----------------------------
--- View structure for `q_at_info`
+-- View structure for `questionsinfo`
 -- ----------------------------
-DROP VIEW IF EXISTS `q_at_info`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `q_at_info` AS select `questions`.`questionID` AS `questionID`,`questions`.`title` AS `title`,`questions`.`description` AS `description`,`questions`.`userID` AS `userID`,`users`.`nickname` AS `nickname`,`users`.`headportrait` AS `headportrait`,`users`.`usergroup` AS `usergroup`,`users`.`exp` AS `exp`,`questions`.`edittime` AS `edittime` from (`questions` join `users`) where (`questions`.`userID` = `users`.`userID`) ;
+DROP VIEW IF EXISTS `questionsinfo`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `questionsinfo` AS select `questions`.`questionID` AS `questionID`,`questions`.`title` AS `title`,`questions`.`description` AS `description`,`questions`.`edittime` AS `edittime`,`questions`.`userID` AS `userID`,`questions`.`tags` AS `tags`,`users`.`nickname` AS `nickname`,`users`.`headportrait` AS `headportrait`,`users`.`usergroup` AS `usergroup`,`users`.`exp` AS `exp`,`questions`.`state` AS `state` from (`questions` join `users`) where (`questions`.`userID` = `users`.`userID`) ;
 
 -- ----------------------------
 -- View structure for `signed_demand_info`

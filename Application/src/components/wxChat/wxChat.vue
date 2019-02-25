@@ -221,6 +221,7 @@
     .message{
         /*height: 100%;*/
         padding: 10px 15px;
+        padding-bottom: 30px;
         /*overflow-y: scroll;*/
         background-color: #F5F5F5;
     }
@@ -237,7 +238,7 @@
     .message .text {
         display: inline-block;
         position: relative;
-        padding: 0 10px;
+        /*padding: 0 10px;*/
         max-width: calc(100% - 75px);
         min-height: 35px;
         line-height: 2.1;
