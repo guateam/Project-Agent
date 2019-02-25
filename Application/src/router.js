@@ -18,6 +18,8 @@ import Callme from './components/callme/callme'
 import SchoolDetail from './views/schoolDetail'
 import dataCenter from './views/dataCenter'
 import publish from './views/publish'
+import userDetail from './views/userDetail'
+import fanList from './views/fanList'
 
 
 const view = name => () => import(`./views/${name}`);
@@ -105,6 +107,16 @@ export default new Router({
             name: 'myself',
             component: Myself,
             children:[
+                {
+                    path: '/userDetail',
+                    name: 'userDetail',
+                    component: view('userDetail')
+                },
+                {
+                    path: '/fanList',
+                    name: 'fanList',
+                    component: view('fanList')
+                },
                 {
                     path: '/settings',
                     name: 'settings',
