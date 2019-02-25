@@ -1,25 +1,27 @@
 <template>
-    <div class="chat">
-        <div class="head">
-            <span class="goback" @click="$router.push('./message')">&lt;</span>
-            <h2>李一般</h2>
-            <span class="setting" @click="$router.push('./chatSetting')">设置</span>
-        </div>
-        <div class="line"></div>
-        <div style="width: 100%;">
-            <WxChat
-                    :data="wxChatData"
-                    :showShade="false"
-                    contactNickname="简叔"
-                    :getUpperData="getUpperData"
-                    :getUnderData="getUnderData"
-                    :ownerAvatarUrl="ownerAvatarUrl"
-                    :contactAvatarUrl="contactAvatarUrl"
-                    :width="width">
-            </WxChat>
-        </div>
-        <div class="footinput">
-            <input type="text">
+    <div class="bigbox">
+        <div class="chat">
+            <div class="head">
+                <span class="goback" @click="$router.push('./message')">&lt;</span>
+                <h2>李一般</h2>
+                <span class="setting" @click="$router.push('./chatSetting')">设置</span>
+            </div>
+            <div class="line"></div>
+            <div style="width: 100%;">
+                <WxChat
+                        :data="wxChatData"
+                        :showShade="false"
+                        contactNickname="简叔"
+                        :getUpperData="getUpperData"
+                        :getUnderData="getUnderData"
+                        :ownerAvatarUrl="ownerAvatarUrl"
+                        :contactAvatarUrl="contactAvatarUrl"
+                        :width="width">
+                </WxChat>
+                <div class="footinput">
+                    <input type="text">
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -29,7 +31,7 @@
 
     export default {
         name: "chat",
-        components:{WxChat},
+        components: {WxChat},
         data() {
             return {
                 upperTimes: 0,
@@ -77,14 +79,14 @@
                     }]
             }
         },
-        created(){
+        created() {
             this.initWidth();
         },
-        methods:{
+        methods: {
             get_message(token, receiver) {
                 // 获取消息记录
                 import('axios').then((axios) => {
-                    axios.get('http://127.0.0.1:5000/api/message/get_chat_box', {
+                    axios.get('https://' + this.GLOBAL.host + '/api/message/get_chat_box', {
                         responseType: 'json',
                         params: {
                             token: token,
@@ -97,20 +99,20 @@
                 })
             },
 
-            initWidth(){
+            initWidth() {
                 let ua = navigator.userAgent;
                 let ipad = ua.match(/(iPad).*OS\s([\d_]+)/),
-                    isIphone =!ipad && ua.match(/(iPhone\sOS)\s([\d_]+)/),
+                    isIphone = !ipad && ua.match(/(iPhone\sOS)\s([\d_]+)/),
                     isAndroid = ua.match(/(Android)\s+([\d.]+)/),
                     isMobile = isIphone || isAndroid;
                 //非移动端设置400px宽度，移动端是100%
-                if(!isMobile){
+                if (!isMobile) {
                     this.width = 400
                 }
             },
 
             //向上滚动加载数据
-            getUpperData(){
+            getUpperData() {
                 var me = this;
 
                 // 这里为模拟异步加载数据
@@ -118,44 +120,43 @@
                 // return axios.get('xxx').then(function(result){
                 //     return result;  //result的格式需要类似下面resolve里面的数组
                 // })
-                return new Promise(function(resolve){
-                    setTimeout(function(){
+                return new Promise(function (resolve) {
+                    setTimeout(function () {
                         //模拟加载完毕
-                        if(me.upperTimes>3){
+                        if (me.upperTimes > 3) {
                             return resolve([]);
                         }
 
                         //加载数据
                         resolve([{
                                 direction: 2,
-                                id: me.upperId-1,
+                                id: me.upperId - 1,
                                 type: 1,
-                                content: '向上滚动加载第 ' + me.upperTimes +' 条！',
+                                content: '向上滚动加载第 ' + me.upperTimes + ' 条！',
                                 ctime: new Date().toLocaleString()
                             },
                                 {
                                     direction: 1,
-                                    id: me.upperId-2,
+                                    id: me.upperId - 2,
                                     type: 1,
-                                    content: '向上滚动加载第 ' + me.upperTimes +' 条！',
+                                    content: '向上滚动加载第 ' + me.upperTimes + ' 条！',
                                     ctime: new Date().toLocaleString()
                                 }]
-
                         )
                     }, 1000);
-                    me.upperId= me.upperId+2;
+                    me.upperId = me.upperId + 2;
                     me.upperTimes++;
                 })
             },
 
-            getUnderData(){
+            getUnderData() {
                 let me = this;
 
                 //意义同getUpperData()
-                return new Promise(function(resolve){
-                    setTimeout(function(){
+                return new Promise(function (resolve) {
+                    setTimeout(function () {
                         //模拟加载完毕
-                        if(me.underTimes>3){
+                        if (me.underTimes > 3) {
                             return resolve([]);
                         }
 
@@ -163,22 +164,22 @@
                         resolve(
                             [{
                                 direction: 1,
-                                id: me.underId+1,
+                                id: me.underId + 1,
                                 type: 1,
-                                content: '向下滚动加载第 ' + me.underTimes +' 条！',
+                                content: '向下滚动加载第 ' + me.underTimes + ' 条！',
                                 ctime: new Date().toLocaleString()
                             },
                                 {
                                     direction: 2,
-                                    id: me.underId+2,
+                                    id: me.underId + 2,
                                     type: 1,
-                                    content: '向下滚动加载第 ' + me.underTimes +' 条！',
+                                    content: '向下滚动加载第 ' + me.underTimes + ' 条！',
                                     ctime: new Date().toLocaleString()
                                 }]
                         )
                     }, 1000);
 
-                    me.underId = me.underId+2;
+                    me.underId = me.underId + 2;
                     me.underTimes++;
                 })
             }
@@ -202,6 +203,18 @@
 
     li {
         display: inline-block;
+    }
+
+    .bigbox {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        z-index: 200;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: white;
     }
 
     .chat {
@@ -238,17 +251,19 @@
         height: 4em;
         background-color: #eee;
     }
-    .footinput{
+
+    .footinput {
         width: 100%;
-        height: 4em;
+        height: 3.5em;
         position: fixed;
-        z-index: 100;
+        z-index: 200;
         background-color: white;
         bottom: 0;
         display: flex;
         align-items: center;
     }
-    .footinput input{
+
+    .footinput input {
         border: 1px solid #bbb;
         border-radius: 10px;
         height: 90%;

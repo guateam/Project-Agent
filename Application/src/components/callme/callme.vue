@@ -48,10 +48,10 @@
             get_at_message() {
                 import('js-cookie').then((Cookies) => {
                     import('axios').then((axios) => {
-                        axios.get('http://127.0.0.1:5000/api/message/get_at_list', {
+                        axios.get('https://'+this.GLOBAL.host+'/api/message/get_at_list', {
                             responseType: 'json',
                             params: {
-                                token: Cookies.get('token'),
+                                token: this.GLOBAL.token,
                             }
                         }).then((response) => {
                             window.console.log(response.data.data);

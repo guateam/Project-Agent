@@ -105,7 +105,7 @@
             // },
             getAnswers(questionID) {
                 // 获取答案信息
-                axios.get('http://127.0.0.1:5000/api/questions/get_answer_list', {
+                axios.get('https://'+this.GLOBAL.host+'/api/questions/get_answer_list', {
                     responseType: 'json',
                     params: {
                         question_id: questionID,
@@ -117,7 +117,7 @@
                 });
             },
             getQuestion(questionID){
-                axios.get('http://127.0.0.1:5000/api/questions/get_question', {
+                axios.get('https://'+this.GLOBAL.host+'/api/questions/get_question', {
                     responseType: 'json',
                     params: {
                         question_id: questionID,
@@ -141,10 +141,9 @@
 
 <style scoped>
     .topic {
-        position: fixed;
         width: 100%;
         height: 100%;
-        z-index: 200;
+        z-index: 400;
         top: 0;
         left: 0;
         right: 0;

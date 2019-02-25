@@ -918,82 +918,97 @@ Format:
     ```
 
 11. ##### 为查看付费问题付费 pay_question
-    - 接口 `/api/questions/pay_question()`
+     - 接口 `/api/questions/pay_question()`
 
-    - 参数 `question_id`-问题ID  `token`-token 
-
-    - 返回值
-
-    ```python
-    {
-        code: code,         # -5=退钱失败   -4=创建支付记录失败
-                            # -3=问题不存在 -2=用户不存在 
-                            # -1=余额不足   0 =支付失败         1=成功
-        msg: msg,           # 信息
-    }
-    ```
-
-12. ##### 赞同问题的评论 agree_question_comment
-    - 接口 `/api/questions/agree_question_comment()`
-
-    - 参数 `token`-token  `comment_id`-评论ID
-
-    - 返回值
-
-    ```python
-    {
-        code: code,         # 0=未知用户 -1=未知评论 -2=不能记录用户行为 -3=不能更新点赞数 1=成功
-        msg: msg,           # 信息
-       
-    }
-    ```
-
-13. ##### 后台获取问题列表 back_get_questions
-     - 接口 `/api/questions/back_get_questions()`
-
-     - 参数 `token`-token  
+     - 参数 `question_id`-问题ID  `token`-token 
 
      - 返回值
 
      ```python
      {
-         code: code,         # 0=未知用户 1=成功
+         code: code,         # -5=退钱失败   -4=创建支付记录失败
+                             # -3=问题不存在 -2=用户不存在 
+                             # -1=余额不足   0 =支付失败         1=成功
          msg: msg,           # 信息
-         data:[
-             {
-                 questionID:questionID, # 问题ID
-                 title:title, # 标题
-                 description:description, # 描述
-                 edittime:edittime, # 编辑时间
-                 userID:userID, # 用户ID
-                 tags:tags, # tag
-                 nickname:nickname, # 昵称
-                 headportrait:headportrait, # 头像
-                 usergroup:usergroup, # 用户组
-                 exp:exp, # 经验
-                 state:state, # 状态
-             },
-             # ...
-         ]
      }
      ```
 
+12. ##### 赞同问题的评论 agree_question_comment
+     - 接口 `/api/questions/agree_question_comment()`
+
+     - 参数 `token`-token  `comment_id`-评论ID
+
+     - 返回值
+
+     ```python
+     {
+         code: code,         # 0=未知用户 -1=未知评论 -2=不能记录用户行为 -3=不能更新点赞数 1=成功
+         msg: msg,           # 信息
+        
+     }
+     ```
+
+13. ##### 后台获取问题列表 back_get_questions
+      - 接口 `/api/questions/back_get_questions()`
+
+      - 参数 `token`-token  
+
+      - 返回值
+
+      ```python
+      {
+          code: code,         # 0=未知用户 1=成功
+          msg: msg,           # 信息
+          data:[
+              {
+                  questionID:questionID, # 问题ID
+                  title:title, # 标题
+                  description:description, # 描述
+                  edittime:edittime, # 编辑时间
+                  userID:userID, # 用户ID
+                  tags:tags, # tag
+                  nickname:nickname, # 昵称
+                  headportrait:headportrait, # 头像
+                  usergroup:usergroup, # 用户组
+                  exp:exp, # 经验
+                  state:state, # 状态
+              },
+              # ...
+          ]
+      }
+      ```
+
 14. ##### 清除问题 delete_question
-    - 接口 `/api/questions/delete_question()`
+     - 接口 `/api/questions/delete_question()`
 
-    - 参数 `token`-token  `question_id`-问题ID
+     - 参数 `token`-token  `question_id`-问题ID
 
-    - 返回值
+     - 返回值
 
-    ```python
-    {
-        code: code,         # 0=未知用户 -1=无法写入 1=成功
-        msg: msg,           # 信息
-       
-    }
-    ```
+     ```python
+     {
+         code: code,         # 0=未知用户 -1=无法写入 1=成功
+         msg: msg,           # 信息
+        
+     }
+     ```
 
-15. 
+15. 获取关注 get_follow
+      - 接口 `/api/questions/get_follow()`
+
+      - 参数 `token`-token  `question_id`-问题ID
+
+      - 返回值
+
+      ```python
+      {
+          code: code,         # 0=未知用户 -1=未关注 1=已关注
+          msg: msg,           # 信息
+         
+      }
+      ```
+
+16. 
 
 #### Answer 回答
 
@@ -1156,9 +1171,9 @@ Format:
 10. ##### 举报评论 complain
    - 接口 `/api/answer/complain()`
 
-    - 参数 `token`-token  `id`-评论的ID
+        - 参数 `token`-token  `id`-评论的ID
 
-    - 返回值
+        - 返回值
 
     ```python
     {

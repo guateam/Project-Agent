@@ -1,7 +1,7 @@
 <template>
-    <div>
+    <div class="bigbox">
         <div class="myself">
-            <div class="head" @click="go_to_login">
+            <div class="head" @click="$router.push('userDetail')">
                 <div class="head-main">
                     <div class="head-items">
                         <div class="pic">
@@ -23,7 +23,7 @@
                 </div>
             </div>
             <div class="box">
-                <div class="box-main">
+                <div class="box-main" @click="$router.push('fanList')">
                     <div class="box-main-items" style="border-right: 2px black solid;">关注 <span
                             class="box-number">22</span>
                     </div>
@@ -48,7 +48,7 @@
                         </v-list-tile-content>
 
                         <v-list-tile-action>
-                            <v-icon :color="item.active ? 'teal' : 'grey'">chat_bubble</v-icon>
+                            <v-icon :color="item.active ? 'teal' : 'grey'">fas fa-angle-right</v-icon>
                         </v-list-tile-action>
                     </v-list-tile>
                 </v-list>
@@ -71,6 +71,12 @@
                 group: '未知',
                 items: [
                     {
+                        active: this.GLOBAL.user_group!=1&&this.GLOBAL.user_group!=4,
+                        title: '文章发布',
+                        avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
+                        name: 'publish'
+                    },
+                    {
                         active: true,
                         title: '我发布的',
                         avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
@@ -81,6 +87,12 @@
                         title: '我的收藏',
                         avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
                         name: 'collection'
+                    },
+                    {
+                        active: true,
+                        title: '数据中心',
+                        avatar: 'https://cdn.vuetifyjs.com/images/lists/5.jpg',
+                        name: 'dataCenter'
                     },
                     {
                         active: true,
@@ -100,8 +112,8 @@
         methods: {
             get_user_info() {
                 import('js-cookie').then((Cookies) => {
-                    let token = Cookies.get('token');
-                    axios.get('http://127.0.0.1:5000/api/account/get_user_by_token', {
+                    let token = this.GLOBAL.token;
+                    axios.get('https://' + this.GLOBAL.host + '/api/account/get_user_by_token', {
                         responseType: 'json',
                         params: {
                             token: token,
@@ -115,15 +127,24 @@
                         this.nickname = user_info.nickname;
                         this.valueDeterminate = user_info.exp;
                         this.head_portrait = user_info.head_portrait;
-                        this.group = group[user_info['user_group']];
+                        this.group = user_info['group']['text'];
                     });
                 });
             },
-            go_to_login(){
+            go_to_login() {
                 import('js-cookie').then((Cookies) => {
-                    if(Cookies.get('token')){
-
-                    }else {
+                    if (this.GLOBAL.token) {
+                        axios.get('https://' + this.GLOBAL.host + '/api/account/get_user_by_token', {
+                            responseType: 'json',
+                            params: {
+                                token: this.GLOBAL.token,
+                            }
+                        }).then((response) => {
+                            if(response.data.code!==1){
+                                this.$router.push('/login')
+                            }
+                        });
+                    } else {
                         this.$router.push('/login')
                     }
                 })
@@ -136,6 +157,10 @@
 </script>
 
 <style scoped>
+    .bigbox {
+        width: 100%;
+    }
+
     .myself {
         width: 100%;
         height: 100%;

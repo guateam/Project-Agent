@@ -122,10 +122,10 @@
             get_my_questions() {
                 import('js-cookie').then((Cookies) => {
                     import('axios').then((axios) => {
-                        axios.get('http://'+this.GLOBAL.host+'/api/questions/get_my_questions', {
+                        axios.get('https://'+this.GLOBAL.host+'/api/questions/get_my_questions', {
                             responseType: 'json',
                             params: {
-                                token: Cookies.get('token'),
+                                token: this.GLOBAL.token,
                             }
                         }).then((data) => {
                             if (data.data.code === 1) {
@@ -165,10 +165,10 @@
             get_my_answers() {
                 import('js-cookie').then((Cookies) => {
                     import('axios').then((axios) => {
-                        axios.get('http://'+this.GLOBAL.host+'/api/answer/get_user_answers', {
+                        axios.get('https://'+this.GLOBAL.host+'/api/answer/get_user_answers', {
                             responseType: 'json',
                             params: {
-                                token: Cookies.get('token'),
+                                token: this.GLOBAL.token,
                             }
                         }).then((data) => {
                             if (data.data.code === 1) {
@@ -192,10 +192,10 @@
             get_my_articles() {
                 import('js-cookie').then((Cookies) => {
                     import('axios').then((axios) => {
-                        axios.get('http://'+this.GLOBAL.host+'/api/article/get_user_articles', {
+                        axios.get('https://'+this.GLOBAL.host+'/api/article/get_user_articles', {
                             responseType: 'json',
                             params: {
-                                token: Cookies.get('token'),
+                                token: this.GLOBAL.token,
                             }
                         }).then((data) => {
                             if (data.data.code === 1) {
@@ -219,10 +219,10 @@
             get_category() {
                 import('js-cookie').then((Cookies) => {
                     import('axios').then((axios) => {
-                        axios.get('http://'+this.GLOBAL.host+'/api/article/get_article_allowed_group', {
+                        axios.get('https://'+this.GLOBAL.host+'/api/article/get_article_allowed_group', {
                             responseType: 'json',
                             params: {
-                                token: Cookies.get('token'),
+                                token: this.GLOBAL.token,
                             }
                         }).then((data) => {
                             if (data.data.code === 1) {

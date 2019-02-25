@@ -154,7 +154,7 @@
             // 获取答案信息
             getAnswerData() {
                 import('axios').then(axios => {
-                    axios.get('http://'+this.GLOBAL.host+'/api/answer/get_answer', {
+                    axios.get('https://'+this.GLOBAL.host+'/api/answer/get_answer', {
                         responseType: 'json',
                         params: {
                             answer_id: this.$route.params.id
@@ -176,7 +176,7 @@
             // 获取评论信息
             getCommentData() {
                 import('axios').then(axios => {
-                    axios.get('http://'+this.GLOBAL.host+'/api/get_answer_comment_list', {
+                    axios.get('https://'+this.GLOBAL.host+'/api/get_answer_comment_list', {
                         responseType: 'json',
                         params: {
                             answer_id: this.$route.params.id
@@ -208,7 +208,6 @@
 
 <style>
     .bigbox {
-        position: fixed;
         width: 100%;
         height: 100%;
         z-index: 200;

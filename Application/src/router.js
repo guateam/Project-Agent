@@ -16,6 +16,10 @@ import Notice from './components/notice/notice'
 import Reply from './components/reply/reply'
 import Callme from './components/callme/callme'
 import SchoolDetail from './views/schoolDetail'
+import dataCenter from './views/dataCenter'
+import publish from './views/publish'
+import userDetail from './views/userDetail'
+import fanList from './views/fanList'
 
 
 const view = name => () => import(`./views/${name}`);
@@ -104,14 +108,34 @@ export default new Router({
             component: Myself,
             children:[
                 {
+                    path: '/userDetail',
+                    name: 'userDetail',
+                    component: view('userDetail')
+                },
+                {
+                    path: '/fanList',
+                    name: 'fanList',
+                    component: view('fanList')
+                },
+                {
                     path: '/settings',
                     name: 'settings',
                     component: view('Settings')
                 },
                 {
+                    path: '/publish',
+                    name: 'publish',
+                    component: view('publish')
+                },
+                {
                     path: '/collection',
                     name: 'collection',
                     component: view('collection')
+                },
+                {
+                    path: '/dataCenter',
+                    name: 'dataCenter',
+                    component: view('dataCenter')
                 },
                 {
                     path: '/oldpost',
@@ -135,5 +159,8 @@ export default new Router({
             name: 'register',
             component: Register
         },
-    ]
+    ],
+    scrollBehavior (to, from, savedPosition) {
+        return { x: 0, y: 0 }
+    }
 })
