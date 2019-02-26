@@ -113,6 +113,8 @@ def register():
         }, 'users')
         if flag:
             return jsonify({'code': 1, 'msg': 'success'})  # 成功返回
+        else:
+            return jsonify({'code': -2, 'msg': 'unable to insert'})
     return jsonify({'code': -1, 'msg': 'user has already exist'})  # 未知错误
 
 
@@ -171,7 +173,10 @@ def get_user_by_token():
             'exp': {'value': user['exp'], 'percent': user['exp'] / LEVEL_EXP[get_level(user['exp'])] * 100},
             'answer': db.count({'userID': user['userID']}, 'answers'),
             'follow': db.count({'userID': user['userID']}, 'followuser'),
-            'fans': db.count({'target': user['userID']}, 'followuser')
+            'fans': db.count({'target': user['userID']}, 'followuser'),
+            'email': user['email'],
+            'description': user['description'],
+            'state': user['state'],
         }
         return jsonify({'code': 1, 'msg': 'success', 'data': data})
     return jsonify({'code': 0, 'msg': 'unexpected user'})
@@ -234,6 +239,32 @@ def follow_user():
         return jsonify({'code': 1, 'msg': 'follow success'})
     else:
         return jsonify({'code': 0, 'msg': 'there are something wrong when inserted the data into database'})
+
+
+@app.route('/api/account/get_my_follow')
+def get_my_follow():
+    """
+    获取关注的人列表
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        follow = db.get({'userID': user['userID']}, 'followinfo', 0)
+        data = []
+        for value in follow:
+            data.append({
+                'id': value['target'],
+                'nickname': value['target_nickname'],
+                'description': value['target_description'],
+                'head_portrait': value['target_headportrait'],
+                'usergroup': get_group(value['target_usergroup']),
+                'exp': value['target_exp'],
+                'level': get_level(value['target_exp']),
+            })
+        return jsonify({'code': 1, 'msg': 'success', 'data': data})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
 
 
 def set_user_action(user_id, target, action_type):
@@ -1428,7 +1459,7 @@ def collect_answer():
 
     user_id = user['userID']
     success = db.insert({'userID': user_id, 'answerID': answer_id}, 'collectanswer')
-    set_user_action(user_id, answer_id, 37)
+    set_user_action(user_id, answer_id, 50)
     if success:
         return jsonify({'code': 1, 'msg': "collect success"})
     else:
@@ -2892,7 +2923,8 @@ def get_my_fans():
                 'usergroup': get_group(value['follower_usergroup']),
                 'exp': value['follower_exp'],
                 'level': get_level(value['follower_exp']),
-                'description': value['follower_description']
+                'description': value['follower_description'],
+                'head_portrait': value['follower_headportrait']
             })
         return jsonify({'code': 1, 'msg': 'success', 'data': data})
     return jsonify({'code': 0, 'msg': 'unexpected user'})
