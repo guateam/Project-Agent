@@ -3503,15 +3503,17 @@ def get_recommend_article():
         return jsonify({'code': -1, 'msg': 'the rate rectangle is not exist,please'
                                            ' build it by function build_article_rate_rect'})
     # 查找该用户最近浏览的最多3篇文章
-    action = db.sql("select targetID from useraction where userID='%s' and targettype >=21 and targettype<=25 limit"
-                    "3 order by actiontime DESC group by targetID ")
+    action = db.sql(
+        "select targetID from useraction where userID='%s' and targettype >=21 and targettype<=25 order by actiontime DESC limit 3"
+        % (user['userID']))
     # 推荐结果容器
     recommend_article = []
     # 推荐的文章id,最多3条，相似度降序排列
     for each in action:
-        ids = item_cf_api(rate_dir, "/etc/project-agent/CF/similar_rect/article_similar_rect.txt", each['targetID'], 3)
+        ids = item_cf_api(rate_dir, "/etc/project-agent/CF/similar_rect/article_similar_rect.txt", each['targetID'], 6)
         for id in ids:
             article = db.get({'articleID': id}, 'article')
+            article.update({'tags': get_tags(article['tags'])})
             recommend_article += article
     # 若action为空，则随机推荐
     if not action:
@@ -3969,6 +3971,45 @@ def delete_group():
             return jsonify({'code': 1, 'msg': 'success'})
         return jsonify({'code': -1, 'msg': 'unable to delete'})
     return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+"""
+    活动接口
+"""
+
+
+@app.route('/api/activities/add_activity')
+def add_activity():
+    """
+    添加新活动
+    :return:
+    """
+    token = request.headers.get('X-Token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        title = request.form['title']
+        cover = request.form['cover']
+        url = request.form['url']
+        act_type = request.form['type']
+        flag = db.insert({'title': title, 'cover': cover, 'url': url, 'type': act_type, 'userID': user['userID']},
+                         'activities')
+        if flag:
+            return jsonify({'code': 1, 'msg': 'success'})
+        return jsonify({'code': -1, 'msg': 'unable to insert'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/activities/get_activities')
+def get_activities():
+    """
+    获取活动
+    :return:
+    """
+    act_type = request.values.get('type')
+    db = Database()
+    activity = db.get({'type': act_type, 'state': 0}, 'activities', 0)
+    return jsonify({'code': 1, 'msg': 'success', 'data': activity})
 
 
 if __name__ == '__main__':
