@@ -4,7 +4,7 @@ import re
 import string
 import time
 
-from CF.cf import item_cf
+from CF.cf import item_cf, set_similarity_vec
 from vague_search.vague_search import select_by_similarity, compute_tf
 from API.OCR import ocr
 from flask import Flask, jsonify, request
@@ -2147,7 +2147,7 @@ def get_recommend():
     # 用户token
     token = request.values.get('token')
     # 用于推荐的评分矩阵路径，以api.py所在目录为根目录的表示
-    rate_dir = "/etc/project-agent/CF/rate_rect/question_rate_rect.txt"
+    rate_dir = "../CF/rate_rect/question_rate_rect.txt"
 
     # 获取用户信息
     db = Database()
@@ -2167,7 +2167,7 @@ def get_recommend():
             return jsonify({'code': -1, 'msg': 'the rate rectangle is not exist,please'
                                                ' build it by function build_questoin_rate_rect'})
         # 获得相似度降序排列的问题序列
-        recommend_question_ids = item_cf_api(rate_dir, "/etc/project-agent/CF/similar_rect/question_similar_rect.txt",
+        recommend_question_ids = item_cf_api("question_similar_rect.txt",
                                              target_question_id, 13)
         # 录入结果
         for id in recommend_question_ids:
@@ -2188,8 +2188,10 @@ def get_recommend():
                 value1['edittime'] = get_formative_datetime(value1['edittime'])
                 # 录入推荐的问题
                 data.append(value1)
+
             # 查询该ID下的问题，取最多3条,按赞同数降序排列
             answers = db.sql("select * from answersinfo where questionID = '%s' order by agree DESC limit 3" % id)
+
             # 进行格式处理
             for value2 in answers:
                 value2.update({'type': 1, 'image': pattern.findall(value2['content'])})
@@ -2658,18 +2660,18 @@ def upload_identity_card():
 """
 
 
-def item_cf_api(dirs, simi, target, num):
+def item_cf_api(simi,target, num):
     """
     调用item_cf算法推荐
-    :param dirs: 评分矩阵所在的文件名
-    :param simi: 待创建的相似度矩阵文件名
+    :param simi: 相似度矩阵文件名(不包含路径)
     :param target: 根据该ID进行相似推荐
     :param num: 推荐数量
     :return: ID序列
     """
 
     # 得到的推荐结果
-    result = item_cf(dirs, simi, target, num)
+    result = item_cf("similar_rect/"+simi, target, num)
+
     return result
 
 
@@ -2683,8 +2685,10 @@ def build_article_rate_rect():
     # 所有用户对某一篇文章的行为进行权值计算后得到的一个向量,所有文章对应一个向量组合成矩阵
     # file_name = request.values.get("file_name")
     file_name = "article_rate_rect.txt"
+    rate_path = "../CF/rate_rect/"
+    similar_path = "../CF/similar_rect/"
     # 重置文件内容
-    with open("/etc/project-agent/CF/rate_rect/" + file_name, "w") as f:
+    with open(rate_path + file_name, "w") as f:
         pass
     db = Database()
     # targettype 对应的评分
@@ -2710,13 +2714,15 @@ def build_article_rate_rect():
                 rates[users[j]['userID']] = rate
 
         keys = rates.keys()
-        with open("/etc/project-agent/CF/rate_rect/" + file_name, "a+") as f:
+        with open(rate_path + file_name, "a+") as f:
             f.write("ID:" + str(article[i]['articleID']) + " rate:")
             rate_str = ""
             for key in keys:
                 rate_str += str(key) + "-" + str(rates[key]) + "-"
             rate_str = rate_str[:-1]
             f.write(rate_str + "\n")
+
+    set_similarity_vec(rate_path,similar_path,file_name,"article_similar_rect.txt")
 
     return jsonify({"code": 1})
 
@@ -2731,8 +2737,12 @@ def build_question_rate_rect():
     # 所有用户对某一个问题的行为进行权值计算后得到的一个向量,所有问题对应一个向量组合成矩阵
     # file_name = request.values.get("file_name")
     file_name = "question_rate_rect.txt"
+
+    rate_path = "../CF/rate_rect/"
+    similar_path = "../CF/similar_rect/"
+
     # 重置文件内容
-    with open("/etc/project-agent/CF/rate_rect/" + file_name, "w") as f:
+    with open(rate_path + file_name, "w") as f:
         pass
     db = Database()
     # targettype 对应的评分
@@ -2758,13 +2768,15 @@ def build_question_rate_rect():
                 rates[users[j]['userID']] = rate
 
         keys = rates.keys()
-        with open("/etc/project-agent/CF/rate_rect/" + file_name, "a+") as f:
+        with open(rate_path + file_name, "a+") as f:
             f.write("ID:" + str(questions[i]['questionID']) + " rate:")
             rate_str = ""
             for key in keys:
                 rate_str += str(key) + "-" + str(rates[key]) + "-"
             rate_str = rate_str[:-1]
             f.write(rate_str + "\n")
+
+    set_similarity_vec(rate_path,similar_path,file_name,"question_similar_rect.txt")
 
     return jsonify({"code": 1})
 
@@ -3495,7 +3507,9 @@ def get_recommend_article():
     token = request.values.get('token')
     db = Database()
     user = db.get({'token': token}, 'users')
-    rate_dir = '/etc/project-agent/CF/rate_rect/article_rate_rect.txt'
+
+    rate_dir = '../CF/rate_rect/article_rate_rect.txt'
+
     if not user:
         return jsonify({'code': 0, 'msg': 'user is not exist'})
     # 判断评分矩阵是否存在
@@ -3503,18 +3517,16 @@ def get_recommend_article():
         return jsonify({'code': -1, 'msg': 'the rate rectangle is not exist,please'
                                            ' build it by function build_article_rate_rect'})
     # 查找该用户最近浏览的最多3篇文章
-    action = db.sql(
-        "select targetID from useraction where userID='%s' and targettype >=21 and targettype<=25 order by actiontime DESC limit 3"
-        % (user['userID']))
+    action = db.sql("select distinct targetID from useraction where userID='%s' and targettype >=21 and targettype<=25 "
+                    "order by actiontime DESC limit 3" % user['userID'])
     # 推荐结果容器
     recommend_article = []
     # 推荐的文章id,最多3条，相似度降序排列
     for each in action:
-        ids = item_cf_api(rate_dir, "/etc/project-agent/CF/similar_rect/article_similar_rect.txt", each['targetID'], 6)
+        ids = item_cf_api("article_similar_rect.txt", each['targetID'], 3)
         for id in ids:
             article = db.get({'articleID': id}, 'article')
-            article.update({'tags': get_tags(article['tags'])})
-            recommend_article += article
+            recommend_article.append(article)
     # 若action为空，则随机推荐
     if not action:
         recommend_article = db.sql("select * from article order by edittime DESC limit 10")
@@ -4020,5 +4032,6 @@ if __name__ == '__main__':
     # with open('static\\upload\\36.txt', 'rb') as file:
     #     result = pred(file.read())
     #     print(result[0])
-    app.run(host='0.0.0.0', port=5000, debug=False, ssl_context=(
-        '/etc/letsencrypt/live/hanerx.tk/fullchain.pem', '/etc/letsencrypt/live/hanerx.tk/privkey.pem'))
+    # app.run(host='0.0.0.0', port=5000, debug=False, ssl_context=(
+    #     '/etc/letsencrypt/live/hanerx.tk/fullchain.pem', '/etc/letsencrypt/live/hanerx.tk/privkey.pem'))
+    app.run(host='0.0.0.0', port=5000, debug=False)
