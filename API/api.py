@@ -3985,6 +3985,45 @@ def delete_group():
     return jsonify({'code': 0, 'msg': 'unexpected user'})
 
 
+"""
+    活动接口
+"""
+
+
+@app.route('/api/activities/add_activity')
+def add_activity():
+    """
+    添加新活动
+    :return:
+    """
+    token = request.headers.get('X-Token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        title = request.form['title']
+        cover = request.form['cover']
+        url = request.form['url']
+        act_type = request.form['type']
+        flag = db.insert({'title': title, 'cover': cover, 'url': url, 'type': act_type, 'userID': user['userID']},
+                         'activities')
+        if flag:
+            return jsonify({'code': 1, 'msg': 'success'})
+        return jsonify({'code': -1, 'msg': 'unable to insert'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/activities/get_activities')
+def get_activities():
+    """
+    获取活动
+    :return:
+    """
+    act_type = request.values.get('type')
+    db = Database()
+    activity = db.get({'type': act_type, 'state': 0}, 'activities', 0)
+    return jsonify({'code': 1, 'msg': 'success', 'data': activity})
+
+
 if __name__ == '__main__':
     # 开启调试模式，修改代码后不需要重新启动服务即可生效
     # 请勿在生产环境下使用调试模式
