@@ -115,6 +115,6 @@ def set_current_user_action(id, n):
 if __name__ == '__main__':
     # fake_user_register(20)
     # question_upload(100, 2)
-    add_random_user_action(10000)
+    add_random_user_action(1000)
     # set_current_user_action(1, 100)
     pass
