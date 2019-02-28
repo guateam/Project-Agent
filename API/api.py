@@ -2263,6 +2263,15 @@ def classify_by_tag():
     return jsonify({'code': 1, 'msg': 'success', 'data': target[begin_index:end_index]})
 
 
+def flow_loading(data,each,page):
+    """
+    流加载
+    :param data: 源数据
+    :param each: 每次加载量
+    :param page:
+    :return:
+    """
+
 @app.route('/api/homepage/get_category')
 def get_category():
     """
