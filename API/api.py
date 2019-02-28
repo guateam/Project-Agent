@@ -2251,11 +2251,11 @@ def classify_by_tag():
     db = Database()
 
     if type == 1:
-        target = db.sql("select * from questions where tags like '%," + tag + ",% or tags like '" + tag + ",%'"
-                                                                                                          "or tags like '" + tag + "' or tags like '%," + tag + " order by edittime desc")
+        target = db.sql("select * from questions where tags like '%," + tag + ",%' or tags like '" + tag + ",%'"
+                                "or tags like '" + tag + "' or tags like '%," + tag + "' order by edittime desc")
     elif type == 2:
-        target = db.sql("select * from article where tags like '%," + tag + ",% or tags like '" + tag + ",%'"
-                                                                                                        "or tags like '" + tag + "' or tags like '%," + tag + " order by edittime desc")
+        target = db.sql("select * from article where tags like '%," + tag + ",%' or tags like '" + tag + ",%'"
+                                "or tags like '" + tag + "' or tags like '%," + tag + "' order by edittime desc")
 
     result = flow_loading(target,each,page)
 
