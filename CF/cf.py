@@ -226,7 +226,7 @@ def item_cf(dirs,id_file, target, num):
     :return: 推荐的物品ID序列
     """
     # simi_vec, item_ids = set_similarity_vec(rate_dir, dirs)
-    path = "../CF/"
+    path = "/etc/project-agent/CF/"
     simi_vec,item_ids = read_similarity_vec(path,dirs,id_file)
 
     idx = most_similar(simi_vec, item_ids, target, num)
