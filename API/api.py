@@ -2392,10 +2392,13 @@ def get_friend_list():
     if user:
         # 根据token获取该用户的好友列表
         friend = db.sql(
-            "select A.userID as user_id ,A.nickname as nickname,A.headportrait as headportrait,A.usergroup as "
+            "select A.userID as user_id ,A.description as description,A.nickname as nickname,A.headportrait as "
+            "headportrait,A.usergroup as "
             "usergroup,A.exp as exp from users A,(select C.* from followuser C,users D where C.userID = D.userID and "
             "D.token= '%s') B,followuser C where A.userID=C.userID and (C.target = B.userID) and C.userID = B.target "
             "" % token)
+        for value in friend:
+            value.update({'group': get_group(value['usergroup'])})
         if friend:
             return jsonify({'code': 1, 'msg': 'success', 'data': friend})
         return jsonify({'code': 1, 'msg': 'success', 'data': []})
