@@ -883,7 +883,7 @@ def get_collections():
                 'headline': value['content'],
                 'action': '',
                 'subtitle': str(db.count({'targettype': 1, 'targetID': value['answerID']},
-                                         'useraction')) + ' 评论 · ' + str(db.count({'answerID': value['answerID']},
+                                         'useraction')) + ' 点赞 · ' + str(db.count({'answerID': value['answerID']},
                                                                                   'answercomments')) + ' 评论',
                 'id': value['answerID']
             })
@@ -909,6 +909,28 @@ def get_collections():
                 'id': value['articleID']
             })
         return jsonify({'code': 1, 'msg': 'success', 'data': [answers_data, questions_data, articles_data]})
+
+
+@app.route('/api/account/get_history')
+def get_history():
+    """
+    获取历史纪录
+    :return:
+    """
+    token = request.values.get('token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        answers = db.get({'userID': user['userID']}, 'history_answers', 0)
+        questions = db.get({'userID': user['userID']}, 'history_questions', 0)
+        articles = db.get({'userID': user['userID']}, 'history_articles', 0)
+        answers = sorted(answers, reverse=True, key=lambda a: a['actiontime'])
+        questions = sorted(questions, reverse=True, key=lambda a: a['actiontime'])
+        articles = sorted(articles, reverse=True, key=lambda a: a['actiontime'])
+        for value in answers + questions + articles:
+            value.update({'tags': get_tags(value['tags'])})
+        return jsonify({'code': 1, 'msg': 'success', 'data': [answers, questions, articles]})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
 
 
 """
@@ -2147,7 +2169,7 @@ def get_recommend():
     # 用户token
     token = request.values.get('token')
     # 用于推荐的评分矩阵路径，以api.py所在目录为根目录的表示
-    rate_dir = "../CF/rate_rect/question_rate_rect.txt"
+    rate_dir = "/etc/project-agent/CF/rate_rect/question_rate_rect.txt"
 
     # 获取用户信息
     db = Database()
@@ -2167,7 +2189,7 @@ def get_recommend():
             return jsonify({'code': -1, 'msg': 'the rate rectangle is not exist,please'
                                                ' build it by function build_questoin_rate_rect'})
         # 获得相似度降序排列的问题序列
-        recommend_question_ids = item_cf_api("question_similar_rect.txt","question_id_list.txt",
+        recommend_question_ids = item_cf_api("question_similar_rect.txt", "question_id_list.txt",
                                              target_question_id, 13)
         # 录入结果
         for id in recommend_question_ids:
@@ -2221,25 +2243,24 @@ def classify_by_tag():
     db = Database()
 
     if type == 1:
-        target  = db.sql("select * from questions where tags like '%,"+ tag + ",% or tags like '"+ tag +",%'"
-                        "or tags like '"+ tag+"' or tags like '%,"+ tag + " order by edittime desc")
+        target = db.sql("select * from questions where tags like '%," + tag + ",% or tags like '" + tag + ",%'"
+                                                                                                          "or tags like '" + tag + "' or tags like '%," + tag + " order by edittime desc")
     elif type == 2:
-        target  = db.sql("select * from article where tags like '%,"+ tag + ",% or tags like '"+ tag +",%'"
-                        "or tags like '"+ tag+"' or tags like '%,"+ tag + " order by edittime desc")
+        target = db.sql("select * from article where tags like '%," + tag + ",% or tags like '" + tag + ",%'"
+                                                                                                        "or tags like '" + tag + "' or tags like '%," + tag + " order by edittime desc")
 
     # 最多流加载几次
     max_page = int(target.length / each) + 1
     # 超过最高加载次数的从第一次开始循环加载
     page = max_page if (page % max_page) == 0 else page % max_page
 
-    begin_index = each * (page-1)
-    end_index = begin_index + each -1
+    begin_index = each * (page - 1)
+    end_index = begin_index + each - 1
 
-    if(end_index >= target.length):
-        end_index = target.length -1
+    if (end_index >= target.length):
+        end_index = target.length - 1
 
     return jsonify({'code': 1, 'msg': 'success', 'data': target[begin_index:end_index]})
-
 
 
 @app.route('/api/homepage/get_category')
@@ -2698,7 +2719,7 @@ def upload_identity_card():
 """
 
 
-def item_cf_api(simi,id,target, num):
+def item_cf_api(simi, id, target, num):
     """
     调用item_cf算法推荐
     :param simi: 相似度矩阵文件名(不包含路径)
@@ -2709,7 +2730,7 @@ def item_cf_api(simi,id,target, num):
     """
 
     # 得到的推荐结果
-    result = item_cf("similar_rect/"+simi,"similar_rect/"+id, target, num)
+    result = item_cf("similar_rect/" + simi, "similar_rect/" + id, target, num)
 
     return result
 
@@ -2724,8 +2745,8 @@ def build_article_rate_rect():
     # 所有用户对某一篇文章的行为进行权值计算后得到的一个向量,所有文章对应一个向量组合成矩阵
     # file_name = request.values.get("file_name")
     file_name = "article_rate_rect.txt"
-    rate_path = "../CF/rate_rect/"
-    similar_path = "../CF/similar_rect/"
+    rate_path = "/etc/project-agent/CF/rate_rect/"
+    similar_path = "/etc/project-agent/CF/similar_rect/"
     id_list = "article_id_list.txt"
 
     # 重置文件内容
@@ -2763,7 +2784,7 @@ def build_article_rate_rect():
             rate_str = rate_str[:-1]
             f.write(rate_str + "\n")
 
-    set_similarity_vec(rate_path,similar_path,file_name,id_list,"article_similar_rect.txt")
+    set_similarity_vec(rate_path, similar_path, file_name, id_list, "article_similar_rect.txt")
 
     return jsonify({"code": 1})
 
@@ -2779,8 +2800,8 @@ def build_question_rate_rect():
     # file_name = request.values.get("file_name")
     file_name = "question_rate_rect.txt"
 
-    rate_path = "../CF/rate_rect/"
-    similar_path = "../CF/similar_rect/"
+    rate_path = "/etc/project-agent/CF/rate_rect/"
+    similar_path = "/etc/project-agent/CF/similar_rect/"
     id_list = "question_id_list.txt"
 
     # 重置文件内容
@@ -2818,7 +2839,7 @@ def build_question_rate_rect():
             rate_str = rate_str[:-1]
             f.write(rate_str + "\n")
 
-    set_similarity_vec(rate_path,similar_path,file_name,id_list,"question_similar_rect.txt")
+    set_similarity_vec(rate_path, similar_path, file_name, id_list, "question_similar_rect.txt")
 
     return jsonify({"code": 1})
 
@@ -3534,7 +3555,7 @@ def get_similar_article():
         return jsonify({'code': 0, 'msg': 'the rate rectangle is not exist,please'
                                           ' build it by function build_article_rate_rect'})
     # 推荐的文章id,最多3条，相似度降序排列
-    recommend_article = item_cf_api("article_similar_rect.txt", "article_id_list.txt",article_id,
+    recommend_article = item_cf_api("article_similar_rect.txt", "article_id_list.txt", article_id,
                                     3)
 
     return jsonify({'code': 1, 'msg': 'success', 'data': recommend_article})
@@ -3550,7 +3571,7 @@ def get_recommend_article():
     db = Database()
     user = db.get({'token': token}, 'users')
 
-    rate_dir = '../CF/rate_rect/article_rate_rect.txt'
+    rate_dir = '/etc/project-agent/CF/rate_rect/article_rate_rect.txt'
 
     if not user:
         return jsonify({'code': 0, 'msg': 'user is not exist'})
@@ -3565,9 +3586,10 @@ def get_recommend_article():
     recommend_article = []
     # 推荐的文章id,最多3条，相似度降序排列
     for each in action:
-        ids = item_cf_api("article_similar_rect.txt","article_id_list.txt", each['targetID'], 3)
+        ids = item_cf_api("article_similar_rect.txt", "article_id_list.txt", each['targetID'], 3)
         for id in ids:
             article = db.get({'articleID': id}, 'article')
+            article.update({'tags': get_tags(article['tags'])})
             recommend_article.append(article)
     # 若action为空，则随机推荐
     if not action:
@@ -4066,6 +4088,59 @@ def get_activities():
     return jsonify({'code': 1, 'msg': 'success', 'data': activity})
 
 
+@app.route('/api/activities/get_all_activities')
+def get_all_activities():
+    """
+    获取所有活动
+    :return:
+    """
+    db = Database()
+    activity = db.get({}, 'activities_info')
+    return jsonify({'code': 1, 'msg': 'success', 'data': activity})
+
+
+@app.route('/api/activities/edit_activity')
+def edit_activity():
+    """
+    修改活动
+    :return:
+    """
+    token = request.headers.get('X-Token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        title = request.form['title']
+        cover = request.form['cover']
+        url = request.form['url']
+        act_type = request.form['type']
+        act_id = request.form['id']
+        flag = db.update({'activityID': act_id},
+                         {'title': title, 'cover': cover, 'url': url, 'type': act_type, 'userID': user['userID']},
+                         'activities')
+        if flag:
+            return jsonify({'code': 1, 'msg': 'success'})
+        return jsonify({'code': -1, 'msg': 'unable to update'})
+    return jsonify({'code': 1, 'msg': 'unexpected user'})
+
+
+@app.route('/api/activities/delete_activity')
+def delete_activity():
+    """
+    删除活动
+    :return:
+    """
+    token = request.headers.get('X-Token')
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        act_id = request.values.get('id')
+        flag = db.update({'activityID': act_id}, {'state': -1}, 'activities')
+        if flag:
+            return jsonify({'code': 1, 'msg': 'success'})
+        return jsonify({'code': -1, 'msg': 'unable to update'})
+    return jsonify({'code': 1, 'msg': 'unexpected user'})
+
+
 if __name__ == '__main__':
     # 开启调试模式，修改代码后不需要重新启动服务即可生效
     # 请勿在生产环境下使用调试模式
@@ -4074,6 +4149,6 @@ if __name__ == '__main__':
     # with open('static\\upload\\36.txt', 'rb') as file:
     #     result = pred(file.read())
     #     print(result[0])
-    # app.run(host='0.0.0.0', port=5000, debug=False, ssl_context=(
-    #     '/etc/letsencrypt/live/hanerx.tk/fullchain.pem', '/etc/letsencrypt/live/hanerx.tk/privkey.pem'))
-    app.run(host='0.0.0.0', port=5000, debug=False)
+    app.run(host='0.0.0.0', port=5000, debug=False, ssl_context=(
+        '/etc/letsencrypt/live/hanerx.tk/fullchain.pem', '/etc/letsencrypt/live/hanerx.tk/privkey.pem'))
+    # app.run(host='0.0.0.0', port=5000, debug=False)
