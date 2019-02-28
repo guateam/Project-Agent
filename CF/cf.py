@@ -24,7 +24,7 @@ def cosine_similarity(vector1, vector2):
         return round(dot_product / (norm_a * norm_b), 4)
 
 
-def set_similarity_vec(path,similar_path,rect_file, name="similarity_vector.txt"):
+def set_similarity_vec(path,similar_path,rect_file,id_list_name,name="similarity_vector.txt"):
     """
     计算相似矩阵
 
@@ -39,13 +39,14 @@ def set_similarity_vec(path,similar_path,rect_file, name="similarity_vector.txt"
     with open(path + rect_file, "r") as f:
         lines = f.readlines()
         for i in range(len(lines)):
+            lines[i].replace("\n", "")
             a = lines[i].split(" ")
             id = a[0].split(":")
             id = int(id[1])
             item_ids.append(id)
 
             rt = a[1].split(":")
-            rt = rt[1].split("-")
+            rt = rt[1].split(";")
             rtt = []
             for i in range(len(rt)):
                 if (i % 2 == 1):
@@ -61,14 +62,14 @@ def set_similarity_vec(path,similar_path,rect_file, name="similarity_vector.txt"
             f.write("\n")
     f.close()
 
-    with open(similar_path + "id_list.txt","w") as f:
+    with open(similar_path + id_list_name,"w") as f:
         for i in range(len(item_ids)):
             f.write(str(item_ids[i]) + ",")
 
     return simi_vec, item_ids
 
 
-def read_similarity_vec(path,dir="similarity_vector.txt"):
+def read_similarity_vec(path,dir="similarity_vector.txt",id_file=""):
     """
     读取文件中存储的相似度矩阵
     :param dir: 读取的文件路径，默认为本目录下的similarity_vector.txt
@@ -84,7 +85,7 @@ def read_similarity_vec(path,dir="similarity_vector.txt"):
             for j in range(len(line) - 1):
                 simi_vec[i][j] = float(line[j])
 
-    with open(path + "similar_rect/id_list.txt") as f:
+    with open(path + id_file) as f:
         lines = f.readlines()
         line = lines[0].split(",")
         for i in range(len(line)):
@@ -216,7 +217,7 @@ def cf(self_vec, others_vec, k=1, m=1, item_vec=[]):
     return data
 
 
-def item_cf(dirs, target, num):
+def item_cf(dirs,id_file, target, num):
     """
     基于物品的cf算法
     :param dirs: 物品相似度矩阵文件名
@@ -226,7 +227,7 @@ def item_cf(dirs, target, num):
     """
     # simi_vec, item_ids = set_similarity_vec(rate_dir, dirs)
     path = "../CF/"
-    simi_vec,item_ids = read_similarity_vec(path,dirs)
+    simi_vec,item_ids = read_similarity_vec(path,dirs,id_file)
 
     idx = most_similar(simi_vec, item_ids, target, num)
     return idx

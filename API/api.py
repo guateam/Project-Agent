@@ -2167,7 +2167,7 @@ def get_recommend():
             return jsonify({'code': -1, 'msg': 'the rate rectangle is not exist,please'
                                                ' build it by function build_questoin_rate_rect'})
         # 获得相似度降序排列的问题序列
-        recommend_question_ids = item_cf_api("question_similar_rect.txt",
+        recommend_question_ids = item_cf_api("question_similar_rect.txt","question_id_list.txt",
                                              target_question_id, 13)
         # 录入结果
         for id in recommend_question_ids:
@@ -2202,6 +2202,44 @@ def get_recommend():
 
         return jsonify({'code': 1, 'msg': 'success', 'data': data})
     return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/homepage/classify_by_tag')
+def classify_by_tag():
+    """
+    获取特定类别的问题或者文章，type 1-问题+回答   2-文章
+    :return:
+    """
+    # 需要获取的问题或文章tag
+    tag = request.values.get('tag')
+    type = request.values.get('type')
+    # 每次调用返回几个
+    each = 5
+    # 第几次调用(相当于第几页/第几次流加载），第一次为 1
+    page = request.values.get('page')
+
+    db = Database()
+
+    if type == 1:
+        target  = db.sql("select * from questions where tags like '%,"+ tag + ",% or tags like '"+ tag +",%'"
+                        "or tags like '"+ tag+"' or tags like '%,"+ tag + " order by edittime desc")
+    elif type == 2:
+        target  = db.sql("select * from article where tags like '%,"+ tag + ",% or tags like '"+ tag +",%'"
+                        "or tags like '"+ tag+"' or tags like '%,"+ tag + " order by edittime desc")
+
+    # 最多流加载几次
+    max_page = int(target.length / each) + 1
+    # 超过最高加载次数的从第一次开始循环加载
+    page = max_page if (page % max_page) == 0 else page % max_page
+
+    begin_index = each * (page-1)
+    end_index = begin_index + each -1
+
+    if(end_index >= target.length):
+        end_index = target.length -1
+
+    return jsonify({'code': 1, 'msg': 'success', 'data': target[begin_index:end_index]})
+
 
 
 @app.route('/api/homepage/get_category')
@@ -2660,17 +2698,18 @@ def upload_identity_card():
 """
 
 
-def item_cf_api(simi,target, num):
+def item_cf_api(simi,id,target, num):
     """
     调用item_cf算法推荐
     :param simi: 相似度矩阵文件名(不包含路径)
+    :param id:对象id列表文件名(不包含路径)
     :param target: 根据该ID进行相似推荐
     :param num: 推荐数量
     :return: ID序列
     """
 
     # 得到的推荐结果
-    result = item_cf("similar_rect/"+simi, target, num)
+    result = item_cf("similar_rect/"+simi,"similar_rect/"+id, target, num)
 
     return result
 
@@ -2687,6 +2726,8 @@ def build_article_rate_rect():
     file_name = "article_rate_rect.txt"
     rate_path = "../CF/rate_rect/"
     similar_path = "../CF/similar_rect/"
+    id_list = "article_id_list.txt"
+
     # 重置文件内容
     with open(rate_path + file_name, "w") as f:
         pass
@@ -2718,11 +2759,11 @@ def build_article_rate_rect():
             f.write("ID:" + str(article[i]['articleID']) + " rate:")
             rate_str = ""
             for key in keys:
-                rate_str += str(key) + "-" + str(rates[key]) + "-"
+                rate_str += str(key) + ";" + str(rates[key]) + ";"
             rate_str = rate_str[:-1]
             f.write(rate_str + "\n")
 
-    set_similarity_vec(rate_path,similar_path,file_name,"article_similar_rect.txt")
+    set_similarity_vec(rate_path,similar_path,file_name,id_list,"article_similar_rect.txt")
 
     return jsonify({"code": 1})
 
@@ -2740,6 +2781,7 @@ def build_question_rate_rect():
 
     rate_path = "../CF/rate_rect/"
     similar_path = "../CF/similar_rect/"
+    id_list = "question_id_list.txt"
 
     # 重置文件内容
     with open(rate_path + file_name, "w") as f:
@@ -2772,11 +2814,11 @@ def build_question_rate_rect():
             f.write("ID:" + str(questions[i]['questionID']) + " rate:")
             rate_str = ""
             for key in keys:
-                rate_str += str(key) + "-" + str(rates[key]) + "-"
+                rate_str += str(key) + ";" + str(rates[key]) + ";"
             rate_str = rate_str[:-1]
             f.write(rate_str + "\n")
 
-    set_similarity_vec(rate_path,similar_path,file_name,"question_similar_rect.txt")
+    set_similarity_vec(rate_path,similar_path,file_name,id_list,"question_similar_rect.txt")
 
     return jsonify({"code": 1})
 
@@ -3492,7 +3534,7 @@ def get_similar_article():
         return jsonify({'code': 0, 'msg': 'the rate rectangle is not exist,please'
                                           ' build it by function build_article_rate_rect'})
     # 推荐的文章id,最多3条，相似度降序排列
-    recommend_article = item_cf_api(rate_dir, "/etc/project-agent/CF/similar_rect/article_similar_rect.txt", article_id,
+    recommend_article = item_cf_api("article_similar_rect.txt", "article_id_list.txt",article_id,
                                     3)
 
     return jsonify({'code': 1, 'msg': 'success', 'data': recommend_article})
@@ -3523,7 +3565,7 @@ def get_recommend_article():
     recommend_article = []
     # 推荐的文章id,最多3条，相似度降序排列
     for each in action:
-        ids = item_cf_api("article_similar_rect.txt", each['targetID'], 3)
+        ids = item_cf_api("article_similar_rect.txt","article_id_list.txt", each['targetID'], 3)
         for id in ids:
             article = db.get({'articleID': id}, 'article')
             recommend_article.append(article)
