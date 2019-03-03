@@ -2191,6 +2191,10 @@ def get_recommend():
         # 获得相似度降序排列的问题序列
         recommend_question_ids = item_cf_api("question_similar_rect.txt", "question_id_list.txt",
                                              target_question_id, 13)
+
+        result = flow_loading(recommend_question_ids,each,page)
+
+
         # 录入结果
         for id in recommend_question_ids:
             # 查询该id的问题信息
