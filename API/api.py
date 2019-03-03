@@ -2168,6 +2168,13 @@ def get_recommend():
     """
     # 用户token
     token = request.values.get('token')
+
+
+    # 加载的次数
+    pages = request.values.get('page')
+    # 每次加载量
+    each_ = 5
+
     # 用于推荐的评分矩阵路径，以api.py所在目录为根目录的表示
     rate_dir = "/etc/project-agent/CF/rate_rect/question_rate_rect.txt"
 
@@ -2192,7 +2199,7 @@ def get_recommend():
         recommend_question_ids = item_cf_api("question_similar_rect.txt", "question_id_list.txt",
                                              target_question_id, 13)
 
-        result = flow_loading(recommend_question_ids,each,page)
+        result = flow_loading(recommend_question_ids,each_,pages)
 
         # 录入结果
         for id in recommend_question_ids:
