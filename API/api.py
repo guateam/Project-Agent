@@ -2169,7 +2169,6 @@ def get_recommend():
     # 用户token
     token = request.values.get('token')
 
-
     # 加载的次数
     pages = request.values.get('page')
     # 每次加载量
@@ -2202,7 +2201,7 @@ def get_recommend():
         result = flow_loading(recommend_question_ids,each_,pages)
 
         # 录入结果
-        for id in recommend_question_ids:
+        for id in result:
             # 查询该id的问题信息
             out = db.sql("select * from questionsinfo where questionID = '%s'" % id)
             # 正则表达匹配图片
@@ -3597,6 +3596,9 @@ def get_recommend_article():
     :return:code:-1=评分矩阵未建立  0=用户不存在  1=成功
     """
     token = request.values.get('token')
+    each = 5
+    page = request.values.get('page')
+
     db = Database()
     user = db.get({'token': token}, 'users')
 
@@ -3624,7 +3626,9 @@ def get_recommend_article():
     if not action:
         recommend_article = db.sql("select * from article order by edittime DESC limit 10")
 
-    return jsonify({'code': 1, 'msg': 'success', 'data': recommend_article})
+    result = flow_loading(recommend_article,each,page)
+
+    return jsonify({'code': 1, 'msg': 'success', 'data': result})
 
 
 """
