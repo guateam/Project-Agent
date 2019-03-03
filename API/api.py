@@ -2259,18 +2259,12 @@ def classify_by_tag():
         target = db.sql("select * from article where tags like '%," + tag + ",% or tags like '" + tag + ",%'"
                                                                                                         "or tags like '" + tag + "' or tags like '%," + tag + " order by edittime desc")
 
-    # 最多流加载几次
-    max_page = int(target.length / each) + 1
-    # 超过最高加载次数的从第一次开始循环加载
-    page = max_page if (page % max_page) == 0 else page % max_page
+    result = flow_loading(target,each,page)
 
-    begin_index = each * (page - 1)
-    end_index = begin_index + each - 1
+    return jsonify({'code': 1, 'msg': 'success', 'data': result})
 
-    if (end_index >= target.length):
-        end_index = target.length - 1
 
-    return jsonify({'code': 1, 'msg': 'success', 'data': target[begin_index:end_index]})
+
 
 
 @app.route('/api/homepage/get_category')
