@@ -2169,9 +2169,11 @@ def get_recommend():
     # 用户token
     token = request.values.get('token')
     # 加载次数
+    # 为什么这里几行消失了
     page = request.values.get('page')
     # 每次加载量
     each = 5
+    # 为什么上面几行消失了
 
     # 用于推荐的评分矩阵路径，以api.py所在目录为根目录的表示
     rate_dir = "/etc/project-agent/CF/rate_rect/question_rate_rect.txt"
