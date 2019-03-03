@@ -2194,7 +2194,6 @@ def get_recommend():
 
         result = flow_loading(recommend_question_ids,each,page)
 
-
         # 录入结果
         for id in recommend_question_ids:
             # 查询该id的问题信息
