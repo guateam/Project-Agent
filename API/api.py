@@ -1124,7 +1124,7 @@ def get_answer_list():
             {'questionID': question_id, 'state': 1}, 'answersinfo', 0)
         for answer in answer_list:
             answer['edittime'] = get_formative_datetime(answer['edittime'])
-            pattern = re.compile(r'<[Ii][Mm][Gg].+?/>')
+            pattern = re.compile(r'<[Ii][Mm][Gg].+?/?>')
             answer.update({'image': pattern.findall(answer['content'])})
         return jsonify({'code': 1, 'msg': 'success', 'data': answer_list})
     return jsonify({'code': 0, 'msg': 'unknown question'})
@@ -2168,11 +2168,6 @@ def get_recommend():
     """
     # 用户token
     token = request.values.get('token')
-    # 加载次数
-    page = request.values.get('page')
-    # 每次加载量
-    each = 5
-
     # 用于推荐的评分矩阵路径，以api.py所在目录为根目录的表示
     rate_dir = "/etc/project-agent/CF/rate_rect/question_rate_rect.txt"
 
@@ -2196,15 +2191,12 @@ def get_recommend():
         # 获得相似度降序排列的问题序列
         recommend_question_ids = item_cf_api("question_similar_rect.txt", "question_id_list.txt",
                                              target_question_id, 13)
-
-        result = flow_loading(recommend_question_ids,each,page)
-
         # 录入结果
-        for id in result:
+        for id in recommend_question_ids:
             # 查询该id的问题信息
             out = db.sql("select * from questionsinfo where questionID = '%s'" % id)
             # 正则表达匹配图片
-            pattern = re.compile(r'<[Ii][Mm][Gg].+?/>')
+            pattern = re.compile(r'<[Ii][Mm][Gg].+?/?>')
             # 进行格式的处理
             for value1 in out:
                 value1.update({
@@ -2251,38 +2243,24 @@ def classify_by_tag():
     db = Database()
 
     if type == 1:
-        target = db.sql("select * from questions where tags like '%," + tag + ",%' or tags like '" + tag + ",%'"
-                                "or tags like '" + tag + "' or tags like '%," + tag + "' order by edittime desc")
+        target = db.sql("select * from questions where tags like '%," + tag + ",% or tags like '" + tag + ",%'"
+                                                                                                          "or tags like '" + tag + "' or tags like '%," + tag + " order by edittime desc")
     elif type == 2:
-        target = db.sql("select * from article where tags like '%," + tag + ",%' or tags like '" + tag + ",%'"
-                                "or tags like '" + tag + "' or tags like '%," + tag + "' order by edittime desc")
+        target = db.sql("select * from article where tags like '%," + tag + ",% or tags like '" + tag + ",%'"
+                                                                                                        "or tags like '" + tag + "' or tags like '%," + tag + " order by edittime desc")
 
-    result = flow_loading(target,each,page)
-
-    return jsonify({'code': 1, 'msg': 'success', 'data': result})
-
-
-def flow_loading(data,each,page):
-    """
-    流加载
-    :param data: 源数据
-    :param each: 每次加载量
-    :param page:第几次加载
-    :return:本次需要加载的数据
-    """
-    page = int(page)
     # 最多流加载几次
-    max_page = int(len(data) / each) + 1
+    max_page = int(target.length / each) + 1
     # 超过最高加载次数的从第一次开始循环加载
     page = max_page if (page % max_page) == 0 else page % max_page
 
     begin_index = each * (page - 1)
     end_index = begin_index + each - 1
 
-    if (end_index >= len(data)):
-        end_index = len(data) - 1
+    if (end_index >= target.length):
+        end_index = target.length - 1
 
-    return data[begin_index:end_index]
+    return jsonify({'code': 1, 'msg': 'success', 'data': target[begin_index:end_index]})
 
 
 @app.route('/api/homepage/get_category')
@@ -2689,7 +2667,7 @@ def upload_picture():
         new_filename = str(int(time.time())) + secure_filename(f.filename)
         upload_path = os.path.join(basepath, 'static/uploads', new_filename)  # 注意：没有的文件夹一定要先创建，不然会提示没有该路径
         f.save(upload_path)
-        return jsonify({'code': 1, 'msg': 'success', 'data': '/static/uploads/' + new_filename})
+        return jsonify({'code': 1, 'msg': 'success', 'data': 'https://hanerx.tk:5000/static/uploads/' + new_filename})
     return jsonify({'code': 0, 'msg': 'unexpected type'})
 
 
@@ -3593,10 +3571,6 @@ def get_recommend_article():
     :return:code:-1=评分矩阵未建立  0=用户不存在  1=成功
     """
     token = request.values.get('token')
-    page = request.values.get('page')
-    each = 5
-
-
     db = Database()
     user = db.get({'token': token}, 'users')
 
@@ -3624,9 +3598,7 @@ def get_recommend_article():
     if not action:
         recommend_article = db.sql("select * from article order by edittime DESC limit 10")
 
-    result = flow_loading(recommend_article,each,page)
-
-    return jsonify({'code': 1, 'msg': 'success', 'data': result})
+    return jsonify({'code': 1, 'msg': 'success', 'data': recommend_article})
 
 
 """
