@@ -2264,7 +2264,29 @@ def classify_by_tag():
     return jsonify({'code': 1, 'msg': 'success', 'data': result})
 
 
+def flow_loading(data, each, page):
+    """
+    流加载
 
+    :param data: 源数据
+    :param each: 每次加载量
+    :param page:第几次加载
+    :return:本次需要加载的数据
+    """
+    # 转换成整数
+    page = int(page)
+    # 最多流加载几次
+    max_page = int(len(data) / each) + 1
+    # 超过最高加载次数的从第一次开始循环加载
+    page = max_page if (page % max_page) == 0 else page % max_page
+
+    begin_index = each * (page - 1)
+    end_index = begin_index + each - 1
+
+    if (end_index >= len(data)):
+        end_index = len(data) - 1
+
+    return data[begin_index:end_index]
 
 
 @app.route('/api/homepage/get_category')
