@@ -118,7 +118,7 @@
                 <v-tab-item :key="4">
                     <v-card>
                         <v-list two-line>
-                            <template v-for="(item, index) in items1">
+                            <template v-for="(item, index) in items5">
                                 <v-subheader v-if="item.header" :key="item.header">
                                     {{ item.header }}
                                 </v-subheader>

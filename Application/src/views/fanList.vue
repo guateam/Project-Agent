@@ -13,7 +13,7 @@
                 v-model="active"
                 color="cyan"
                 dark
-                slider-color="yellow"
+                slider-color="#ffcc00"
         >
             <v-tab
                     v-for="item in tabs"
