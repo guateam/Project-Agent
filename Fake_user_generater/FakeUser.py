@@ -112,9 +112,24 @@ def set_current_user_action(id, n):
             db.insert({'userID': id, 'articleID': target}, 'collectarticle')
 
 
+def fake_user_follow(n):
+    """
+    随机添加用户的关注
+    :return:
+    """
+    db = Database()
+    user = db.get({}, 'users')
+    for i in range(n):
+        target = random.choice(user)
+        follower = random.choice(user)
+        db.insert({'userID': follower['userID'], 'target': target['userID']}, 'followuser')
+        print(i)
+
+
 if __name__ == '__main__':
     # fake_user_register(20)
     # question_upload(100, 2)
-    add_random_user_action(1000)
+    # add_random_user_action(1000)
     # set_current_user_action(1, 100)
+    fake_user_follow(200)
     pass

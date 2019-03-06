@@ -1124,7 +1124,7 @@ def get_answer_list():
             {'questionID': question_id, 'state': 1}, 'answersinfo', 0)
         for answer in answer_list:
             answer['edittime'] = get_formative_datetime(answer['edittime'])
-            pattern = re.compile(r'<[Ii][Mm][Gg].+?/>')
+            pattern = re.compile(r'<[Ii][Mm][Gg].+?/?>')
             answer.update({'image': pattern.findall(answer['content'])})
         return jsonify({'code': 1, 'msg': 'success', 'data': answer_list})
     return jsonify({'code': 0, 'msg': 'unknown question'})
@@ -2169,7 +2169,6 @@ def get_recommend():
     # 用户token
     token = request.values.get('token')
 
-
     # 加载的次数
     pages = request.values.get('page')
     # 每次加载量
@@ -2206,7 +2205,7 @@ def get_recommend():
             # 查询该id的问题信息
             out = db.sql("select * from questionsinfo where questionID = '%s'" % id)
             # 正则表达匹配图片
-            pattern = re.compile(r'<[Ii][Mm][Gg].+?/>')
+            pattern = re.compile(r'<[Ii][Mm][Gg].+?/?>')
             # 进行格式的处理
             for value1 in out:
                 value1.update({
@@ -2253,11 +2252,11 @@ def classify_by_tag():
     db = Database()
 
     if type == 1:
-        target = db.sql("select * from questions where tags like '%," + tag + ",%' or tags like '" + tag + ",%'"
-                                "or tags like '" + tag + "' or tags like '%," + tag + "' order by edittime desc")
+        target = db.sql("select * from questions where tags like '%," + tag + ",% or tags like '" + tag + ",%'"
+                                                                                                          "or tags like '" + tag + "' or tags like '%," + tag + " order by edittime desc")
     elif type == 2:
-        target = db.sql("select * from article where tags like '%," + tag + ",%' or tags like '" + tag + ",%'"
-                                "or tags like '" + tag + "' or tags like '%," + tag + "' order by edittime desc")
+        target = db.sql("select * from article where tags like '%," + tag + ",% or tags like '" + tag + ",%'"
+                                                                                                        "or tags like '" + tag + "' or tags like '%," + tag + " order by edittime desc")
 
     result = flow_loading(target,each,page)
 
@@ -2418,10 +2417,13 @@ def get_friend_list():
     if user:
         # 根据token获取该用户的好友列表
         friend = db.sql(
-            "select A.userID as user_id ,A.nickname as nickname,A.headportrait as headportrait,A.usergroup as "
+            "select A.userID as user_id ,A.description as description,A.nickname as nickname,A.headportrait as "
+            "headportrait,A.usergroup as "
             "usergroup,A.exp as exp from users A,(select C.* from followuser C,users D where C.userID = D.userID and "
             "D.token= '%s') B,followuser C where A.userID=C.userID and (C.target = B.userID) and C.userID = B.target "
             "" % token)
+        for value in friend:
+            value.update({'group': get_group(value['usergroup'])})
         if friend:
             return jsonify({'code': 1, 'msg': 'success', 'data': friend})
         return jsonify({'code': 1, 'msg': 'success', 'data': []})
@@ -2690,7 +2692,7 @@ def upload_picture():
         new_filename = str(int(time.time())) + secure_filename(f.filename)
         upload_path = os.path.join(basepath, 'static/uploads', new_filename)  # 注意：没有的文件夹一定要先创建，不然会提示没有该路径
         f.save(upload_path)
-        return jsonify({'code': 1, 'msg': 'success', 'data': '/static/uploads/' + new_filename})
+        return jsonify({'code': 1, 'msg': 'success', 'data': 'https://hanerx.tk:5000/static/uploads/' + new_filename})
     return jsonify({'code': 0, 'msg': 'unexpected type'})
 
 
@@ -3594,9 +3596,8 @@ def get_recommend_article():
     :return:code:-1=评分矩阵未建立  0=用户不存在  1=成功
     """
     token = request.values.get('token')
-    page = request.values.get('page')
     each = 5
-
+    page = request.values.get('page')
 
     db = Database()
     user = db.get({'token': token}, 'users')

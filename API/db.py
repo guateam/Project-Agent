@@ -50,18 +50,20 @@ class Database(object):
         # 构造键值成分
         keys = '`' + '`, `'.join(data.keys()) + '`'
         list2 = []
+        list3 = []
         for key, values in data.items():
             if values == self.MYSQL_INSERT_NULL:
                 list2.append(values)
             else:
-                list2.append('"' + str(values) + '"')
+                list2.append('%s')
+                list3.append(str(values))
         values = ', '.join(list2)
         # 插入数据
         try:
             with self.db.cursor() as cursor:
                 # 构造sql语句
                 sql_query = 'INSERT INTO %s (%s) VALUES (%s)' % (table, keys, values)
-                cursor.execute(sql_query)
+                cursor.execute(sql_query, list3)
             # 提交语句
             self.db.commit()
             return True
@@ -249,7 +251,7 @@ class Database(object):
                                 str_use = (key + ' LIKE \'%')
                             for single in values:
                                 str_use += single + '%'
-                            str_use +='\''
+                            str_use += '\''
                             list1.append(str_use)
                         else:
                             list1.append(key + ' LIKE \'%' + str(values) + '%\'')
