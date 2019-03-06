@@ -58,6 +58,15 @@ def new_token():
 """
 
 
+@app.route('/api/account/get_user_group')
+def get_user_group():
+    """
+    获取用户组信息
+    :return:
+    """
+    return jsonify({'code': 1, 'msg': 'success', 'data': USER_GROUP})
+
+
 @app.route('/api/account/login', methods=['POST'])
 def login():
     """
@@ -858,7 +867,7 @@ def change_account_balance(num, token):
         # 若num为负数，钱包可能被扣到负值
         if user['account_balance'] + num < 0:
             return -1
-        flag = db.update({'userID': user['user_id']}, {'account_balance': user['account_balance'] + num}, 'users')
+        flag = db.update({'userID': user['userID']}, {'account_balance': user['account_balance'] + num}, 'users')
         if flag:
             return 1
         return 0
@@ -968,7 +977,7 @@ def add_priced_question():
     token = request.form['token']
     price = request.form['price']
     db = Database()
-    res = change_account_balance(int(price), token)
+    res = change_account_balance(-int(price), token)
     if res == 1:
         user = db.get({'token': token}, 'users')
         if user:
@@ -1377,6 +1386,35 @@ def add_answer():
             if flag:
                 return jsonify({'code': 1, 'msg': 'success'})
             return jsonify({'code': -2, 'msg': 'unable to insert answer'})
+        return jsonify({'code': -1, 'msg': 'unknown question'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/answer/add_priced_answer')
+def add_priced_answer():
+    """
+    对付费问题添加回答
+    :return:
+    """
+    question_id = request.form['question_id']
+    token = request.form['token']
+    content = request.form['content']
+    answer_type = request.form['answer_type']
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        question = db.get({'questionID': question_id}, 'questions')
+        if question:
+            allowed_user = question['allowed_user'].split(',')
+            if user['usergroup'] in allowed_user:
+                flag = db.insert(
+                    {'content': content, 'userID': user['userID'], 'questionID': question_id,
+                     'answertype': answer_type},
+                    'answers')
+                if flag:
+                    return jsonify({'code': 1, 'msg': 'success'})
+                return jsonify({'code': -2, 'msg': 'unable to insert answer'})
+            return jsonify({'code': -3, 'msg': 'you are not allowed to answer'})
         return jsonify({'code': -1, 'msg': 'unknown question'})
     return jsonify({'code': 0, 'msg': 'unexpected user'})
 
@@ -1928,13 +1966,24 @@ def add_article():
     token = request.form['token']
     content = request.form["content"]
     title = request.form['title']
+    tags = request.form['tags']
+    free = request.form['free']
+    price = request.form['price']
+    cover = request.form['cover']
+    description = request.form['description']
 
-    db = Database()
+    tag = tag1 + tag
+
     user = db.get({'token': token}, 'users')
     if not user:
         return jsonify({'code': -1, 'msg': 'the user is not exist'})
-
-    success = db.insert({'content': content, 'userID': user['userID'], 'title': title}, 'article')
+    free_ = 1
+    if free == 'true':
+        free_ = 0
+    success = db.insert(
+        {'content': content, 'userID': user['userID'], 'title': title, 'tags': tags, 'free': free_, 'price': price,
+         'cover': cover, 'description': description},
+        'article')
     if success:
         return jsonify({'code': 1, 'msg': 'add success'})
     else:
@@ -2153,6 +2202,112 @@ def get_user_articles():
     return jsonify({'code': 0, 'msg': 'unexpected user'})
 
 
+@app.route('/api/article/get_tag_articles')
+def get_tag_articles():
+    """
+    获取特定tag下的文章
+    :return:
+    """
+    tag_id = request.values.get('tag_id')
+    db = Database()
+    articles = db.get({'state': 0}, 'articleinfo', 0)
+    data = []
+    for value in articles:
+        tags = value['tags'].split(',')
+        if tag_id in tags:
+            value.update({'tags': get_tags(value['tags'])})
+            data.append(value)
+    return jsonify({'code': 1, 'msg': 'success', 'data': data})
+
+
+@app.route('/api/article/get_article_info')
+def get_article_info():
+    """
+    获取文章信息
+    :return:
+    """
+    article_id = request.values.get('article_id')
+    db = Database()
+    article = db.get({'articleID': article_id}, 'articleinfo')
+    if article:
+        data = {
+            'id': article['articleID'],
+            'title': article['title'],
+            'nickname': article['nickname'],
+            'exp': article['exp'],
+            'level': get_level(article['exp']),
+            'group': get_group(article['usergroup']),
+            'head_portrait': article['headportrait'],
+            'cover': article['cover'],
+            'description': article['description'],
+            'tags': get_tags(article['tags']),
+            'article_description': article['article_description'],
+            'collect': db.count({'articleID': article['articleID']}, 'collectarticle'),
+            'read': db.count({'targettype': 21, 'targetID': article['articleID']}, 'useraction'),
+            'price': article['price'],
+            'free': article['free'],
+            'rate': get_article_rate(article_id)
+        }
+        return jsonify({'code': 1, 'msg': 'success', 'data': data})
+    return jsonify({'code': 0, 'msg': 'unknown article'})
+
+
+def get_article_rate(article_id):
+    """
+    获取文章评分
+    :param article_id:
+    :return:
+    """
+    db = Database()
+    article = db.get({'articleID': article_id}, 'articleinfo')
+    if db.count({'targettype': 23, 'targetID': article['articleID']}, 'useraction') + db.count(
+            {'targettype': 24, 'targetID': article['articleID']}, 'useraction') > 0:
+        rate = 2.5 + (db.count({'targettype': 23, 'targetID': article['articleID']}, 'useraction') - db.count(
+            {'targettype': 24, 'targetID': article['articleID']}, 'useraction')) // (
+                       db.count({'targettype': 23, 'targetID': article['articleID']}, 'useraction') + db.count(
+                   {'targettype': 24, 'targetID': article['articleID']}, 'useraction')) * 2.5
+        if rate < 0:
+            rate = 0
+        elif rate > 5:
+            rate = 5
+        return rate
+    return 2.5
+
+
+@app.route('/api/article/get_article_comment')
+def get_article_comment():
+    """
+    获取文章的评论
+    :return:
+    """
+    article_id = request.values.get('article_id')
+    db = Database()
+    comment = db.get({'articleID': article_id}, 'article_comments_info', 0)
+    for value in comment:
+        value.update({'group': get_group(value['usergroup']), 'level': get_level(value['exp'])})
+    return jsonify({'code': 1, 'msg': 'success', 'data': comment})
+
+
+@app.route('/api/article/add_article_comment', methods=['POST'])
+def add_article_comment():
+    """
+    添加文章评论
+    :return:
+    """
+    token = request.form['token']
+    db = Database()
+    user = db.get({'token': token}, 'users')
+    if user:
+        content = request.form['content']
+        article_id = request.form['article_id']
+        flag = db.insert({'articleID': article_id, 'content': content, 'userID': user['userID']}, 'article_comments')
+        set_user_action(user['userID'], article_id, 25)
+        if flag:
+            return jsonify({'code': 1, 'msg': 'success'})
+        return jsonify({'code': -1, 'msg': 'unable to insert'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
 """
     首页接口
 """
@@ -2168,11 +2323,11 @@ def get_recommend():
     """
     # 用户token
     token = request.values.get('token')
-
+    return jsonify({'code': 1, 'msg': 'test'})
     # 加载的次数
     pages = request.values.get('page')
     # 每次加载量
-    each_ = 5
+    each_ = 6
 
     # 用于推荐的评分矩阵路径，以api.py所在目录为根目录的表示
     rate_dir = "/etc/project-agent/CF/rate_rect/question_rate_rect.txt"
@@ -2196,9 +2351,9 @@ def get_recommend():
                                                ' build it by function build_questoin_rate_rect'})
         # 获得相似度降序排列的问题序列
         recommend_question_ids = item_cf_api("question_similar_rect.txt", "question_id_list.txt",
-                                             target_question_id, 13)
+                                             target_question_id, 100)
 
-        result = flow_loading(recommend_question_ids,each_,pages)
+        result = flow_loading(recommend_question_ids, each_, pages)
 
         # 录入结果
         for id in result:
@@ -2245,7 +2400,7 @@ def classify_by_tag():
     tag = request.values.get('tag')
     type = request.values.get('type')
     # 每次调用返回几个
-    each = 5
+    each = 6
     # 第几次调用(相当于第几页/第几次流加载），第一次为 1
     page = request.values.get('page')
 
@@ -2258,9 +2413,39 @@ def classify_by_tag():
         target = db.sql("select * from article where tags like '%," + tag + ",% or tags like '" + tag + ",%'"
                                                                                                         "or tags like '" + tag + "' or tags like '%," + tag + " order by edittime desc")
 
-    result = flow_loading(target,each,page)
+    result = flow_loading(target, each, page)
 
     return jsonify({'code': 1, 'msg': 'success', 'data': result})
+
+
+@app.route('/api/homepage/classify_all_tag')
+def classify_all_tag():
+    """
+    获取所有类别的问题或者文章，type 1-问题+回答   2-文章
+    :return:
+    """
+    # 需要获取的问题或文章tag
+    type = int(request.values.get('type'))
+    # 最终的数据
+    data = {}
+
+    result = []
+    db = Database()
+    category = db.sql("select * from tags where type=1")
+    for cate in category:
+        tag = str(cate['id'])
+        target = []
+        if type == 1:
+            sts = "select * from questions where tags like '%," + tag + ",%' or tags like '" + tag + ",%' or tags like '" + tag + "' or tags like '%," + tag + "' order by edittime desc"
+            target = db.sql(sts)
+        elif type == 2:
+            target = db.sql("select * from article where tags like '%," + tag + ",%' or tags like '" + tag + ",%'"
+                            "or tags like '" + tag + "' or tags like '%," + tag + "' order by edittime desc")
+        result = flow_loading(target, 6, 1)
+
+        data[tag] = result
+
+    return jsonify({'code': 1, 'msg': 'success', 'data': data})
 
 
 def flow_loading(data, each, page):
@@ -2282,10 +2467,10 @@ def flow_loading(data, each, page):
     begin_index = each * (page - 1)
     end_index = begin_index + each - 1
 
-    if (end_index >= len(data)):
+    if end_index >= len(data):
         end_index = len(data) - 1
 
-    return data[begin_index:end_index]
+    return data[begin_index:end_index+1]
 
 
 @app.route('/api/homepage/get_category')
@@ -2300,7 +2485,8 @@ def get_category():
     for value in tags:
         data.append({
             'name': value['name'],
-            'id': value['id']
+            'id': value['id'],
+            'page': 1
         })
     return jsonify({'code': 1, 'msg': 'success', 'data': data})
 
@@ -3596,8 +3782,8 @@ def get_recommend_article():
     :return:code:-1=评分矩阵未建立  0=用户不存在  1=成功
     """
     token = request.values.get('token')
-    each = 5
     page = request.values.get('page')
+    each = 6
 
     db = Database()
     user = db.get({'token': token}, 'users')
@@ -3610,18 +3796,19 @@ def get_recommend_article():
     if not os.path.exists(rate_dir):
         return jsonify({'code': -1, 'msg': 'the rate rectangle is not exist,please'
                                            ' build it by function build_article_rate_rect'})
-    # 查找该用户最近浏览的最多3篇文章
+    # 查找该用户最近浏览的最多10篇文章
     action = db.sql("select distinct targetID from useraction where userID='%s' and targettype >=21 and targettype<=25 "
-                    "order by actiontime DESC limit 3" % user['userID'])
+                    "order by actiontime DESC limit 10" % user['userID'])
     # 推荐结果容器
     recommend_article = []
     # 推荐的文章id,最多3条，相似度降序排列
     for each in action:
-        ids = item_cf_api("article_similar_rect.txt", "article_id_list.txt", each['targetID'], 3)
+        ids = item_cf_api("article_similar_rect.txt", "article_id_list.txt", each['targetID'], 10)
         for id in ids:
             article = db.get({'articleID': id}, 'article')
             article.update({'tags': get_tags(article['tags'])})
-            recommend_article.append(article)
+            if article in recommend_article:
+                recommend_article.append(article)
     # 若action为空，则随机推荐
     if not action:
         recommend_article = db.sql("select * from article order by edittime DESC limit 10")
@@ -4174,6 +4361,86 @@ def delete_activity():
     return jsonify({'code': 1, 'msg': 'unexpected user'})
 
 
+"""
+    标签接口
+"""
+
+
+@app.route('/api/tags/get_first_tag')
+def get_first_tag():
+    """
+    获取tag
+    :return:
+    """
+    db = Database()
+    tags = db.get({'type': 1}, 'tags', 0)
+    return jsonify({'code': 1, 'msg': 'success', 'data': tags})
+
+
+@app.route('/api/tags/get_child_tag')
+def get_child_tag():
+    """
+    获取tag下的子tag
+    :return:
+    """
+    db = Database()
+    tag_id = request.values.get('tag_id')
+    tags = db.get({'father': tag_id}, 'tags', 0)
+    return jsonify({'code': 1, 'msg': 'success', 'data': tags})
+
+
+@app.route('/api/tags/get_tag_recommend')
+def get_tag_recommend():
+    """
+    键入tag时获取推荐
+    :return:
+    """
+    db = Database()
+    tag_id = request.values.get('tag_id')
+    tag = request.values.get('tag')
+    tags = db.sql('SELECT * FROM tags  WHERE name LIKE "%' + str(tag) + '%" AND father = "' + str(tag_id) + '"')
+    if tags:
+        return jsonify({'code': 1, 'msg': 'success', 'data': tags})
+    return jsonify({'code': 1, 'msg': 'success', 'data': [{'name': tag, 'id': -1}]})
+
+
+@app.route('/api/tags/add_tag', methods=['POST'])
+def add_tag():
+    """
+    添加tag
+    :return:
+    """
+    db = Database()
+    token = request.form['token']
+    user = db.get({'token': token}, 'users')
+    if user:
+        name = request.form['name']
+        tag_type = request.form['tag_type']
+        father = request.form['father']
+        if db.get({'name': name, 'type': tag_type, 'father': father}, 'tags'):
+            return jsonify({'code': -2, 'msg': 'tag is already exist'})
+        flag = db.insert({'name': name, 'type': tag_type, 'father': father}, 'tags')
+        if flag:
+            tag_id = db.get({'name': name, 'type': tag_type, 'father': father}, 'tags')
+            return jsonify({'code': 1, 'msg': 'success', 'data': tag_id})
+        return jsonify({'code': -1, 'msg': 'unable to insert'})
+    return jsonify({'code': 0, 'msg': 'unexpected user'})
+
+
+@app.route('/api/tags/get_tag_tree')
+def get_tag_tree():
+    """
+    获取tag树
+    :return:
+    """
+    db = Database()
+    tags = db.get({'type': 1}, 'tags', 0)
+    for value in tags:
+        children = db.get({'father': value['id']}, 'tags', 0)
+        value.update({'children': children})
+    return jsonify({'code': 1, 'msg': 'success', 'data': tags})
+
+
 if __name__ == '__main__':
     # 开启调试模式，修改代码后不需要重新启动服务即可生效
     # 请勿在生产环境下使用调试模式
@@ -4182,6 +4449,5 @@ if __name__ == '__main__':
     # with open('static\\upload\\36.txt', 'rb') as file:
     #     result = pred(file.read())
     #     print(result[0])
-    app.run(host='0.0.0.0', port=5000, debug=False, ssl_context=(
-        '/etc/letsencrypt/live/hanerx.tk/fullchain.pem', '/etc/letsencrypt/live/hanerx.tk/privkey.pem'))
+    app.run(host='0.0.0.0', port=5000, debug=False)
     # app.run(host='0.0.0.0', port=5000, debug=False)
