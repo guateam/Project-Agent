@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50725
 File Encoding         : 65001
 
-Date: 2019-03-06 16:54:54
+Date: 2019-03-18 11:33:45
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -29,7 +29,7 @@ CREATE TABLE `activities` (
   `userID` int(10) NOT NULL DEFAULT '0',
   `state` int(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`activityID`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of activities
@@ -37,6 +37,12 @@ CREATE TABLE `activities` (
 INSERT INTO `activities` VALUES ('1', '开学季特价', '2', 'https://hanerx.tk', '2019-02-27 16:34:14', 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1551200316578&di=9c9312e3ae88f6f44da5cce0b8c034b0&imgtype=0&src=http%3A%2F%2Fbpic.ooopic.com%2F16%2F59%2F37%2F16593762-cd9328613cd92d108535fb95a8e7cb7b-0.jpg', '1', '0');
 INSERT INTO `activities` VALUES ('2', '绝赞好书-怎样装逼', '2', 'https://www.baidu.com', '2019-02-27 16:47:06', 'https://gss0.bdstatic.com/94o3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268%3Bg%3D0/sign=a9d322ec6f2762d0803ea3b998d76fc7/a71ea8d3fd1f4134973598b1291f95cad0c85efa.jpg', '1', '0');
 INSERT INTO `activities` VALUES ('3', '彩虹六号新干员更新', '2', 'https://www.ubisoft.com.cn/news2/r6_show/1929', '2019-02-27 19:03:58', 'http://cdn.hommk.com/pcgame/upload/attachments/uploads/000/005/011/original_1550564065.jpg?1550564065', '1', '0');
+INSERT INTO `activities` VALUES ('4', '创作激励计划', '3', 'https://www.baidu.com', '2019-03-08 21:50:31', 'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=2184971280,1487039722&fm=58&bpow=989&bpoh=741', '1', '0');
+INSERT INTO `activities` VALUES ('5', '开业激励，签约作者降低抽成', '3', '', '2019-03-08 22:15:37', 'http://imgsrc.baidu.com/imgad/pic/item/4bed2e738bd4b31c23d0c5af8dd6277f9e2ff832.jpg', '0', '0');
+INSERT INTO `activities` VALUES ('6', '关于低俗无意义内容封禁规定', '3', '', '2019-03-08 22:08:43', 'http://img1.imgtn.bdimg.com/it/u=3283533154,2329166413&fm=26&gp=0.jpg', '0', '0');
+INSERT INTO `activities` VALUES ('7', '开业大酬宾', '4', '', '2019-03-08 22:10:08', 'http://img0.imgtn.bdimg.com/it/u=2245338540,2973110680&fm=26&gp=0.jpg', '0', '0');
+INSERT INTO `activities` VALUES ('8', '需求发布手册', '4', '', '2019-03-08 22:23:43', 'http://img.zcool.cn/community/01eb1858be4389a801219c7724606e.jpg', '0', '0');
+INSERT INTO `activities` VALUES ('9', '广告投放指南', '4', '', '2019-03-08 22:23:27', 'http://www.qianshijun.com/uploads/img/20170905/59ae7629e1113.jpg', '0', '0');
 
 -- ----------------------------
 -- Table structure for `answercomments`
@@ -50,7 +56,7 @@ CREATE TABLE `answercomments` (
   `createtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
   `answerID` int(11) NOT NULL COMMENT '对应答案ID',
   PRIMARY KEY (`acommentID`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='回答评论表';
+) ENGINE=InnoDB AUTO_INCREMENT=298 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='回答评论表';
 
 -- ----------------------------
 -- Records of answercomments
@@ -59,6 +65,254 @@ INSERT INTO `answercomments` VALUES ('1', '1', '这是评论这是评论这是�
 INSERT INTO `answercomments` VALUES ('2', '1', '这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论', '0', '2018-12-16 08:08:09', '1');
 INSERT INTO `answercomments` VALUES ('3', '1', '这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论', '0', '2018-12-16 08:08:36', '1');
 INSERT INTO `answercomments` VALUES ('4', '1', '@拉拉人 疯狂@拉拉人', '0', '2018-12-29 23:35:57', '1');
+INSERT INTO `answercomments` VALUES ('50', '3', 'lalalala', '0', '2019-03-11 12:28:18', '1');
+INSERT INTO `answercomments` VALUES ('51', '3', '略略略略略', '0', '2019-03-11 12:28:45', '1');
+INSERT INTO `answercomments` VALUES ('52', '3', '', '0', '2019-03-07 15:39:13', '5');
+INSERT INTO `answercomments` VALUES ('53', '3', '', '0', '2019-03-07 15:39:14', '5');
+INSERT INTO `answercomments` VALUES ('54', '3', '', '0', '2019-03-07 15:39:14', '5');
+INSERT INTO `answercomments` VALUES ('55', '3', '', '0', '2019-03-07 15:39:15', '5');
+INSERT INTO `answercomments` VALUES ('56', '3', '', '0', '2019-03-07 15:39:16', '5');
+INSERT INTO `answercomments` VALUES ('57', '3', '', '0', '2019-03-07 15:39:17', '5');
+INSERT INTO `answercomments` VALUES ('58', '3', '', '0', '2019-03-07 15:39:18', '5');
+INSERT INTO `answercomments` VALUES ('59', '3', '', '0', '2019-03-07 15:39:19', '5');
+INSERT INTO `answercomments` VALUES ('60', '3', '', '0', '2019-03-07 15:39:21', '5');
+INSERT INTO `answercomments` VALUES ('61', '3', '为撒', '0', '2019-03-07 15:39:22', '5');
+INSERT INTO `answercomments` VALUES ('62', '3', '', '0', '2019-03-07 15:39:22', '5');
+INSERT INTO `answercomments` VALUES ('63', '3', '', '0', '2019-03-07 15:39:22', '5');
+INSERT INTO `answercomments` VALUES ('64', '3', '', '0', '2019-03-07 15:39:24', '5');
+INSERT INTO `answercomments` VALUES ('65', '3', '', '0', '2019-03-07 15:39:24', '5');
+INSERT INTO `answercomments` VALUES ('66', '3', '', '0', '2019-03-07 15:39:25', '5');
+INSERT INTO `answercomments` VALUES ('67', '3', '', '0', '2019-03-07 15:39:26', '5');
+INSERT INTO `answercomments` VALUES ('68', '3', '', '0', '2019-03-07 15:39:27', '5');
+INSERT INTO `answercomments` VALUES ('69', '3', '', '0', '2019-03-07 15:39:28', '5');
+INSERT INTO `answercomments` VALUES ('70', '3', '', '0', '2019-03-07 15:39:29', '5');
+INSERT INTO `answercomments` VALUES ('71', '3', '', '0', '2019-03-07 15:39:30', '5');
+INSERT INTO `answercomments` VALUES ('72', '3', '', '0', '2019-03-07 15:39:31', '5');
+INSERT INTO `answercomments` VALUES ('73', '3', '', '0', '2019-03-07 15:39:32', '5');
+INSERT INTO `answercomments` VALUES ('74', '3', '', '0', '2019-03-07 15:39:33', '5');
+INSERT INTO `answercomments` VALUES ('75', '3', '', '0', '2019-03-07 15:39:34', '5');
+INSERT INTO `answercomments` VALUES ('76', '3', '', '0', '2019-03-07 15:39:35', '5');
+INSERT INTO `answercomments` VALUES ('77', '3', '', '0', '2019-03-07 15:39:36', '5');
+INSERT INTO `answercomments` VALUES ('78', '3', '', '0', '2019-03-07 15:39:37', '5');
+INSERT INTO `answercomments` VALUES ('79', '3', '', '0', '2019-03-07 15:39:38', '5');
+INSERT INTO `answercomments` VALUES ('80', '3', '', '0', '2019-03-07 15:39:38', '5');
+INSERT INTO `answercomments` VALUES ('81', '3', '', '0', '2019-03-07 15:39:40', '5');
+INSERT INTO `answercomments` VALUES ('82', '3', '', '0', '2019-03-07 15:39:40', '5');
+INSERT INTO `answercomments` VALUES ('83', '3', '', '0', '2019-03-07 15:39:41', '5');
+INSERT INTO `answercomments` VALUES ('84', '3', '', '0', '2019-03-07 15:39:43', '5');
+INSERT INTO `answercomments` VALUES ('85', '3', '', '0', '2019-03-07 15:39:44', '5');
+INSERT INTO `answercomments` VALUES ('86', '3', '', '0', '2019-03-07 15:39:45', '5');
+INSERT INTO `answercomments` VALUES ('87', '3', '', '0', '2019-03-07 15:39:46', '5');
+INSERT INTO `answercomments` VALUES ('88', '3', '', '0', '2019-03-07 15:39:47', '5');
+INSERT INTO `answercomments` VALUES ('89', '3', '', '0', '2019-03-07 15:39:48', '5');
+INSERT INTO `answercomments` VALUES ('90', '3', '', '0', '2019-03-07 15:39:49', '5');
+INSERT INTO `answercomments` VALUES ('91', '3', '', '0', '2019-03-07 15:39:50', '5');
+INSERT INTO `answercomments` VALUES ('92', '3', '', '0', '2019-03-07 15:39:51', '5');
+INSERT INTO `answercomments` VALUES ('93', '3', '', '0', '2019-03-07 15:39:52', '5');
+INSERT INTO `answercomments` VALUES ('94', '3', '', '0', '2019-03-07 15:39:53', '5');
+INSERT INTO `answercomments` VALUES ('95', '3', '', '0', '2019-03-07 15:39:54', '5');
+INSERT INTO `answercomments` VALUES ('96', '3', '', '0', '2019-03-07 15:39:55', '5');
+INSERT INTO `answercomments` VALUES ('97', '3', '', '0', '2019-03-07 15:39:56', '5');
+INSERT INTO `answercomments` VALUES ('98', '3', '', '0', '2019-03-07 15:39:57', '5');
+INSERT INTO `answercomments` VALUES ('99', '3', '', '0', '2019-03-07 15:39:58', '5');
+INSERT INTO `answercomments` VALUES ('100', '3', '', '0', '2019-03-07 15:39:59', '5');
+INSERT INTO `answercomments` VALUES ('101', '3', '', '0', '2019-03-07 15:39:59', '5');
+INSERT INTO `answercomments` VALUES ('102', '3', '', '0', '2019-03-07 15:40:00', '5');
+INSERT INTO `answercomments` VALUES ('103', '3', '', '0', '2019-03-07 15:40:02', '5');
+INSERT INTO `answercomments` VALUES ('104', '3', '', '0', '2019-03-07 15:40:03', '5');
+INSERT INTO `answercomments` VALUES ('105', '3', '', '0', '2019-03-07 15:40:04', '5');
+INSERT INTO `answercomments` VALUES ('106', '3', '', '0', '2019-03-07 15:40:05', '5');
+INSERT INTO `answercomments` VALUES ('107', '3', '', '0', '2019-03-07 15:40:07', '5');
+INSERT INTO `answercomments` VALUES ('108', '3', '', '0', '2019-03-07 15:40:07', '5');
+INSERT INTO `answercomments` VALUES ('109', '3', '', '0', '2019-03-07 15:40:08', '5');
+INSERT INTO `answercomments` VALUES ('110', '3', '', '0', '2019-03-07 15:40:09', '5');
+INSERT INTO `answercomments` VALUES ('111', '3', '', '0', '2019-03-07 15:40:10', '5');
+INSERT INTO `answercomments` VALUES ('112', '3', '', '0', '2019-03-07 15:43:25', '5');
+INSERT INTO `answercomments` VALUES ('113', '3', '', '0', '2019-03-07 15:43:27', '5');
+INSERT INTO `answercomments` VALUES ('114', '3', '', '0', '2019-03-07 15:43:28', '5');
+INSERT INTO `answercomments` VALUES ('115', '3', '', '0', '2019-03-07 15:43:30', '5');
+INSERT INTO `answercomments` VALUES ('116', '3', '', '0', '2019-03-07 15:43:32', '5');
+INSERT INTO `answercomments` VALUES ('117', '3', '个', '0', '2019-03-07 15:43:32', '5');
+INSERT INTO `answercomments` VALUES ('118', '3', '', '0', '2019-03-07 15:43:33', '5');
+INSERT INTO `answercomments` VALUES ('119', '3', '', '0', '2019-03-07 15:43:34', '5');
+INSERT INTO `answercomments` VALUES ('120', '3', '', '0', '2019-03-07 15:43:35', '5');
+INSERT INTO `answercomments` VALUES ('121', '3', '高级', '0', '2019-03-07 15:43:36', '5');
+INSERT INTO `answercomments` VALUES ('122', '3', '高级', '0', '2019-03-07 15:43:36', '5');
+INSERT INTO `answercomments` VALUES ('123', '3', '', '0', '2019-03-07 15:43:36', '5');
+INSERT INTO `answercomments` VALUES ('124', '3', '', '0', '2019-03-07 15:43:37', '5');
+INSERT INTO `answercomments` VALUES ('125', '3', '', '0', '2019-03-07 15:43:38', '5');
+INSERT INTO `answercomments` VALUES ('126', '3', '', '0', '2019-03-07 15:43:40', '5');
+INSERT INTO `answercomments` VALUES ('127', '3', '', '0', '2019-03-07 15:43:41', '5');
+INSERT INTO `answercomments` VALUES ('128', '3', '', '0', '2019-03-07 15:43:42', '5');
+INSERT INTO `answercomments` VALUES ('129', '3', '', '0', '2019-03-07 15:43:43', '5');
+INSERT INTO `answercomments` VALUES ('130', '3', '', '0', '2019-03-07 15:43:44', '5');
+INSERT INTO `answercomments` VALUES ('131', '3', '', '0', '2019-03-07 15:43:45', '5');
+INSERT INTO `answercomments` VALUES ('132', '3', '', '0', '2019-03-07 15:43:47', '5');
+INSERT INTO `answercomments` VALUES ('133', '3', '', '0', '2019-03-07 15:43:48', '5');
+INSERT INTO `answercomments` VALUES ('134', '3', '', '0', '2019-03-07 15:43:49', '5');
+INSERT INTO `answercomments` VALUES ('135', '3', '', '0', '2019-03-07 15:43:50', '5');
+INSERT INTO `answercomments` VALUES ('136', '3', '', '0', '2019-03-07 15:43:52', '5');
+INSERT INTO `answercomments` VALUES ('137', '3', '', '0', '2019-03-07 15:43:53', '5');
+INSERT INTO `answercomments` VALUES ('138', '3', '', '0', '2019-03-07 15:43:54', '5');
+INSERT INTO `answercomments` VALUES ('139', '3', '', '0', '2019-03-07 15:43:55', '5');
+INSERT INTO `answercomments` VALUES ('140', '3', '', '0', '2019-03-07 15:43:57', '5');
+INSERT INTO `answercomments` VALUES ('141', '3', '', '0', '2019-03-07 15:43:58', '5');
+INSERT INTO `answercomments` VALUES ('142', '3', '', '0', '2019-03-07 15:43:59', '5');
+INSERT INTO `answercomments` VALUES ('143', '3', '', '0', '2019-03-07 15:44:01', '5');
+INSERT INTO `answercomments` VALUES ('144', '3', '', '0', '2019-03-07 15:44:02', '5');
+INSERT INTO `answercomments` VALUES ('145', '3', '', '0', '2019-03-07 15:44:03', '5');
+INSERT INTO `answercomments` VALUES ('146', '3', '', '0', '2019-03-07 15:44:05', '5');
+INSERT INTO `answercomments` VALUES ('147', '3', '', '0', '2019-03-07 15:44:06', '5');
+INSERT INTO `answercomments` VALUES ('148', '3', '', '0', '2019-03-07 15:44:07', '5');
+INSERT INTO `answercomments` VALUES ('149', '3', '', '0', '2019-03-07 15:44:09', '5');
+INSERT INTO `answercomments` VALUES ('150', '3', '', '0', '2019-03-07 15:44:10', '5');
+INSERT INTO `answercomments` VALUES ('151', '3', '', '0', '2019-03-07 15:44:11', '5');
+INSERT INTO `answercomments` VALUES ('152', '3', '', '0', '2019-03-07 15:44:12', '5');
+INSERT INTO `answercomments` VALUES ('153', '3', '', '0', '2019-03-07 15:44:14', '5');
+INSERT INTO `answercomments` VALUES ('154', '3', '', '0', '2019-03-07 15:44:15', '5');
+INSERT INTO `answercomments` VALUES ('155', '3', '', '0', '2019-03-07 15:44:16', '5');
+INSERT INTO `answercomments` VALUES ('156', '3', '', '0', '2019-03-07 15:44:18', '5');
+INSERT INTO `answercomments` VALUES ('157', '3', '', '0', '2019-03-07 15:44:19', '5');
+INSERT INTO `answercomments` VALUES ('158', '3', '', '0', '2019-03-07 15:44:20', '5');
+INSERT INTO `answercomments` VALUES ('159', '3', '', '0', '2019-03-07 15:44:22', '5');
+INSERT INTO `answercomments` VALUES ('160', '3', '', '0', '2019-03-07 15:44:23', '5');
+INSERT INTO `answercomments` VALUES ('161', '3', '', '0', '2019-03-07 15:44:26', '5');
+INSERT INTO `answercomments` VALUES ('162', '3', '', '0', '2019-03-07 15:44:27', '5');
+INSERT INTO `answercomments` VALUES ('163', '3', '', '0', '2019-03-07 15:44:28', '5');
+INSERT INTO `answercomments` VALUES ('164', '3', '', '0', '2019-03-07 15:44:29', '5');
+INSERT INTO `answercomments` VALUES ('165', '3', '', '0', '2019-03-07 15:44:31', '5');
+INSERT INTO `answercomments` VALUES ('166', '3', '', '0', '2019-03-07 15:44:32', '5');
+INSERT INTO `answercomments` VALUES ('167', '3', '', '0', '2019-03-07 15:44:33', '5');
+INSERT INTO `answercomments` VALUES ('168', '3', '', '0', '2019-03-07 15:44:35', '5');
+INSERT INTO `answercomments` VALUES ('169', '3', '', '0', '2019-03-07 15:44:36', '5');
+INSERT INTO `answercomments` VALUES ('170', '3', '', '0', '2019-03-07 15:44:38', '5');
+INSERT INTO `answercomments` VALUES ('171', '3', '', '0', '2019-03-07 15:44:39', '5');
+INSERT INTO `answercomments` VALUES ('172', '3', '', '0', '2019-03-07 15:44:40', '5');
+INSERT INTO `answercomments` VALUES ('173', '3', '', '0', '2019-03-07 15:44:42', '5');
+INSERT INTO `answercomments` VALUES ('174', '3', '', '0', '2019-03-07 15:44:43', '5');
+INSERT INTO `answercomments` VALUES ('175', '3', '', '0', '2019-03-07 15:44:44', '5');
+INSERT INTO `answercomments` VALUES ('176', '3', '', '0', '2019-03-07 15:44:46', '5');
+INSERT INTO `answercomments` VALUES ('177', '3', '', '0', '2019-03-07 15:44:47', '5');
+INSERT INTO `answercomments` VALUES ('178', '3', '', '0', '2019-03-07 15:44:48', '5');
+INSERT INTO `answercomments` VALUES ('179', '3', '', '0', '2019-03-07 15:44:49', '5');
+INSERT INTO `answercomments` VALUES ('180', '3', '', '0', '2019-03-07 15:44:51', '5');
+INSERT INTO `answercomments` VALUES ('181', '3', '', '0', '2019-03-07 15:44:52', '5');
+INSERT INTO `answercomments` VALUES ('182', '3', '', '0', '2019-03-07 15:44:53', '5');
+INSERT INTO `answercomments` VALUES ('183', '3', '', '0', '2019-03-07 15:44:55', '5');
+INSERT INTO `answercomments` VALUES ('184', '3', '', '0', '2019-03-07 15:44:56', '5');
+INSERT INTO `answercomments` VALUES ('185', '3', '', '0', '2019-03-07 15:44:58', '5');
+INSERT INTO `answercomments` VALUES ('186', '3', '', '0', '2019-03-07 15:44:59', '5');
+INSERT INTO `answercomments` VALUES ('187', '3', '', '0', '2019-03-07 15:45:01', '5');
+INSERT INTO `answercomments` VALUES ('188', '3', '', '0', '2019-03-07 15:45:02', '5');
+INSERT INTO `answercomments` VALUES ('189', '3', '', '0', '2019-03-07 15:45:04', '5');
+INSERT INTO `answercomments` VALUES ('190', '3', '', '0', '2019-03-07 15:45:05', '5');
+INSERT INTO `answercomments` VALUES ('191', '3', '', '0', '2019-03-07 15:45:07', '5');
+INSERT INTO `answercomments` VALUES ('192', '3', '', '0', '2019-03-07 15:45:08', '5');
+INSERT INTO `answercomments` VALUES ('193', '3', '', '0', '2019-03-07 15:45:10', '5');
+INSERT INTO `answercomments` VALUES ('194', '3', '', '0', '2019-03-07 15:45:11', '5');
+INSERT INTO `answercomments` VALUES ('195', '3', '', '0', '2019-03-07 15:45:13', '5');
+INSERT INTO `answercomments` VALUES ('196', '3', '', '0', '2019-03-07 15:45:14', '5');
+INSERT INTO `answercomments` VALUES ('197', '3', '', '0', '2019-03-07 15:45:15', '5');
+INSERT INTO `answercomments` VALUES ('198', '3', '', '0', '2019-03-07 15:45:17', '5');
+INSERT INTO `answercomments` VALUES ('199', '3', '', '0', '2019-03-07 15:45:18', '5');
+INSERT INTO `answercomments` VALUES ('200', '3', '', '0', '2019-03-07 15:45:20', '5');
+INSERT INTO `answercomments` VALUES ('201', '3', '', '0', '2019-03-07 15:45:21', '5');
+INSERT INTO `answercomments` VALUES ('202', '3', '', '0', '2019-03-07 15:45:23', '5');
+INSERT INTO `answercomments` VALUES ('203', '3', '', '0', '2019-03-07 15:45:24', '5');
+INSERT INTO `answercomments` VALUES ('204', '3', '', '0', '2019-03-07 15:45:26', '5');
+INSERT INTO `answercomments` VALUES ('205', '3', '', '0', '2019-03-07 15:45:27', '5');
+INSERT INTO `answercomments` VALUES ('206', '3', '', '0', '2019-03-07 15:45:28', '5');
+INSERT INTO `answercomments` VALUES ('207', '3', '', '0', '2019-03-07 15:45:30', '5');
+INSERT INTO `answercomments` VALUES ('208', '3', '', '0', '2019-03-07 15:45:32', '5');
+INSERT INTO `answercomments` VALUES ('209', '3', '', '0', '2019-03-07 15:45:33', '5');
+INSERT INTO `answercomments` VALUES ('210', '3', '', '0', '2019-03-07 15:45:34', '5');
+INSERT INTO `answercomments` VALUES ('211', '3', '', '0', '2019-03-07 15:45:36', '5');
+INSERT INTO `answercomments` VALUES ('212', '3', '', '0', '2019-03-07 15:45:37', '5');
+INSERT INTO `answercomments` VALUES ('213', '3', '', '0', '2019-03-07 15:45:39', '5');
+INSERT INTO `answercomments` VALUES ('214', '3', '', '0', '2019-03-07 15:45:40', '5');
+INSERT INTO `answercomments` VALUES ('215', '3', '', '0', '2019-03-07 15:45:42', '5');
+INSERT INTO `answercomments` VALUES ('216', '3', '', '0', '2019-03-07 15:45:44', '5');
+INSERT INTO `answercomments` VALUES ('217', '3', '', '0', '2019-03-07 15:45:45', '5');
+INSERT INTO `answercomments` VALUES ('218', '3', '', '0', '2019-03-07 15:45:46', '5');
+INSERT INTO `answercomments` VALUES ('219', '3', '', '0', '2019-03-07 15:45:48', '5');
+INSERT INTO `answercomments` VALUES ('220', '3', '', '0', '2019-03-07 15:45:50', '5');
+INSERT INTO `answercomments` VALUES ('221', '3', '', '0', '2019-03-07 15:45:52', '5');
+INSERT INTO `answercomments` VALUES ('222', '3', '', '0', '2019-03-07 15:45:53', '5');
+INSERT INTO `answercomments` VALUES ('223', '3', '', '0', '2019-03-07 15:45:55', '5');
+INSERT INTO `answercomments` VALUES ('224', '3', '', '0', '2019-03-07 15:46:00', '5');
+INSERT INTO `answercomments` VALUES ('225', '3', '', '0', '2019-03-07 15:46:00', '5');
+INSERT INTO `answercomments` VALUES ('226', '3', '', '0', '2019-03-07 15:46:01', '5');
+INSERT INTO `answercomments` VALUES ('227', '3', '', '0', '2019-03-07 15:46:02', '5');
+INSERT INTO `answercomments` VALUES ('228', '3', '', '0', '2019-03-07 15:46:04', '5');
+INSERT INTO `answercomments` VALUES ('229', '3', '', '0', '2019-03-07 15:46:06', '5');
+INSERT INTO `answercomments` VALUES ('230', '3', '', '0', '2019-03-07 15:46:11', '5');
+INSERT INTO `answercomments` VALUES ('231', '3', '', '0', '2019-03-07 15:46:12', '5');
+INSERT INTO `answercomments` VALUES ('232', '3', '', '0', '2019-03-07 15:46:14', '5');
+INSERT INTO `answercomments` VALUES ('233', '3', '', '0', '2019-03-07 15:46:17', '5');
+INSERT INTO `answercomments` VALUES ('234', '3', '从', '0', '2019-03-07 15:46:18', '5');
+INSERT INTO `answercomments` VALUES ('235', '3', '', '0', '2019-03-07 15:46:18', '5');
+INSERT INTO `answercomments` VALUES ('236', '3', '', '0', '2019-03-07 15:46:19', '5');
+INSERT INTO `answercomments` VALUES ('237', '3', '', '0', '2019-03-07 15:46:23', '5');
+INSERT INTO `answercomments` VALUES ('238', '3', '', '0', '2019-03-07 15:46:24', '5');
+INSERT INTO `answercomments` VALUES ('239', '3', '', '0', '2019-03-07 15:46:25', '5');
+INSERT INTO `answercomments` VALUES ('240', '3', '', '0', '2019-03-07 15:46:28', '5');
+INSERT INTO `answercomments` VALUES ('241', '3', '', '0', '2019-03-07 15:46:30', '5');
+INSERT INTO `answercomments` VALUES ('242', '3', '', '0', '2019-03-07 15:46:31', '5');
+INSERT INTO `answercomments` VALUES ('243', '3', '', '0', '2019-03-07 15:46:33', '5');
+INSERT INTO `answercomments` VALUES ('244', '3', '', '0', '2019-03-07 15:46:35', '5');
+INSERT INTO `answercomments` VALUES ('245', '3', '', '0', '2019-03-07 15:46:37', '5');
+INSERT INTO `answercomments` VALUES ('246', '3', '', '0', '2019-03-07 15:46:38', '5');
+INSERT INTO `answercomments` VALUES ('247', '3', '', '0', '2019-03-07 15:46:40', '5');
+INSERT INTO `answercomments` VALUES ('248', '3', '', '0', '2019-03-07 15:46:42', '5');
+INSERT INTO `answercomments` VALUES ('249', '3', '', '0', '2019-03-07 15:46:44', '5');
+INSERT INTO `answercomments` VALUES ('250', '3', '', '0', '2019-03-07 15:46:46', '5');
+INSERT INTO `answercomments` VALUES ('251', '3', '', '0', '2019-03-07 15:46:47', '5');
+INSERT INTO `answercomments` VALUES ('252', '3', '', '0', '2019-03-07 15:46:50', '5');
+INSERT INTO `answercomments` VALUES ('253', '3', '', '0', '2019-03-07 15:46:52', '5');
+INSERT INTO `answercomments` VALUES ('254', '3', '', '0', '2019-03-07 15:46:55', '5');
+INSERT INTO `answercomments` VALUES ('255', '3', '', '0', '2019-03-07 15:46:57', '5');
+INSERT INTO `answercomments` VALUES ('256', '3', '', '0', '2019-03-07 15:46:58', '5');
+INSERT INTO `answercomments` VALUES ('257', '3', '', '0', '2019-03-07 15:47:00', '5');
+INSERT INTO `answercomments` VALUES ('258', '3', '', '0', '2019-03-07 15:47:02', '5');
+INSERT INTO `answercomments` VALUES ('259', '3', '', '0', '2019-03-07 15:47:05', '5');
+INSERT INTO `answercomments` VALUES ('260', '3', '', '0', '2019-03-07 15:47:10', '5');
+INSERT INTO `answercomments` VALUES ('261', '3', '', '0', '2019-03-07 15:47:12', '5');
+INSERT INTO `answercomments` VALUES ('262', '3', '', '0', '2019-03-07 15:47:13', '5');
+INSERT INTO `answercomments` VALUES ('263', '3', '', '0', '2019-03-07 15:47:13', '5');
+INSERT INTO `answercomments` VALUES ('264', '3', '', '0', '2019-03-07 15:47:14', '5');
+INSERT INTO `answercomments` VALUES ('265', '3', '', '0', '2019-03-07 15:47:22', '5');
+INSERT INTO `answercomments` VALUES ('266', '3', '', '0', '2019-03-07 15:47:26', '5');
+INSERT INTO `answercomments` VALUES ('267', '3', '', '0', '2019-03-07 15:47:27', '5');
+INSERT INTO `answercomments` VALUES ('268', '3', '', '0', '2019-03-07 15:47:30', '5');
+INSERT INTO `answercomments` VALUES ('269', '3', '', '0', '2019-03-07 15:47:32', '5');
+INSERT INTO `answercomments` VALUES ('270', '3', '', '0', '2019-03-07 15:47:35', '5');
+INSERT INTO `answercomments` VALUES ('271', '3', '', '0', '2019-03-07 15:47:38', '5');
+INSERT INTO `answercomments` VALUES ('272', '3', '', '0', '2019-03-07 15:47:40', '5');
+INSERT INTO `answercomments` VALUES ('273', '3', '', '0', '2019-03-07 15:47:43', '5');
+INSERT INTO `answercomments` VALUES ('274', '3', '', '0', '2019-03-07 15:47:45', '5');
+INSERT INTO `answercomments` VALUES ('275', '3', '', '0', '2019-03-07 15:47:47', '5');
+INSERT INTO `answercomments` VALUES ('276', '3', '', '0', '2019-03-07 15:47:49', '5');
+INSERT INTO `answercomments` VALUES ('277', '3', '', '0', '2019-03-07 15:47:50', '5');
+INSERT INTO `answercomments` VALUES ('278', '3', '', '0', '2019-03-07 15:47:53', '5');
+INSERT INTO `answercomments` VALUES ('279', '3', '', '0', '2019-03-07 15:47:55', '5');
+INSERT INTO `answercomments` VALUES ('280', '3', '', '0', '2019-03-07 15:48:19', '5');
+INSERT INTO `answercomments` VALUES ('281', '3', '', '0', '2019-03-07 15:48:22', '5');
+INSERT INTO `answercomments` VALUES ('282', '3', '', '0', '2019-03-07 15:48:23', '5');
+INSERT INTO `answercomments` VALUES ('283', '3', '', '0', '2019-03-07 15:49:43', '5');
+INSERT INTO `answercomments` VALUES ('284', '3', '', '0', '2019-03-07 15:50:09', '5');
+INSERT INTO `answercomments` VALUES ('285', '3', '', '0', '2019-03-07 15:50:12', '5');
+INSERT INTO `answercomments` VALUES ('286', '3', '测试1', '0', '2019-03-07 15:51:10', '5');
+INSERT INTO `answercomments` VALUES ('287', '75', '添加评论', '0', '2019-03-11 12:35:08', '20');
+INSERT INTO `answercomments` VALUES ('288', '73', '评论2', '0', '2019-03-11 13:07:24', '17');
+INSERT INTO `answercomments` VALUES ('289', '1', '输入评论', '0', '2019-03-14 19:37:35', '22');
+INSERT INTO `answercomments` VALUES ('290', '3', '评论', '0', '2019-03-16 15:01:35', '26');
+INSERT INTO `answercomments` VALUES ('291', '3', '评论2', '0', '2019-03-16 15:33:07', '26');
+INSERT INTO `answercomments` VALUES ('292', '3', '评论3', '0', '2019-03-16 15:33:13', '26');
+INSERT INTO `answercomments` VALUES ('293', '3', '评论4', '0', '2019-03-16 15:33:20', '26');
+INSERT INTO `answercomments` VALUES ('294', '3', '评论5', '0', '2019-03-16 15:34:01', '26');
+INSERT INTO `answercomments` VALUES ('295', '3', '评论6', '0', '2019-03-16 15:34:10', '26');
+INSERT INTO `answercomments` VALUES ('296', '1', '添加评论', '0', '2019-03-16 18:07:27', '27');
+INSERT INTO `answercomments` VALUES ('297', '87', '我说的对', '0', '2019-03-17 19:56:15', '28');
 
 -- ----------------------------
 -- Table structure for `answers`
@@ -76,12 +330,12 @@ CREATE TABLE `answers` (
   `tags` text,
   `state` int(2) NOT NULL DEFAULT '0',
   PRIMARY KEY (`answerID`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='答案';
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='答案';
 
 -- ----------------------------
 -- Records of answers
 -- ----------------------------
-INSERT INTO `answers` VALUES ('1', '1', '2018-12-16 05:31:12', '先回答大家最关心的两个问题：\n1、我们可以实现芯片彻底国产化了吗？\n答：暂时还不行。\n2、不吹不黑，这个装备真的这么厉害吗，还是只是吹牛？\n答：确实很厉害。\n很多人只盯着新闻里22nm这个指标，其实大家要关注的是“365nm的光源，单次曝光线宽可达22nm”。注意到我加黑的那几个关键词了吗？22nm指标虽然很棒但是业界早就做过了，到底哪里厉害呢？所以关键是用365nm的光源单次曝光做到22nm，懂点光学的就知道这意味着什么：打破了传统的衍射极限。\n所以在我看来，这台机器最大的价值是验证了表面等离子体（SP）光刻加工的可行性。\n这台SP光刻机与ASML光刻机对比怎么样呢？举个不恰当的例子吧，这就像是初期的枪械与最厉害的弓箭的对比。早期枪械，比如火铳，无论是射击精度还是射击距离都远远比不上厉害的弓箭，但是如今的狙击枪早已把弓箭甩开十万八千里了，这就是原理性的胜利。\n要理解刚才说的这个“原理性的胜利”到底是怎么回事，我们首先得回顾一下以ASML为代表的传统光刻机是怎么做的。\n上面是ASML光刻机简单的原理图，抛开复杂的监测设备不谈，最核心的原理就是通过物镜系统将掩膜版上的图案进行缩印成像。涉及到成像过程，就不得不考虑光的衍射极限。即便抛开所有的几何像差，由于衍射的作用，一个无限小的点成像后也会变成一个弥散斑，被称为“艾里斑”。因此实际光学系统成像的分辨率就是两个艾里斑恰好能够分开的距离。\n所以由于衍射效应，成像分辨率会受到限制，最终的分辨率取决于波长、数值孔径等参数，波长越小、数值孔径越大分辨率则越高。所以ASML这些年来主要的研究方向就是利用更短的波长（近紫外-深紫外-极紫外）、增大数值孔径（更复杂的物镜、液体浸没）。但是每进一步都变得更加艰难，对系统设计、加工装配、误差检测等等诸多方面都提出了更为苛刻的要求，成本也越来越高昂。\n那么表面等离子体光刻又是怎么一回事呢？表面等离子体指的是一种局域在物质表面的特殊的电磁波，随着离开物质表面距离的增大迅速衰减，一般认为波长量级以上的区域就不存在了。\n更为神奇的是，虽然表面等离子体波是由其他电磁波激发的，但是波长会被极大地压缩，而压缩的比例取决于材料的电磁性质等参数。\n这就意味着，利用表面等离子体波进行光刻时，从原理上就不在受到传统衍射极限的限制了。\n在光刻机研制方面，我们一直有两个选择：沿用ASML的老路走一遍，还是另辟蹊径通过新原理弯道超车？我们国家很有钱，两个选择都在做。而这台SP光刻机的研制成功，就是让我们看到了弯道超车的可能性。其实从原理上，这简直就不是弯道超车了，而是在别的人还在绕山路的时候，我们尝试着打了一条隧道……虽然还没有完全挖通，但曙光就在眼前了。\n这个装备是我在的课题组主导研发的（但我没做这个方向），从原理提出、项目立项到装备最终验收通过，前前后后有十几年的时间。十几年磨一剑，挥洒了许许多多的老师和师兄师姐的智慧、汗水与青春。向他们致敬~', '2', '2', '0', '1', '1,2', '0');
+INSERT INTO `answers` VALUES ('1', '1', '2018-12-16 05:31:12', '先回答大家最关心的两个问题：\n1、我们可以实现芯片彻底国产化了吗？\n答：暂时还不行。\n2、不吹不黑，这个装备真的这么厉害吗，还是只是吹牛？\n答：确实很厉害。\n很多人只盯着新闻里22nm这个指标，其实大家要关注的是“365nm的光源，单次曝光线宽可达22nm”。注意到我加黑的那几个关键词了吗？22nm指标虽然很棒但是业界早就做过了，到底哪里厉害呢？所以关键是用365nm的光源单次曝光做到22nm，懂点光学的就知道这意味着什么：打破了传统的衍射极限。\n所以在我看来，这台机器最大的价值是验证了表面等离子体（SP）光刻加工的可行性。\n这台SP光刻机与ASML光刻机对比怎么样呢？举个不恰当的例子吧，这就像是初期的枪械与最厉害的弓箭的对比。早期枪械，比如火铳，无论是射击精度还是射击距离都远远比不上厉害的弓箭，但是如今的狙击枪早已把弓箭甩开十万八千里了，这就是原理性的胜利。\n要理解刚才说的这个“原理性的胜利”到底是怎么回事，我们首先得回顾一下以ASML为代表的传统光刻机是怎么做的。\n上面是ASML光刻机简单的原理图，抛开复杂的监测设备不谈，最核心的原理就是通过物镜系统将掩膜版上的图案进行缩印成像。涉及到成像过程，就不得不考虑光的衍射极限。即便抛开所有的几何像差，由于衍射的作用，一个无限小的点成像后也会变成一个弥散斑，被称为“艾里斑”。因此实际光学系统成像的分辨率就是两个艾里斑恰好能够分开的距离。\n所以由于衍射效应，成像分辨率会受到限制，最终的分辨率取决于波长、数值孔径等参数，波长越小、数值孔径越大分辨率则越高。所以ASML这些年来主要的研究方向就是利用更短的波长（近紫外-深紫外-极紫外）、增大数值孔径（更复杂的物镜、液体浸没）。但是每进一步都变得更加艰难，对系统设计、加工装配、误差检测等等诸多方面都提出了更为苛刻的要求，成本也越来越高昂。\n那么表面等离子体光刻又是怎么一回事呢？表面等离子体指的是一种局域在物质表面的特殊的电磁波，随着离开物质表面距离的增大迅速衰减，一般认为波长量级以上的区域就不存在了。\n更为神奇的是，虽然表面等离子体波是由其他电磁波激发的，但是波长会被极大地压缩，而压缩的比例取决于材料的电磁性质等参数。\n这就意味着，利用表面等离子体波进行光刻时，从原理上就不在受到传统衍射极限的限制了。\n在光刻机研制方面，我们一直有两个选择：沿用ASML的老路走一遍，还是另辟蹊径通过新原理弯道超车？我们国家很有钱，两个选择都在做。而这台SP光刻机的研制成功，就是让我们看到了弯道超车的可能性。其实从原理上，这简直就不是弯道超车了，而是在别的人还在绕山路的时候，我们尝试着打了一条隧道……虽然还没有完全挖通，但曙光就在眼前了。\n这个装备是我在的课题组主导研发的（但我没做这个方向），从原理提出、项目立项到装备最终验收通过，前前后后有十几年的时间。十几年磨一剑，挥洒了许许多多的老师和师兄师姐的智慧、汗水与青春。向他们致敬~', '1', '3', '0', '1', '1,2', '0');
 INSERT INTO `answers` VALUES ('2', '1', '2018-12-16 08:35:41', 'jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj', '0', '0', '0', '1', '', '0');
 INSERT INTO `answers` VALUES ('3', '1', '2018-12-16 08:49:26', '<img src=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAtoAAAMsCAYAAABqUgWDAAAACXBIWXMAAAsTAAALEwEAmpwYAAAFEmlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDIgNzkuMTYwOTI0LCAyMDE3LzA3LzEzLTAxOjA2OjM5ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgeG1sbnM6cGhvdG9zaG9wPSJodHRwOi8vbnMuYWRvYmUuY29tL3Bob3Rvc2hvcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgKFdpbmRvd3MpIiB4bXA6Q3JlYXRlRGF0ZT0iMjAxOC0xMi0xNVQxNjoyNjo1OSswODowMCIgeG1wOk1vZGlmeURhdGU9IjIwMTgtMTItMTVUMTY6MzA6NTkrMDg6MDAiIHhtcDpNZXRhZGF0YURhdGU9IjIwMTgtMTItMTVUMTY6MzA6NTkrMDg6MDAiIGRjOmZvcm1hdD0iaW1hZ2UvcG5nIiBwaG90b3Nob3A6Q29sb3JNb2RlPSIzIiBwaG90b3Nob3A6SUNDUHJvZmlsZT0ic1JHQiBJRUM2MTk2Ni0yLjEiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6ODAzZWM4MzgtMWY0ZS00NzQx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\"/>', '0', '0', '0', '1', '', '0');
 INSERT INTO `answers` VALUES ('4', '1', '2018-12-29 23:35:33', '@拉拉人 你来回答', '0', '0', '0', '1', '', '0');
@@ -95,7 +349,20 @@ INSERT INTO `answers` VALUES ('11', '1', '2019-03-03 15:35:48', '<p><br></p><p><
 INSERT INTO `answers` VALUES ('12', '1', '2019-03-03 15:37:27', '<p><br></p><p><img src=\"https://hanerx.tk:5000/static/uploads/1551598627u19425408422632857820fm27gp0.jpg\" style=\"cursor: nwse-resize;\" width=\"190\"></p>', '0', '0', '0', '100', null, '0');
 INSERT INTO `answers` VALUES ('13', '1', '2019-03-04 13:39:24', '<p>测试对接内容</p><p><br></p>', '0', '0', '0', '182', null, '0');
 INSERT INTO `answers` VALUES ('14', '1', '2019-03-04 13:49:24', '<p>测试内容二</p>', '0', '0', '0', '182', null, '0');
-INSERT INTO `answers` VALUES ('15', '3', '2019-03-05 12:45:29', '<p>送精神病院吧，让专业人员来处理吧</p>', '0', '0', '0', '116', null, '0');
+INSERT INTO `answers` VALUES ('15', '3', '2019-03-05 12:45:29', '<p>送精神病院吧，让专业人员来处理吧</p>', '1', '0', '0', '116', null, '0');
+INSERT INTO `answers` VALUES ('16', '1', '2019-03-06 20:52:09', '<p>孙一峰偶尔是我大哥</p><p><img src=\"https://hanerx.tk:5000/static/uploads/15518767133c0b1f6c2254b439e27d006c8876835e9f58f9e17bd3e13e89294693a5282b12.jpg\"></p><p>但他永远是我老婆</p>', '0', '0', '0', '114', null, '0');
+INSERT INTO `answers` VALUES ('17', '1', '2019-03-09 15:11:33', '<p>123</p>', '0', '0', '0', '209', null, '0');
+INSERT INTO `answers` VALUES ('18', '3', '2019-03-09 20:09:01', '<p>应该听lemon，酸就完事了</p>', '0', '0', '0', '10', null, '0');
+INSERT INTO `answers` VALUES ('19', '1', '2019-03-09 23:36:23', '<p>意识模糊</p><p><img src=\"https://hanerx.tk:5000/static/uploads/1552145744SSSS._-_3.jpg\"></p>', '1', '0', '0', '128', null, '0');
+INSERT INTO `answers` VALUES ('20', '75', '2019-03-11 12:34:47', '<p>回答</p>', '0', '0', '0', '214', null, '0');
+INSERT INTO `answers` VALUES ('21', '1', '2019-03-14 15:34:23', '<p><br></p><p><img src=\"https://hanerx.tk:5000/static/uploads/15525488369e007ee71b07bbfe54d2af648d7f5bc01610ef29.jpg\"><img src=\"https://hanerx.tk:5000/static/uploads/155254884158agb92oz8iwe0tf05a8vii9v.jpg\">不是可以吗</p>', '0', '0', '0', '89', null, '0');
+INSERT INTO `answers` VALUES ('22', '75', '2019-03-14 15:38:32', '<p>需要一个文字足够多的答案需要一个文字足够多的答案需要一个文字足够多的答案需要一个文字足够多的答案需要一个文字足够多的答案需要一个文字足够多的答案需要一个文字足够多的答案需要一个文字足够多的答案需要一个文字足够多的答案需要一个文字足够多的答案需要一个文字足够多的答案需要一个文字足够多的答案需要一个文字足够多的答案需要一个文字足够多的答案需要一个文字足够多的答案需要一个文字足够多的答案需要一个文字<img src=\"https://hanerx.tk:5000/static/uploads/1552548881400430_20181113140627_1.png\">足够多的答案需要一个文字足够多的答案需要一个文字足够多的答案需要一个文字足够多的答案<img src=\"https://hanerx.tk:5000/static/uploads/15525486883c0b1f6c2254b439e27d006c8876835e9f58f9e17bd3e13e89294693a5282b12.jpg\"></p><p>需要一个文字足够多的答案需要一个文字足够多的答案需要一个文字足够多的答案需要一个文字足够多的答案需要一个文字足够多需要一个文字足够多的答案需要一个文字足够多的答案需要一个文字足够多的答案需要一个文字足够多的答多的答案需要一个文字足够多的答案需要一个文字足够多的答案需要一个文字足够多的答案需要一个文字足够多的答案需要一个文字足够多的多的答案需要一个文字足够多的答案需要一个文字足够多的多的<img src=\"https://hanerx.tk:5000/static/uploads/155254902549520_20181125004038_1.png\">答案需要一个文字足够多的答案需要一个文字足够多的多的答案需要一个文字足够多的答案需要一个文字足够多的多的答案需要一个文字足够多的答案需要一个文字足够多的多的答案需要一个文字足够多的答案需要一个文字足够多的多的答案需要一个文字足够多的答案需要一个文字足够多的多的答案需要一个文字足够多的答案需要一个文字足够多的多的答案需要一个文字足够多的答案需要一个文字足够多的多的答案需要一个文字足够多的答案需要一个文字足够多的多的答案需要一个文字足够多的答案需要一个文字足够多的多的答案需要一个文字足够多的答案需要一个文字足够多的多的答案需要一个文字足够多的答案需要一个文字足够多的多的答案需要一个文字足够多的答案需要一个文字足够多的多的答案需要一个文字足够多的答案需要一个文字足够多的多的答案需要一个文字足够多的答案需要一个文字足够多的多的答案需要一个文字足够多的答案需要一个文字足够多的多的答案需要一个文字足够多的答案需要一个文字足够多的多的答案需要一个文字足够多的答案需要一个文字足够多的多的答案需要一个文字足够多的答案需要一个文字足够多的多的答案需要一个文字足够多的答案需要一个文字足够多的多的答案需要一个文字足够多的答案需要一个文字足够多的多的答案需要一个文字足够多的答案需要一个文字足够多的多的答案需要一个文字足够多的答案需要一个文字足够多的多的答案需要一个文字足够多的答案需要一个文字足够多的多的答案需要一个文字足够多的答案需要一个文字足够多的多的答案需要一个文字足够多的答案需要一个文字足够多的多的答案需要一个文字足够多的答案需要一个文字足够多的多的答案需要一个文字足够多的答案需要一个文字足够多的多的答案需要一个文字足够多的答案需要一个文字足够多的多的答案需要一个文字足够多的答案需要一个文字足够多的多的答案需要一个文字足够多的答案需要一个文字足够多的多的答案需要一个文字足够多的答案需要一个文字足够多的多的答案需要一个文字足够多的答案需要一个文字足够多的多的答案需要一个文字足够多的答案需要一个文字足够多的多的答案需要一个文字足够多的答案需要一个文字足够多的多的答案需要一个文字足够多的答案需要一个文字足够多的多的答案需要一个文字足够多的答案需要一个文字足够多的多的答案需要一个文字足够多的答案需要一个文字足够多的多的答案需要一个文字足够多的答案需要一个文字足够多的</p>', '-3', '0', '0', '60', null, '0');
+INSERT INTO `answers` VALUES ('23', '1', '2019-03-15 21:27:03', '<p>添加回答</p>', '0', '0', '0', '22', null, '0');
+INSERT INTO `answers` VALUES ('24', '1', '2019-03-15 21:27:20', '<p>添加回答</p>', '0', '0', '0', '22', null, '0');
+INSERT INTO `answers` VALUES ('25', '1', '2019-03-15 21:41:42', '<p>测试</p>', '2', '-1', '0', '12', null, '0');
+INSERT INTO `answers` VALUES ('26', '3', '2019-03-15 21:54:12', '<p>不知道</p>', '2', '4', '0', '112', null, '0');
+INSERT INTO `answers` VALUES ('27', '3', '2019-03-16 16:07:38', '<p>mysql注入失败了，但是没有正确处理报错，导致返回了错误的代码</p>', '1', '0', '0', '207', null, '0');
+INSERT INTO `answers` VALUES ('28', '87', '2019-03-17 19:47:18', '<p>我也不知道怎么治疗，但是去医院里问医生比在这里问要靠谱吧？</p>', '0', '0', '0', '140', null, '0');
 
 -- ----------------------------
 -- Table structure for `article`
@@ -114,7 +381,7 @@ CREATE TABLE `article` (
   `price` float(10,0) NOT NULL DEFAULT '0',
   `description` text NOT NULL,
   PRIMARY KEY (`articleID`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of article
@@ -134,6 +401,9 @@ INSERT INTO `article` VALUES ('12', '利用ngnix实现流量转发', '利用ngin
 INSERT INTO `article` VALUES ('13', 'wdnmd真白给啊', 'wdnmd为何在网络上传播迅速', '2019-03-06 16:43:33', '4', '16,9', '0', 'https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=2816370445,2950698417&fm=85&app=57&f=JPEG?w=121&h=75&s=AEF1E25E5BF777BD11B5A2C70300E0A3', '1', '0', '');
 INSERT INTO `article` VALUES ('14', '<p>文章发布</p>', '文章发布', '2019-03-05 20:45:41', '3', '12,28', '0', 'https://hanerx.tk:5000/static/uploads/1551789880764a9bd750fb875a59a626c5b718aff0.jpg', '0', '10', '');
 INSERT INTO `article` VALUES ('15', '<p>测试文章</p>', '测试文章', '2019-03-06 15:33:47', '3', '16,29', '0', 'https://hanerx.tk:5000/static/uploads/1551857601764a9bd750fb875a59a626c5b718aff0.jpg', '0', '10', '这里是文章简介');
+INSERT INTO `article` VALUES ('16', '<p>测试文章<img src=\"https://hanerx.tk:5000/static/uploads/15520222591c9643a71a21431a38004a93f7c53002cebae0112868777606a936a88e9dafe0.jpg\"></p>', '没有只狼玩我要死了', '2019-03-08 13:18:49', '1', '3,18', '0', 'https://hanerx.tk:5000/static/uploads/1552022293-140384482.jpg', '0', '988', '简介个鬼');
+INSERT INTO `article` VALUES ('17', '<p>测试文章<img src=\"https://hanerx.tk:5000/static/uploads/15520222591c9643a71a21431a38004a93f7c53002cebae0112868777606a936a88e9dafe0.jpg\"></p>', '没有只狼玩我要死了', '2019-03-08 13:18:53', '1', '3,18', '0', 'https://hanerx.tk:5000/static/uploads/1552022293-140384482.jpg', '0', '988', '简介个鬼');
+INSERT INTO `article` VALUES ('18', '<p>再次发布一遍</p>', '发布文章', '2019-03-17 22:17:37', '87', '4,26', '0', 'https://hanerx.tk:5000/static/uploads/1552832249u7513331423020252835fm27gp0.jpg', '1', '0', '简介');
 
 -- ----------------------------
 -- Table structure for `article_comments`
@@ -147,12 +417,22 @@ CREATE TABLE `article_comments` (
   `state` int(1) NOT NULL DEFAULT '0',
   `edit_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`article_comment_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of article_comments
 -- ----------------------------
 INSERT INTO `article_comments` VALUES ('1', '没有什么游戏是不能tk的', '8', '1', '0', '2019-03-06 15:49:19');
+INSERT INTO `article_comments` VALUES ('2', '民科现场！', '4', '3', '0', '2019-03-07 14:52:58');
+INSERT INTO `article_comments` VALUES ('3', '测试！', '4', '3', '0', '2019-03-07 14:54:00');
+INSERT INTO `article_comments` VALUES ('4', '继续测试！', '4', '3', '0', '2019-03-07 14:54:51');
+INSERT INTO `article_comments` VALUES ('5', '我评论我自己！', '4', '3', '0', '2019-03-07 14:55:08');
+INSERT INTO `article_comments` VALUES ('6', '添加评论', '6', '1', '0', '2019-03-08 13:15:17');
+INSERT INTO `article_comments` VALUES ('7', '发送评论！', '2', '3', '0', '2019-03-09 22:40:51');
+INSERT INTO `article_comments` VALUES ('8', '只狼天下第一！', '16', '1', '0', '2019-03-11 00:14:38');
+INSERT INTO `article_comments` VALUES ('9', '天天就想着玩之狼', '16', '3', '0', '2019-03-15 23:34:06');
+INSERT INTO `article_comments` VALUES ('10', '写得好啊', '13', '87', '0', '2019-03-17 20:39:35');
+INSERT INTO `article_comments` VALUES ('11', '天哪，简直是本世纪最伟大的发现！', '4', '87', '0', '2019-03-17 20:54:07');
 
 -- ----------------------------
 -- Table structure for `collectanswer`
@@ -163,7 +443,7 @@ CREATE TABLE `collectanswer` (
   `userID` int(11) NOT NULL,
   `answerID` int(11) NOT NULL,
   PRIMARY KEY (`idCollectAnswer`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=184 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='收藏：用户-答案映射';
+) ENGINE=InnoDB AUTO_INCREMENT=187 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='收藏：用户-答案映射';
 
 -- ----------------------------
 -- Records of collectanswer
@@ -304,6 +584,8 @@ INSERT INTO `collectanswer` VALUES ('178', '46', '2');
 INSERT INTO `collectanswer` VALUES ('179', '24', '2');
 INSERT INTO `collectanswer` VALUES ('180', '1', '7');
 INSERT INTO `collectanswer` VALUES ('183', '1', '13');
+INSERT INTO `collectanswer` VALUES ('184', '3', '5');
+INSERT INTO `collectanswer` VALUES ('185', '1', '19');
 
 -- ----------------------------
 -- Table structure for `collectarticle`
@@ -314,7 +596,7 @@ CREATE TABLE `collectarticle` (
   `userID` int(11) NOT NULL,
   `articleID` int(11) NOT NULL,
   PRIMARY KEY (`idCollectArticle`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=186 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='收藏：用户-文章映射';
+) ENGINE=InnoDB AUTO_INCREMENT=190 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='收藏：用户-文章映射';
 
 -- ----------------------------
 -- Records of collectarticle
@@ -469,6 +751,8 @@ INSERT INTO `collectarticle` VALUES ('182', '15', '8');
 INSERT INTO `collectarticle` VALUES ('183', '29', '2');
 INSERT INTO `collectarticle` VALUES ('184', '2', '1');
 INSERT INTO `collectarticle` VALUES ('185', '46', '6');
+INSERT INTO `collectarticle` VALUES ('187', '3', '15');
+INSERT INTO `collectarticle` VALUES ('188', '1', '8');
 
 -- ----------------------------
 -- Table structure for `demands`
@@ -484,12 +768,24 @@ CREATE TABLE `demands` (
   `createtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `state` int(2) NOT NULL,
   `title` varchar(45) NOT NULL,
+  `cover` text,
+  `group` int(10) NOT NULL,
   PRIMARY KEY (`demandID`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of demands
 -- ----------------------------
+INSERT INTO `demands` VALUES ('1', '1', '寻求代打', '0,1,2,3,4,5,6', '100', '3,4', '2019-03-08 19:46:02', '0', '诚招代打', 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2225104867,1420422196&fm=26&gp=0.jpg', '0');
+INSERT INTO `demands` VALUES ('2', '4', '要求会追星，会咕咕咕，还要有一大批脑残粉', '0,2,3,5,6', '1000000', '3,5', '2019-03-08 19:45:01', '0', '诚招游戏制作人', 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAEsAhUDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDz2iiivpTxQooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKtWVjPfzLDbxPLK33URSSfoBQ3bcZVoq9caXdWrlJoZI2H8LqQf1qq0Lr1FJSTCzI6KUgjtSUxBRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAV2fwz/5HbTP+ujf+gmuMrs/hn/yO2mf9dG/9BNZV/wCHL0NKXxo+ibi1t7qMx3EEUyH+GRAw/I1zmofDzwzqOSdPWBz/ABW7FMfh0/SuoorwYzlHZnqOKe6PJ9T+DCNltN1L6JcJ/wCzD/CuK1X4a+ItN3M2nvNGP47c+YPyHP5ivo2iumGMqx31MZYaD20Pkiaxmhcq6MrDggjBFVyjL1FfWGo6JpmrJtv7GC493Qbh9D1FcVq/wi0e7DPp9xNaOeiN+8T9ef1NdcMfF/ErGEsLJbHgVFd5rfwu17Sw0iWwu4Rzvtju/Nev6Vxc1pLCxVlIIOCCOldkKsJ6xZzyhKO6K9FBBHWirICiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigArs/hn/yO2mf9dG/9BNcZXZ/DP/kdtM/66N/6Cayr/wAOXoaUvjR9HUUUV8+esFFFFABRXI+OfGq+FLaFIYkmvJ8lVc/Kqjucf561i+FPipHq99HY6pBHBJKdsc0ZOwt2BB6fXNaqhNw50tDN1YqXK3qekVi634U0bxAhF9ZqZSOJk+Vx+Pf8c1tUVmpOLui2k9GeD+LP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SkiOeMEDcOqsDyrD0Nc2Rg1UZKSuiWmnZhRRRVCCiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKkjlaI5U1HRQB0+keOdc0fatrqMyxj/lm53p+RyK73SPjM/wAqapYI47yW7bT/AN8ng/mK8bpQSO9YTw1Oe6NY1px2Z9OaV488O6ttWLUEhkP/ACzuP3Z/M8H8DXRqwZQykEHkEHrXyIk7p0NbWk+LdX0dgbK/nhA/gDZU/wDATxXHPAfyM6I4v+ZHX/Fr/kcR/wBe8f8AWvSPDOr6fpXgbSpb+8ht1+zjHmMATyeg6mvBvEHiW78Q3q3l6UM4QIWRduQPb15rKe8ldQCxOBgZNbPCudOMG9jNV1Gbkup7lrPxe0u03JplvJduOkknyJ/if0rzzWviXr+rbkN4beI/8s7b5B+fU/nXFM7N1NNrSnhacOhE685dSxLdyysSzEk9STUBYnqaSiulKxkFFFFAgooooA7HwH/yELryv+Pr7FP9nx137D098ZrsLa+s7Tw74dW6utUgLGXH2KQKD+8/izXlWm6hPp15Fc28jRyxMGRl6giuvbxNoeoBZtQ0udbgckWlz5cbE9TtKnbn2rjrUm5XOinNJWNvxCJBbeLxchRH9sjMQAwPM3Hp77N2a8rk++cV0niDxRJq0cdtFEtvZxElIVYtknqzMeWb3NcyTk1rQg4x1IqyUnoFFFFbmQUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFGTRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFAH//Z', '0');
+INSERT INTO `demands` VALUES ('3', '8', '要求是瞎子，爱喝宝矿力，熟练掌握F2A等战术', '0,1,2,3,4,5,6', '2.5', '5,6', '2019-03-08 19:49:20', '0', '诚招星际玩家', 'data:image/jpeg;base64,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', '0');
+INSERT INTO `demands` VALUES ('4', '9', '要求是圆滚滚的，最好是蓝色的，夏天需要充当水袋，魔力高者优先', '0,1,2,3,4,5,6', '0', '7,8', '2019-03-08 19:55:54', '0', '诚招吉祥物', 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2639626111,3880212020&fm=26&gp=0.jpg', '0');
+INSERT INTO `demands` VALUES ('6', '2', '要是任豚', '0,1,2,3,4,5,6', '1000', '3,4,5,6,7,8', '2019-03-09 19:19:49', '0', 'ns玩伴', 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1552735182&di=87eca7e04b603cbaa0e25cc6d20eca59&imgtype=jpg&er=1&src=http%3A%2F%2F00.imgmini.eastday.com%2Fmobile%2F20180508%2F20180508175927_0499b49d01e07b56cbe302078323fd4b_33.gif', '0');
+INSERT INTO `demands` VALUES ('7', '10', '诚招手模', '0,1,2,3,4,5,6', '1000', '3,5,6,8,9,10,11', '2019-03-09 19:24:17', '0', '吉良吉影邀你共度难关', 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1552140705743&di=462f7baf44da808eca20ca1fa3de9067&imgtype=0&src=http%3A%2F%2Fphotocdn.sohu.com%2F20131125%2FImg390742091.jpg', '0');
+INSERT INTO `demands` VALUES ('8', '11', '要求是替身使者，会远程攻击，精度要是A', '0,1,2,3,4,5,6', '1234567', '3,4,5,6,7,8,9,10,11,12', '2019-03-09 19:28:44', '0', '埃及打DIO团诚招人才', 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1552140998264&di=d5f67969786e5e1d10fb3de555d53a68&imgtype=0&src=http%3A%2F%2Fwx3.sinaimg.cn%2Flarge%2Fa778bac2gy1fxer981294j20rs0fmhb5.jpg', '0');
+INSERT INTO `demands` VALUES ('9', '12', '要求能够经得起折腾，最好是肌肉笨蛋', '0,1,2,3,4,5,6', '0', '3,4,16', '2019-03-09 19:35:26', '0', '诚招工具人', 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1552736054&di=2b7d6d4ddfd65a8e63c17f0a83b39e1e&imgtype=jpg&er=1&src=http%3A%2F%2Fi1.hdslb.com%2Fbfs%2Farchive%2F7cde3738584594d4c166b307a0abe993ebcdbd44.png', '0');
+INSERT INTO `demands` VALUES ('10', '3', '<p>测试能否同时发布需求的同时创建附属群组</p>', '0,1,2,3,4,5,6', '10', '8,23', '2019-03-13 21:28:50', '2', '测试！', 'https://hanerx.tk:5000/static/uploads/15524794589e007ee71b07bbfe54d2af648d7f5bc01610ef29.jpg', '0');
+INSERT INTO `demands` VALUES ('11', '3', '<p>测试需求和群组的同步发布</p>', '0,1,3,2,4,6,5', '10', '8,23', '2019-03-13 20:22:29', '0', '测试需求和群组的同步发布', 'https://hanerx.tk:5000/static/uploads/15524797309e007ee71b07bbfe54d2af648d7f5bc01610ef29.jpg', '5');
 
 -- ----------------------------
 -- Table structure for `exp_change`
@@ -532,7 +828,7 @@ CREATE TABLE `followtopic` (
   `userID` int(11) NOT NULL COMMENT '用户ID',
   `target` int(11) NOT NULL COMMENT '目标 话题ID',
   PRIMARY KEY (`idFollowTopic`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=171 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='用户-话题 关注关系映射表';
+) ENGINE=InnoDB AUTO_INCREMENT=174 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='用户-话题 关注关系映射表';
 
 -- ----------------------------
 -- Records of followtopic
@@ -664,6 +960,9 @@ INSERT INTO `followtopic` VALUES ('167', '46', '97');
 INSERT INTO `followtopic` VALUES ('168', '28', '87');
 INSERT INTO `followtopic` VALUES ('169', '1', '100');
 INSERT INTO `followtopic` VALUES ('170', '1', '100');
+INSERT INTO `followtopic` VALUES ('171', '3', '213');
+INSERT INTO `followtopic` VALUES ('172', '75', '214');
+INSERT INTO `followtopic` VALUES ('173', '87', '140');
 
 -- ----------------------------
 -- Table structure for `followuser`
@@ -674,7 +973,7 @@ CREATE TABLE `followuser` (
   `userID` int(11) NOT NULL COMMENT '用户ID',
   `target` int(11) NOT NULL COMMENT '目标 用户ID',
   PRIMARY KEY (`idFollowUser`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=410 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='用户-用户 关注关系映射表';
+) ENGINE=InnoDB AUTO_INCREMENT=415 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='用户-用户 关注关系映射表';
 
 -- ----------------------------
 -- Records of followuser
@@ -687,7 +986,6 @@ INSERT INTO `followuser` VALUES ('5', '4', '1');
 INSERT INTO `followuser` VALUES ('6', '5', '1');
 INSERT INTO `followuser` VALUES ('7', '6', '1');
 INSERT INTO `followuser` VALUES ('8', '7', '1');
-INSERT INTO `followuser` VALUES ('9', '1', '4');
 INSERT INTO `followuser` VALUES ('10', '2', '63');
 INSERT INTO `followuser` VALUES ('11', '30', '19');
 INSERT INTO `followuser` VALUES ('12', '21', '21');
@@ -1088,6 +1386,8 @@ INSERT INTO `followuser` VALUES ('406', '23', '57');
 INSERT INTO `followuser` VALUES ('407', '5', '17');
 INSERT INTO `followuser` VALUES ('408', '30', '1');
 INSERT INTO `followuser` VALUES ('409', '24', '12');
+INSERT INTO `followuser` VALUES ('410', '4', '5');
+INSERT INTO `followuser` VALUES ('411', '83', '1');
 
 -- ----------------------------
 -- Table structure for `group_members`
@@ -1100,13 +1400,18 @@ CREATE TABLE `group_members` (
   `state` int(2) NOT NULL,
   `silent` int(2) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of group_members
 -- ----------------------------
 INSERT INTO `group_members` VALUES ('2', '4', '1', '0', '0');
 INSERT INTO `group_members` VALUES ('3', '4', '2', '1', '0');
+INSERT INTO `group_members` VALUES ('4', '4', '4', '1', '0');
+INSERT INTO `group_members` VALUES ('5', '4', '3', '1', '0');
+INSERT INTO `group_members` VALUES ('6', '5', '3', '0', '0');
+INSERT INTO `group_members` VALUES ('7', '5', '1', '2', '0');
+INSERT INTO `group_members` VALUES ('8', '5', '4', '2', '0');
 
 -- ----------------------------
 -- Table structure for `group_message`
@@ -1120,7 +1425,7 @@ CREATE TABLE `group_message` (
   `type` int(2) NOT NULL,
   `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of group_message
@@ -1128,6 +1433,9 @@ CREATE TABLE `group_message` (
 INSERT INTO `group_message` VALUES ('1', '这是一个测试群，用于测试线上会议的功能', '1', '4', '0', '2019-01-26 03:00:29');
 INSERT INTO `group_message` VALUES ('2', '忘记写type=0了，哈哈哈', '1', '4', '0', '2019-01-26 03:07:52');
 INSERT INTO `group_message` VALUES ('3', '忘记写type=0了，哈哈哈', '2', '4', '0', '2019-01-26 03:26:09');
+INSERT INTO `group_message` VALUES ('4', 'test1', '1', '4', '0', '2019-03-14 17:10:23');
+INSERT INTO `group_message` VALUES ('5', '终于能用群组功能了吗', '3', '4', '0', '2019-03-15 23:24:40');
+INSERT INTO `group_message` VALUES ('6', '这是某个附属群', '3', '5', '0', '2019-03-15 23:29:45');
 
 -- ----------------------------
 -- Table structure for `groups`
@@ -1141,12 +1449,59 @@ CREATE TABLE `groups` (
   `head_portrait` text,
   `state` int(2) NOT NULL DEFAULT '0',
   PRIMARY KEY (`groupID`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of groups
 -- ----------------------------
 INSERT INTO `groups` VALUES ('4', 'project-agent讨论群', '这是测试群', '1', 'http://img3.imgtn.bdimg.com/it/u=3524594933,3944395980&fm=214&gp=0.jpg', '0');
+INSERT INTO `groups` VALUES ('5', '测试需求和群组的同步发布', '测试需求和群组的同步发布 自动附属群', '3', 'https://hanerx.tk:5000/static/uploads/15524797309e007ee71b07bbfe54d2af648d7f5bc01610ef29.jpg', '0');
+
+-- ----------------------------
+-- Table structure for `history_search`
+-- ----------------------------
+DROP TABLE IF EXISTS `history_search`;
+CREATE TABLE `history_search` (
+  `id` int(12) NOT NULL AUTO_INCREMENT,
+  `userID` int(10) NOT NULL,
+  `content` varchar(256) NOT NULL DEFAULT '',
+  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of history_search
+-- ----------------------------
+INSERT INTO `history_search` VALUES ('1', '3', '文章', '2019-03-16 16:36:04');
+INSERT INTO `history_search` VALUES ('2', '1', '救命', '2019-03-09 14:06:15');
+INSERT INTO `history_search` VALUES ('3', '1', '救命', '2019-03-09 14:06:15');
+INSERT INTO `history_search` VALUES ('7', '1', '竹鼠', '2019-03-14 14:33:01');
+INSERT INTO `history_search` VALUES ('8', '1', '竹鼠', '2019-03-14 14:33:01');
+INSERT INTO `history_search` VALUES ('9', '1', '竹鼠', '2019-03-14 14:33:01');
+INSERT INTO `history_search` VALUES ('10', '1', '厨师长', '2019-03-14 14:33:10');
+INSERT INTO `history_search` VALUES ('11', '3', '瞎子', '2019-03-09 14:18:48');
+INSERT INTO `history_search` VALUES ('12', '3', '精神病', '2019-03-09 14:18:58');
+INSERT INTO `history_search` VALUES ('13', '3', 'None', '2019-03-09 14:29:10');
+INSERT INTO `history_search` VALUES ('14', '3', '拉拉人', '2019-03-16 16:20:21');
+INSERT INTO `history_search` VALUES ('15', '1', '文章', '2019-03-16 16:21:50');
+INSERT INTO `history_search` VALUES ('16', '1', '拉拉人', '2019-03-16 18:06:30');
+INSERT INTO `history_search` VALUES ('17', '1', '只狼', '2019-03-14 14:32:53');
+INSERT INTO `history_search` VALUES ('18', '1', '紫罗兰', '2019-03-11 00:16:35');
+INSERT INTO `history_search` VALUES ('19', '1', '代打', '2019-03-12 13:33:28');
+INSERT INTO `history_search` VALUES ('20', '77', '拉拉人', '2019-03-14 14:32:10');
+INSERT INTO `history_search` VALUES ('21', '1', '老司机', '2019-03-14 14:32:40');
+INSERT INTO `history_search` VALUES ('22', '1', '九江', '2019-03-14 14:37:35');
+INSERT INTO `history_search` VALUES ('23', '75', '张煜', '2019-03-15 23:23:12');
+INSERT INTO `history_search` VALUES ('24', '3', '竹鼠', '2019-03-16 13:38:48');
+INSERT INTO `history_search` VALUES ('25', '3', '老司机', '2019-03-16 13:38:53');
+INSERT INTO `history_search` VALUES ('26', '3', '张煜', '2019-03-16 16:20:34');
+INSERT INTO `history_search` VALUES ('27', '1', '图片', '2019-03-16 18:10:34');
+INSERT INTO `history_search` VALUES ('28', '1', '同志', '2019-03-16 18:11:06');
+INSERT INTO `history_search` VALUES ('29', '83', '拉拉人', '2019-03-16 21:01:43');
+INSERT INTO `history_search` VALUES ('30', '87', '竹鼠', '2019-03-17 19:37:25');
+INSERT INTO `history_search` VALUES ('31', '87', '拉拉人', '2019-03-17 19:29:13');
+INSERT INTO `history_search` VALUES ('32', '87', '文章', '2019-03-17 19:36:41');
+INSERT INTO `history_search` VALUES ('33', '87', '父母', '2019-03-17 19:42:01');
 
 -- ----------------------------
 -- Table structure for `messages`
@@ -1154,13 +1509,13 @@ INSERT INTO `groups` VALUES ('4', 'project-agent讨论群', '这是测试群', '
 DROP TABLE IF EXISTS `messages`;
 CREATE TABLE `messages` (
   `messageID` int(11) NOT NULL AUTO_INCREMENT,
-  `content` text NOT NULL,
+  `content` text CHARACTER SET utf8mb4 NOT NULL,
   `poster` int(11) NOT NULL,
   `receiver` int(11) NOT NULL,
   `type` int(2) NOT NULL,
   `post_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`messageID`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=78 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of messages
@@ -1169,18 +1524,79 @@ INSERT INTO `messages` VALUES ('1', 'first cry!!!!!', '1', '2', '0', '2018-12-16
 INSERT INTO `messages` VALUES ('2', 'cry again!', '1', '2', '0', '2018-12-16 09:26:31');
 INSERT INTO `messages` VALUES ('3', 'still crying', '1', '2', '0', '2018-12-16 09:26:31');
 INSERT INTO `messages` VALUES ('4', 'de order', '1', '2', '0', '2018-12-16 09:29:27');
-INSERT INTO `messages` VALUES ('5', 'emojixe6xb5x8bxe8xafx95xf0x9fx98x80', '1', '2', '0', '2018-12-21 07:56:19');
-INSERT INTO `messages` VALUES ('6', 'b\'emojixe6xb5x8bxe8xafx95xf0x9fx98x80\'', '1', '2', '0', '2018-12-21 07:48:52');
-INSERT INTO `messages` VALUES ('7', 'emoji\\u6d4b\\u8bd5\\u0001f600', '1', '2', '0', '2019-02-03 00:38:02');
+INSERT INTO `messages` VALUES ('5', '红红火火恍恍惚惚', '1', '2', '0', '2019-03-09 22:08:53');
+INSERT INTO `messages` VALUES ('6', '啦啦啦啦啦', '1', '2', '0', '2019-03-09 22:08:59');
+INSERT INTO `messages` VALUES ('7', '咋哇罗多', '1', '2', '0', '2019-03-09 22:09:11');
 INSERT INTO `messages` VALUES ('8', 'emoji测试????略略略', '3', '2', '0', '2019-01-08 07:44:56');
 INSERT INTO `messages` VALUES ('9', 'emoji测试????略略略', '3', '3', '0', '2019-02-03 00:24:07');
 INSERT INTO `messages` VALUES ('10', 'emoji测试????略略略', '1', '3', '0', '2019-02-03 00:25:52');
-INSERT INTO `messages` VALUES ('11', 'b\'emojixe6xb5x8bxe8xafx95xf0x9fx98x80xe7x95xa5xe7x95xa5xe7x95xa5\'', '1', '2', '0', '2019-02-03 00:40:13');
-INSERT INTO `messages` VALUES ('12', 'b\'emoji\\u6d4b\\u8bd5\\U0001f600\\u7565\\u7565\\u7565\'', '1', '2', '0', '2019-02-03 00:44:53');
-INSERT INTO `messages` VALUES ('13', 'emoji \\u6d4\\u8d5\\U0001f600\\u7565\\u7565\\u7565', '1', '2', '0', '2019-02-03 00:56:33');
-INSERT INTO `messages` VALUES ('14', '\\uf602', '1', '3', '0', '2019-02-03 01:00:17');
+INSERT INTO `messages` VALUES ('11', 'the world', '1', '2', '0', '2019-03-09 22:09:25');
+INSERT INTO `messages` VALUES ('12', 'b\'emoji\\u6d4bniconiconi', '1', '2', '0', '2019-03-09 22:09:32');
+INSERT INTO `messages` VALUES ('13', 'emoji 德玛西亚', '2', '1', '0', '2019-03-09 22:10:10');
+INSERT INTO `messages` VALUES ('14', '呼啦啦啦', '1', '3', '0', '2019-03-09 22:10:05');
 INSERT INTO `messages` VALUES ('15', '\\u6d4\\u8d5\\u4e00\\u4e0\\u7f16\\u7801\\u529f\\u80fd', '1', '3', '0', '2019-02-03 00:57:00');
 INSERT INTO `messages` VALUES ('16', 'Unicode编码失败', '1', '3', '0', '2019-02-03 01:01:33');
+INSERT INTO `messages` VALUES ('17', '你好', '1', '2', '0', '2019-03-09 22:30:06');
+INSERT INTO `messages` VALUES ('18', '1????', '1', '2', '0', '2019-03-13 22:18:40');
+INSERT INTO `messages` VALUES ('19', '发送测试', '1', '2', '0', '2019-03-09 22:31:31');
+INSERT INTO `messages` VALUES ('20', '测试', '1', '2', '0', '2019-03-09 22:51:33');
+INSERT INTO `messages` VALUES ('21', '测试', '1', '2', '0', '2019-03-09 22:52:27');
+INSERT INTO `messages` VALUES ('22', '测试', '1', '2', '0', '2019-03-09 22:52:33');
+INSERT INTO `messages` VALUES ('23', 'ces', '1', '2', '0', '2019-03-09 22:52:52');
+INSERT INTO `messages` VALUES ('24', 'asa', '1', '2', '0', '2019-03-09 22:53:00');
+INSERT INTO `messages` VALUES ('25', '', '1', '2', '0', '2019-03-09 22:53:01');
+INSERT INTO `messages` VALUES ('26', '', '1', '2', '0', '2019-03-09 22:53:03');
+INSERT INTO `messages` VALUES ('27', '', '1', '2', '0', '2019-03-09 22:53:04');
+INSERT INTO `messages` VALUES ('28', '', '1', '2', '0', '2019-03-09 22:53:04');
+INSERT INTO `messages` VALUES ('29', '', '1', '2', '0', '2019-03-09 22:53:04');
+INSERT INTO `messages` VALUES ('30', '', '1', '2', '0', '2019-03-09 22:53:04');
+INSERT INTO `messages` VALUES ('31', '', '1', '2', '0', '2019-03-09 22:53:04');
+INSERT INTO `messages` VALUES ('32', 'asda', '1', '2', '0', '2019-03-09 22:53:59');
+INSERT INTO `messages` VALUES ('33', 'asda', '1', '2', '0', '2019-03-09 22:54:49');
+INSERT INTO `messages` VALUES ('34', '1', '1', '2', '0', '2019-03-09 22:55:35');
+INSERT INTO `messages` VALUES ('35', '1', '1', '2', '0', '2019-03-09 22:59:45');
+INSERT INTO `messages` VALUES ('36', '1', '1', '2', '0', '2019-03-09 22:59:56');
+INSERT INTO `messages` VALUES ('37', '2', '1', '2', '0', '2019-03-09 22:59:57');
+INSERT INTO `messages` VALUES ('38', '1', '1', '2', '0', '2019-03-09 22:59:59');
+INSERT INTO `messages` VALUES ('39', '1', '1', '2', '0', '2019-03-09 23:00:24');
+INSERT INTO `messages` VALUES ('40', '1', '1', '2', '0', '2019-03-09 23:00:26');
+INSERT INTO `messages` VALUES ('41', '2', '1', '2', '0', '2019-03-09 23:00:30');
+INSERT INTO `messages` VALUES ('42', 'asda', '1', '2', '0', '2019-03-09 23:00:42');
+INSERT INTO `messages` VALUES ('43', 'nihao', '1', '2', '0', '2019-03-09 23:00:52');
+INSERT INTO `messages` VALUES ('44', '测试', '1', '2', '0', '2019-03-09 23:01:15');
+INSERT INTO `messages` VALUES ('45', '1', '1', '2', '0', '2019-03-09 23:02:07');
+INSERT INTO `messages` VALUES ('46', '1', '1', '2', '0', '2019-03-09 23:04:22');
+INSERT INTO `messages` VALUES ('47', '1', '1', '2', '0', '2019-03-09 23:04:34');
+INSERT INTO `messages` VALUES ('48', '2', '1', '2', '0', '2019-03-09 23:04:37');
+INSERT INTO `messages` VALUES ('49', '3', '1', '2', '0', '2019-03-09 23:04:39');
+INSERT INTO `messages` VALUES ('50', '1', '1', '2', '0', '2019-03-09 23:07:39');
+INSERT INTO `messages` VALUES ('51', '1', '1', '2', '0', '2019-03-09 23:08:35');
+INSERT INTO `messages` VALUES ('52', '我他妈', '3', '1', '0', '2019-03-09 23:24:16');
+INSERT INTO `messages` VALUES ('53', '真是日了狗了', '3', '1', '0', '2019-03-09 23:28:35');
+INSERT INTO `messages` VALUES ('54', '啦啦啦', '3', '1', '0', '2019-03-10 01:33:30');
+INSERT INTO `messages` VALUES ('55', '环境', '1', '3', '0', '2019-03-10 01:33:39');
+INSERT INTO `messages` VALUES ('56', '救命', '1', '3', '0', '2019-03-10 01:33:50');
+INSERT INTO `messages` VALUES ('57', '鸡骨头', '1', '3', '0', '2019-03-10 01:34:02');
+INSERT INTO `messages` VALUES ('58', '????', '1', '3', '0', '2019-03-10 01:35:04');
+INSERT INTO `messages` VALUES ('59', '？？？', '1', '3', '0', '2019-03-15 23:23:42');
+INSERT INTO `messages` VALUES ('60', '找了半天没发现私聊在哪', '1', '3', '0', '2019-03-15 23:23:52');
+INSERT INTO `messages` VALUES ('61', '。。。', '3', '1', '0', '2019-03-15 23:23:56');
+INSERT INTO `messages` VALUES ('62', '有收到', '1', '3', '0', '2019-03-15 23:24:25');
+INSERT INTO `messages` VALUES ('63', '但你啥时候发的', '1', '3', '0', '2019-03-15 23:24:37');
+INSERT INTO `messages` VALUES ('64', '现在是23点24分', '1', '3', '0', '2019-03-15 23:24:46');
+INSERT INTO `messages` VALUES ('65', '24发的啊', '3', '1', '0', '2019-03-15 23:25:02');
+INSERT INTO `messages` VALUES ('66', '啦啦啦', '3', '1', '0', '2019-03-15 23:27:15');
+INSERT INTO `messages` VALUES ('67', '啦啦啦', '3', '1', '0', '2019-03-15 23:27:15');
+INSERT INTO `messages` VALUES ('68', '27分发送', '3', '1', '0', '2019-03-15 23:27:31');
+INSERT INTO `messages` VALUES ('69', '呼啦啦啦', '3', '1', '0', '2019-03-16 17:04:53');
+INSERT INTO `messages` VALUES ('70', '。。。', '3', '1', '0', '2019-03-16 17:07:13');
+INSERT INTO `messages` VALUES ('71', '测试测试', '3', '1', '0', '2019-03-16 19:08:08');
+INSERT INTO `messages` VALUES ('72', '测试测试', '1', '3', '0', '2019-03-16 19:09:59');
+INSERT INTO `messages` VALUES ('73', '现在可以愉快的发消息了', '3', '1', '0', '2019-03-16 19:21:23');
+INSERT INTO `messages` VALUES ('74', 'api嗨', '3', '4', '0', '2019-03-16 21:24:49');
+INSERT INTO `messages` VALUES ('75', '????', '3', '1', '0', '2019-03-17 20:01:47');
+INSERT INTO `messages` VALUES ('76', '?', '3', '1', '0', '2019-03-17 20:09:51');
+INSERT INTO `messages` VALUES ('77', '???????❤?', '3', '1', '0', '2019-03-17 20:15:02');
 
 -- ----------------------------
 -- Table structure for `orders`
@@ -1190,16 +1606,21 @@ CREATE TABLE `orders` (
   `orderID` int(10) NOT NULL AUTO_INCREMENT,
   `userID` int(10) NOT NULL,
   `target` int(10) NOT NULL,
-  `start_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `content` text NOT NULL,
   `state` int(2) NOT NULL DEFAULT '0',
-  `end_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `answer` text,
+  `price` float(9,2) NOT NULL,
   PRIMARY KEY (`orderID`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of orders
 -- ----------------------------
+INSERT INTO `orders` VALUES ('1', '3', '1', 'ping！', '1', '2019-03-09 15:54:57', 'pong！', '0.00');
+INSERT INTO `orders` VALUES ('11', '3', '1', '<p>nocknock！</p>', '0', '2019-03-09 17:59:54', null, '10.00');
+INSERT INTO `orders` VALUES ('12', '3', '1', '<p>测试！</p>', '0', '2019-03-09 18:00:26', null, '10.00');
+INSERT INTO `orders` VALUES ('13', '87', '1', '<p>只狼好玩吗</p>', '0', '2019-03-17 21:50:43', null, '233.00');
 
 -- ----------------------------
 -- Table structure for `pay_log`
@@ -1208,16 +1629,28 @@ DROP TABLE IF EXISTS `pay_log`;
 CREATE TABLE `pay_log` (
   `from` int(255) NOT NULL COMMENT '钱的来源，用户ID',
   `receive` int(255) DEFAULT NULL COMMENT '钱的接收ID ,问题ID或专家ID或告示板需求ID',
-  `amount` int(255) DEFAULT NULL COMMENT '金额数量',
+  `amount` float(255,2) DEFAULT NULL COMMENT '金额数量',
   `type` int(255) DEFAULT NULL COMMENT '交易形式  1-付费问答  2-专家咨询  3-告示板需求',
   `time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '交易发起时间',
   `ID` int(11) NOT NULL AUTO_INCREMENT COMMENT '交易单号',
   PRIMARY KEY (`ID`) USING BTREE
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED;
+) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED;
 
 -- ----------------------------
 -- Records of pay_log
 -- ----------------------------
+INSERT INTO `pay_log` VALUES ('3', '15', '-10.00', '4', '2019-03-06 20:07:19', '5');
+INSERT INTO `pay_log` VALUES ('1', '15', '-10.00', '4', '2019-03-07 14:16:44', '6');
+INSERT INTO `pay_log` VALUES ('3', '1', '-10.00', '2', '2019-03-09 17:59:42', '7');
+INSERT INTO `pay_log` VALUES ('3', '1', '-10.00', '2', '2019-03-09 17:59:54', '8');
+INSERT INTO `pay_log` VALUES ('3', '1', '-10.00', '2', '2019-03-09 18:00:26', '9');
+INSERT INTO `pay_log` VALUES ('1', '16', '-988.00', '4', '2019-03-10 00:55:49', '10');
+INSERT INTO `pay_log` VALUES ('1', '16', '790.40', '5', '2019-03-10 00:55:49', '11');
+INSERT INTO `pay_log` VALUES ('3', '14', '-10.00', '4', '2019-03-17 15:58:22', '12');
+INSERT INTO `pay_log` VALUES ('3', '14', '8.00', '5', '2019-03-17 15:58:30', '13');
+INSERT INTO `pay_log` VALUES ('87', '14', '-10.00', '4', '2019-03-17 21:00:57', '14');
+INSERT INTO `pay_log` VALUES ('3', '14', '8.00', '5', '2019-03-17 21:00:57', '15');
+INSERT INTO `pay_log` VALUES ('87', '1', '-233.00', '2', '2019-03-17 21:50:43', '16');
 
 -- ----------------------------
 -- Table structure for `questioncomments`
@@ -1231,7 +1664,7 @@ CREATE TABLE `questioncomments` (
   `createtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
   `questionID` int(11) DEFAULT NULL COMMENT '对应问题ID\n',
   PRIMARY KEY (`qcommentID`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='问题评论';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='问题评论';
 
 -- ----------------------------
 -- Records of questioncomments
@@ -1239,6 +1672,7 @@ CREATE TABLE `questioncomments` (
 INSERT INTO `questioncomments` VALUES ('1', '1', '这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论', '0', '2018-12-19 02:37:34', '1');
 INSERT INTO `questioncomments` VALUES ('2', '1', '这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论', '0', '2018-12-19 02:38:55', '1');
 INSERT INTO `questioncomments` VALUES ('3', '1', '@拉拉人 这是问题评论', '0', '2018-12-29 23:36:25', '1');
+INSERT INTO `questioncomments` VALUES ('4', '87', '这个问题问得好', '0', '2019-03-17 20:04:31', '140');
 
 -- ----------------------------
 -- Table structure for `questionlog`
@@ -1272,246 +1706,271 @@ CREATE TABLE `questions` (
   `tags` varchar(45) DEFAULT NULL COMMENT '问题标签',
   `state` int(2) NOT NULL DEFAULT '0',
   `question_type` int(2) NOT NULL DEFAULT '0',
-  `price` int(255) NOT NULL DEFAULT '0',
+  `price` float(255,2) NOT NULL DEFAULT '0.00',
   `allowed_user` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`questionID`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=214 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='问题\r\n';
+) ENGINE=InnoDB AUTO_INCREMENT=217 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='问题\r\n';
 
 -- ----------------------------
 -- Records of questions
 -- ----------------------------
-INSERT INTO `questions` VALUES ('1', '这算眼袋吗？？', 'None', '2019-02-24 22:02:33', '18', '8,11,3', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('2', '遇不到喜欢的人…？', 'None', '2019-02-24 22:02:34', '40', '8,11,11', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('3', '如果研究生去美国读，大学还去英国读么？', '明年大三，可以大三大四前往英国读，但是我还是希望考美国研究生，那么还有必要后两年去英国么？', '2019-02-24 22:02:34', '11', '3,14,3', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('4', '做了一年多的软件测试了，现在想转开发，不知道如何选择，求点建议。？', 'None', '2019-02-24 22:02:35', '47', '10,15,5', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('5', '为什么说别人坐热的板凳不要立马坐？', 'None', '2019-02-24 22:02:35', '49', '7,7,16', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('6', '你们的字是怎么练得，什么灵飞经之类的?', '我买了一个灵飞经的帖，还有无印良品的一个小毛笔……到开始写我才想起来我连怎么握笔都不知道。。。求你们指导我一下 ', '2019-02-24 22:02:36', '49', '11,5,2', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('7', '【宇智波止水】的百度百科的图册里面的剧照，为什么我一个都没见过？', '【宇智波止水】的百度百科的图册里面的剧照，为什么我一个都没见过？ 这些剧情是哪一集里面的？', '2019-02-24 22:02:36', '19', '2,15,16', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('8', '异地恋女友想和别的男生出去逛街，我可以不同意吗？', '我跟女朋友是异地恋。 她昨天晚上告诉我说一个男生邀她吃饭，是老乡。她同意了。 我没敢说不。因为之前有另一个男生约她出去玩的时候，我很坚决的说不行。她也说尊重我的想法，然后半个小时后她俩在街上被我撞了个正着。所以与其逼她撒谎骗我，倒不如顺从她，这样我起码可以知道部分真相。 可是我真的很介意我的女朋友跟别的男生约会，是我占有欲太强了么？还是她太大大咧咧…… 我该怎么办才能让她明白我的心意，又不会妨碍到她…', '2019-02-24 22:02:37', '47', '4,13,6', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('9', '哈喇子之类的类似土话出处为何？', '如题，是否有出处，还是就这么沿袭的？', '2019-02-24 22:02:38', '44', '2,8,12', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('10', '一个人孤单的时候，该听什么歌？', '<img src=\"http://img2.imgtn.bdimg.com/it/u=3671845256,1234246258&fm=26&gp=0.jpg\">', '2019-02-24 22:02:38', '6', '9,13,6', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('11', '高中化学易错常考的小知识点有哪些？', '主要是高考理综选择题中易出现的，教材中比较容易被忽略的。谢谢', '2019-02-24 22:02:39', '15', '12,3,15', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('12', '喜欢高二同班的一个女生，现在大一，不在一个学校，隔得很远，怎么追？', '她现在没谈恋爱', '2019-02-24 22:02:39', '20', '4,10,14', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('13', '人被分手后的心理变化过程，多久能恢复正常?', 'None', '2019-02-24 22:02:39', '36', '9,4,12', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('14', '想在学校组建一个小型非专业医疗队，急救箱里买些什么好？', 'None', '2019-02-24 22:02:40', '33', '9,5,14', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('15', '一段好的援助交际关系，应该具有怎样的特征？', 'None', '2019-02-24 22:02:40', '28', '14,8,8', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('16', '没有什么人脉、朋友不多。该怎么改变这种现状？', '我是一个女孩，90后。朋友不多。没什么人脉。现在好想多交朋友。只是、我不爱和陌生人说话。在熟人面前很疯。我该怎么积累人脉？', '2019-02-24 22:02:41', '35', '8,8,12', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('17', '招财宝理财总是高利率买入低利率卖出，不是赚大了？', '招财宝理财总是高利率买入低利率卖出，不是赚大了？', '2019-02-24 22:02:42', '46', '4,14,3', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('18', '文理分科，选文科or理科？文理科的选择对以后职业生涯的影响？', 'None', '2019-02-24 22:02:42', '16', '2,10,11', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('19', '疯狂外星人里面的插曲是什么？', '01. Rihanna – Towards the Sun (04:34) 02. Coffee – Run To Me (04:15) 03. Kiesza – Cannonball (03:58) 04. Rihanna – As Real As You and Me (03:41) 05. Charli XCX – Red Balloon (03:27) 06. Rihanna – Dancing In the Dark (03:44) 07. Jacob Plant – Drop That (04:19) 08. Jennifer Lopez – Feel the Light (04:52) 除了这些还有的。。。求各位大神。。。找不到的话妹子不跟我玩了 ', '2019-02-24 22:02:43', '12', '5,15,5', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('20', '请问有没有人知道轻轨每公里的造价 就是路基和钢轨 如果不知道价格的话 型号什么的也行 或者举出别地价格？', 'None', '2019-02-24 22:02:43', '46', '16,3,8', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('21', 'angelbabay是不是小三?', 'None', '2019-02-24 22:02:43', '14', '4,12,3', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('22', '女朋友总是管我玩游戏怎么办？', '其实大学的时候我是不玩游戏的，是个爱学习的好孩子。可是毕业这两年以来，工作之余爱玩游戏。我觉得我工作辛苦，下班后和节假日里玩会儿游戏没啥，但女朋友觉得我因此忽略了她，三天两头因为这个跟我吵架。我女朋友是一生气就特别不好哄的那种女生，我特别害怕她发脾气。我现在玩游戏都心惊胆战的，仿佛在做什么亏心事。还有，每周五晚上公司都会订场打球，我也常去打球，但女朋友觉得周五下班这么好的时光我不应该跑去玩，为此…', '2019-02-24 22:02:44', '24', '2,15,16', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('23', '凉粉形成凝胶状的高分子物理机理是什么？为何木薯粉不如红薯粉和绿豆粉？', '夏天比较喜欢吃凉粉. 而网络上看到的教程都是非常简单的. 总的水和绿豆粉(红薯粉,豌豆粉之类)的比例为1:4~5, 然后取一部分稀释,一部分烧开,边搅拌边倒入淀粉糊到烧开的水中,半透明状在容器中冷却即可. (必要时加明矾等交联剂) 考虑到starch也算大分子了,本来以为任何淀粉都可以的. 我尝试了两种: 木薯粉和红薯粉(超市暂时只买到这两种), 结果发现,同样的配方和工艺,木薯粉打死也做不出类似果冻的效果,而红薯粉就容易得多(考虑到…', '2019-02-24 22:02:44', '10', '3,13,11', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('24', 'None', 'None', '2019-02-24 22:02:45', '43', '15,10,13', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('25', '如何入门《周易》？', '希望各位的回答通俗易懂又不失逻辑严谨性。另外，本人看过《周易》一书，却读了几页就读不下去了。希望各位能够介绍如何入门《周易》。谢谢。', '2019-02-24 22:02:45', '35', '14,11,11', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('26', '男，23，初中学历。做过土建施工放线，后来放弃做销售。如今的自己对于未来一片迷茫，怎么办？？', '如果做网站相关的工作可以吗？自学还是上培训班好？或者是先找个能做的工作可以闲时学习？？求前辈指条明路，感激不尽！！！！', '2019-02-24 22:02:46', '20', '10,3,14', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('27', '《我的青春恋爱物语果然有问题》中，海老名姬菜和大老师属于同一类人吗？', '在小说第七卷有这样的描写 大老师：「……虽然户部是个烂透的像垃圾一样的人，不过我觉得还是个不错的家伙来的。」 姬菜：「没戏没戏。比取谷君的话，像这种事应该能懂吧？因为，现在的我和谁往什么的是绝对不可能的嘛。」 「这样的事……」 「是存在的哦。」 海老名同学间不容发的回答道。 「因为，我腐烂了。」 我想，这里的腐烂是一语双关吧，一方面明指自己是腐女，另一方面其实暗指自己的处事方式，比起与朋友亲密相处，更…', '2019-02-24 22:02:46', '8', '12,6,16', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('28', '已经入门c++了，想更深入系统的学c++该怎样学？可以推荐相关的书籍吗？', 'None', '2019-02-24 22:02:47', '26', '16,1,16', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('29', '足球为什么是圆的？', '为什么最后定形是圆的，料子一样的话方的并不是不能踢啊，单纯为了发展团队合作设计成方便传球的圆形？', '2019-02-24 22:02:47', '29', '2,9,10', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('30', '如何看待吉利车模，顺便说说国产车的定位？', '如图，', '2019-02-24 22:02:48', '27', '4,8,6', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('31', '针对目前亚投行遇到的挑战，比如规范透明、控制贷款风险、协调成员国等，提出建议对策思考？', '针对目前亚投行遇到的挑战，比如规范透明、控制贷款风险、协调成员国等，提出建议对策思考', '2019-02-24 22:02:48', '50', '15,12,2', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('32', '明确知道两个人没有结果，不能结婚，为什么还要继续在一起？', '我的男朋友是阿拉伯人，是穆斯林，作为大汉民族的女生以后和他不能结婚，他也明确告诉我我们以后不能结婚，我们还是继续在一起，只是每次有未来幻想时，两个人都会陷入尴尬和无奈中，我不知道我是否应该和他继续下去，以后注定会分手。', '2019-02-24 22:02:48', '48', '2,4,11', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('33', '中国有卖superdry吗？', '<img src=\"https://gss3.bdstatic.com/-Po3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268%3Bg%3D0/sign=ebf5050b4334970a47731729adf1b6f5/21a4462309f79052db048a1a0ef3d7ca7bcbd5ff.jpg\">', '2019-02-24 22:02:50', '7', '8,9,2', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('34', '如果要你推荐一首近百字的诗词你会选哪首？', '古诗词，或潇洒或回首往事嘘唏不已，或发人深省的都可以，如果是你，会推荐哪一首古诗词写下来送给20～30的年轻人呢？', '2019-02-24 22:02:50', '43', '10,3,4', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('35', '有争议的海外信用卡扣款可以先冻结再申请拒付。对已划帐的争议扣款还能追诉回来么？VISA在国际结算中的作用', '关于国际信用卡海外不明或有争议的扣款', '2019-02-24 22:02:50', '43', '10,3,6', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('36', '为什么大家不爱党？', '高中生文科，已被课本严重洗脑导致自己没脑子。', '2019-02-24 22:02:51', '41', '4,2,8', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('37', '为什么去游乐园玩那些刺激的娱乐设施被转晕后会恶心甚至会吐?', 'None', '2019-02-24 22:02:51', '9', '16,6,9', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('38', '企业管理软件的营销怎么做？', '互联网太火的，但那时To C的，有谁知道TO B的苦闷。杜蕾斯，可口可乐的营销做的确实好，但是传统的企业管理软件公司没有一家做的好的。这是为什么呢？有没有为这类企业做整合营销的代理公司？', '2019-02-24 22:02:51', '26', '15,8,4', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('39', '我国制造业自主研发和购买技术差距在哪里？', '比方说，中国的“中华之星”高速列车的研发被边缘化，国家购买西方先进的高铁技术。那么从产业链发展和技术发展潜力两个方面看，自主研发技术和购买技术相比会有什么差距？ 根据知友的提醒，定义一下”自主研发“和”购买技术“ 自主研发：进口零件自行研究原理和技术细节，而后进行整合 购买技术：直接购买整套成熟技术，根据国内情况进行调整和消化 也许商业级、军事级的技术在这个问题上会有不同？', '2019-02-24 22:02:52', '28', '11,1,4', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('40', '两人恋爱对方不愿用合照做头像代表什么？', 'None', '2019-02-24 22:02:52', '11', '1,8,7', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('41', 'μ\'s的9位与希腊神话中的9位女神如何一一对应？', '在sh的百科中有提到过，想知道各位的看法', '2019-02-24 22:02:53', '24', '12,5,2', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('42', '《阿凡达》中左右两边各有一个可调节的螺旋桨的直升机未来真的会出现吗？理论上符合动力科学吗？', 'None', '2019-02-24 22:02:53', '20', '14,6,14', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('43', 'MRI扫描单这个结果是什么含义？', '什么情况啊。。膝盖要废掉了吗？最近没干啥啊。。', '2019-02-24 22:02:53', '23', '10,16,9', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('44', '一般写科幻小说需要注意哪几个要素？', 'None', '2019-02-24 22:02:54', '18', '8,1,5', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('45', '《爵士时代的故事》哪一个版本翻译得最好？', '很想看', '2019-02-24 22:02:54', '30', '14,1,14', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('46', '如果你能身临其境地感受到魔兽世界中的场景，你最愿意生活在什么地方，每天都做些什么？', '别和我说天天守敌对阵营的尸体啊！太low惹！ 如果是我，我选择生活在暴风城，就和傻馒一样，喜欢这个名字，而且暴风城附近风景很美。每天逛逛街，看看暴风城外的瀑布，去湖畔镇钓鱼，打野猪做烧烤，品尝各种美食。暴露惹阵营和吃货本质。', '2019-02-24 22:02:55', '48', '13,8,15', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('47', '如何有朋友？', '我是女生，最好的惟一的朋友不和我玩了。和同学没有共同话题，也不知道说什么。现在一个朋友都没有。好孤独，本身就内向。如何才能有一个朋友?', '2019-02-24 22:02:55', '2', '1,5,16', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('48', '如何通过所有途径营销自己？', '如何通过所有的途径来营销自己？让自己能成为某个领域的专家？', '2019-02-24 22:02:55', '43', '13,3,13', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('49', '入门级单反佳能700D如何？5000价位单反有哪些推荐，小白求大神指点?', 'None', '2019-02-24 22:02:56', '8', '8,9,1', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('50', '建築模型需要怎麼選擇工具？', '最近學校開始做模型發現手工刀非常難得切，總是切歪，雖然可能是剛開始不熟練。。以及用來做窗戶的透明板居然0.5mm完全切不動。。。 切好形狀後把圖紙揭下來就變得相當粘，過一會就變髒了，掉到地上就慘不忍睹。 以及如果是木造模型也要手工刀切麼。。有沒有容易使用的工具。 素材和工具要怎麼選擇，哪種材料哪種型號，有經驗的可以告訴我的話就太感謝了 以上問題麻煩解答啦，感激不盡 ', '2019-02-24 22:02:56', '41', '3,5,5', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('51', 'None', 'None', '2019-02-24 22:02:56', '27', '11,15,6', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('52', '什么样的台式电脑比较适合玩游戏（便宜一点的）？', '我比较喜欢玩游戏，大概也就是刺客信条，黑暗之魂，gta这一类的，所以想买个台式，但是是学生党，所以预算不是很多，4k以内，想要一款散热好一点，运行比较流畅的台式机，组装机或者牌子都无所谓，什么样的主机比较好，显示器呢', '2019-02-24 22:02:57', '14', '15,16,5', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('53', '为什么每次睡完午觉脸都肿肿的?', 'None', '2019-02-24 22:02:57', '16', '9,1,1', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('54', '不相爱的父母为什么要在一起，为什么要生下小孩。为什么要让我讨厌“家”?', 'None', '2019-02-24 22:02:58', '8', '6,15,5', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('55', '本科生遭遇学术黑幕应该怎样处理？', '还是匿了。。。不敢找死。 今年省挑战杯赛，我们辛苦做了很久的一个项目经学院报到校团委，由', '2019-02-24 22:02:58', '46', '3,7,12', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('56', '一加的1步1步看清韩寒的文案是如何做到的？用打字机参与互动宣传的文案很有创意。？', 'None', '2019-02-24 22:02:58', '22', '6,5,12', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('57', '国内外搜索引擎得竞价排名系统大体上有哪些异同？', 'None', '2019-02-24 22:02:59', '4', '5,5,10', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('58', '中式建筑和欧式建筑有什么区别？怎么发展出区别的？有什么相同之处吗？', '这种建筑风格的差异是怎么产生的？材料和气候以外还有什么因素？', '2019-02-24 22:02:59', '41', '7,13,12', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('59', '知乎是否应该限制营销软文？', 'None', '2019-02-24 22:03:00', '9', '16,1,5', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('60', '如果分手该怎么走出失恋阴影？', 'None', '2019-02-24 22:03:01', '3', '8,4,16', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('61', '电机维护？', '电机日常维护与检查', '2019-02-24 22:03:01', '50', '5,14,13', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('62', '如何才能上微博热评？', '有很多时候，刚好赶上明星发微博，便都会去评论个几句，但总是上不了热评，也想过一些稀奇古怪的评论，但都不行，很想试试被赞得手机嘟嘟响的感觉。', '2019-02-24 22:03:01', '14', '7,6,2', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('63', '父母情商低是怎样的一种体验？', 'None', '2019-02-24 22:03:02', '2', '13,3,2', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('64', 'Nexus5 (型号D821，未经过root)在中国大陆能否收到谷歌的ota推送从而进行系统升级？', 'Nexus 5，型号D821，未经过root', '2019-02-24 22:03:03', '48', '3,9,10', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('65', '直男真的能灵活运用各种表情聊天？', 'None', '2019-02-24 22:03:03', '29', '2,11,12', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('66', '一个女生曾多次被不同的男性朋友差点侵犯，能分析一下为什么吗?', '女生性格很好，爱笑，微胖，不太会拒绝，一般是有求必应。 大概是从初二的时候开始，一个平时玩的还不错的男生，欲对我不轨，我反抗了之后，他住手了，因为当时什么都不太懂，就原谅了他。 然后是高中的时候，是有两个男生，我把他们当成朋友，他们却以这种方式伤害了我。 现在是大学，大一，认识了一个工作的男人，比我大几岁，他经常叫我出去吃饭，看电影，因为认识时间短，不太熟，所以能拒绝就拒绝了， 没课的时候出去过几次…', '2019-02-24 22:03:04', '22', '14,9,15', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('67', '为什么中国的动漫产业始终发展不起来？', '能出没和喜羊羊发展迅速，但魁拔系列无限延期，众多国产优秀青少年动漫也都因为各种原因停止或延期，原因是什么？', '2019-02-24 22:03:04', '29', '5,12,10', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('68', '为何读外国经典小说也不知道它哪里经典?', 'None', '2019-02-24 22:03:05', '23', '9,7,1', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('69', '有没有经营得好的家庭的栗子？', 'None', '2019-02-24 22:03:05', '22', '14,2,11', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('70', '军盲对《美国狙击手》的几个问题？', '1.影片中有一段是冲进饭店，结果见到一堆分尸和吊着的人，那些是什么来的？ 2.有一段他们开车去跟踪敌人，但一条街上车都不多一辆他们还穿着军装，不是明摆着让敌人知道被跟踪吗？ 3.他们被狙击手击中时总是一群人起来对着不同方向射击，这样的作用是什么？既不可能射中远处的狙击手，还会暴露自己。 4.像男主射杀这么多人的士兵薪酬会多点吗？', '2019-02-24 22:03:05', '38', '7,10,14', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('71', '公婆爱控制我们，控制我们的资金，什么都管，连敷面膜都要管，怎么破？', '立马切入正题，我们小两口刚结婚，平时上班后攒的钱被家公拿去炒股票。他是个炒股高手，也是个谨慎的人，交给他炒的确是个稳赚的事情。但是！！！我们是一个新家庭了，虽说他不会骗走我们的钱，我也从来没有怀疑过。 他们俩的控制欲不是一般人能承受的，什么都要管，连我敷面膜都要管，说：“现在的面膜都有毒，你又不是小姑娘还没嫁，嫁了哪里需要敷面膜，还浪费钱。”…………听到后我忍住了情绪…最鸡毛蒜皮的是连结婚那会改…', '2019-02-24 22:03:06', '14', '8,11,13', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('72', '为什么有些大学在省内招生是重本，而在省外招是二本？', '如题', '2019-02-24 22:03:07', '32', '12,4,4', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('73', '宿舍新装了个奇怪的东西，不知道是干什么用的？', '好奇的不行 ----------------------------------------------------------------------------萌萌哒的分割线----------------------------------------------------------- 以上是原题主的提问 我们宿舍也装了个奇怪的东东 0.0 同问是什么 =￣ω￣=', '2019-02-24 22:03:07', '22', '14,13,12', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('74', '餐桌什么牌子最好?', 'None', '2019-02-24 22:03:08', '11', '7,3,3', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('75', '当我见同学家长 我该谈些什么?', '跟同学去家里玩，比如吃饭的时候，跟他父母应该聊些什么 不显得没话找话，自然恰到好处的话题', '2019-02-24 22:03:08', '33', '9,12,12', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('76', '有没有类似于反斗神鹰一样的神剧喜剧。求各位大神推荐?', 'None', '2019-02-24 22:03:08', '48', '5,4,3', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('77', '我的栀子花病了，大神们谁能救救它。？', 'None', '2019-02-24 22:03:09', '31', '2,3,16', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('78', '一定要先改变自己才能改变他人乃至改变世界？', 'None', '2019-02-24 22:03:09', '46', '12,11,14', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('79', '学电子的人平时看什么网站或者论坛？', 'None', '2019-02-24 22:03:10', '32', '14,3,11', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('80', '在大学如何与一些陌生同学深交，特别是在某些方面有专长的人？', '我在大学交友的圈子太窄，感觉就只有一个宿舍内的，想找个高年级的学长或学姐做好朋友，平时挺喜欢去自习室的，但感到太孤独，一方面是想扩展人际关系，也想找个人教我不会的知识。', '2019-02-24 22:03:10', '20', '7,12,1', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('81', '教育骗了一些落后地区的人？', '我现在读高三去年认识一个学姐她当时高三，她家里特别的穷，衣服都是穿哥哥姐姐的校服。她中考考上了一流中学但是为了助学金她来了我们这个二流中学。高中她最后年看她特别特别的努力，很多时候都是看她一个人，放假为了省车费，为了学习也不会回家留在学校。高考她去年考了580，忘记那个大学了。只知道今年听老师说，她报的解剖专业，因为根本不了解这个专业，不喜欢，甚至讨厌，最后逃课太多被开除了。我知道后有种说不出的感…', '2019-02-24 22:03:10', '30', '11,7,4', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('82', '堵车时后车一直开着远光怎么办？', '很难受，有没有办法抗议或者应对？', '2019-02-24 22:03:11', '27', '6,4,6', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('83', '偶遇2次，很有感觉的女生。请问怎么搭讪？或者切入点', '这几天吃早饭，会碰到一个女生。第一次见面就感到是自己喜欢的类型，自己不敢搭讪，或者说不知道该怎么搭讪，今天第二次遇到了，依旧心动，求大师跟我指点指点。', '2019-02-24 22:03:11', '39', '15,15,12', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('84', '单身用什么样的厨具，小巧一点，一个人用的，可以煮煮面，热热东西的？', 'None', '2019-02-24 22:03:11', '8', '10,16,10', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('85', '最近跟现实生活与抉择亲密接触，发现成人的世界没有容易二字，想问为什么学生时代不容易产生绝望感？', '不是德智体美劳全面发展的好学生，最近感觉要克服无数次绝望感才能过好这一生，喜欢的人，喜欢的工作，喜欢的生活都那么来之不易，因为发现知识真的可以转变成金钱，至少做工程是这样，那些以后的筹码，学历，六级，二建这些，说实话，觉得得来没有需要那么艰难，为什么学生时代可以努力而没有那种绝望感呢？', '2019-02-24 22:03:12', '28', '13,9,9', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('86', '有哪些5K左右适合女生用的手机？', '适合女生即:外表美观，单手可操作。', '2019-02-24 22:03:12', '21', '14,15,15', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('87', '把大额资产(上十亿)从香港转回内地难在哪儿？有哪些方法可以操作？', 'None', '2019-02-24 22:03:13', '6', '2,16,6', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('88', '如何评价泰国电影《对不起，谢谢，我爱你》？', '电影情节', '2019-02-24 22:03:13', '36', '8,2,4', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('89', '高频交易获利安全吗？', 'None', '2019-02-24 22:03:13', '22', '1,11,12', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('90', '新买5s其他内存占了8g？', '3我今天才买的5s睡觉之前可用内存还有9g睡觉起来就只剩3g了 连接电脑上看其他占了8g 到底是什么情况啊 突然又变成可用6g 这是我刚才的', '2019-02-24 22:03:14', '44', '6,1,3', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('91', '在医院实习时，怎么做，才能尽量减少被主任批评的几率？', '医学生快进入实习阶段了，心理有点紧张，听学长说好像主任动不动就会骂人，那么应该怎么做，才能尽量减少被主任批评的几率？', '2019-02-24 22:03:15', '34', '16,11,16', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('92', '经过改装的59式是否有与三代坦一决高下的能力？', '指两方的的 数量X成本 相同的情况下，大改、魔改均可。允许有狼群等开挂行为', '2019-02-24 22:03:15', '33', '10,10,9', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('93', '狗狗一直抹自己的面部，一直不停的动是怎么回事？', 'None', '2019-02-24 22:03:15', '34', '2,9,2', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('94', '物业企业适合哪种绩效考评方法？', 'None', '2019-02-24 22:03:16', '41', '3,4,5', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('95', '屁话太多的人怎样让他闭嘴?', '总是喋喋不休的说很久，让人想把袜子塞到她嘴里让他闭嘴，说了很长时间后往外走时还在说，有时候走着走着又绕回来说，说什么可以让他闭嘴然后再也不说话', '2019-02-24 22:03:16', '16', '13,2,2', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('96', '道不同不相为谋吗？', 'None', '2019-02-24 22:03:17', '32', '6,2,5', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('97', '如何看待B站重开邀请码？', 'None', '2019-02-24 22:03:17', '19', '1,13,12', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('98', '如何挑到适合自己体型的白衬衫?版型？面料？', 'None', '2019-02-24 22:03:18', '35', '11,12,7', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('99', '在一起恋爱七年了，还没结婚，现在没话讲了怎么办？', '在一起恋爱七年了，还没结婚，现在两个人不在一个城市，他总觉得我孩子气，跟我说不来。我也只是跟他讲我的近况，讲我身边有趣的事情，因为不在一起，很少见面，如果我不说他就不会知道我的任何事情了啊。 我也想要变成他要的那种成熟，知性的女生。但是这不是还要个过程的嘛', '2019-02-24 22:03:18', '8', '4,12,5', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('100', '我该怎么挽回?', '你好，谢谢你帮我分析下我现在能挽回吗？ 我们还不是男女朋友，但是因为我太粘人而且爱发点小脾气，让她对我失望了，她说以后没有机会了，机会是零。改不改和她没关系了。我们之前有过两个月的一起吃晚餐，该走的时候，可是我总舍不得，结果让她先提出来，我很粘人。这是生气的第11天，第7天接我电话以后，她就开始说她现在对我很厌恶，让我不要联系她，做朋友偶尔联系下就行。我说那我不是没机会了，她说如果不联系机会是零，那…', '2019-02-24 22:03:18', '1', '4,16,13', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('101', '如何将小清新融入花艺之中（现在不是流行这一块么）？', 'None', '2019-02-24 22:05:02', '8', '11,5', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('102', '广州成人钢琴零基础学琴哪里好？不是速成哪种，需要专业一点的谢谢！！', '本人很喜欢钢琴，最近想抽时间去学习一下，不想学速成的，想从基础学起~~有没有人了解过？', '2019-02-24 22:05:03', '10', '9,7', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('103', '植物的某一部分离体后，细胞失去活性的时间是多久？是不是与植物本身有关？DNA失去活性的时间是多久？', 'None', '2019-02-24 22:05:03', '29', '9,12', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('104', '为什么在眼皮上贴个小红纸就能压制住眼皮跳呢？', 'None', '2019-02-24 22:05:04', '50', '3,12', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('105', '什么是「圣人」？', '各家各派都有圣人这个说法，那么谁说的对呢？怎样算是一个圣人？ 曾国藩有一句圣人必可学而致之，可是他应该不算是圣人吧？ 孔老夫子能算圣人吗？', '2019-02-24 22:05:05', '44', '5,12', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('106', '有哪些作恶一生依旧活得很好的人？', 'None', '2019-02-24 22:05:05', '36', '11,5', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('107', '保险方案的概念?', '官方概念', '2019-02-24 22:05:05', '40', '14,2', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('108', 'None', 'None', '2019-02-24 22:05:06', '25', '10,15', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('109', '知乎交流平台限制太多会怎样？', '保护环境固然很好，但是限制太多会不会使得太多人不敢发言或是不想发言。（对这一问题，本人保持中立）', '2019-02-24 22:05:06', '17', '5,13', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('110', '前任对于以后生活中应该扮演怎么样一份角色？', '谁没有个青春，谁没有过一场刻骨铭心的恋爱。但对于错过我们未来，那曾经在某一段时光中，曾对于我们来说最重要的那个人，在现在或将来结你又有怎样影响？', '2019-02-24 22:05:07', '45', '1,3', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('111', '不喜欢自己的人会有一天改变自己的想法喜欢上自己吗？', '喜欢一个男生，可是拒绝我了，狠狠的拒绝了，连朋友都不和我做，我原以为他把我当朋友，可是却不是我想的，可我还是过不去这个坎，会不会有一天他看到我的好了，就会和我在一起呢，我再努力努力是不是会改变呢', '2019-02-24 22:05:07', '16', '7,4', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('112', '豆瓣有哪些靠谱的同志兴趣小组？', '比较活跃质量高一些的因为发现二线城市的小组不活跃', '2019-02-24 22:05:07', '21', '7,5', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('113', '我姐申请参加盐club，但是没有被邀请。到现在心情还不好。我要怎么安慰她？', '她一直很阴郁，我都不敢和她说话了', '2019-02-24 22:05:08', '32', '14,11', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('114', '求鉴别到底是鸢尾还是紫罗兰？', '在校园里碰到如图花，黄色的是在水里种的，紫色的是在草坪里。截图是百度到的鸢尾和紫罗兰，但是小伙伴搜索紫罗兰的时候，竟然出现的是鸢尾！直接蒙B了，求大神解答。果壳上不去，发帖不成。。。 后面这两张是截图。。前两张是在学校拍到的。', '2019-02-24 22:05:09', '17', '11,13', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('115', '为什么很多人最终都变成了自己讨厌的模样？', '自私冷漠懒惰 可能是人的通病吧 内心深处不愿承认', '2019-02-24 22:05:09', '45', '2,8', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('116', '家里姐弟有精神病，我该怎么办。？', '求助', '2019-02-24 22:05:10', '29', '13,7', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('117', '作为入行数年的专业科研工作者，你每周看几篇 paper ？', '我挺想了解做科研的各位在看paper上是一个怎样的节奏。 一般每周看多少篇？ 粗读、精读的情况是怎样的？ 回答时请说明自己是在哪个领域，谢谢。', '2019-02-24 22:05:11', '13', '12,4', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('118', '怎样在大学保持高中时学习的那股劲儿？', 'None', '2019-02-24 22:05:12', '26', '2,8', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('119', '我国有没有颁布知识产权保护法？', '台湾地区的法律和我国的差别大不大？台湾知识产权保护法怎么样？', '2019-02-24 22:05:12', '32', '3,12', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('120', 'NTJ对个人自由要求高，但是同时INTJ也按照计划循规蹈矩，为什么？', '在一个回答里发现说intj要求个人自由，不适合当军人。 但是很多时候，intj是按计划做事。 ', '2019-02-24 22:05:12', '18', '13,6', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('121', '观音菩萨在西方极乐世界能排第几？除了如来佛祖，还有谁是最厉害的？', 'None', '2019-02-24 22:05:13', '41', '4,11', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('122', '为什么在一些客车上的字车一边顺着写（xy客运公司）在车的另一边反着写（司公运客yx）？', 'None', '2019-02-24 22:05:14', '26', '4,3', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('123', '和一个性格温润的男生在一起，性格变得越来越man了怎么办?', '如题，和一个性格温柔和善型，从不装逼老实型的男生在一起，一年了。想当年我也是淑女一个，文静内敛，可是最近发觉性格潜移默化的变化。快准狠，雷厉风行，说话做事像个男生一样，还觉得他说话做事不利索，像个女生。为什么他的性格没有对我产生积极影响反而让我变man了-_-我该怎么改变', '2019-02-24 22:05:15', '44', '3,6', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('124', '女生每天往脸上拍的水啊乳啊皮肤真的能吸收吗？', 'None', '2019-02-24 22:05:16', '21', '16,11', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('125', '如何看待雄鹿对公牛第六场惨绝人寰的惨败？', 'None', '2019-02-24 22:05:16', '41', '10,13', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('126', '如何安慰手机被偷的朋友？', 'None', '2019-02-24 22:05:17', '44', '11,3', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('127', '广场舞算不算非法集会？', '如题 如果算能不能报警 报了警要是警察不管怎么办', '2019-02-24 22:05:19', '19', '8,11', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('128', '我国传统戏剧有没有可能走歌剧到音乐剧这样的进化路线？', '首先我不否认我国传统戏剧很有魅力，但我实在是觉得现在它们挺难吸引除了发烧级粉丝以外的人的兴趣。去年在国家大剧院看了《西厢记》，那么大的场地，那么豪华的剧院，仍然是几个人，穿着现在看来已经有点朴素的戏服，在没有任何道具和场景的舞台上咿咿呀呀一唱好几小时，连标榜喜爱传统的我爸妈和我公公婆婆都睡着了，旁边的观众也是该睡的睡该找乐子的找乐子，又不敢吐槽生怕别人觉得他们“不懂传统文化”遭人耻笑。剧终了我们…', '2019-02-24 22:05:21', '20', '12,10', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('129', '为什么一般人在放松时会稍息姿势站立，重心偏离到单脚上？', '如题，经常观察到一些人在等待的时候会情不自禁做出“稍息”的姿势，自己也常常会这样，似乎全身重量偏离到其中一只脚会更轻松，但为什么不是两只脚平摊重量更轻松一点呢', '2019-02-24 22:05:22', '6', '12,11', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('130', '一般MRI诊断的所谓“前十字韧带损伤”，“前十字韧带损伤”和十字韧带撕裂之间有区别吗？', '这是我同学MRI的诊断结果。请问所谓的“部分损伤”，和一般我们听到的运动员的韧带撕裂，乃至韧带断裂是什么关系？还有半月板损伤就是指半月板撕裂吗？', '2019-02-24 22:05:23', '28', '5,5', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('131', '怎么改掉自己爱看手机的毛病？', '睡前看手机，睡醒看手机，上厕所看手机，没事总爱看一下手机。明明知道没有人找，还是要看一下微信啊知乎啊之类的各种app 不停刷新 明知道没有意义 几乎是没几分钟看一次 觉得自己这样真的很不好 有没有办法可以改掉？', '2019-02-24 22:05:23', '49', '10,10', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('132', '广州最好吃的面包在哪里？', '半夜梦见吃面包。。。然后饿醒了。。。跪求广州最好吃的面包，不然睡不着了', '2019-02-24 22:05:24', '48', '1,14', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('133', '有那些比较好的入门级建筑安全类书籍?', '我男朋友是计算机专业转安全员的,目前正在做码头工程,由于专业不对口,工作起来比较困难,请问有没有一些简单易懂的,入门必学知识的建筑或者市政或者水利的安全管理类书籍介绍?', '2019-02-24 22:05:24', '29', '14,8', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('134', '当男友在朋友圈留言叫自己肥肥的时候如何机智的回答？', '朋友圈机智回复', '2019-02-24 22:05:26', '9', '16,1', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('135', '如何把不要的东西丢掉？', '房子是多年前买的，住了好久，跟家里情况、爸妈观念有关，我们家都特别不舍得丢东西，小到一块连抹布都做不了的布、一根吸管、一个手表盒子、一条抽奖来的塑料手链，大到旧电脑、旧电视、很多很多的旧衣服。旧的不要了不舍得扔就在那里堆着，然后继续往家里买新的来，东西越来越多，就堆在那里，旧的东西不管，新的也不珍惜。然后东西也没个固定的地点，用到哪儿算哪儿，用完就堆在那儿，从来不会放回原来的位置，要用了找不到就…', '2019-02-24 22:05:26', '43', '4,8', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('136', '有一个分数序列 2/1,3/2,5/3,8/5,13/8,21/13,....... 求这个序列的前20项之和？', '要求用C语言编写且不带指针', '2019-02-24 22:05:27', '6', '8,6', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('137', '特别想听冬吴相对论评论uber，想听听两位的看法？', 'None', '2019-02-24 22:05:29', '10', '11,9', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('138', '从事肿瘤研究的PhD在肿瘤被人类彻底治愈后怎么办？', '假如，指的是假如，有一天出现一位千年一遇的牛人做出了堪比宇宙起源和大统一理论的研究成果，推动了医学发展，让所有的癌症在短短几个月内就被人类彻底攻破。这样的话，研究机构里从事癌症研究的研究员怎么寻找出路？如果是更改研究方向，研究肿瘤的技能、思维和知识储备如何迁移到其它研究方向？', '2019-02-24 22:05:29', '20', '6,6', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('139', '求高人指教，香灰为何中间呈现黑色?', '回家后给财神上了个香，不为什么，就是想看看他，但是香灰中间是黑色的，不知道是不是预示着什么，求教！', '2019-02-24 22:05:30', '1', '10,11', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('140', '眼睛周围的扁平疣怎么治啊？', 'None', '2019-02-24 22:05:31', '8', '12,4', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('141', '女友一点没有信用 怎么办？', '骗人和他说了 还骗', '2019-02-24 22:05:31', '36', '6,1', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('142', '为什么onenote中文搜索问题迟迟得不到解决？', 'onenote的中文搜索有很多问题，其中一个是同音字搜索问题。在onenote页面上搜索中文字，会搜索出所有包含同音字的结果。比如搜索“油”会匹配到“邮”。根据此贴： ', '2019-02-24 22:05:32', '48', '5,8', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('143', '港大和清华的Computer Science谁更强？ ？', 'None', '2019-02-24 22:05:33', '14', '11,4', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('144', '若离去，后会无期?', '我曾经喜欢你并且也得到了你的回应，不管怎么说我们有过一些很美好的回忆，相对于很多人我已经足够幸运。我拥有过一段感情，在这段感情中我认真地爱过，努力地经营过，我对得起自己的心。我不能控制我们的感情，但我可以控制我自己的感情，虽然这段感情有遗憾，但我却没有遗憾。', '2019-02-24 22:05:33', '19', '8,1', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('145', '想找一个期刊 不受版面费且是北核以下的？', '最近写了文章 考虑文章质量太差 想找一个期刊 不受版面费且是北核以下的 投过去 也比死在自己手上好 求推荐期刊 ', '2019-02-24 22:05:33', '26', '1,4', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('146', '对于益智类节目的看法?', '看了下节目选手答题，然后和老爸讨论了一下，意见不同。 记住一些知识标签然后答题时就显得很有学识的样子，（不是不爽，只是有些是可以当做常识记住的） 想起那些名著只看导言概序，然后侃侃而谈的人来显示优越感（个人偏见罢了）感觉太浮躁了，对知识没有敬畏感', '2019-02-24 22:05:34', '32', '8,11', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('147', '程序员加班到什么程度，才能获得全国五一劳动奖章？', 'None', '2019-02-24 22:05:35', '48', '10,1', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('148', '为什么李贽的《焚书》没有被焚?', 'None', '2019-02-24 22:05:36', '18', '3,8', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('149', '1~n^3中随机取出n个数，他们唯一的概率？', '算法导论', '2019-02-24 22:05:37', '22', '2,10', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('150', '男生不想谈恋爱是什么原因?', 'None', '2019-02-24 22:05:39', '46', '12,6', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('151', '已保研985非计算机类专业，想放弃保研从事编程类工作，考研还是工作？', '本人是男生，本科是环境工程，已经保上南方某985高校，在实验室搬砖后越来越感觉对本专业不感兴趣，再加上自己对编程有兴趣，想放弃保研，要成为程序员，是考研还是工作？', '2019-02-24 22:05:40', '43', '1,7', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('152', '如何评价佐藤健和黑木华主演的日剧《天皇の料理番（天皇的料理人、天皇的御厨）》呢？', 'ACFUN第一话：', '2019-02-24 22:05:40', '25', '4,11', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('153', 'None', 'None', '2019-02-24 22:05:41', '43', '8,11', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('154', '中西方恋爱观都有什么区别？ ？', '可详细描述和欧美女（男）孩谈恋爱是一种怎么样的体验。 可从恋爱心理，关系确定的顺序等方面描述', '2019-02-24 22:05:42', '28', '14,3', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('155', '我想知道 大学中兼职的平台 他们是如何联系到当前城市需要兼职的厂家的，又是如何合作的?', 'None', '2019-02-24 22:05:42', '12', '2,14', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('156', 'James Bay的Hold Back the River为什么前奏这么熟悉，觉得像是一首日文歌里的？', '哪位大神知道是哪首歌里的？困扰一整天了…强迫症睡不着啊…', '2019-02-24 22:05:43', '34', '2,13', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('157', '人为什么需要睡那么长时间？我指的是至少要6-8个小时。 人睡觉的时候各器官都在干嘛？', 'None', '2019-02-24 22:05:43', '8', '5,11', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('158', '适合一个人做的事。?', '大四单身男很闲，但不想和身边的人一起做什么，又感觉生活很无聊很孤独。除了看书看电影，还有什么事是很适合这样一个人做的。', '2019-02-24 22:05:44', '44', '14,4', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('159', '为什么最近一段时间到处都有人在学习炒股？', 'QQ，微博，空间，到处看到有人在学炒股，而且电视新闻里面也曾经报道过某大学某班超过半数同学都在炒股，这是怎么回事呢？', '2019-02-24 22:05:44', '16', '15,8', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('160', '在四川进行关于现代农业的暑期社会实践有什么建议或者推荐走访的企业?', '川农学子，想做一次社会实践，了解四川省内有机农业，绿色农业或是生态农业的发展现状，公司运营状况和规模等，给涉农类大学生就业方面一个社会大背景引导，和现状知己知彼，为之后的一些创业和就业提供指导~请教一下这个项目本身的意义程度和实施方法，注意事项等~谢谢~', '2019-02-24 22:05:46', '25', '7,7', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('161', '父母强迫我们去喜欢一个看了一眼就没有感觉的人，除了对方的经济条件还可以之外其他的都很一般！该怎么办?', 'None', '2019-02-24 22:05:46', '31', '5,14', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('162', '我是针灸推拿本科生，如果考研北上广天津，哪个中医院校针推专业比较好呢？', 'None', '2019-02-24 22:05:48', '6', '6,14', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('163', '职业发展?', '以前做资信评级，现在换工作，有两条路，一个是新成立的p2p平台做风控，一个是小券商公司承做机构业务，到底该怎么办呢？这两块都不怎么懂，不知道以后发展哪个更有前途？', '2019-02-24 22:05:49', '22', '5,6', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('164', '能做到忘我、投入地演奏一种乐器，是一种什么样的感觉？', '一个人演奏，不管有没有观众', '2019-02-24 22:05:49', '15', '14,12', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('165', '我在国外旅游，买了很多当地的纪念品，包括菩提子，宝石等等，希望能拿到国内来卖，但不知道怎么过海关检查?', '我在国外旅游，买了很多当地的纪念品，包括菩提子，宝石等等，希望能拿到国内来卖，但不知道怎么过海关检查', '2019-02-24 22:05:50', '31', '4,13', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('166', '高考三十天如何提高理综成绩？', '目前语数外都还不错 可理综一直上不了200 有没有可能三十天提高到220', '2019-02-24 22:05:50', '28', '5,15', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('167', '人们喜欢做的事应该不是单一的吧？那怎样找到自己喜欢做的事？', 'None', '2019-02-24 22:05:50', '32', '13,12', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('168', '怎么才能不懒惰？', 'None', '2019-02-24 22:05:51', '26', '10,10', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('169', '什么技能能在家自学并且能带来经济上的收益？', '比如ps，但是有点难度，觉得没老师带自学还挺费力的。以后做做美工什么的…其他的呢？', '2019-02-24 22:05:51', '31', '7,15', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('170', '古玩鉴定?', '不知道怎么得来 [图片未上传成功] [图片未上传成功]', '2019-02-24 22:05:52', '20', '8,7', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('171', '太老实，没有心机，没有手段，没有城府，被人欺负不会反抗怎么改变？', 'None', '2019-02-24 22:05:54', '46', '11,10', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('172', '俄语专业除了四八级还有哪些资格证比较值得考呢？国际商务俄语等级考试的资格证能被大多数企业认可吗', '今年大三了，想多考一些有帮助的资格证', '2019-02-24 22:05:55', '46', '1,11', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('173', '出门玩晚归被领导撞见，心塞怎么破？', 'None', '2019-02-24 22:05:55', '34', '14,12', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('174', '怎么吸引别人的注意力？并且和人相处融洽？', '面临即将踏上社会，EQ低就不好生存了啊。 感觉自己EQ低，很担心以后不能好好跟人处，很羡慕宝钗那样的八面玲珑，可是不知道怎么做到？ 平时在学校和同学我还是会打打闹闹，可是放假不会找我玩。咳咳，我是个半宅，不算很宅，感觉己有点社交困难。 有时候面对陌生人好像不太会相处，不知道要聊什么话题吸引别人！？一下子熟络起来？希望能得到大家的回答！', '2019-02-24 22:05:57', '23', '9,8', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('175', '早上起床漱口是在早饭前好一点还是早饭后呢 ？晚上又是什么时候漱口比较好？', '因为自己发现有些人只喜欢早上起床就漱口，然后就吃早饭。时间久了，给我的感觉就像他们早上只是漱了一口水一般。', '2019-02-24 22:05:57', '12', '13,9', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('176', '公交司机行驶时会自己拿出一张卡在刷卡器刷一下，请问他们是在做什么？', 'None', '2019-02-24 22:05:58', '41', '14,11', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('177', '分别在上学和工作的两个同龄人在一起会怎样?', 'None', '2019-02-24 22:05:58', '40', '2,13', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('178', '听京剧是否有利于提高相声水平？', '我这里不只指黄鹤楼全德报这些腿子活', '2019-02-24 22:05:58', '29', '1,8', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('179', '想带2岁半的女儿去英国体验生活1-2周，定airbnb靠谱吗？安全吗？', '最近有个大胆想法，想暑期带着两岁半女儿去英国短暂体验生活1-2周，就我一个人带！特别想住当地人家里，定个airbnb。但可能孩子会偶尔吵闹，饮食得我单独使用厨房做。这样的情况能订到吗？有可能实现吗？就想周边简单玩下，体验下生活。语言没有太大问题。 各位有经验的大侠们，能给点意见吗？', '2019-02-24 22:05:59', '22', '10,11', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('180', '求一些学习芳疗的课本，比较权威的书籍，可以是英文书籍。谢谢各位大大。？', '想了解芳疗，看了几本都觉得不够系统，各说各话。求专业或爱好认识推荐权威书籍。涉及理论知识或者一些芳疗课程所用的书籍书单都可以。', '2019-02-24 22:05:59', '1', '8,9', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('181', '在东风裕隆 做试制验证员是什么体验 ，个人发展空间 待遇如何？', '在东风裕隆 做试制验证员是什么体验 ，个人发展空间 待遇如何？', '2019-02-24 22:06:00', '22', '12,4', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('182', '你们有没有过见到第一眼的人却突然觉得打心眼里喜欢的经历？', '我还是实习幼儿老师的时候新来了一个两岁几个月的小男孩，只见了第一面我就忒喜欢他，刚开始以为只是他长得好看再加上新来比较调皮所以才会特别关注他。可是到后来实习结束之后几乎每晚都能梦见而且几乎都是长大以后的样子…所以我想问这种感觉你们有过吗？是真有前世今生还是只是痴女的表现？？？', '2019-02-24 22:06:00', '7', '4,9', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('183', '低级别地震时自己把自己吓出糗是一种怎样的体验？', '题主自身经历不忍回忆，来这里找找安慰', '2019-02-24 22:06:01', '26', '10,10', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('184', '请问红字是什么字体？', 'None', '2019-02-24 22:06:01', '34', '9,16', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('185', '如何看待知乎大v抱团现象严重？', '解答', '2019-02-24 22:06:01', '41', '8,4', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('186', '毕业设计要写区域性快递业务流程优化，可有大神可以对区域性快递有比较好的诠释？', 'None', '2019-02-24 22:06:02', '11', '1,3', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('187', '我做了一个仰卧起坐，能量去哪了呢？', 'None', '2019-02-24 22:06:03', '3', '2,5', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('188', '女生，170/48kg,小腿与腰腹部怎么减？', '哦对了，我平胸', '2019-02-24 22:06:04', '42', '16,8', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('189', '如何在手机Quora软件上安装字典？', '要是有字典插件，遇上生词，长按一下就能显示词意，该多好啊！有没有办法啊？', '2019-02-24 22:06:04', '17', '8,1', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('190', '从精灵梦叶罗丽上还能看出国产动漫有希望吗？', '国产动漫的未来', '2019-02-24 22:06:05', '39', '4,16', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('191', '国外（欧洲）有网吧吗？是什么样子的？', 'None', '2019-02-24 22:06:05', '3', '3,4', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('192', '三百五十平方米的一层，适合做什么？', '在二线城市，两个商圈交界处。车流人流量都不错。有三百五十平使用面积的一楼，二至六楼是我们的酒店和咖啡厅。适合做什么生意？静吧或者演艺吧可以么？', '2019-02-24 22:06:06', '46', '1,15', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('193', '请教一下这是什么石头？有价值么？', '结婚时候朋友送来的，也是别人送他的。我俩都不知道是什么石头，想请教一下，要是有价值我就做一托摆上，没价值就扔池塘里摆着了…', '2019-02-24 22:06:06', '42', '2,3', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('194', '该不该继续接受一个不喜欢的人？', '马上30了，身边的人都结婚了，谈了两次恋爱都因为失去自我而分手，让我认识到必须找一个爱自己的人结婚…通过相亲认识的一个男人，很喜欢我的样子，各种殷勤，但因为成长环境的不同，我觉得聊不到一起，但又对我很好，恨嫁却又不喜欢，该如何取舍？？', '2019-02-24 22:06:06', '41', '13,16', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('195', '含钪岩石中，钪的品位或者说其氧化物的品位要达到多少才算有经济价值？', '最近正在读有关稀土的知识，说钪的平均丰度是36ppm，而个别钪矿床品位最低的也有15ppm,虽然说品位低但储量大。那么假如一块岩石样本中钪的含量达到了40-50ppm的区间，那么能否说它可能有经济价值', '2019-02-24 22:06:07', '33', '14,12', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('196', '如何看待中国现在的直销产业？是否处于合法状态，其现状如何，请懂的人赐教，谢谢！?', 'None', '2019-02-24 22:06:09', '12', '4,5', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('197', '怎么判断一家贵金属公司投入资金是不是可靠？', '现在贵金属投资公司很多，怎么知道钱投进去以后是不是只能看到几个数字，老板拿了你钱就跑呢？', '2019-02-24 22:06:09', '21', '2,15', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('198', '如何评价微软 Build 2015 的 Android 子系统来对 apk 进行支持？', '这样做效果好吗？实现原理？大概又是如何对apk直接生成appx呢', '2019-02-24 22:06:09', '28', '11,16', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('199', '大四找工作失败被打击会使一个人蜕变吗，完全变励志型？', 'None', '2019-02-24 22:06:10', '4', '14,2', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('200', '氦！这是第一条话题', '<p>Hello World！</p>', '2019-03-04 18:49:08', '3', '3', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('201', '测试！', '<p>测试测试！</p>', '2019-03-04 18:51:26', '3', '3', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('202', '测试tag添加', '<p>测试tag的添加</p>', '2019-03-04 18:55:20', '3', '4', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('203', '测试', '<p>测试</p>', '2019-03-04 18:56:37', '3', '5', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('204', '测试', '<p>测试</p>', '2019-03-04 18:57:22', '3', '6', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('205', '测试', '<p>测试</p>', '2019-03-04 18:58:32', '3', '3,0', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('206', '【权威发布】发布测试！', '<p>发布测试！</p>', '2019-03-04 19:04:20', '3', '3,18,19', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('207', '24丢失了！', '<p>为啥24没有啊</p>', '2019-03-04 19:06:36', '3', '3,18,19', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('208', '测试！最后第二次测试！', '<p>测试！最后第二次测试！</p>', '2019-03-04 19:15:45', '3', '4,20,-1', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('209', '好吧还是得干', '<p>再改我就不干了</p>', '2019-03-04 19:17:30', '3', '4,20,26,27', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('210', '干活时脑壳痛', '<p>求助，干活的时候脑壳痛怎么办</p>', '2019-03-04 19:22:15', '3', '12,28', '0', '1', '0', '0,1,2,3,4,5,6');
-INSERT INTO `questions` VALUES ('211', '测试付费话题', '<p>测试付费话题</p>', '2019-03-04 19:24:15', '3', '16,29', '0', '1', '0', '0');
-INSERT INTO `questions` VALUES ('212', '为啥mousedown不能在手机浏览器上使用', '<p>为啥mousedown的事件手机都没有做适配</p>', '2019-03-04 19:38:41', '1', '8,31', '0', '0', '0', null);
-INSERT INTO `questions` VALUES ('213', '为啥mousedown不能在手机浏览器上使用', '<p>为啥mousedown的事件手机都没有做适配</p>', '2019-03-04 19:38:45', '1', '8,31', '0', '0', '0', null);
+INSERT INTO `questions` VALUES ('1', '这算眼袋吗？？', 'None', '2019-02-24 22:02:33', '18', '8,11,3', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('2', '遇不到喜欢的人…？', 'None', '2019-02-24 22:02:34', '40', '8,11,11', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('3', '如果研究生去美国读，大学还去英国读么？', '明年大三，可以大三大四前往英国读，但是我还是希望考美国研究生，那么还有必要后两年去英国么？', '2019-02-24 22:02:34', '11', '3,14,3', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('4', '做了一年多的软件测试了，现在想转开发，不知道如何选择，求点建议。？', 'None', '2019-02-24 22:02:35', '47', '10,15,5', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('5', '为什么说别人坐热的板凳不要立马坐？', 'None', '2019-02-24 22:02:35', '49', '7,7,16', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('6', '你们的字是怎么练得，什么灵飞经之类的?', '我买了一个灵飞经的帖，还有无印良品的一个小毛笔……到开始写我才想起来我连怎么握笔都不知道。。。求你们指导我一下 ', '2019-02-24 22:02:36', '49', '11,5,2', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('7', '【宇智波止水】的百度百科的图册里面的剧照，为什么我一个都没见过？', '【宇智波止水】的百度百科的图册里面的剧照，为什么我一个都没见过？ 这些剧情是哪一集里面的？', '2019-02-24 22:02:36', '19', '2,15,16', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('8', '异地恋女友想和别的男生出去逛街，我可以不同意吗？', '我跟女朋友是异地恋。 她昨天晚上告诉我说一个男生邀她吃饭，是老乡。她同意了。 我没敢说不。因为之前有另一个男生约她出去玩的时候，我很坚决的说不行。她也说尊重我的想法，然后半个小时后她俩在街上被我撞了个正着。所以与其逼她撒谎骗我，倒不如顺从她，这样我起码可以知道部分真相。 可是我真的很介意我的女朋友跟别的男生约会，是我占有欲太强了么？还是她太大大咧咧…… 我该怎么办才能让她明白我的心意，又不会妨碍到她…', '2019-02-24 22:02:37', '47', '4,13,6', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('9', '哈喇子之类的类似土话出处为何？', '如题，是否有出处，还是就这么沿袭的？', '2019-02-24 22:02:38', '44', '2,8,12', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('10', '一个人孤单的时候，该听什么歌？', '<img src=\"http://img2.imgtn.bdimg.com/it/u=3671845256,1234246258&fm=26&gp=0.jpg\">', '2019-02-24 22:02:38', '6', '9,13,6', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('11', '高中化学易错常考的小知识点有哪些？', '主要是高考理综选择题中易出现的，教材中比较容易被忽略的。谢谢', '2019-02-24 22:02:39', '15', '12,3,15', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('12', '喜欢高二同班的一个女生，现在大一，不在一个学校，隔得很远，怎么追？', '她现在没谈恋爱', '2019-02-24 22:02:39', '20', '4,10,14', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('13', '人被分手后的心理变化过程，多久能恢复正常?', 'None', '2019-02-24 22:02:39', '36', '9,4,12', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('14', '想在学校组建一个小型非专业医疗队，急救箱里买些什么好？', 'None', '2019-02-24 22:02:40', '33', '9,5,14', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('15', '一段好的援助交际关系，应该具有怎样的特征？', 'None', '2019-02-24 22:02:40', '28', '14,8,8', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('16', '没有什么人脉、朋友不多。该怎么改变这种现状？', '我是一个女孩，90后。朋友不多。没什么人脉。现在好想多交朋友。只是、我不爱和陌生人说话。在熟人面前很疯。我该怎么积累人脉？', '2019-02-24 22:02:41', '35', '8,8,12', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('17', '招财宝理财总是高利率买入低利率卖出，不是赚大了？', '招财宝理财总是高利率买入低利率卖出，不是赚大了？', '2019-02-24 22:02:42', '46', '4,14,3', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('18', '文理分科，选文科or理科？文理科的选择对以后职业生涯的影响？', 'None', '2019-02-24 22:02:42', '16', '2,10,11', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('19', '疯狂外星人里面的插曲是什么？', '01. Rihanna – Towards the Sun (04:34) 02. Coffee – Run To Me (04:15) 03. Kiesza – Cannonball (03:58) 04. Rihanna – As Real As You and Me (03:41) 05. Charli XCX – Red Balloon (03:27) 06. Rihanna – Dancing In the Dark (03:44) 07. Jacob Plant – Drop That (04:19) 08. Jennifer Lopez – Feel the Light (04:52) 除了这些还有的。。。求各位大神。。。找不到的话妹子不跟我玩了 ', '2019-02-24 22:02:43', '12', '5,15,5', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('20', '请问有没有人知道轻轨每公里的造价 就是路基和钢轨 如果不知道价格的话 型号什么的也行 或者举出别地价格？', 'None', '2019-02-24 22:02:43', '46', '16,3,8', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('21', 'angelbabay是不是小三?', 'None', '2019-02-24 22:02:43', '14', '4,12,3', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('22', '女朋友总是管我玩游戏怎么办？', '其实大学的时候我是不玩游戏的，是个爱学习的好孩子。可是毕业这两年以来，工作之余爱玩游戏。我觉得我工作辛苦，下班后和节假日里玩会儿游戏没啥，但女朋友觉得我因此忽略了她，三天两头因为这个跟我吵架。我女朋友是一生气就特别不好哄的那种女生，我特别害怕她发脾气。我现在玩游戏都心惊胆战的，仿佛在做什么亏心事。还有，每周五晚上公司都会订场打球，我也常去打球，但女朋友觉得周五下班这么好的时光我不应该跑去玩，为此…', '2019-02-24 22:02:44', '24', '2,15,16', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('23', '凉粉形成凝胶状的高分子物理机理是什么？为何木薯粉不如红薯粉和绿豆粉？', '夏天比较喜欢吃凉粉. 而网络上看到的教程都是非常简单的. 总的水和绿豆粉(红薯粉,豌豆粉之类)的比例为1:4~5, 然后取一部分稀释,一部分烧开,边搅拌边倒入淀粉糊到烧开的水中,半透明状在容器中冷却即可. (必要时加明矾等交联剂) 考虑到starch也算大分子了,本来以为任何淀粉都可以的. 我尝试了两种: 木薯粉和红薯粉(超市暂时只买到这两种), 结果发现,同样的配方和工艺,木薯粉打死也做不出类似果冻的效果,而红薯粉就容易得多(考虑到…', '2019-02-24 22:02:44', '10', '3,13,11', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('24', 'None', 'None', '2019-02-24 22:02:45', '43', '15,10,13', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('25', '如何入门《周易》？', '希望各位的回答通俗易懂又不失逻辑严谨性。另外，本人看过《周易》一书，却读了几页就读不下去了。希望各位能够介绍如何入门《周易》。谢谢。', '2019-02-24 22:02:45', '35', '14,11,11', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('26', '男，23，初中学历。做过土建施工放线，后来放弃做销售。如今的自己对于未来一片迷茫，怎么办？？', '如果做网站相关的工作可以吗？自学还是上培训班好？或者是先找个能做的工作可以闲时学习？？求前辈指条明路，感激不尽！！！！', '2019-02-24 22:02:46', '20', '10,3,14', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('27', '《我的青春恋爱物语果然有问题》中，海老名姬菜和大老师属于同一类人吗？', '在小说第七卷有这样的描写 大老师：「……虽然户部是个烂透的像垃圾一样的人，不过我觉得还是个不错的家伙来的。」 姬菜：「没戏没戏。比取谷君的话，像这种事应该能懂吧？因为，现在的我和谁往什么的是绝对不可能的嘛。」 「这样的事……」 「是存在的哦。」 海老名同学间不容发的回答道。 「因为，我腐烂了。」 我想，这里的腐烂是一语双关吧，一方面明指自己是腐女，另一方面其实暗指自己的处事方式，比起与朋友亲密相处，更…', '2019-02-24 22:02:46', '8', '12,6,16', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('28', '已经入门c++了，想更深入系统的学c++该怎样学？可以推荐相关的书籍吗？', 'None', '2019-02-24 22:02:47', '26', '16,1,16', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('29', '足球为什么是圆的？', '为什么最后定形是圆的，料子一样的话方的并不是不能踢啊，单纯为了发展团队合作设计成方便传球的圆形？', '2019-02-24 22:02:47', '29', '2,9,10', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('30', '如何看待吉利车模，顺便说说国产车的定位？', '如图，', '2019-02-24 22:02:48', '27', '4,8,6', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('31', '针对目前亚投行遇到的挑战，比如规范透明、控制贷款风险、协调成员国等，提出建议对策思考？', '针对目前亚投行遇到的挑战，比如规范透明、控制贷款风险、协调成员国等，提出建议对策思考', '2019-02-24 22:02:48', '50', '15,12,2', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('32', '明确知道两个人没有结果，不能结婚，为什么还要继续在一起？', '我的男朋友是阿拉伯人，是穆斯林，作为大汉民族的女生以后和他不能结婚，他也明确告诉我我们以后不能结婚，我们还是继续在一起，只是每次有未来幻想时，两个人都会陷入尴尬和无奈中，我不知道我是否应该和他继续下去，以后注定会分手。', '2019-02-24 22:02:48', '48', '2,4,11', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('33', '中国有卖superdry吗？', '<img src=\"https://gss3.bdstatic.com/-Po3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268%3Bg%3D0/sign=ebf5050b4334970a47731729adf1b6f5/21a4462309f79052db048a1a0ef3d7ca7bcbd5ff.jpg\">', '2019-02-24 22:02:50', '7', '8,9,2', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('34', '如果要你推荐一首近百字的诗词你会选哪首？', '古诗词，或潇洒或回首往事嘘唏不已，或发人深省的都可以，如果是你，会推荐哪一首古诗词写下来送给20～30的年轻人呢？', '2019-02-24 22:02:50', '43', '10,3,4', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('35', '有争议的海外信用卡扣款可以先冻结再申请拒付。对已划帐的争议扣款还能追诉回来么？VISA在国际结算中的作用', '关于国际信用卡海外不明或有争议的扣款', '2019-02-24 22:02:50', '43', '10,3,6', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('36', '为什么大家不爱党？', '高中生文科，已被课本严重洗脑导致自己没脑子。', '2019-02-24 22:02:51', '41', '4,2,8', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('37', '为什么去游乐园玩那些刺激的娱乐设施被转晕后会恶心甚至会吐?', 'None', '2019-02-24 22:02:51', '9', '16,6,9', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('38', '企业管理软件的营销怎么做？', '互联网太火的，但那时To C的，有谁知道TO B的苦闷。杜蕾斯，可口可乐的营销做的确实好，但是传统的企业管理软件公司没有一家做的好的。这是为什么呢？有没有为这类企业做整合营销的代理公司？', '2019-02-24 22:02:51', '26', '15,8,4', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('39', '我国制造业自主研发和购买技术差距在哪里？', '比方说，中国的“中华之星”高速列车的研发被边缘化，国家购买西方先进的高铁技术。那么从产业链发展和技术发展潜力两个方面看，自主研发技术和购买技术相比会有什么差距？ 根据知友的提醒，定义一下”自主研发“和”购买技术“ 自主研发：进口零件自行研究原理和技术细节，而后进行整合 购买技术：直接购买整套成熟技术，根据国内情况进行调整和消化 也许商业级、军事级的技术在这个问题上会有不同？', '2019-02-24 22:02:52', '28', '11,1,4', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('40', '两人恋爱对方不愿用合照做头像代表什么？', 'None', '2019-02-24 22:02:52', '11', '1,8,7', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('41', 'μ\'s的9位与希腊神话中的9位女神如何一一对应？', '在sh的百科中有提到过，想知道各位的看法', '2019-02-24 22:02:53', '24', '12,5,2', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('42', '《阿凡达》中左右两边各有一个可调节的螺旋桨的直升机未来真的会出现吗？理论上符合动力科学吗？', 'None', '2019-02-24 22:02:53', '20', '14,6,14', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('43', 'MRI扫描单这个结果是什么含义？', '什么情况啊。。膝盖要废掉了吗？最近没干啥啊。。', '2019-02-24 22:02:53', '23', '10,16,9', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('44', '一般写科幻小说需要注意哪几个要素？', 'None', '2019-02-24 22:02:54', '18', '8,1,5', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('45', '《爵士时代的故事》哪一个版本翻译得最好？', '很想看', '2019-02-24 22:02:54', '30', '14,1,14', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('46', '如果你能身临其境地感受到魔兽世界中的场景，你最愿意生活在什么地方，每天都做些什么？', '别和我说天天守敌对阵营的尸体啊！太low惹！ 如果是我，我选择生活在暴风城，就和傻馒一样，喜欢这个名字，而且暴风城附近风景很美。每天逛逛街，看看暴风城外的瀑布，去湖畔镇钓鱼，打野猪做烧烤，品尝各种美食。暴露惹阵营和吃货本质。', '2019-02-24 22:02:55', '48', '13,8,15', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('47', '如何有朋友？', '我是女生，最好的惟一的朋友不和我玩了。和同学没有共同话题，也不知道说什么。现在一个朋友都没有。好孤独，本身就内向。如何才能有一个朋友?', '2019-02-24 22:02:55', '2', '1,5,16', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('48', '如何通过所有途径营销自己？', '如何通过所有的途径来营销自己？让自己能成为某个领域的专家？', '2019-02-24 22:02:55', '43', '13,3,13', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('49', '入门级单反佳能700D如何？5000价位单反有哪些推荐，小白求大神指点?', 'None', '2019-02-24 22:02:56', '8', '8,9,1', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('50', '建築模型需要怎麼選擇工具？', '最近學校開始做模型發現手工刀非常難得切，總是切歪，雖然可能是剛開始不熟練。。以及用來做窗戶的透明板居然0.5mm完全切不動。。。 切好形狀後把圖紙揭下來就變得相當粘，過一會就變髒了，掉到地上就慘不忍睹。 以及如果是木造模型也要手工刀切麼。。有沒有容易使用的工具。 素材和工具要怎麼選擇，哪種材料哪種型號，有經驗的可以告訴我的話就太感謝了 以上問題麻煩解答啦，感激不盡 ', '2019-02-24 22:02:56', '41', '3,5,5', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('51', 'None', 'None', '2019-02-24 22:02:56', '27', '11,15,6', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('52', '什么样的台式电脑比较适合玩游戏（便宜一点的）？', '我比较喜欢玩游戏，大概也就是刺客信条，黑暗之魂，gta这一类的，所以想买个台式，但是是学生党，所以预算不是很多，4k以内，想要一款散热好一点，运行比较流畅的台式机，组装机或者牌子都无所谓，什么样的主机比较好，显示器呢', '2019-02-24 22:02:57', '14', '15,16,5', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('53', '为什么每次睡完午觉脸都肿肿的?', 'None', '2019-02-24 22:02:57', '16', '9,1,1', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('54', '不相爱的父母为什么要在一起，为什么要生下小孩。为什么要让我讨厌“家”?', 'None', '2019-02-24 22:02:58', '8', '6,15,5', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('55', '本科生遭遇学术黑幕应该怎样处理？', '还是匿了。。。不敢找死。 今年省挑战杯赛，我们辛苦做了很久的一个项目经学院报到校团委，由', '2019-02-24 22:02:58', '46', '3,7,12', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('56', '一加的1步1步看清韩寒的文案是如何做到的？用打字机参与互动宣传的文案很有创意。？', 'None', '2019-02-24 22:02:58', '22', '6,5,12', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('57', '国内外搜索引擎得竞价排名系统大体上有哪些异同？', 'None', '2019-02-24 22:02:59', '4', '5,5,10', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('58', '中式建筑和欧式建筑有什么区别？怎么发展出区别的？有什么相同之处吗？', '这种建筑风格的差异是怎么产生的？材料和气候以外还有什么因素？', '2019-02-24 22:02:59', '41', '7,13,12', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('59', '知乎是否应该限制营销软文？', 'None', '2019-02-24 22:03:00', '9', '16,1,5', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('60', '如果分手该怎么走出失恋阴影？', 'None', '2019-02-24 22:03:01', '3', '8,4,16', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('61', '电机维护？', '电机日常维护与检查', '2019-02-24 22:03:01', '50', '5,14,13', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('62', '如何才能上微博热评？', '有很多时候，刚好赶上明星发微博，便都会去评论个几句，但总是上不了热评，也想过一些稀奇古怪的评论，但都不行，很想试试被赞得手机嘟嘟响的感觉。', '2019-02-24 22:03:01', '14', '7,6,2', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('63', '父母情商低是怎样的一种体验？', 'None', '2019-02-24 22:03:02', '2', '13,3,2', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('64', 'Nexus5 (型号D821，未经过root)在中国大陆能否收到谷歌的ota推送从而进行系统升级？', 'Nexus 5，型号D821，未经过root', '2019-02-24 22:03:03', '48', '3,9,10', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('65', '直男真的能灵活运用各种表情聊天？', 'None', '2019-02-24 22:03:03', '29', '2,11,12', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('66', '一个女生曾多次被不同的男性朋友差点侵犯，能分析一下为什么吗?', '女生性格很好，爱笑，微胖，不太会拒绝，一般是有求必应。 大概是从初二的时候开始，一个平时玩的还不错的男生，欲对我不轨，我反抗了之后，他住手了，因为当时什么都不太懂，就原谅了他。 然后是高中的时候，是有两个男生，我把他们当成朋友，他们却以这种方式伤害了我。 现在是大学，大一，认识了一个工作的男人，比我大几岁，他经常叫我出去吃饭，看电影，因为认识时间短，不太熟，所以能拒绝就拒绝了， 没课的时候出去过几次…', '2019-02-24 22:03:04', '22', '14,9,15', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('67', '为什么中国的动漫产业始终发展不起来？', '能出没和喜羊羊发展迅速，但魁拔系列无限延期，众多国产优秀青少年动漫也都因为各种原因停止或延期，原因是什么？', '2019-02-24 22:03:04', '29', '5,12,10', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('68', '为何读外国经典小说也不知道它哪里经典?', 'None', '2019-02-24 22:03:05', '23', '9,7,1', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('69', '有没有经营得好的家庭的栗子？', 'None', '2019-02-24 22:03:05', '22', '14,2,11', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('70', '军盲对《美国狙击手》的几个问题？', '1.影片中有一段是冲进饭店，结果见到一堆分尸和吊着的人，那些是什么来的？ 2.有一段他们开车去跟踪敌人，但一条街上车都不多一辆他们还穿着军装，不是明摆着让敌人知道被跟踪吗？ 3.他们被狙击手击中时总是一群人起来对着不同方向射击，这样的作用是什么？既不可能射中远处的狙击手，还会暴露自己。 4.像男主射杀这么多人的士兵薪酬会多点吗？', '2019-02-24 22:03:05', '38', '7,10,14', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('71', '公婆爱控制我们，控制我们的资金，什么都管，连敷面膜都要管，怎么破？', '立马切入正题，我们小两口刚结婚，平时上班后攒的钱被家公拿去炒股票。他是个炒股高手，也是个谨慎的人，交给他炒的确是个稳赚的事情。但是！！！我们是一个新家庭了，虽说他不会骗走我们的钱，我也从来没有怀疑过。 他们俩的控制欲不是一般人能承受的，什么都要管，连我敷面膜都要管，说：“现在的面膜都有毒，你又不是小姑娘还没嫁，嫁了哪里需要敷面膜，还浪费钱。”…………听到后我忍住了情绪…最鸡毛蒜皮的是连结婚那会改…', '2019-02-24 22:03:06', '14', '8,11,13', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('72', '为什么有些大学在省内招生是重本，而在省外招是二本？', '如题', '2019-02-24 22:03:07', '32', '12,4,4', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('73', '宿舍新装了个奇怪的东西，不知道是干什么用的？', '好奇的不行 ----------------------------------------------------------------------------萌萌哒的分割线----------------------------------------------------------- 以上是原题主的提问 我们宿舍也装了个奇怪的东东 0.0 同问是什么 =￣ω￣=', '2019-02-24 22:03:07', '22', '14,13,12', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('74', '餐桌什么牌子最好?', 'None', '2019-02-24 22:03:08', '11', '7,3,3', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('75', '当我见同学家长 我该谈些什么?', '跟同学去家里玩，比如吃饭的时候，跟他父母应该聊些什么 不显得没话找话，自然恰到好处的话题', '2019-02-24 22:03:08', '33', '9,12,12', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('76', '有没有类似于反斗神鹰一样的神剧喜剧。求各位大神推荐?', 'None', '2019-02-24 22:03:08', '48', '5,4,3', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('77', '我的栀子花病了，大神们谁能救救它。？', 'None', '2019-02-24 22:03:09', '31', '2,3,16', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('78', '一定要先改变自己才能改变他人乃至改变世界？', 'None', '2019-02-24 22:03:09', '46', '12,11,14', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('79', '学电子的人平时看什么网站或者论坛？', 'None', '2019-02-24 22:03:10', '32', '14,3,11', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('80', '在大学如何与一些陌生同学深交，特别是在某些方面有专长的人？', '我在大学交友的圈子太窄，感觉就只有一个宿舍内的，想找个高年级的学长或学姐做好朋友，平时挺喜欢去自习室的，但感到太孤独，一方面是想扩展人际关系，也想找个人教我不会的知识。', '2019-02-24 22:03:10', '20', '7,12,1', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('81', '教育骗了一些落后地区的人？', '我现在读高三去年认识一个学姐她当时高三，她家里特别的穷，衣服都是穿哥哥姐姐的校服。她中考考上了一流中学但是为了助学金她来了我们这个二流中学。高中她最后年看她特别特别的努力，很多时候都是看她一个人，放假为了省车费，为了学习也不会回家留在学校。高考她去年考了580，忘记那个大学了。只知道今年听老师说，她报的解剖专业，因为根本不了解这个专业，不喜欢，甚至讨厌，最后逃课太多被开除了。我知道后有种说不出的感…', '2019-02-24 22:03:10', '30', '11,7,4', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('82', '堵车时后车一直开着远光怎么办？', '很难受，有没有办法抗议或者应对？', '2019-02-24 22:03:11', '27', '6,4,6', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('83', '偶遇2次，很有感觉的女生。请问怎么搭讪？或者切入点', '这几天吃早饭，会碰到一个女生。第一次见面就感到是自己喜欢的类型，自己不敢搭讪，或者说不知道该怎么搭讪，今天第二次遇到了，依旧心动，求大师跟我指点指点。', '2019-02-24 22:03:11', '39', '15,15,12', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('84', '单身用什么样的厨具，小巧一点，一个人用的，可以煮煮面，热热东西的？', 'None', '2019-02-24 22:03:11', '8', '10,16,10', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('85', '最近跟现实生活与抉择亲密接触，发现成人的世界没有容易二字，想问为什么学生时代不容易产生绝望感？', '不是德智体美劳全面发展的好学生，最近感觉要克服无数次绝望感才能过好这一生，喜欢的人，喜欢的工作，喜欢的生活都那么来之不易，因为发现知识真的可以转变成金钱，至少做工程是这样，那些以后的筹码，学历，六级，二建这些，说实话，觉得得来没有需要那么艰难，为什么学生时代可以努力而没有那种绝望感呢？', '2019-02-24 22:03:12', '28', '13,9,9', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('86', '有哪些5K左右适合女生用的手机？', '适合女生即:外表美观，单手可操作。', '2019-02-24 22:03:12', '21', '14,15,15', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('87', '把大额资产(上十亿)从香港转回内地难在哪儿？有哪些方法可以操作？', 'None', '2019-02-24 22:03:13', '6', '2,16,6', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('88', '如何评价泰国电影《对不起，谢谢，我爱你》？', '电影情节', '2019-02-24 22:03:13', '36', '8,2,4', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('89', '高频交易获利安全吗？', 'None', '2019-02-24 22:03:13', '22', '1,11,12', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('90', '新买5s其他内存占了8g？', '3我今天才买的5s睡觉之前可用内存还有9g睡觉起来就只剩3g了 连接电脑上看其他占了8g 到底是什么情况啊 突然又变成可用6g 这是我刚才的', '2019-02-24 22:03:14', '44', '6,1,3', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('91', '在医院实习时，怎么做，才能尽量减少被主任批评的几率？', '医学生快进入实习阶段了，心理有点紧张，听学长说好像主任动不动就会骂人，那么应该怎么做，才能尽量减少被主任批评的几率？', '2019-02-24 22:03:15', '34', '16,11,16', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('92', '经过改装的59式是否有与三代坦一决高下的能力？', '指两方的的 数量X成本 相同的情况下，大改、魔改均可。允许有狼群等开挂行为', '2019-02-24 22:03:15', '33', '10,10,9', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('93', '狗狗一直抹自己的面部，一直不停的动是怎么回事？', 'None', '2019-02-24 22:03:15', '34', '2,9,2', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('94', '物业企业适合哪种绩效考评方法？', 'None', '2019-02-24 22:03:16', '41', '3,4,5', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('95', '屁话太多的人怎样让他闭嘴?', '总是喋喋不休的说很久，让人想把袜子塞到她嘴里让他闭嘴，说了很长时间后往外走时还在说，有时候走着走着又绕回来说，说什么可以让他闭嘴然后再也不说话', '2019-02-24 22:03:16', '16', '13,2,2', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('96', '道不同不相为谋吗？', 'None', '2019-02-24 22:03:17', '32', '6,2,5', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('97', '如何看待B站重开邀请码？', 'None', '2019-02-24 22:03:17', '19', '1,13,12', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('98', '如何挑到适合自己体型的白衬衫?版型？面料？', 'None', '2019-02-24 22:03:18', '35', '11,12,7', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('99', '在一起恋爱七年了，还没结婚，现在没话讲了怎么办？', '在一起恋爱七年了，还没结婚，现在两个人不在一个城市，他总觉得我孩子气，跟我说不来。我也只是跟他讲我的近况，讲我身边有趣的事情，因为不在一起，很少见面，如果我不说他就不会知道我的任何事情了啊。 我也想要变成他要的那种成熟，知性的女生。但是这不是还要个过程的嘛', '2019-02-24 22:03:18', '8', '4,12,5', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('100', '我该怎么挽回?', '你好，谢谢你帮我分析下我现在能挽回吗？ 我们还不是男女朋友，但是因为我太粘人而且爱发点小脾气，让她对我失望了，她说以后没有机会了，机会是零。改不改和她没关系了。我们之前有过两个月的一起吃晚餐，该走的时候，可是我总舍不得，结果让她先提出来，我很粘人。这是生气的第11天，第7天接我电话以后，她就开始说她现在对我很厌恶，让我不要联系她，做朋友偶尔联系下就行。我说那我不是没机会了，她说如果不联系机会是零，那…', '2019-02-24 22:03:18', '1', '4,16,13', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('101', '如何将小清新融入花艺之中（现在不是流行这一块么）？', 'None', '2019-02-24 22:05:02', '8', '11,5', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('102', '广州成人钢琴零基础学琴哪里好？不是速成哪种，需要专业一点的谢谢！！', '本人很喜欢钢琴，最近想抽时间去学习一下，不想学速成的，想从基础学起~~有没有人了解过？', '2019-02-24 22:05:03', '10', '9,7', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('103', '植物的某一部分离体后，细胞失去活性的时间是多久？是不是与植物本身有关？DNA失去活性的时间是多久？', 'None', '2019-02-24 22:05:03', '29', '9,12', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('104', '为什么在眼皮上贴个小红纸就能压制住眼皮跳呢？', 'None', '2019-02-24 22:05:04', '50', '3,12', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('105', '什么是「圣人」？', '各家各派都有圣人这个说法，那么谁说的对呢？怎样算是一个圣人？ 曾国藩有一句圣人必可学而致之，可是他应该不算是圣人吧？ 孔老夫子能算圣人吗？', '2019-02-24 22:05:05', '44', '5,12', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('106', '有哪些作恶一生依旧活得很好的人？', 'None', '2019-02-24 22:05:05', '36', '11,5', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('107', '保险方案的概念?', '官方概念', '2019-02-24 22:05:05', '40', '14,2', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('108', 'None', 'None', '2019-02-24 22:05:06', '25', '10,15', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('109', '知乎交流平台限制太多会怎样？', '保护环境固然很好，但是限制太多会不会使得太多人不敢发言或是不想发言。（对这一问题，本人保持中立）', '2019-02-24 22:05:06', '17', '5,13', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('110', '前任对于以后生活中应该扮演怎么样一份角色？', '谁没有个青春，谁没有过一场刻骨铭心的恋爱。但对于错过我们未来，那曾经在某一段时光中，曾对于我们来说最重要的那个人，在现在或将来结你又有怎样影响？', '2019-02-24 22:05:07', '45', '1,3', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('111', '不喜欢自己的人会有一天改变自己的想法喜欢上自己吗？', '喜欢一个男生，可是拒绝我了，狠狠的拒绝了，连朋友都不和我做，我原以为他把我当朋友，可是却不是我想的，可我还是过不去这个坎，会不会有一天他看到我的好了，就会和我在一起呢，我再努力努力是不是会改变呢', '2019-02-24 22:05:07', '16', '7,4', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('112', '豆瓣有哪些靠谱的同志兴趣小组？', '比较活跃质量高一些的因为发现二线城市的小组不活跃', '2019-02-24 22:05:07', '21', '7,5', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('113', '我姐申请参加盐club，但是没有被邀请。到现在心情还不好。我要怎么安慰她？', '她一直很阴郁，我都不敢和她说话了', '2019-02-24 22:05:08', '32', '14,11', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('114', '求鉴别到底是鸢尾还是紫罗兰？', '在校园里碰到如图花，黄色的是在水里种的，紫色的是在草坪里。截图是百度到的鸢尾和紫罗兰，但是小伙伴搜索紫罗兰的时候，竟然出现的是鸢尾！直接蒙B了，求大神解答。果壳上不去，发帖不成。。。 后面这两张是截图。。前两张是在学校拍到的。', '2019-02-24 22:05:09', '17', '11,13', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('115', '为什么很多人最终都变成了自己讨厌的模样？', '自私冷漠懒惰 可能是人的通病吧 内心深处不愿承认', '2019-02-24 22:05:09', '45', '2,8', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('116', '家里姐弟有精神病，我该怎么办。？', '求助', '2019-02-24 22:05:10', '29', '13,7', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('117', '作为入行数年的专业科研工作者，你每周看几篇 paper ？', '我挺想了解做科研的各位在看paper上是一个怎样的节奏。 一般每周看多少篇？ 粗读、精读的情况是怎样的？ 回答时请说明自己是在哪个领域，谢谢。', '2019-02-24 22:05:11', '13', '12,4', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('118', '怎样在大学保持高中时学习的那股劲儿？', 'None', '2019-02-24 22:05:12', '26', '2,8', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('119', '我国有没有颁布知识产权保护法？', '台湾地区的法律和我国的差别大不大？台湾知识产权保护法怎么样？', '2019-02-24 22:05:12', '32', '3,12', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('120', 'NTJ对个人自由要求高，但是同时INTJ也按照计划循规蹈矩，为什么？', '在一个回答里发现说intj要求个人自由，不适合当军人。 但是很多时候，intj是按计划做事。 ', '2019-02-24 22:05:12', '18', '13,6', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('121', '观音菩萨在西方极乐世界能排第几？除了如来佛祖，还有谁是最厉害的？', 'None', '2019-02-24 22:05:13', '41', '4,11', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('122', '为什么在一些客车上的字车一边顺着写（xy客运公司）在车的另一边反着写（司公运客yx）？', 'None', '2019-02-24 22:05:14', '26', '4,3', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('123', '和一个性格温润的男生在一起，性格变得越来越man了怎么办?', '如题，和一个性格温柔和善型，从不装逼老实型的男生在一起，一年了。想当年我也是淑女一个，文静内敛，可是最近发觉性格潜移默化的变化。快准狠，雷厉风行，说话做事像个男生一样，还觉得他说话做事不利索，像个女生。为什么他的性格没有对我产生积极影响反而让我变man了-_-我该怎么改变', '2019-02-24 22:05:15', '44', '3,6', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('124', '女生每天往脸上拍的水啊乳啊皮肤真的能吸收吗？', 'None', '2019-02-24 22:05:16', '21', '16,11', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('125', '如何看待雄鹿对公牛第六场惨绝人寰的惨败？', 'None', '2019-02-24 22:05:16', '41', '10,13', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('126', '如何安慰手机被偷的朋友？', 'None', '2019-02-24 22:05:17', '44', '11,3', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('127', '广场舞算不算非法集会？', '如题 如果算能不能报警 报了警要是警察不管怎么办', '2019-02-24 22:05:19', '19', '8,11', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('128', '我国传统戏剧有没有可能走歌剧到音乐剧这样的进化路线？', '首先我不否认我国传统戏剧很有魅力，但我实在是觉得现在它们挺难吸引除了发烧级粉丝以外的人的兴趣。去年在国家大剧院看了《西厢记》，那么大的场地，那么豪华的剧院，仍然是几个人，穿着现在看来已经有点朴素的戏服，在没有任何道具和场景的舞台上咿咿呀呀一唱好几小时，连标榜喜爱传统的我爸妈和我公公婆婆都睡着了，旁边的观众也是该睡的睡该找乐子的找乐子，又不敢吐槽生怕别人觉得他们“不懂传统文化”遭人耻笑。剧终了我们…', '2019-02-24 22:05:21', '20', '12,10', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('129', '为什么一般人在放松时会稍息姿势站立，重心偏离到单脚上？', '如题，经常观察到一些人在等待的时候会情不自禁做出“稍息”的姿势，自己也常常会这样，似乎全身重量偏离到其中一只脚会更轻松，但为什么不是两只脚平摊重量更轻松一点呢', '2019-02-24 22:05:22', '6', '12,11', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('130', '一般MRI诊断的所谓“前十字韧带损伤”，“前十字韧带损伤”和十字韧带撕裂之间有区别吗？', '这是我同学MRI的诊断结果。请问所谓的“部分损伤”，和一般我们听到的运动员的韧带撕裂，乃至韧带断裂是什么关系？还有半月板损伤就是指半月板撕裂吗？', '2019-02-24 22:05:23', '28', '5,5', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('131', '怎么改掉自己爱看手机的毛病？', '睡前看手机，睡醒看手机，上厕所看手机，没事总爱看一下手机。明明知道没有人找，还是要看一下微信啊知乎啊之类的各种app 不停刷新 明知道没有意义 几乎是没几分钟看一次 觉得自己这样真的很不好 有没有办法可以改掉？', '2019-02-24 22:05:23', '49', '10,10', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('132', '广州最好吃的面包在哪里？', '半夜梦见吃面包。。。然后饿醒了。。。跪求广州最好吃的面包，不然睡不着了', '2019-02-24 22:05:24', '48', '1,14', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('133', '有那些比较好的入门级建筑安全类书籍?', '我男朋友是计算机专业转安全员的,目前正在做码头工程,由于专业不对口,工作起来比较困难,请问有没有一些简单易懂的,入门必学知识的建筑或者市政或者水利的安全管理类书籍介绍?', '2019-02-24 22:05:24', '29', '14,8', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('134', '当男友在朋友圈留言叫自己肥肥的时候如何机智的回答？', '朋友圈机智回复', '2019-02-24 22:05:26', '9', '16,1', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('135', '如何把不要的东西丢掉？', '房子是多年前买的，住了好久，跟家里情况、爸妈观念有关，我们家都特别不舍得丢东西，小到一块连抹布都做不了的布、一根吸管、一个手表盒子、一条抽奖来的塑料手链，大到旧电脑、旧电视、很多很多的旧衣服。旧的不要了不舍得扔就在那里堆着，然后继续往家里买新的来，东西越来越多，就堆在那里，旧的东西不管，新的也不珍惜。然后东西也没个固定的地点，用到哪儿算哪儿，用完就堆在那儿，从来不会放回原来的位置，要用了找不到就…', '2019-02-24 22:05:26', '43', '4,8', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('136', '有一个分数序列 2/1,3/2,5/3,8/5,13/8,21/13,....... 求这个序列的前20项之和？', '要求用C语言编写且不带指针', '2019-02-24 22:05:27', '6', '8,6', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('137', '特别想听冬吴相对论评论uber，想听听两位的看法？', 'None', '2019-02-24 22:05:29', '10', '11,9', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('138', '从事肿瘤研究的PhD在肿瘤被人类彻底治愈后怎么办？', '假如，指的是假如，有一天出现一位千年一遇的牛人做出了堪比宇宙起源和大统一理论的研究成果，推动了医学发展，让所有的癌症在短短几个月内就被人类彻底攻破。这样的话，研究机构里从事癌症研究的研究员怎么寻找出路？如果是更改研究方向，研究肿瘤的技能、思维和知识储备如何迁移到其它研究方向？', '2019-02-24 22:05:29', '20', '6,6', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('139', '求高人指教，香灰为何中间呈现黑色?', '回家后给财神上了个香，不为什么，就是想看看他，但是香灰中间是黑色的，不知道是不是预示着什么，求教！', '2019-02-24 22:05:30', '1', '10,11', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('140', '眼睛周围的扁平疣怎么治啊？', 'None', '2019-02-24 22:05:31', '8', '12,4', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('141', '女友一点没有信用 怎么办？', '骗人和他说了 还骗', '2019-02-24 22:05:31', '36', '6,1', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('142', '为什么onenote中文搜索问题迟迟得不到解决？', 'onenote的中文搜索有很多问题，其中一个是同音字搜索问题。在onenote页面上搜索中文字，会搜索出所有包含同音字的结果。比如搜索“油”会匹配到“邮”。根据此贴： ', '2019-02-24 22:05:32', '48', '5,8', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('143', '港大和清华的Computer Science谁更强？ ？', 'None', '2019-02-24 22:05:33', '14', '11,4', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('144', '若离去，后会无期?', '我曾经喜欢你并且也得到了你的回应，不管怎么说我们有过一些很美好的回忆，相对于很多人我已经足够幸运。我拥有过一段感情，在这段感情中我认真地爱过，努力地经营过，我对得起自己的心。我不能控制我们的感情，但我可以控制我自己的感情，虽然这段感情有遗憾，但我却没有遗憾。', '2019-02-24 22:05:33', '19', '8,1', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('145', '想找一个期刊 不受版面费且是北核以下的？', '最近写了文章 考虑文章质量太差 想找一个期刊 不受版面费且是北核以下的 投过去 也比死在自己手上好 求推荐期刊 ', '2019-02-24 22:05:33', '26', '1,4', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('146', '对于益智类节目的看法?', '看了下节目选手答题，然后和老爸讨论了一下，意见不同。 记住一些知识标签然后答题时就显得很有学识的样子，（不是不爽，只是有些是可以当做常识记住的） 想起那些名著只看导言概序，然后侃侃而谈的人来显示优越感（个人偏见罢了）感觉太浮躁了，对知识没有敬畏感', '2019-02-24 22:05:34', '32', '8,11', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('147', '程序员加班到什么程度，才能获得全国五一劳动奖章？', 'None', '2019-02-24 22:05:35', '48', '10,1', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('148', '为什么李贽的《焚书》没有被焚?', 'None', '2019-02-24 22:05:36', '18', '3,8', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('149', '1~n^3中随机取出n个数，他们唯一的概率？', '算法导论', '2019-02-24 22:05:37', '22', '2,10', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('150', '男生不想谈恋爱是什么原因?', 'None', '2019-02-24 22:05:39', '46', '12,6', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('151', '已保研985非计算机类专业，想放弃保研从事编程类工作，考研还是工作？', '本人是男生，本科是环境工程，已经保上南方某985高校，在实验室搬砖后越来越感觉对本专业不感兴趣，再加上自己对编程有兴趣，想放弃保研，要成为程序员，是考研还是工作？', '2019-02-24 22:05:40', '43', '1,7', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('152', '如何评价佐藤健和黑木华主演的日剧《天皇の料理番（天皇的料理人、天皇的御厨）》呢？', 'ACFUN第一话：', '2019-02-24 22:05:40', '25', '4,11', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('153', 'None', 'None', '2019-02-24 22:05:41', '43', '8,11', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('154', '中西方恋爱观都有什么区别？ ？', '可详细描述和欧美女（男）孩谈恋爱是一种怎么样的体验。 可从恋爱心理，关系确定的顺序等方面描述', '2019-02-24 22:05:42', '28', '14,3', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('155', '我想知道 大学中兼职的平台 他们是如何联系到当前城市需要兼职的厂家的，又是如何合作的?', 'None', '2019-02-24 22:05:42', '12', '2,14', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('156', 'James Bay的Hold Back the River为什么前奏这么熟悉，觉得像是一首日文歌里的？', '哪位大神知道是哪首歌里的？困扰一整天了…强迫症睡不着啊…', '2019-02-24 22:05:43', '34', '2,13', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('157', '人为什么需要睡那么长时间？我指的是至少要6-8个小时。 人睡觉的时候各器官都在干嘛？', 'None', '2019-02-24 22:05:43', '8', '5,11', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('158', '适合一个人做的事。?', '大四单身男很闲，但不想和身边的人一起做什么，又感觉生活很无聊很孤独。除了看书看电影，还有什么事是很适合这样一个人做的。', '2019-02-24 22:05:44', '44', '14,4', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('159', '为什么最近一段时间到处都有人在学习炒股？', 'QQ，微博，空间，到处看到有人在学炒股，而且电视新闻里面也曾经报道过某大学某班超过半数同学都在炒股，这是怎么回事呢？', '2019-02-24 22:05:44', '16', '15,8', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('160', '在四川进行关于现代农业的暑期社会实践有什么建议或者推荐走访的企业?', '川农学子，想做一次社会实践，了解四川省内有机农业，绿色农业或是生态农业的发展现状，公司运营状况和规模等，给涉农类大学生就业方面一个社会大背景引导，和现状知己知彼，为之后的一些创业和就业提供指导~请教一下这个项目本身的意义程度和实施方法，注意事项等~谢谢~', '2019-02-24 22:05:46', '25', '7,7', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('161', '父母强迫我们去喜欢一个看了一眼就没有感觉的人，除了对方的经济条件还可以之外其他的都很一般！该怎么办?', 'None', '2019-02-24 22:05:46', '31', '5,14', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('162', '我是针灸推拿本科生，如果考研北上广天津，哪个中医院校针推专业比较好呢？', 'None', '2019-02-24 22:05:48', '6', '6,14', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('163', '职业发展?', '以前做资信评级，现在换工作，有两条路，一个是新成立的p2p平台做风控，一个是小券商公司承做机构业务，到底该怎么办呢？这两块都不怎么懂，不知道以后发展哪个更有前途？', '2019-02-24 22:05:49', '22', '5,6', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('164', '能做到忘我、投入地演奏一种乐器，是一种什么样的感觉？', '一个人演奏，不管有没有观众', '2019-02-24 22:05:49', '15', '14,12', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('165', '我在国外旅游，买了很多当地的纪念品，包括菩提子，宝石等等，希望能拿到国内来卖，但不知道怎么过海关检查?', '我在国外旅游，买了很多当地的纪念品，包括菩提子，宝石等等，希望能拿到国内来卖，但不知道怎么过海关检查', '2019-02-24 22:05:50', '31', '4,13', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('166', '高考三十天如何提高理综成绩？', '目前语数外都还不错 可理综一直上不了200 有没有可能三十天提高到220', '2019-02-24 22:05:50', '28', '5,15', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('167', '人们喜欢做的事应该不是单一的吧？那怎样找到自己喜欢做的事？', 'None', '2019-02-24 22:05:50', '32', '13,12', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('168', '怎么才能不懒惰？', 'None', '2019-02-24 22:05:51', '26', '10,10', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('169', '什么技能能在家自学并且能带来经济上的收益？', '比如ps，但是有点难度，觉得没老师带自学还挺费力的。以后做做美工什么的…其他的呢？', '2019-02-24 22:05:51', '31', '7,15', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('170', '古玩鉴定?', '不知道怎么得来 [图片未上传成功] [图片未上传成功]', '2019-02-24 22:05:52', '20', '8,7', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('171', '太老实，没有心机，没有手段，没有城府，被人欺负不会反抗怎么改变？', 'None', '2019-02-24 22:05:54', '46', '11,10', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('172', '俄语专业除了四八级还有哪些资格证比较值得考呢？国际商务俄语等级考试的资格证能被大多数企业认可吗', '今年大三了，想多考一些有帮助的资格证', '2019-02-24 22:05:55', '46', '1,11', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('173', '出门玩晚归被领导撞见，心塞怎么破？', 'None', '2019-02-24 22:05:55', '34', '14,12', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('174', '怎么吸引别人的注意力？并且和人相处融洽？', '面临即将踏上社会，EQ低就不好生存了啊。 感觉自己EQ低，很担心以后不能好好跟人处，很羡慕宝钗那样的八面玲珑，可是不知道怎么做到？ 平时在学校和同学我还是会打打闹闹，可是放假不会找我玩。咳咳，我是个半宅，不算很宅，感觉己有点社交困难。 有时候面对陌生人好像不太会相处，不知道要聊什么话题吸引别人！？一下子熟络起来？希望能得到大家的回答！', '2019-02-24 22:05:57', '23', '9,8', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('175', '早上起床漱口是在早饭前好一点还是早饭后呢 ？晚上又是什么时候漱口比较好？', '因为自己发现有些人只喜欢早上起床就漱口，然后就吃早饭。时间久了，给我的感觉就像他们早上只是漱了一口水一般。', '2019-02-24 22:05:57', '12', '13,9', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('176', '公交司机行驶时会自己拿出一张卡在刷卡器刷一下，请问他们是在做什么？', 'None', '2019-02-24 22:05:58', '41', '14,11', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('177', '分别在上学和工作的两个同龄人在一起会怎样?', 'None', '2019-02-24 22:05:58', '40', '2,13', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('178', '听京剧是否有利于提高相声水平？', '我这里不只指黄鹤楼全德报这些腿子活', '2019-02-24 22:05:58', '29', '1,8', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('179', '想带2岁半的女儿去英国体验生活1-2周，定airbnb靠谱吗？安全吗？', '最近有个大胆想法，想暑期带着两岁半女儿去英国短暂体验生活1-2周，就我一个人带！特别想住当地人家里，定个airbnb。但可能孩子会偶尔吵闹，饮食得我单独使用厨房做。这样的情况能订到吗？有可能实现吗？就想周边简单玩下，体验下生活。语言没有太大问题。 各位有经验的大侠们，能给点意见吗？', '2019-02-24 22:05:59', '22', '10,11', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('180', '求一些学习芳疗的课本，比较权威的书籍，可以是英文书籍。谢谢各位大大。？', '想了解芳疗，看了几本都觉得不够系统，各说各话。求专业或爱好认识推荐权威书籍。涉及理论知识或者一些芳疗课程所用的书籍书单都可以。', '2019-02-24 22:05:59', '1', '8,9', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('181', '在东风裕隆 做试制验证员是什么体验 ，个人发展空间 待遇如何？', '在东风裕隆 做试制验证员是什么体验 ，个人发展空间 待遇如何？', '2019-02-24 22:06:00', '22', '12,4', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('182', '你们有没有过见到第一眼的人却突然觉得打心眼里喜欢的经历？', '我还是实习幼儿老师的时候新来了一个两岁几个月的小男孩，只见了第一面我就忒喜欢他，刚开始以为只是他长得好看再加上新来比较调皮所以才会特别关注他。可是到后来实习结束之后几乎每晚都能梦见而且几乎都是长大以后的样子…所以我想问这种感觉你们有过吗？是真有前世今生还是只是痴女的表现？？？', '2019-02-24 22:06:00', '7', '4,9', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('183', '低级别地震时自己把自己吓出糗是一种怎样的体验？', '题主自身经历不忍回忆，来这里找找安慰', '2019-02-24 22:06:01', '26', '10,10', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('184', '请问红字是什么字体？', 'None', '2019-02-24 22:06:01', '34', '9,16', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('185', '如何看待知乎大v抱团现象严重？', '解答', '2019-02-24 22:06:01', '41', '8,4', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('186', '毕业设计要写区域性快递业务流程优化，可有大神可以对区域性快递有比较好的诠释？', 'None', '2019-02-24 22:06:02', '11', '1,3', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('187', '我做了一个仰卧起坐，能量去哪了呢？', 'None', '2019-02-24 22:06:03', '3', '2,5', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('188', '女生，170/48kg,小腿与腰腹部怎么减？', '哦对了，我平胸', '2019-02-24 22:06:04', '42', '16,8', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('189', '如何在手机Quora软件上安装字典？', '要是有字典插件，遇上生词，长按一下就能显示词意，该多好啊！有没有办法啊？', '2019-02-24 22:06:04', '17', '8,1', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('190', '从精灵梦叶罗丽上还能看出国产动漫有希望吗？', '国产动漫的未来', '2019-02-24 22:06:05', '39', '4,16', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('191', '国外（欧洲）有网吧吗？是什么样子的？', 'None', '2019-02-24 22:06:05', '3', '3,4', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('192', '三百五十平方米的一层，适合做什么？', '在二线城市，两个商圈交界处。车流人流量都不错。有三百五十平使用面积的一楼，二至六楼是我们的酒店和咖啡厅。适合做什么生意？静吧或者演艺吧可以么？', '2019-02-24 22:06:06', '46', '1,15', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('193', '请教一下这是什么石头？有价值么？', '结婚时候朋友送来的，也是别人送他的。我俩都不知道是什么石头，想请教一下，要是有价值我就做一托摆上，没价值就扔池塘里摆着了…', '2019-02-24 22:06:06', '42', '2,3', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('194', '该不该继续接受一个不喜欢的人？', '马上30了，身边的人都结婚了，谈了两次恋爱都因为失去自我而分手，让我认识到必须找一个爱自己的人结婚…通过相亲认识的一个男人，很喜欢我的样子，各种殷勤，但因为成长环境的不同，我觉得聊不到一起，但又对我很好，恨嫁却又不喜欢，该如何取舍？？', '2019-02-24 22:06:06', '41', '13,16', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('195', '含钪岩石中，钪的品位或者说其氧化物的品位要达到多少才算有经济价值？', '最近正在读有关稀土的知识，说钪的平均丰度是36ppm，而个别钪矿床品位最低的也有15ppm,虽然说品位低但储量大。那么假如一块岩石样本中钪的含量达到了40-50ppm的区间，那么能否说它可能有经济价值', '2019-02-24 22:06:07', '33', '14,12', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('196', '如何看待中国现在的直销产业？是否处于合法状态，其现状如何，请懂的人赐教，谢谢！?', 'None', '2019-02-24 22:06:09', '12', '4,5', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('197', '怎么判断一家贵金属公司投入资金是不是可靠？', '现在贵金属投资公司很多，怎么知道钱投进去以后是不是只能看到几个数字，老板拿了你钱就跑呢？', '2019-02-24 22:06:09', '21', '2,15', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('198', '如何评价微软 Build 2015 的 Android 子系统来对 apk 进行支持？', '这样做效果好吗？实现原理？大概又是如何对apk直接生成appx呢', '2019-02-24 22:06:09', '28', '11,16', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('199', '大四找工作失败被打击会使一个人蜕变吗，完全变励志型？', 'None', '2019-02-24 22:06:10', '4', '14,2', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('200', '氦！这是第一条话题', '<p>Hello World！</p>', '2019-03-04 18:49:08', '3', '3', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('201', '测试！', '<p>测试测试！</p>', '2019-03-04 18:51:26', '3', '3', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('202', '测试tag添加', '<p>测试tag的添加</p>', '2019-03-04 18:55:20', '3', '4', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('203', '测试', '<p>测试</p>', '2019-03-04 18:56:37', '3', '5', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('204', '测试', '<p>测试</p>', '2019-03-04 18:57:22', '3', '6', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('205', '测试', '<p>测试</p>', '2019-03-04 18:58:32', '3', '3,0', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('206', '【权威发布】发布测试！', '<p>发布测试！</p>', '2019-03-04 19:04:20', '3', '3,18,19', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('207', '24丢失了！', '<p>为啥24没有啊</p>', '2019-03-04 19:06:36', '3', '3,18,19', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('208', '测试！最后第二次测试！', '<p>测试！最后第二次测试！</p>', '2019-03-04 19:15:45', '3', '4,20,-1', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('209', '好吧还是得干', '<p>再改我就不干了</p>', '2019-03-04 19:17:30', '3', '4,20,26,27', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('210', '干活时脑壳痛', '<p>求助，干活的时候脑壳痛怎么办</p>', '2019-03-04 19:22:15', '3', '12,28', '0', '1', '0.00', '0,1,2,3,4,5,6');
+INSERT INTO `questions` VALUES ('211', '测试付费话题', '<p>测试付费话题</p>', '2019-03-04 19:24:15', '3', '16,29', '0', '1', '0.00', '0');
+INSERT INTO `questions` VALUES ('212', '为啥mousedown不能在手机浏览器上使用', '<p>为啥mousedown的事件手机都没有做适配</p>', '2019-03-04 19:38:41', '1', '8,31', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('213', '为啥mousedown不能在手机浏览器上使用', '<p>为啥mousedown的事件手机都没有做适配</p>', '2019-03-04 19:38:45', '1', '8,31', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('214', '九江', '<p>急急急<img src=\"https://hanerx.tk:5000/static/uploads/15522788512ab3942f070828383dd131d6b199a9014e08f164.jpg\"></p>', '2019-03-11 12:34:29', '75', '7', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('215', '话题发布', '<p>话题发布</p>', '2019-03-11 12:34:41', '3', '16,29', '0', '0', '0.00', null);
+INSERT INTO `questions` VALUES ('216', '现代流水线和人工', '<p>为什么现代流水线工厂不辞退人工操作员改用机器人？</p>', '2019-03-17 22:02:53', '87', '8,23', '0', '0', '0.00', null);
 
 -- ----------------------------
 -- Table structure for `search_word`
 -- ----------------------------
 DROP TABLE IF EXISTS `search_word`;
 CREATE TABLE `search_word` (
+  `id` int(12) NOT NULL AUTO_INCREMENT,
   `content` varchar(255) NOT NULL DEFAULT '' COMMENT '搜索的内容',
-  `time` int(10) NOT NULL DEFAULT '0' COMMENT '总共被搜索了多少次'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+  `time` int(10) NOT NULL DEFAULT '0' COMMENT '总共被搜索了多少次',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of search_word
 -- ----------------------------
-INSERT INTO `search_word` VALUES ('王刚', '1');
-INSERT INTO `search_word` VALUES ('美食作家王刚', '0');
-INSERT INTO `search_word` VALUES ('厨师长', '0');
-INSERT INTO `search_word` VALUES ('华农兄弟', '0');
-INSERT INTO `search_word` VALUES ('竹鼠', '0');
-INSERT INTO `search_word` VALUES ('王家刚刚来', '0');
+INSERT INTO `search_word` VALUES ('1', '王刚', '1');
+INSERT INTO `search_word` VALUES ('2', '美食作家王刚', '0');
+INSERT INTO `search_word` VALUES ('3', '厨师长', '4');
+INSERT INTO `search_word` VALUES ('4', '华农兄弟', '0');
+INSERT INTO `search_word` VALUES ('5', '竹鼠', '24');
+INSERT INTO `search_word` VALUES ('6', '王家刚刚来', '0');
+INSERT INTO `search_word` VALUES ('7', '文章', '51');
+INSERT INTO `search_word` VALUES ('8', '救命', '0');
+INSERT INTO `search_word` VALUES ('9', '救命', '0');
+INSERT INTO `search_word` VALUES ('10', '瞎子', '2');
+INSERT INTO `search_word` VALUES ('11', '精神病', '2');
+INSERT INTO `search_word` VALUES ('12', 'lalala', '0');
+INSERT INTO `search_word` VALUES ('13', '2333', '0');
+INSERT INTO `search_word` VALUES ('14', 'ldsghasiog', '0');
+INSERT INTO `search_word` VALUES ('15', '', '0');
+INSERT INTO `search_word` VALUES ('16', 'None', '2');
+INSERT INTO `search_word` VALUES ('17', '拉拉人', '1539');
+INSERT INTO `search_word` VALUES ('18', '只狼', '1');
+INSERT INTO `search_word` VALUES ('19', '紫罗兰', '0');
+INSERT INTO `search_word` VALUES ('20', '代打', '0');
+INSERT INTO `search_word` VALUES ('21', '老司机', '2');
+INSERT INTO `search_word` VALUES ('22', '九江', '2');
+INSERT INTO `search_word` VALUES ('23', '张煜', '4');
+INSERT INTO `search_word` VALUES ('24', '图片', '0');
+INSERT INTO `search_word` VALUES ('25', '同志', '1');
+INSERT INTO `search_word` VALUES ('26', '父母', '3');
 
 -- ----------------------------
 -- Table structure for `sign_demand`
@@ -1523,11 +1982,23 @@ CREATE TABLE `sign_demand` (
   `target` int(10) NOT NULL,
   `state` int(2) NOT NULL DEFAULT '0',
   PRIMARY KEY (`signID`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of sign_demand
 -- ----------------------------
+INSERT INTO `sign_demand` VALUES ('1', '3', '1', '1');
+INSERT INTO `sign_demand` VALUES ('2', '4', '1', '1');
+INSERT INTO `sign_demand` VALUES ('3', '4', '1', '1');
+INSERT INTO `sign_demand` VALUES ('4', '1', '1', '-1');
+INSERT INTO `sign_demand` VALUES ('5', '75', '1', '0');
+INSERT INTO `sign_demand` VALUES ('6', '1', '11', '1');
+INSERT INTO `sign_demand` VALUES ('7', '4', '11', '1');
+INSERT INTO `sign_demand` VALUES ('8', '3', '4', '0');
+INSERT INTO `sign_demand` VALUES ('9', '1', '7', '0');
+INSERT INTO `sign_demand` VALUES ('10', '75', '8', '0');
+INSERT INTO `sign_demand` VALUES ('11', '1', '8', '0');
+INSERT INTO `sign_demand` VALUES ('12', '93', '3', '0');
 
 -- ----------------------------
 -- Table structure for `sys_message`
@@ -1542,7 +2013,7 @@ CREATE TABLE `sys_message` (
   `target` int(10) NOT NULL DEFAULT '0',
   `content` text NOT NULL,
   PRIMARY KEY (`noticeID`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of sys_message
@@ -1577,6 +2048,15 @@ INSERT INTO `sys_message` VALUES ('27', '测试！', '1', '2019-02-21 16:36:01',
 INSERT INTO `sys_message` VALUES ('28', '测试！', '1', '2019-02-21 19:44:32', '0', '0', '测试！');
 INSERT INTO `sys_message` VALUES ('29', '测试！', '1', '2019-02-21 19:44:48', '0', '0', '测试！');
 INSERT INTO `sys_message` VALUES ('30', '测试！', '1', '2019-02-21 19:45:09', '0', '0', '测试！');
+INSERT INTO `sys_message` VALUES ('31', '新付费咨询', '3', '2019-03-09 17:59:42', '3', '1', '您有一份来自张煜咨询待回答！');
+INSERT INTO `sys_message` VALUES ('32', '新付费咨询', '3', '2019-03-09 17:59:54', '3', '1', '您有一份来自张煜咨询待回答！');
+INSERT INTO `sys_message` VALUES ('33', '新付费咨询', '3', '2019-03-09 18:00:26', '3', '1', '您有一份来自张煜咨询待回答！');
+INSERT INTO `sys_message` VALUES ('34', '报名信息', '1', '2019-03-09 21:11:54', '1', '3', '您之前报名的诚招代打已由企业审核通过，您现在是该需求的参与者了！');
+INSERT INTO `sys_message` VALUES ('35', '报名信息', '1', '2019-03-10 00:58:11', '1', '4', '您之前报名的诚招代打已由企业审核通过，您现在是该需求的参与者了！');
+INSERT INTO `sys_message` VALUES ('36', '报名信息', '1', '2019-03-10 00:58:28', '1', '1', '您之前报名的 诚招代打 申请未通过！');
+INSERT INTO `sys_message` VALUES ('37', '报名信息', '3', '2019-03-16 21:22:36', '1', '1', '您之前报名的测试需求和群组的同步发布已由企业审核通过，您现在是该需求的参与者了！');
+INSERT INTO `sys_message` VALUES ('38', '报名信息', '3', '2019-03-16 21:22:39', '1', '4', '您之前报名的测试需求和群组的同步发布已由企业审核通过，您现在是该需求的参与者了！');
+INSERT INTO `sys_message` VALUES ('39', '新付费咨询', '87', '2019-03-17 21:50:43', '3', '1', '您有一份来自袁宜照咨询待回答！');
 
 -- ----------------------------
 -- Table structure for `tags`
@@ -1634,7 +2114,7 @@ CREATE TABLE `useraction` (
   `targettype` int(11) NOT NULL COMMENT '行为类型',
   `actiontime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '行为发生时间',
   PRIMARY KEY (`actionID`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=5282 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='用户行为表\n';
+) ENGINE=InnoDB AUTO_INCREMENT=6280 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='用户行为表\n';
 
 -- ----------------------------
 -- Records of useraction
@@ -2697,7 +3177,6 @@ INSERT INTO `useraction` VALUES ('3321', '1', '1', '3', '2019-02-24 21:46:39');
 INSERT INTO `useraction` VALUES ('3322', '1', '2', '23', '2019-02-24 21:46:40');
 INSERT INTO `useraction` VALUES ('3323', '1', '3', '4', '2019-02-24 21:46:40');
 INSERT INTO `useraction` VALUES ('3324', '1', '3', '21', '2019-02-24 21:46:41');
-INSERT INTO `useraction` VALUES ('3325', '1', '1', '1', '2019-02-24 21:46:43');
 INSERT INTO `useraction` VALUES ('3326', '1', '1', '2', '2019-02-24 21:46:46');
 INSERT INTO `useraction` VALUES ('3327', '1', '2', '21', '2019-02-24 21:46:48');
 INSERT INTO `useraction` VALUES ('3328', '1', '77', '11', '2019-02-24 21:46:50');
@@ -4654,6 +5133,920 @@ INSERT INTO `useraction` VALUES ('5278', '3', '13', '21', '2019-03-06 16:42:29')
 INSERT INTO `useraction` VALUES ('5279', '3', '13', '21', '2019-03-06 16:42:34');
 INSERT INTO `useraction` VALUES ('5280', '3', '13', '21', '2019-03-06 16:43:39');
 INSERT INTO `useraction` VALUES ('5281', '3', '1', '21', '2019-03-06 16:44:12');
+INSERT INTO `useraction` VALUES ('5282', '1', '114', '11', '2019-03-06 17:01:31');
+INSERT INTO `useraction` VALUES ('5283', '3', '14', '21', '2019-03-06 17:13:54');
+INSERT INTO `useraction` VALUES ('5284', '3', '1', '21', '2019-03-07 12:55:39');
+INSERT INTO `useraction` VALUES ('5285', '3', '1', '21', '2019-03-06 17:15:21');
+INSERT INTO `useraction` VALUES ('5286', '3', '1', '21', '2019-03-06 17:17:21');
+INSERT INTO `useraction` VALUES ('5287', '3', '1', '21', '2019-03-06 17:18:29');
+INSERT INTO `useraction` VALUES ('5288', '3', '1', '21', '2019-03-06 17:19:31');
+INSERT INTO `useraction` VALUES ('5289', '3', '1', '21', '2019-03-06 17:22:02');
+INSERT INTO `useraction` VALUES ('5290', '3', '1', '21', '2019-03-06 17:22:05');
+INSERT INTO `useraction` VALUES ('5291', '3', '1', '21', '2019-03-06 17:22:08');
+INSERT INTO `useraction` VALUES ('5292', '1', '14', '21', '2019-03-06 17:39:14');
+INSERT INTO `useraction` VALUES ('5293', '1', '15', '21', '2019-03-06 18:10:10');
+INSERT INTO `useraction` VALUES ('5294', '1', '114', '11', '2019-03-06 18:18:18');
+INSERT INTO `useraction` VALUES ('5295', '1', '14', '21', '2019-03-06 18:18:52');
+INSERT INTO `useraction` VALUES ('5296', '1', '14', '21', '2019-03-06 18:24:01');
+INSERT INTO `useraction` VALUES ('5297', '1', '14', '21', '2019-03-06 18:24:27');
+INSERT INTO `useraction` VALUES ('5298', '1', '14', '21', '2019-03-06 18:45:33');
+INSERT INTO `useraction` VALUES ('5299', '1', '14', '21', '2019-03-06 18:46:03');
+INSERT INTO `useraction` VALUES ('5300', '1', '14', '21', '2019-03-06 18:51:12');
+INSERT INTO `useraction` VALUES ('5301', '1', '114', '11', '2019-03-06 18:51:18');
+INSERT INTO `useraction` VALUES ('5302', '1', '114', '11', '2019-03-06 18:51:25');
+INSERT INTO `useraction` VALUES ('5303', '1', '14', '21', '2019-03-06 18:51:58');
+INSERT INTO `useraction` VALUES ('5304', '3', '1', '21', '2019-03-06 19:38:56');
+INSERT INTO `useraction` VALUES ('5305', '3', '1', '21', '2019-03-06 19:40:02');
+INSERT INTO `useraction` VALUES ('5306', '3', '15', '21', '2019-03-06 19:43:18');
+INSERT INTO `useraction` VALUES ('5307', '3', '15', '21', '2019-03-06 19:43:34');
+INSERT INTO `useraction` VALUES ('5308', '3', '15', '21', '2019-03-06 19:44:31');
+INSERT INTO `useraction` VALUES ('5309', '3', '15', '21', '2019-03-06 19:45:46');
+INSERT INTO `useraction` VALUES ('5310', '3', '15', '21', '2019-03-06 20:04:20');
+INSERT INTO `useraction` VALUES ('5311', '3', '15', '21', '2019-03-06 20:04:34');
+INSERT INTO `useraction` VALUES ('5312', '3', '15', '21', '2019-03-06 20:05:09');
+INSERT INTO `useraction` VALUES ('5313', '3', '15', '21', '2019-03-06 20:07:14');
+INSERT INTO `useraction` VALUES ('5314', '3', '15', '21', '2019-03-06 20:07:23');
+INSERT INTO `useraction` VALUES ('5315', '3', '15', '21', '2019-03-06 20:07:37');
+INSERT INTO `useraction` VALUES ('5316', '3', '15', '21', '2019-03-06 20:13:56');
+INSERT INTO `useraction` VALUES ('5317', '3', '15', '21', '2019-03-06 20:15:11');
+INSERT INTO `useraction` VALUES ('5318', '3', '15', '21', '2019-03-06 20:16:16');
+INSERT INTO `useraction` VALUES ('5319', '3', '15', '21', '2019-03-06 20:17:04');
+INSERT INTO `useraction` VALUES ('5320', '3', '15', '21', '2019-03-06 20:17:23');
+INSERT INTO `useraction` VALUES ('5321', '3', '15', '21', '2019-03-06 20:17:54');
+INSERT INTO `useraction` VALUES ('5322', '3', '15', '21', '2019-03-06 20:19:03');
+INSERT INTO `useraction` VALUES ('5323', '3', '15', '21', '2019-03-06 20:19:18');
+INSERT INTO `useraction` VALUES ('5324', '3', '15', '21', '2019-03-06 20:20:35');
+INSERT INTO `useraction` VALUES ('5325', '3', '15', '21', '2019-03-06 20:21:34');
+INSERT INTO `useraction` VALUES ('5326', '3', '15', '21', '2019-03-06 20:30:09');
+INSERT INTO `useraction` VALUES ('5327', '3', '15', '21', '2019-03-06 20:33:51');
+INSERT INTO `useraction` VALUES ('5328', '3', '15', '21', '2019-03-06 20:39:08');
+INSERT INTO `useraction` VALUES ('5329', '3', '15', '21', '2019-03-06 20:39:55');
+INSERT INTO `useraction` VALUES ('5330', '3', '13', '21', '2019-03-06 20:42:13');
+INSERT INTO `useraction` VALUES ('5331', '3', '15', '21', '2019-03-06 20:42:20');
+INSERT INTO `useraction` VALUES ('5332', '1', '114', '11', '2019-03-06 20:51:28');
+INSERT INTO `useraction` VALUES ('5333', '1', '114', '11', '2019-03-06 20:52:11');
+INSERT INTO `useraction` VALUES ('5334', '1', '16', '51', '2019-03-06 20:52:33');
+INSERT INTO `useraction` VALUES ('5335', '1', '114', '11', '2019-03-06 20:52:45');
+INSERT INTO `useraction` VALUES ('5336', '1', '16', '51', '2019-03-06 20:52:56');
+INSERT INTO `useraction` VALUES ('5337', '1', '114', '11', '2019-03-06 20:53:05');
+INSERT INTO `useraction` VALUES ('5338', '1', '114', '11', '2019-03-06 20:53:43');
+INSERT INTO `useraction` VALUES ('5339', '1', '16', '51', '2019-03-06 20:55:07');
+INSERT INTO `useraction` VALUES ('5340', '1', '114', '11', '2019-03-06 20:56:10');
+INSERT INTO `useraction` VALUES ('5341', '3', '118', '11', '2019-03-06 20:56:31');
+INSERT INTO `useraction` VALUES ('5342', '3', '13', '21', '2019-03-06 21:05:39');
+INSERT INTO `useraction` VALUES ('5343', '3', '2', '21', '2019-03-07 12:59:10');
+INSERT INTO `useraction` VALUES ('5344', '3', '2', '21', '2019-03-07 13:36:25');
+INSERT INTO `useraction` VALUES ('5345', '3', '2', '21', '2019-03-07 13:37:08');
+INSERT INTO `useraction` VALUES ('5346', '3', '2', '21', '2019-03-07 13:39:17');
+INSERT INTO `useraction` VALUES ('5347', '1', '114', '11', '2019-03-07 13:48:18');
+INSERT INTO `useraction` VALUES ('5348', '1', '13', '21', '2019-03-07 13:53:50');
+INSERT INTO `useraction` VALUES ('5349', '3', '2', '21', '2019-03-07 14:13:22');
+INSERT INTO `useraction` VALUES ('5350', '1', '15', '21', '2019-03-07 14:16:39');
+INSERT INTO `useraction` VALUES ('5351', '1', '15', '21', '2019-03-07 14:16:55');
+INSERT INTO `useraction` VALUES ('5352', '3', '2', '21', '2019-03-07 14:17:40');
+INSERT INTO `useraction` VALUES ('5353', '3', '2', '21', '2019-03-07 14:20:07');
+INSERT INTO `useraction` VALUES ('5354', '1', '114', '11', '2019-03-07 14:21:13');
+INSERT INTO `useraction` VALUES ('5355', '1', '68', '11', '2019-03-07 14:21:24');
+INSERT INTO `useraction` VALUES ('5356', '1', '15', '21', '2019-03-07 14:21:48');
+INSERT INTO `useraction` VALUES ('5357', '3', '2', '21', '2019-03-07 14:23:52');
+INSERT INTO `useraction` VALUES ('5358', '3', '15', '21', '2019-03-07 14:23:58');
+INSERT INTO `useraction` VALUES ('5359', '3', '15', '21', '2019-03-07 14:24:10');
+INSERT INTO `useraction` VALUES ('5360', '3', '15', '21', '2019-03-07 14:26:23');
+INSERT INTO `useraction` VALUES ('5361', '3', '15', '21', '2019-03-07 14:28:25');
+INSERT INTO `useraction` VALUES ('5362', '3', '2', '21', '2019-03-07 14:28:47');
+INSERT INTO `useraction` VALUES ('5363', '3', '2', '21', '2019-03-07 14:36:04');
+INSERT INTO `useraction` VALUES ('5364', '3', '4', '21', '2019-03-07 14:36:08');
+INSERT INTO `useraction` VALUES ('5365', '3', '4', '21', '2019-03-07 14:36:12');
+INSERT INTO `useraction` VALUES ('5366', '3', '4', '21', '2019-03-07 14:47:56');
+INSERT INTO `useraction` VALUES ('5367', '1', '15', '21', '2019-03-07 14:51:12');
+INSERT INTO `useraction` VALUES ('5368', '3', '4', '21', '2019-03-07 14:52:40');
+INSERT INTO `useraction` VALUES ('5369', '3', '4', '25', '2019-03-07 14:52:58');
+INSERT INTO `useraction` VALUES ('5370', '3', '4', '21', '2019-03-07 14:53:38');
+INSERT INTO `useraction` VALUES ('5371', '3', '4', '25', '2019-03-07 14:54:00');
+INSERT INTO `useraction` VALUES ('5372', '3', '4', '25', '2019-03-07 14:54:51');
+INSERT INTO `useraction` VALUES ('5373', '3', '4', '25', '2019-03-07 14:55:08');
+INSERT INTO `useraction` VALUES ('5374', '3', '4', '21', '2019-03-07 14:55:21');
+INSERT INTO `useraction` VALUES ('5375', '3', '1', '21', '2019-03-07 14:56:05');
+INSERT INTO `useraction` VALUES ('5376', '3', '89', '11', '2019-03-07 14:56:17');
+INSERT INTO `useraction` VALUES ('5377', '1', '15', '21', '2019-03-07 14:56:45');
+INSERT INTO `useraction` VALUES ('5378', '3', '118', '11', '2019-03-07 15:24:23');
+INSERT INTO `useraction` VALUES ('5379', '3', '5', '51', '2019-03-07 15:24:30');
+INSERT INTO `useraction` VALUES ('5380', '3', '5', '51', '2019-03-07 15:28:04');
+INSERT INTO `useraction` VALUES ('5381', '3', '5', '51', '2019-03-07 15:30:26');
+INSERT INTO `useraction` VALUES ('5382', '3', '5', '51', '2019-03-07 15:33:59');
+INSERT INTO `useraction` VALUES ('5383', '3', '5', '51', '2019-03-07 15:34:06');
+INSERT INTO `useraction` VALUES ('5384', '3', '118', '11', '2019-03-07 15:34:10');
+INSERT INTO `useraction` VALUES ('5385', '3', '5', '51', '2019-03-07 15:35:00');
+INSERT INTO `useraction` VALUES ('5386', '3', '5', '51', '2019-03-07 15:35:14');
+INSERT INTO `useraction` VALUES ('5387', '3', '5', '51', '2019-03-07 15:35:46');
+INSERT INTO `useraction` VALUES ('5388', '3', '118', '11', '2019-03-07 15:38:55');
+INSERT INTO `useraction` VALUES ('5389', '3', '5', '51', '2019-03-07 15:38:58');
+INSERT INTO `useraction` VALUES ('5390', '3', '5', '51', '2019-03-07 15:40:12');
+INSERT INTO `useraction` VALUES ('5391', '3', '5', '51', '2019-03-07 15:41:01');
+INSERT INTO `useraction` VALUES ('5392', '3', '118', '11', '2019-03-07 15:46:07');
+INSERT INTO `useraction` VALUES ('5393', '3', '5', '51', '2019-03-07 15:46:12');
+INSERT INTO `useraction` VALUES ('5394', '3', '5', '51', '2019-03-07 15:47:14');
+INSERT INTO `useraction` VALUES ('5395', '3', '118', '11', '2019-03-07 15:47:23');
+INSERT INTO `useraction` VALUES ('5396', '3', '5', '51', '2019-03-07 15:47:27');
+INSERT INTO `useraction` VALUES ('5397', '3', '118', '11', '2019-03-07 15:47:56');
+INSERT INTO `useraction` VALUES ('5398', '3', '5', '51', '2019-03-07 15:48:21');
+INSERT INTO `useraction` VALUES ('5399', '3', '118', '11', '2019-03-07 15:48:27');
+INSERT INTO `useraction` VALUES ('5400', '3', '5', '51', '2019-03-07 15:49:22');
+INSERT INTO `useraction` VALUES ('5401', '3', '5', '51', '2019-03-07 15:50:04');
+INSERT INTO `useraction` VALUES ('5402', '3', '118', '11', '2019-03-07 15:51:00');
+INSERT INTO `useraction` VALUES ('5403', '3', '5', '51', '2019-03-07 15:51:04');
+INSERT INTO `useraction` VALUES ('5404', '3', '5', '51', '2019-03-07 15:52:19');
+INSERT INTO `useraction` VALUES ('5405', '3', '5', '51', '2019-03-07 15:52:33');
+INSERT INTO `useraction` VALUES ('5406', '3', '5', '51', '2019-03-07 15:53:56');
+INSERT INTO `useraction` VALUES ('5407', '3', '5', '51', '2019-03-07 15:54:31');
+INSERT INTO `useraction` VALUES ('5408', '3', '118', '11', '2019-03-07 15:56:07');
+INSERT INTO `useraction` VALUES ('5409', '3', '5', '51', '2019-03-07 15:56:12');
+INSERT INTO `useraction` VALUES ('5410', '3', '5', '51', '2019-03-07 15:56:24');
+INSERT INTO `useraction` VALUES ('5411', '3', '5', '50', '2019-03-07 15:56:44');
+INSERT INTO `useraction` VALUES ('5412', '3', '5', '51', '2019-03-07 15:57:05');
+INSERT INTO `useraction` VALUES ('5413', '3', '5', '51', '2019-03-07 15:58:03');
+INSERT INTO `useraction` VALUES ('5414', '3', '5', '51', '2019-03-07 15:58:08');
+INSERT INTO `useraction` VALUES ('5415', '3', '118', '11', '2019-03-07 15:58:13');
+INSERT INTO `useraction` VALUES ('5416', '3', '5', '51', '2019-03-07 15:58:18');
+INSERT INTO `useraction` VALUES ('5417', '3', '5', '51', '2019-03-07 15:59:13');
+INSERT INTO `useraction` VALUES ('5418', '3', '5', '51', '2019-03-07 16:02:04');
+INSERT INTO `useraction` VALUES ('5419', '3', '5', '51', '2019-03-07 16:05:56');
+INSERT INTO `useraction` VALUES ('5420', '3', '5', '51', '2019-03-07 16:06:13');
+INSERT INTO `useraction` VALUES ('5421', '3', '5', '51', '2019-03-07 16:09:23');
+INSERT INTO `useraction` VALUES ('5422', '3', '5', '51', '2019-03-07 16:11:29');
+INSERT INTO `useraction` VALUES ('5423', '3', '5', '51', '2019-03-07 16:13:09');
+INSERT INTO `useraction` VALUES ('5424', '3', '5', '51', '2019-03-07 16:13:12');
+INSERT INTO `useraction` VALUES ('5425', '3', '5', '51', '2019-03-07 16:13:18');
+INSERT INTO `useraction` VALUES ('5426', '3', '5', '51', '2019-03-07 16:41:38');
+INSERT INTO `useraction` VALUES ('5427', '3', '5', '51', '2019-03-07 16:44:17');
+INSERT INTO `useraction` VALUES ('5428', '3', '5', '51', '2019-03-07 16:44:28');
+INSERT INTO `useraction` VALUES ('5429', '3', '5', '51', '2019-03-07 16:45:24');
+INSERT INTO `useraction` VALUES ('5430', '3', '5', '51', '2019-03-07 16:45:52');
+INSERT INTO `useraction` VALUES ('5431', '3', '5', '51', '2019-03-07 16:46:39');
+INSERT INTO `useraction` VALUES ('5432', '3', '89', '11', '2019-03-07 16:50:23');
+INSERT INTO `useraction` VALUES ('5433', '3', '118', '11', '2019-03-07 16:50:42');
+INSERT INTO `useraction` VALUES ('5434', '3', '5', '51', '2019-03-07 16:50:49');
+INSERT INTO `useraction` VALUES ('5435', '3', '118', '11', '2019-03-07 16:52:03');
+INSERT INTO `useraction` VALUES ('5436', '3', '116', '11', '2019-03-07 16:52:59');
+INSERT INTO `useraction` VALUES ('5437', '3', '15', '51', '2019-03-07 16:53:03');
+INSERT INTO `useraction` VALUES ('5445', '3', '116', '11', '2019-03-07 16:55:25');
+INSERT INTO `useraction` VALUES ('5446', '3', '15', '51', '2019-03-07 16:55:28');
+INSERT INTO `useraction` VALUES ('5447', '3', '116', '11', '2019-03-07 16:55:42');
+INSERT INTO `useraction` VALUES ('5448', '3', '116', '11', '2019-03-07 16:56:48');
+INSERT INTO `useraction` VALUES ('5449', '3', '116', '11', '2019-03-07 16:57:26');
+INSERT INTO `useraction` VALUES ('5450', '3', '15', '51', '2019-03-07 16:57:41');
+INSERT INTO `useraction` VALUES ('5451', '3', '116', '11', '2019-03-07 16:57:43');
+INSERT INTO `useraction` VALUES ('5452', '3', '15', '51', '2019-03-07 16:57:45');
+INSERT INTO `useraction` VALUES ('5453', '3', '116', '11', '2019-03-07 16:58:15');
+INSERT INTO `useraction` VALUES ('5454', '1', '139', '11', '2019-03-07 17:18:37');
+INSERT INTO `useraction` VALUES ('5455', '3', '116', '11', '2019-03-07 17:29:56');
+INSERT INTO `useraction` VALUES ('5456', '3', '6', '21', '2019-03-07 18:16:51');
+INSERT INTO `useraction` VALUES ('5457', '1', '207', '11', '2019-03-07 19:38:10');
+INSERT INTO `useraction` VALUES ('5458', '3', '1', '21', '2019-03-07 19:42:43');
+INSERT INTO `useraction` VALUES ('5459', '3', '1', '21', '2019-03-07 19:43:37');
+INSERT INTO `useraction` VALUES ('5460', '1', '209', '11', '2019-03-07 19:59:34');
+INSERT INTO `useraction` VALUES ('5461', '1', '8', '21', '2019-03-07 19:59:57');
+INSERT INTO `useraction` VALUES ('5462', '1', '8', '21', '2019-03-07 20:00:17');
+INSERT INTO `useraction` VALUES ('5463', '1', '15', '21', '2019-03-07 20:56:29');
+INSERT INTO `useraction` VALUES ('5464', '3', '116', '11', '2019-03-08 12:24:44');
+INSERT INTO `useraction` VALUES ('5465', '3', '15', '51', '2019-03-08 12:24:47');
+INSERT INTO `useraction` VALUES ('5466', '3', '116', '11', '2019-03-08 12:24:57');
+INSERT INTO `useraction` VALUES ('5467', '1', '207', '11', '2019-03-08 13:08:02');
+INSERT INTO `useraction` VALUES ('5468', '1', '9', '21', '2019-03-08 13:13:51');
+INSERT INTO `useraction` VALUES ('5469', '1', '9', '21', '2019-03-08 13:14:46');
+INSERT INTO `useraction` VALUES ('5470', '1', '9', '21', '2019-03-08 13:14:52');
+INSERT INTO `useraction` VALUES ('5471', '1', '6', '21', '2019-03-08 13:14:59');
+INSERT INTO `useraction` VALUES ('5472', '1', '6', '25', '2019-03-08 13:15:17');
+INSERT INTO `useraction` VALUES ('5473', '1', '6', '21', '2019-03-08 13:15:26');
+INSERT INTO `useraction` VALUES ('5474', '1', '6', '21', '2019-03-08 13:15:39');
+INSERT INTO `useraction` VALUES ('5475', '1', '100', '11', '2019-03-08 13:19:25');
+INSERT INTO `useraction` VALUES ('5476', '1', '1', '51', '2019-03-08 13:19:41');
+INSERT INTO `useraction` VALUES ('5478', '1', '1', '2', '2019-03-08 13:19:48');
+INSERT INTO `useraction` VALUES ('5479', '3', '116', '11', '2019-03-08 17:22:55');
+INSERT INTO `useraction` VALUES ('5480', '3', '15', '51', '2019-03-08 17:22:57');
+INSERT INTO `useraction` VALUES ('5481', '3', '15', '51', '2019-03-08 17:23:03');
+INSERT INTO `useraction` VALUES ('5482', '3', '15', '51', '2019-03-08 17:23:13');
+INSERT INTO `useraction` VALUES ('5483', '3', '15', '51', '2019-03-08 17:24:05');
+INSERT INTO `useraction` VALUES ('5484', '3', '116', '11', '2019-03-08 17:24:43');
+INSERT INTO `useraction` VALUES ('5485', '3', '15', '51', '2019-03-08 17:24:45');
+INSERT INTO `useraction` VALUES ('5486', '3', '2', '21', '2019-03-08 17:25:53');
+INSERT INTO `useraction` VALUES ('5487', '3', '2', '21', '2019-03-08 17:26:40');
+INSERT INTO `useraction` VALUES ('5488', '3', '213', '11', '2019-03-08 17:31:54');
+INSERT INTO `useraction` VALUES ('5489', '3', '213', '12', '2019-03-08 17:31:58');
+INSERT INTO `useraction` VALUES ('5490', '3', '196', '11', '2019-03-08 18:50:22');
+INSERT INTO `useraction` VALUES ('5491', '3', '2', '21', '2019-03-08 18:50:29');
+INSERT INTO `useraction` VALUES ('5492', '3', '4', '21', '2019-03-08 18:52:05');
+INSERT INTO `useraction` VALUES ('5493', '1', '6', '21', '2019-03-08 19:53:29');
+INSERT INTO `useraction` VALUES ('5494', '1', '0', '21', '2019-03-08 19:54:47');
+INSERT INTO `useraction` VALUES ('5495', '1', '0', '21', '2019-03-08 19:55:18');
+INSERT INTO `useraction` VALUES ('5496', '3', '1', '52', '2019-03-08 21:19:41');
+INSERT INTO `useraction` VALUES ('5497', '3', '2', '21', '2019-03-08 21:19:51');
+INSERT INTO `useraction` VALUES ('5498', '3', '1', '52', '2019-03-08 21:20:17');
+INSERT INTO `useraction` VALUES ('5499', '3', '1', '52', '2019-03-08 21:22:55');
+INSERT INTO `useraction` VALUES ('5500', '3', '1', '52', '2019-03-08 21:23:49');
+INSERT INTO `useraction` VALUES ('5501', '3', '1', '52', '2019-03-08 21:27:07');
+INSERT INTO `useraction` VALUES ('5502', '3', '1', '52', '2019-03-08 21:27:36');
+INSERT INTO `useraction` VALUES ('5503', '3', '1', '52', '2019-03-08 21:28:41');
+INSERT INTO `useraction` VALUES ('5504', '3', '1', '52', '2019-03-08 21:33:47');
+INSERT INTO `useraction` VALUES ('5505', '3', '1', '52', '2019-03-08 21:34:35');
+INSERT INTO `useraction` VALUES ('5506', '3', '1', '52', '2019-03-08 21:34:43');
+INSERT INTO `useraction` VALUES ('5507', '3', '1', '52', '2019-03-08 21:35:05');
+INSERT INTO `useraction` VALUES ('5508', '3', '1', '52', '2019-03-08 21:35:39');
+INSERT INTO `useraction` VALUES ('5509', '3', '1', '52', '2019-03-08 21:36:15');
+INSERT INTO `useraction` VALUES ('5510', '3', '1', '52', '2019-03-08 21:40:29');
+INSERT INTO `useraction` VALUES ('5511', '3', '4', '52', '2019-03-08 21:42:08');
+INSERT INTO `useraction` VALUES ('5512', '3', '1', '52', '2019-03-09 14:34:19');
+INSERT INTO `useraction` VALUES ('5513', '3', '1', '52', '2019-03-09 14:35:17');
+INSERT INTO `useraction` VALUES ('5514', '1', '114', '11', '2019-03-09 14:41:44');
+INSERT INTO `useraction` VALUES ('5515', '1', '182', '11', '2019-03-09 14:52:35');
+INSERT INTO `useraction` VALUES ('5516', '1', '13', '51', '2019-03-09 14:52:36');
+INSERT INTO `useraction` VALUES ('5517', '1', '114', '11', '2019-03-09 14:53:54');
+INSERT INTO `useraction` VALUES ('5518', '1', '16', '51', '2019-03-09 14:53:55');
+INSERT INTO `useraction` VALUES ('5519', '1', '182', '11', '2019-03-09 14:54:05');
+INSERT INTO `useraction` VALUES ('5520', '1', '13', '51', '2019-03-09 14:54:07');
+INSERT INTO `useraction` VALUES ('5521', '1', '13', '51', '2019-03-09 14:56:31');
+INSERT INTO `useraction` VALUES ('5522', '1', '13', '51', '2019-03-09 14:56:46');
+INSERT INTO `useraction` VALUES ('5523', '1', '13', '51', '2019-03-09 14:56:57');
+INSERT INTO `useraction` VALUES ('5524', '1', '13', '51', '2019-03-09 14:57:03');
+INSERT INTO `useraction` VALUES ('5525', '1', '13', '51', '2019-03-09 14:57:09');
+INSERT INTO `useraction` VALUES ('5526', '1', '13', '51', '2019-03-09 15:04:54');
+INSERT INTO `useraction` VALUES ('5527', '1', '13', '51', '2019-03-09 15:04:57');
+INSERT INTO `useraction` VALUES ('5528', '1', '13', '51', '2019-03-09 15:04:59');
+INSERT INTO `useraction` VALUES ('5529', '1', '114', '11', '2019-03-09 15:05:15');
+INSERT INTO `useraction` VALUES ('5530', '1', '16', '51', '2019-03-09 15:05:18');
+INSERT INTO `useraction` VALUES ('5531', '1', '16', '51', '2019-03-09 15:05:20');
+INSERT INTO `useraction` VALUES ('5532', '1', '16', '51', '2019-03-09 15:05:22');
+INSERT INTO `useraction` VALUES ('5533', '1', '16', '51', '2019-03-09 15:05:24');
+INSERT INTO `useraction` VALUES ('5534', '1', '16', '51', '2019-03-09 15:05:58');
+INSERT INTO `useraction` VALUES ('5535', '1', '114', '11', '2019-03-09 15:05:59');
+INSERT INTO `useraction` VALUES ('5536', '1', '182', '11', '2019-03-09 15:06:03');
+INSERT INTO `useraction` VALUES ('5537', '1', '13', '51', '2019-03-09 15:07:15');
+INSERT INTO `useraction` VALUES ('5538', '1', '0', '11', '2019-03-09 15:07:16');
+INSERT INTO `useraction` VALUES ('5539', '1', '13', '51', '2019-03-09 15:07:24');
+INSERT INTO `useraction` VALUES ('5540', '1', '13', '51', '2019-03-09 15:07:28');
+INSERT INTO `useraction` VALUES ('5541', '1', '207', '11', '2019-03-09 15:07:37');
+INSERT INTO `useraction` VALUES ('5542', '1', '11', '11', '2019-03-09 15:10:07');
+INSERT INTO `useraction` VALUES ('5543', '1', '164', '11', '2019-03-09 15:10:12');
+INSERT INTO `useraction` VALUES ('5544', '1', '128', '11', '2019-03-09 15:10:22');
+INSERT INTO `useraction` VALUES ('5545', '1', '128', '11', '2019-03-09 15:10:28');
+INSERT INTO `useraction` VALUES ('5546', '1', '128', '11', '2019-03-09 15:10:34');
+INSERT INTO `useraction` VALUES ('5547', '1', '134', '11', '2019-03-09 15:10:53');
+INSERT INTO `useraction` VALUES ('5548', '1', '16', '51', '2019-03-09 15:11:01');
+INSERT INTO `useraction` VALUES ('5549', '1', '206', '11', '2019-03-09 15:11:15');
+INSERT INTO `useraction` VALUES ('5550', '1', '209', '11', '2019-03-09 15:11:29');
+INSERT INTO `useraction` VALUES ('5551', '1', '209', '11', '2019-03-09 15:11:33');
+INSERT INTO `useraction` VALUES ('5552', '1', '17', '51', '2019-03-09 15:11:36');
+INSERT INTO `useraction` VALUES ('5553', '1', '209', '11', '2019-03-09 15:11:40');
+INSERT INTO `useraction` VALUES ('5554', '1', '17', '51', '2019-03-09 15:11:42');
+INSERT INTO `useraction` VALUES ('5555', '1', '209', '11', '2019-03-09 15:12:42');
+INSERT INTO `useraction` VALUES ('5556', '1', '17', '51', '2019-03-09 15:12:43');
+INSERT INTO `useraction` VALUES ('5557', '1', '209', '11', '2019-03-09 15:12:47');
+INSERT INTO `useraction` VALUES ('5558', '1', '209', '11', '2019-03-09 15:12:50');
+INSERT INTO `useraction` VALUES ('5559', '1', '17', '51', '2019-03-09 15:13:29');
+INSERT INTO `useraction` VALUES ('5560', '1', '209', '11', '2019-03-09 15:13:31');
+INSERT INTO `useraction` VALUES ('5561', '1', '17', '51', '2019-03-09 15:13:33');
+INSERT INTO `useraction` VALUES ('5562', '1', '209', '11', '2019-03-09 15:13:35');
+INSERT INTO `useraction` VALUES ('5563', '1', '3', '21', '2019-03-09 15:14:31');
+INSERT INTO `useraction` VALUES ('5564', '1', '209', '11', '2019-03-09 16:40:27');
+INSERT INTO `useraction` VALUES ('5565', '1', '17', '51', '2019-03-09 16:40:29');
+INSERT INTO `useraction` VALUES ('5566', '1', '17', '51', '2019-03-09 16:40:54');
+INSERT INTO `useraction` VALUES ('5567', '1', '209', '11', '2019-03-09 16:40:55');
+INSERT INTO `useraction` VALUES ('5568', '3', '74', '11', '2019-03-09 16:49:20');
+INSERT INTO `useraction` VALUES ('5569', '3', '2', '21', '2019-03-09 16:49:29');
+INSERT INTO `useraction` VALUES ('5570', '3', '1', '21', '2019-03-09 17:04:07');
+INSERT INTO `useraction` VALUES ('5571', '3', '2', '21', '2019-03-09 17:16:40');
+INSERT INTO `useraction` VALUES ('5572', '3', '2', '21', '2019-03-09 17:17:51');
+INSERT INTO `useraction` VALUES ('5573', '3', '2', '21', '2019-03-09 17:20:50');
+INSERT INTO `useraction` VALUES ('5574', '3', '2', '21', '2019-03-09 17:23:29');
+INSERT INTO `useraction` VALUES ('5575', '3', '2', '21', '2019-03-09 17:36:02');
+INSERT INTO `useraction` VALUES ('5576', '3', '2', '21', '2019-03-09 17:36:17');
+INSERT INTO `useraction` VALUES ('5577', '3', '2', '21', '2019-03-09 17:36:44');
+INSERT INTO `useraction` VALUES ('5578', '3', '2', '21', '2019-03-09 17:37:37');
+INSERT INTO `useraction` VALUES ('5579', '1', '73', '11', '2019-03-09 17:51:30');
+INSERT INTO `useraction` VALUES ('5580', '3', '2', '21', '2019-03-09 18:02:59');
+INSERT INTO `useraction` VALUES ('5581', '1', '6', '21', '2019-03-09 18:29:07');
+INSERT INTO `useraction` VALUES ('5582', '1', '6', '21', '2019-03-09 18:29:20');
+INSERT INTO `useraction` VALUES ('5583', '1', '6', '21', '2019-03-09 18:31:20');
+INSERT INTO `useraction` VALUES ('5584', '1', '6', '21', '2019-03-09 18:31:25');
+INSERT INTO `useraction` VALUES ('5585', '1', '6', '21', '2019-03-09 18:31:29');
+INSERT INTO `useraction` VALUES ('5586', '1', '6', '21', '2019-03-09 18:32:42');
+INSERT INTO `useraction` VALUES ('5587', '1', '6', '21', '2019-03-09 18:32:47');
+INSERT INTO `useraction` VALUES ('5588', '1', '6', '21', '2019-03-09 18:32:50');
+INSERT INTO `useraction` VALUES ('5589', '1', '6', '21', '2019-03-09 18:32:52');
+INSERT INTO `useraction` VALUES ('5590', '1', '6', '21', '2019-03-09 18:32:53');
+INSERT INTO `useraction` VALUES ('5591', '1', '6', '21', '2019-03-09 18:32:55');
+INSERT INTO `useraction` VALUES ('5592', '1', '6', '21', '2019-03-09 18:32:56');
+INSERT INTO `useraction` VALUES ('5593', '1', '6', '21', '2019-03-09 18:33:41');
+INSERT INTO `useraction` VALUES ('5594', '1', '6', '21', '2019-03-09 18:33:44');
+INSERT INTO `useraction` VALUES ('5595', '1', '6', '21', '2019-03-09 18:33:50');
+INSERT INTO `useraction` VALUES ('5596', '1', '6', '21', '2019-03-09 18:35:46');
+INSERT INTO `useraction` VALUES ('5597', '1', '3', '21', '2019-03-09 18:35:51');
+INSERT INTO `useraction` VALUES ('5598', '1', '3', '21', '2019-03-09 18:35:55');
+INSERT INTO `useraction` VALUES ('5599', '1', '3', '21', '2019-03-09 18:36:00');
+INSERT INTO `useraction` VALUES ('5600', '1', '3', '21', '2019-03-09 18:36:16');
+INSERT INTO `useraction` VALUES ('5601', '1', '3', '21', '2019-03-09 18:36:50');
+INSERT INTO `useraction` VALUES ('5602', '1', '3', '21', '2019-03-09 18:36:58');
+INSERT INTO `useraction` VALUES ('5603', '1', '1', '21', '2019-03-09 18:37:01');
+INSERT INTO `useraction` VALUES ('5604', '1', '1', '21', '2019-03-09 18:37:05');
+INSERT INTO `useraction` VALUES ('5605', '1', '3', '21', '2019-03-09 18:37:09');
+INSERT INTO `useraction` VALUES ('5606', '1', '3', '21', '2019-03-09 18:37:15');
+INSERT INTO `useraction` VALUES ('5607', '1', '3', '21', '2019-03-09 18:37:23');
+INSERT INTO `useraction` VALUES ('5608', '1', '4', '52', '2019-03-09 18:37:29');
+INSERT INTO `useraction` VALUES ('5609', '1', '4', '52', '2019-03-09 18:37:45');
+INSERT INTO `useraction` VALUES ('5610', '1', '4', '52', '2019-03-09 18:37:53');
+INSERT INTO `useraction` VALUES ('5611', '1', '4', '52', '2019-03-09 18:37:59');
+INSERT INTO `useraction` VALUES ('5612', '3', '4', '21', '2019-03-09 19:14:47');
+INSERT INTO `useraction` VALUES ('5613', '1', '1', '52', '2019-03-09 20:03:31');
+INSERT INTO `useraction` VALUES ('5614', '1', '1', '52', '2019-03-09 20:06:41');
+INSERT INTO `useraction` VALUES ('5615', '3', '10', '11', '2019-03-09 20:08:10');
+INSERT INTO `useraction` VALUES ('5616', '1', '0', '52', '2019-03-09 20:08:58');
+INSERT INTO `useraction` VALUES ('5617', '3', '10', '11', '2019-03-09 20:09:03');
+INSERT INTO `useraction` VALUES ('5618', '3', '18', '51', '2019-03-09 20:09:06');
+INSERT INTO `useraction` VALUES ('5619', '3', '18', '51', '2019-03-09 20:09:26');
+INSERT INTO `useraction` VALUES ('5620', '3', '10', '11', '2019-03-09 20:09:27');
+INSERT INTO `useraction` VALUES ('5621', '1', '0', '52', '2019-03-09 20:09:41');
+INSERT INTO `useraction` VALUES ('5622', '3', '10', '11', '2019-03-09 20:10:17');
+INSERT INTO `useraction` VALUES ('5623', '3', '10', '11', '2019-03-09 20:10:32');
+INSERT INTO `useraction` VALUES ('5624', '1', '0', '52', '2019-03-09 20:11:22');
+INSERT INTO `useraction` VALUES ('5625', '3', '33', '11', '2019-03-09 20:11:33');
+INSERT INTO `useraction` VALUES ('5626', '1', '0', '52', '2019-03-09 20:12:00');
+INSERT INTO `useraction` VALUES ('5627', '3', '10', '11', '2019-03-09 20:12:30');
+INSERT INTO `useraction` VALUES ('5628', '1', '0', '52', '2019-03-09 20:12:49');
+INSERT INTO `useraction` VALUES ('5629', '1', '0', '52', '2019-03-09 20:13:16');
+INSERT INTO `useraction` VALUES ('5630', '1', '0', '52', '2019-03-09 20:13:26');
+INSERT INTO `useraction` VALUES ('5631', '1', '0', '52', '2019-03-09 20:13:36');
+INSERT INTO `useraction` VALUES ('5632', '1', '0', '52', '2019-03-09 20:14:15');
+INSERT INTO `useraction` VALUES ('5633', '1', '0', '52', '2019-03-09 20:14:42');
+INSERT INTO `useraction` VALUES ('5634', '1', '0', '52', '2019-03-09 20:14:54');
+INSERT INTO `useraction` VALUES ('5635', '1', '0', '52', '2019-03-09 20:16:15');
+INSERT INTO `useraction` VALUES ('5636', '1', '0', '52', '2019-03-09 20:16:38');
+INSERT INTO `useraction` VALUES ('5637', '1', '0', '52', '2019-03-09 20:18:16');
+INSERT INTO `useraction` VALUES ('5638', '3', '0', '52', '2019-03-09 20:30:40');
+INSERT INTO `useraction` VALUES ('5639', '3', '0', '52', '2019-03-09 20:30:49');
+INSERT INTO `useraction` VALUES ('5640', '1', '0', '52', '2019-03-09 20:40:25');
+INSERT INTO `useraction` VALUES ('5641', '1', '1', '52', '2019-03-09 20:41:28');
+INSERT INTO `useraction` VALUES ('5642', '1', '1', '52', '2019-03-09 20:43:28');
+INSERT INTO `useraction` VALUES ('5643', '4', '1', '52', '2019-03-09 21:40:55');
+INSERT INTO `useraction` VALUES ('5644', '4', '1', '52', '2019-03-09 21:41:14');
+INSERT INTO `useraction` VALUES ('5645', '4', '1', '52', '2019-03-09 21:41:20');
+INSERT INTO `useraction` VALUES ('5646', '1', '6', '21', '2019-03-09 21:53:25');
+INSERT INTO `useraction` VALUES ('5647', '1', '6', '21', '2019-03-09 21:53:53');
+INSERT INTO `useraction` VALUES ('5648', '1', '81', '11', '2019-03-09 21:54:02');
+INSERT INTO `useraction` VALUES ('5649', '1', '154', '11', '2019-03-09 21:54:16');
+INSERT INTO `useraction` VALUES ('5650', '3', '2', '21', '2019-03-09 22:22:07');
+INSERT INTO `useraction` VALUES ('5651', '3', '2', '21', '2019-03-09 22:22:17');
+INSERT INTO `useraction` VALUES ('5652', '3', '2', '21', '2019-03-09 22:27:04');
+INSERT INTO `useraction` VALUES ('5653', '3', '2', '21', '2019-03-09 22:28:27');
+INSERT INTO `useraction` VALUES ('5654', '3', '2', '21', '2019-03-09 22:39:31');
+INSERT INTO `useraction` VALUES ('5655', '3', '2', '25', '2019-03-09 22:40:51');
+INSERT INTO `useraction` VALUES ('5656', '3', '2', '21', '2019-03-09 22:41:09');
+INSERT INTO `useraction` VALUES ('5657', '3', '2', '21', '2019-03-09 22:42:13');
+INSERT INTO `useraction` VALUES ('5658', '3', '2', '21', '2019-03-09 23:09:20');
+INSERT INTO `useraction` VALUES ('5659', '1', '154', '11', '2019-03-09 23:23:17');
+INSERT INTO `useraction` VALUES ('5660', '1', '128', '11', '2019-03-09 23:23:33');
+INSERT INTO `useraction` VALUES ('5661', '3', '213', '11', '2019-03-09 23:25:22');
+INSERT INTO `useraction` VALUES ('5662', '3', '10', '11', '2019-03-09 23:27:56');
+INSERT INTO `useraction` VALUES ('5663', '1', '212', '11', '2019-03-09 23:30:38');
+INSERT INTO `useraction` VALUES ('5664', '1', '128', '11', '2019-03-09 23:33:29');
+INSERT INTO `useraction` VALUES ('5665', '1', '128', '11', '2019-03-09 23:34:33');
+INSERT INTO `useraction` VALUES ('5666', '1', '128', '11', '2019-03-09 23:36:25');
+INSERT INTO `useraction` VALUES ('5667', '1', '128', '11', '2019-03-09 23:37:01');
+INSERT INTO `useraction` VALUES ('5668', '1', '128', '11', '2019-03-09 23:37:30');
+INSERT INTO `useraction` VALUES ('5669', '1', '128', '11', '2019-03-09 23:38:24');
+INSERT INTO `useraction` VALUES ('5670', '1', '128', '11', '2019-03-09 23:38:35');
+INSERT INTO `useraction` VALUES ('5671', '1', '128', '11', '2019-03-09 23:39:12');
+INSERT INTO `useraction` VALUES ('5672', '1', '128', '11', '2019-03-09 23:39:18');
+INSERT INTO `useraction` VALUES ('5673', '1', '19', '51', '2019-03-09 23:41:19');
+INSERT INTO `useraction` VALUES ('5674', '1', '128', '11', '2019-03-09 23:41:25');
+INSERT INTO `useraction` VALUES ('5675', '1', '128', '11', '2019-03-09 23:42:24');
+INSERT INTO `useraction` VALUES ('5676', '1', '128', '11', '2019-03-09 23:42:48');
+INSERT INTO `useraction` VALUES ('5677', '1', '128', '11', '2019-03-09 23:42:59');
+INSERT INTO `useraction` VALUES ('5678', '1', '128', '11', '2019-03-09 23:45:00');
+INSERT INTO `useraction` VALUES ('5679', '3', '33', '11', '2019-03-09 23:48:37');
+INSERT INTO `useraction` VALUES ('5680', '3', '10', '11', '2019-03-09 23:48:44');
+INSERT INTO `useraction` VALUES ('5681', '3', '18', '51', '2019-03-09 23:48:59');
+INSERT INTO `useraction` VALUES ('5682', '3', '10', '11', '2019-03-09 23:49:30');
+INSERT INTO `useraction` VALUES ('5683', '3', '128', '11', '2019-03-09 23:49:46');
+INSERT INTO `useraction` VALUES ('5684', '1', '128', '11', '2019-03-09 23:52:33');
+INSERT INTO `useraction` VALUES ('5685', '3', '128', '11', '2019-03-09 23:55:49');
+INSERT INTO `useraction` VALUES ('5686', '3', '128', '11', '2019-03-09 23:56:08');
+INSERT INTO `useraction` VALUES ('5687', '3', '128', '11', '2019-03-09 23:56:34');
+INSERT INTO `useraction` VALUES ('5688', '3', '19', '51', '2019-03-09 23:59:14');
+INSERT INTO `useraction` VALUES ('5689', '3', '128', '11', '2019-03-09 23:59:26');
+INSERT INTO `useraction` VALUES ('5690', '3', '128', '11', '2019-03-10 00:02:40');
+INSERT INTO `useraction` VALUES ('5691', '3', '1', '52', '2019-03-10 00:15:21');
+INSERT INTO `useraction` VALUES ('5692', '3', '136', '11', '2019-03-10 00:15:46');
+INSERT INTO `useraction` VALUES ('5693', '3', '73', '11', '2019-03-10 00:18:09');
+INSERT INTO `useraction` VALUES ('5694', '3', '2', '52', '2019-03-10 00:42:12');
+INSERT INTO `useraction` VALUES ('5695', '3', '154', '11', '2019-03-10 00:45:40');
+INSERT INTO `useraction` VALUES ('5696', '1', '164', '11', '2019-03-10 00:47:48');
+INSERT INTO `useraction` VALUES ('5697', '1', '128', '11', '2019-03-10 00:47:57');
+INSERT INTO `useraction` VALUES ('5698', '1', '19', '51', '2019-03-10 00:48:03');
+INSERT INTO `useraction` VALUES ('5699', '1', '19', '1', '2019-03-10 00:48:06');
+INSERT INTO `useraction` VALUES ('5700', '1', '19', '50', '2019-03-10 00:48:10');
+INSERT INTO `useraction` VALUES ('5701', '1', '19', '51', '2019-03-10 00:48:17');
+INSERT INTO `useraction` VALUES ('5702', '1', '19', '51', '2019-03-10 00:48:28');
+INSERT INTO `useraction` VALUES ('5703', '1', '19', '51', '2019-03-10 00:49:38');
+INSERT INTO `useraction` VALUES ('5704', '1', '19', '51', '2019-03-10 00:51:27');
+INSERT INTO `useraction` VALUES ('5705', '1', '1', '52', '2019-03-10 00:52:43');
+INSERT INTO `useraction` VALUES ('5706', '1', '114', '11', '2019-03-10 00:54:48');
+INSERT INTO `useraction` VALUES ('5707', '1', '16', '51', '2019-03-10 00:54:52');
+INSERT INTO `useraction` VALUES ('5708', '1', '16', '51', '2019-03-10 00:55:06');
+INSERT INTO `useraction` VALUES ('5709', '1', '114', '11', '2019-03-10 00:55:09');
+INSERT INTO `useraction` VALUES ('5710', '1', '6', '21', '2019-03-10 00:55:19');
+INSERT INTO `useraction` VALUES ('5711', '1', '6', '21', '2019-03-10 00:55:28');
+INSERT INTO `useraction` VALUES ('5712', '1', '16', '21', '2019-03-10 00:55:38');
+INSERT INTO `useraction` VALUES ('5713', '1', '16', '21', '2019-03-10 00:56:00');
+INSERT INTO `useraction` VALUES ('5714', '1', '1', '52', '2019-03-10 00:57:19');
+INSERT INTO `useraction` VALUES ('5715', '1', '117', '11', '2019-03-10 01:16:36');
+INSERT INTO `useraction` VALUES ('5716', '1', '133', '11', '2019-03-10 01:17:30');
+INSERT INTO `useraction` VALUES ('5717', '1', '1', '21', '2019-03-10 01:17:55');
+INSERT INTO `useraction` VALUES ('5718', '1', '1', '21', '2019-03-10 01:18:22');
+INSERT INTO `useraction` VALUES ('5719', '1', '2', '52', '2019-03-10 01:18:36');
+INSERT INTO `useraction` VALUES ('5720', '1', '2', '52', '2019-03-10 01:19:06');
+INSERT INTO `useraction` VALUES ('5721', '1', '60', '11', '2019-03-10 01:19:43');
+INSERT INTO `useraction` VALUES ('5722', '1', '22', '11', '2019-03-10 01:20:12');
+INSERT INTO `useraction` VALUES ('5723', '1', '101', '11', '2019-03-10 01:20:24');
+INSERT INTO `useraction` VALUES ('5724', '1', '112', '11', '2019-03-10 01:21:36');
+INSERT INTO `useraction` VALUES ('5725', '1', '112', '11', '2019-03-10 19:29:45');
+INSERT INTO `useraction` VALUES ('5726', '1', '112', '11', '2019-03-10 19:31:13');
+INSERT INTO `useraction` VALUES ('5727', '1', '112', '11', '2019-03-10 19:34:10');
+INSERT INTO `useraction` VALUES ('5728', '1', '112', '11', '2019-03-10 19:35:48');
+INSERT INTO `useraction` VALUES ('5729', '1', '112', '11', '2019-03-10 19:35:50');
+INSERT INTO `useraction` VALUES ('5730', '1', '207', '11', '2019-03-10 19:35:53');
+INSERT INTO `useraction` VALUES ('5731', '1', '13', '21', '2019-03-10 19:36:46');
+INSERT INTO `useraction` VALUES ('5732', '3', '154', '11', '2019-03-10 19:58:57');
+INSERT INTO `useraction` VALUES ('5733', '3', '164', '11', '2019-03-10 19:59:06');
+INSERT INTO `useraction` VALUES ('5734', '3', '101', '11', '2019-03-10 19:59:31');
+INSERT INTO `useraction` VALUES ('5735', '3', '101', '11', '2019-03-10 19:59:31');
+INSERT INTO `useraction` VALUES ('5736', '3', '112', '11', '2019-03-10 20:00:23');
+INSERT INTO `useraction` VALUES ('5737', '3', '164', '11', '2019-03-10 20:00:26');
+INSERT INTO `useraction` VALUES ('5738', '3', '112', '11', '2019-03-10 20:00:31');
+INSERT INTO `useraction` VALUES ('5739', '3', '1', '52', '2019-03-10 20:01:15');
+INSERT INTO `useraction` VALUES ('5740', '3', '1', '52', '2019-03-10 20:01:20');
+INSERT INTO `useraction` VALUES ('5741', '3', '112', '11', '2019-03-10 20:01:40');
+INSERT INTO `useraction` VALUES ('5742', '3', '1', '21', '2019-03-10 20:02:41');
+INSERT INTO `useraction` VALUES ('5743', '3', '1', '21', '2019-03-10 20:03:00');
+INSERT INTO `useraction` VALUES ('5744', '3', '1', '21', '2019-03-10 20:06:48');
+INSERT INTO `useraction` VALUES ('5745', '3', '112', '11', '2019-03-10 20:07:10');
+INSERT INTO `useraction` VALUES ('5746', '3', '112', '11', '2019-03-10 20:07:34');
+INSERT INTO `useraction` VALUES ('5747', '3', '112', '11', '2019-03-10 20:07:40');
+INSERT INTO `useraction` VALUES ('5748', '3', '112', '11', '2019-03-10 20:07:59');
+INSERT INTO `useraction` VALUES ('5749', '3', '112', '11', '2019-03-10 20:28:48');
+INSERT INTO `useraction` VALUES ('5750', '3', '112', '11', '2019-03-10 20:29:01');
+INSERT INTO `useraction` VALUES ('5751', '3', '112', '11', '2019-03-10 20:29:27');
+INSERT INTO `useraction` VALUES ('5752', '73', '3', '52', '2019-03-10 23:02:48');
+INSERT INTO `useraction` VALUES ('5753', '1', '16', '21', '2019-03-11 00:14:06');
+INSERT INTO `useraction` VALUES ('5754', '1', '16', '25', '2019-03-11 00:14:38');
+INSERT INTO `useraction` VALUES ('5755', '1', '16', '21', '2019-03-11 00:14:59');
+INSERT INTO `useraction` VALUES ('5756', '1', '16', '21', '2019-03-11 00:15:02');
+INSERT INTO `useraction` VALUES ('5757', '1', '13', '21', '2019-03-11 00:15:07');
+INSERT INTO `useraction` VALUES ('5758', '1', '13', '21', '2019-03-11 00:15:12');
+INSERT INTO `useraction` VALUES ('5759', '1', '10', '21', '2019-03-11 00:15:17');
+INSERT INTO `useraction` VALUES ('5760', '1', '10', '21', '2019-03-11 00:15:23');
+INSERT INTO `useraction` VALUES ('5761', '1', '207', '11', '2019-03-11 00:16:14');
+INSERT INTO `useraction` VALUES ('5762', '1', '1', '51', '2019-03-11 12:29:13');
+INSERT INTO `useraction` VALUES ('5763', '75', '16', '21', '2019-03-11 12:31:23');
+INSERT INTO `useraction` VALUES ('5764', '75', '1', '52', '2019-03-11 12:31:50');
+INSERT INTO `useraction` VALUES ('5765', '75', '1', '52', '2019-03-11 12:32:04');
+INSERT INTO `useraction` VALUES ('5766', '75', '214', '11', '2019-03-11 12:34:37');
+INSERT INTO `useraction` VALUES ('5767', '75', '214', '11', '2019-03-11 12:34:47');
+INSERT INTO `useraction` VALUES ('5768', '75', '20', '51', '2019-03-11 12:34:49');
+INSERT INTO `useraction` VALUES ('5770', '75', '20', '51', '2019-03-11 12:35:02');
+INSERT INTO `useraction` VALUES ('5771', '75', '214', '11', '2019-03-11 12:35:17');
+INSERT INTO `useraction` VALUES ('5772', '75', '20', '51', '2019-03-11 12:35:19');
+INSERT INTO `useraction` VALUES ('5773', '75', '20', '51', '2019-03-11 12:35:24');
+INSERT INTO `useraction` VALUES ('5774', '75', '214', '11', '2019-03-11 12:35:29');
+INSERT INTO `useraction` VALUES ('5775', '75', '20', '51', '2019-03-11 12:35:37');
+INSERT INTO `useraction` VALUES ('5776', '75', '214', '11', '2019-03-11 12:35:39');
+INSERT INTO `useraction` VALUES ('5777', '75', '20', '51', '2019-03-11 12:35:41');
+INSERT INTO `useraction` VALUES ('5778', '75', '214', '11', '2019-03-11 12:35:42');
+INSERT INTO `useraction` VALUES ('5779', '75', '20', '51', '2019-03-11 12:35:45');
+INSERT INTO `useraction` VALUES ('5780', '75', '214', '11', '2019-03-11 12:35:47');
+INSERT INTO `useraction` VALUES ('5781', '75', '20', '51', '2019-03-11 12:35:50');
+INSERT INTO `useraction` VALUES ('5782', '75', '214', '11', '2019-03-11 12:35:51');
+INSERT INTO `useraction` VALUES ('5783', '75', '214', '11', '2019-03-11 12:42:36');
+INSERT INTO `useraction` VALUES ('5784', '75', '214', '11', '2019-03-11 12:42:45');
+INSERT INTO `useraction` VALUES ('5785', '75', '214', '11', '2019-03-11 12:43:10');
+INSERT INTO `useraction` VALUES ('5786', '75', '214', '12', '2019-03-11 12:43:15');
+INSERT INTO `useraction` VALUES ('5787', '75', '214', '11', '2019-03-11 12:43:34');
+INSERT INTO `useraction` VALUES ('5788', '75', '6', '52', '2019-03-11 12:45:10');
+INSERT INTO `useraction` VALUES ('5789', '3', '112', '11', '2019-03-11 13:03:04');
+INSERT INTO `useraction` VALUES ('5790', '73', '214', '11', '2019-03-11 13:06:51');
+INSERT INTO `useraction` VALUES ('5791', '73', '212', '11', '2019-03-11 13:06:58');
+INSERT INTO `useraction` VALUES ('5792', '73', '209', '11', '2019-03-11 13:07:03');
+INSERT INTO `useraction` VALUES ('5793', '73', '17', '51', '2019-03-11 13:07:06');
+INSERT INTO `useraction` VALUES ('5794', '73', '17', '51', '2019-03-11 13:08:07');
+INSERT INTO `useraction` VALUES ('5795', '73', '209', '11', '2019-03-11 13:08:08');
+INSERT INTO `useraction` VALUES ('5796', '73', '17', '51', '2019-03-11 13:08:09');
+INSERT INTO `useraction` VALUES ('5797', '73', '209', '11', '2019-03-11 13:08:10');
+INSERT INTO `useraction` VALUES ('5798', '73', '17', '51', '2019-03-11 13:08:11');
+INSERT INTO `useraction` VALUES ('5799', '73', '209', '11', '2019-03-11 13:08:12');
+INSERT INTO `useraction` VALUES ('5800', '73', '17', '51', '2019-03-11 13:08:13');
+INSERT INTO `useraction` VALUES ('5801', '73', '209', '11', '2019-03-11 13:08:15');
+INSERT INTO `useraction` VALUES ('5802', '1', '1', '51', '2019-03-11 13:44:22');
+INSERT INTO `useraction` VALUES ('5803', '1', '1', '51', '2019-03-12 13:33:53');
+INSERT INTO `useraction` VALUES ('5804', '1', '1', '51', '2019-03-12 13:34:15');
+INSERT INTO `useraction` VALUES ('5805', '3', '112', '11', '2019-03-12 19:19:14');
+INSERT INTO `useraction` VALUES ('5806', '3', '112', '11', '2019-03-12 19:19:20');
+INSERT INTO `useraction` VALUES ('5807', '3', '112', '11', '2019-03-12 19:20:15');
+INSERT INTO `useraction` VALUES ('5808', '3', '112', '11', '2019-03-12 19:20:36');
+INSERT INTO `useraction` VALUES ('5809', '3', '112', '11', '2019-03-12 19:20:52');
+INSERT INTO `useraction` VALUES ('5810', '3', '112', '11', '2019-03-12 20:41:18');
+INSERT INTO `useraction` VALUES ('5811', '3', '112', '11', '2019-03-12 20:49:59');
+INSERT INTO `useraction` VALUES ('5812', '3', '112', '11', '2019-03-12 20:50:06');
+INSERT INTO `useraction` VALUES ('5813', '3', '112', '11', '2019-03-12 20:50:26');
+INSERT INTO `useraction` VALUES ('5814', '3', '112', '11', '2019-03-12 20:53:44');
+INSERT INTO `useraction` VALUES ('5815', '3', '112', '11', '2019-03-12 20:53:56');
+INSERT INTO `useraction` VALUES ('5816', '3', '112', '11', '2019-03-12 20:54:10');
+INSERT INTO `useraction` VALUES ('5817', '1', '207', '11', '2019-03-13 19:14:06');
+INSERT INTO `useraction` VALUES ('5818', '3', '73', '11', '2019-03-13 19:14:09');
+INSERT INTO `useraction` VALUES ('5819', '1', '164', '11', '2019-03-13 19:15:37');
+INSERT INTO `useraction` VALUES ('5820', '3', '11', '52', '2019-03-13 20:30:17');
+INSERT INTO `useraction` VALUES ('5821', '3', '11', '52', '2019-03-13 20:30:47');
+INSERT INTO `useraction` VALUES ('5822', '3', '11', '52', '2019-03-13 20:31:54');
+INSERT INTO `useraction` VALUES ('5823', '3', '11', '52', '2019-03-13 20:32:02');
+INSERT INTO `useraction` VALUES ('5824', '3', '11', '52', '2019-03-13 20:32:06');
+INSERT INTO `useraction` VALUES ('5825', '3', '11', '52', '2019-03-13 20:32:27');
+INSERT INTO `useraction` VALUES ('5826', '3', '1', '52', '2019-03-13 20:51:37');
+INSERT INTO `useraction` VALUES ('5827', '3', '154', '11', '2019-03-13 21:04:04');
+INSERT INTO `useraction` VALUES ('5828', '3', '154', '11', '2019-03-13 21:04:14');
+INSERT INTO `useraction` VALUES ('5829', '3', '154', '11', '2019-03-13 21:04:19');
+INSERT INTO `useraction` VALUES ('5830', '3', '154', '11', '2019-03-13 21:05:17');
+INSERT INTO `useraction` VALUES ('5831', '3', '164', '11', '2019-03-13 21:05:22');
+INSERT INTO `useraction` VALUES ('5832', '3', '101', '11', '2019-03-13 21:29:08');
+INSERT INTO `useraction` VALUES ('5833', '3', '101', '11', '2019-03-13 21:29:16');
+INSERT INTO `useraction` VALUES ('5834', '1', '112', '11', '2019-03-13 22:14:33');
+INSERT INTO `useraction` VALUES ('5835', '1', '207', '11', '2019-03-13 22:31:32');
+INSERT INTO `useraction` VALUES ('5836', '1', '12', '11', '2019-03-13 23:00:03');
+INSERT INTO `useraction` VALUES ('5837', '1', '11', '52', '2019-03-13 23:00:39');
+INSERT INTO `useraction` VALUES ('5838', '1', '11', '52', '2019-03-13 23:01:03');
+INSERT INTO `useraction` VALUES ('5839', '1', '11', '52', '2019-03-13 23:01:16');
+INSERT INTO `useraction` VALUES ('5840', '1', '1', '21', '2019-03-14 14:18:56');
+INSERT INTO `useraction` VALUES ('5841', '75', '20', '51', '2019-03-14 15:22:01');
+INSERT INTO `useraction` VALUES ('5842', '75', '22', '11', '2019-03-14 15:22:21');
+INSERT INTO `useraction` VALUES ('5843', '75', '20', '51', '2019-03-14 15:22:29');
+INSERT INTO `useraction` VALUES ('5849', '75', '20', '51', '2019-03-14 15:25:17');
+INSERT INTO `useraction` VALUES ('5850', '75', '20', '51', '2019-03-14 15:25:20');
+INSERT INTO `useraction` VALUES ('5851', '75', '20', '51', '2019-03-14 15:26:18');
+INSERT INTO `useraction` VALUES ('5852', '75', '20', '51', '2019-03-14 15:27:07');
+INSERT INTO `useraction` VALUES ('5853', '75', '20', '51', '2019-03-14 15:27:51');
+INSERT INTO `useraction` VALUES ('5855', '75', '20', '51', '2019-03-14 15:28:31');
+INSERT INTO `useraction` VALUES ('5856', '75', '20', '51', '2019-03-14 15:29:54');
+INSERT INTO `useraction` VALUES ('5857', '75', '89', '11', '2019-03-14 15:30:01');
+INSERT INTO `useraction` VALUES ('5858', '75', '60', '11', '2019-03-14 15:30:09');
+INSERT INTO `useraction` VALUES ('5859', '1', '89', '11', '2019-03-14 15:33:49');
+INSERT INTO `useraction` VALUES ('5860', '1', '89', '11', '2019-03-14 15:34:23');
+INSERT INTO `useraction` VALUES ('5861', '3', '112', '11', '2019-03-14 15:35:35');
+INSERT INTO `useraction` VALUES ('5862', '3', '112', '11', '2019-03-14 15:36:23');
+INSERT INTO `useraction` VALUES ('5863', '75', '60', '11', '2019-03-14 15:38:33');
+INSERT INTO `useraction` VALUES ('5864', '75', '22', '51', '2019-03-14 15:39:23');
+INSERT INTO `useraction` VALUES ('5865', '75', '60', '11', '2019-03-14 15:39:24');
+INSERT INTO `useraction` VALUES ('5866', '1', '206', '11', '2019-03-14 19:27:45');
+INSERT INTO `useraction` VALUES ('5867', '1', '193', '11', '2019-03-14 19:29:17');
+INSERT INTO `useraction` VALUES ('5868', '1', '193', '11', '2019-03-14 19:32:05');
+INSERT INTO `useraction` VALUES ('5869', '1', '12', '11', '2019-03-14 19:33:27');
+INSERT INTO `useraction` VALUES ('5870', '1', '12', '11', '2019-03-14 19:33:37');
+INSERT INTO `useraction` VALUES ('5871', '1', '12', '11', '2019-03-14 19:33:44');
+INSERT INTO `useraction` VALUES ('5872', '1', '0', '51', '2019-03-14 19:33:55');
+INSERT INTO `useraction` VALUES ('5873', '1', '60', '11', '2019-03-14 19:34:21');
+INSERT INTO `useraction` VALUES ('5874', '1', '22', '51', '2019-03-14 19:34:24');
+INSERT INTO `useraction` VALUES ('5875', '1', '60', '11', '2019-03-14 19:34:27');
+INSERT INTO `useraction` VALUES ('5876', '1', '22', '51', '2019-03-14 19:35:34');
+INSERT INTO `useraction` VALUES ('5881', '1', '22', '51', '2019-03-14 19:40:45');
+INSERT INTO `useraction` VALUES ('5882', '1', '22', '51', '2019-03-14 19:41:35');
+INSERT INTO `useraction` VALUES ('5883', '1', '22', '51', '2019-03-14 19:45:24');
+INSERT INTO `useraction` VALUES ('5884', '1', '22', '51', '2019-03-14 20:30:57');
+INSERT INTO `useraction` VALUES ('5885', '1', '22', '51', '2019-03-14 20:41:43');
+INSERT INTO `useraction` VALUES ('5886', '1', '22', '51', '2019-03-14 20:41:43');
+INSERT INTO `useraction` VALUES ('5887', '1', '22', '51', '2019-03-14 20:42:27');
+INSERT INTO `useraction` VALUES ('5888', '1', '22', '51', '2019-03-14 20:44:29');
+INSERT INTO `useraction` VALUES ('5889', '1', '22', '51', '2019-03-14 20:48:16');
+INSERT INTO `useraction` VALUES ('5890', '1', '22', '51', '2019-03-14 21:01:22');
+INSERT INTO `useraction` VALUES ('5891', '1', '22', '51', '2019-03-14 21:01:52');
+INSERT INTO `useraction` VALUES ('5892', '1', '22', '51', '2019-03-14 21:05:00');
+INSERT INTO `useraction` VALUES ('5893', '1', '22', '51', '2019-03-14 21:14:16');
+INSERT INTO `useraction` VALUES ('5894', '1', '22', '11', '2019-03-15 21:26:35');
+INSERT INTO `useraction` VALUES ('5895', '1', '22', '11', '2019-03-15 21:27:21');
+INSERT INTO `useraction` VALUES ('5896', '1', '23', '51', '2019-03-15 21:27:24');
+INSERT INTO `useraction` VALUES ('5897', '1', '12', '11', '2019-03-15 21:41:37');
+INSERT INTO `useraction` VALUES ('5898', '1', '12', '11', '2019-03-15 21:41:44');
+INSERT INTO `useraction` VALUES ('5899', '1', '25', '51', '2019-03-15 21:41:45');
+INSERT INTO `useraction` VALUES ('5911', '1', '89', '11', '2019-03-15 21:45:41');
+INSERT INTO `useraction` VALUES ('5912', '1', '21', '51', '2019-03-15 21:45:44');
+INSERT INTO `useraction` VALUES ('5917', '3', '112', '11', '2019-03-15 21:54:06');
+INSERT INTO `useraction` VALUES ('5918', '3', '112', '11', '2019-03-15 21:54:13');
+INSERT INTO `useraction` VALUES ('5919', '3', '26', '51', '2019-03-15 21:54:15');
+INSERT INTO `useraction` VALUES ('5924', '3', '112', '11', '2019-03-15 21:55:30');
+INSERT INTO `useraction` VALUES ('5925', '3', '26', '51', '2019-03-15 21:55:32');
+INSERT INTO `useraction` VALUES ('5933', '3', '112', '11', '2019-03-15 21:58:06');
+INSERT INTO `useraction` VALUES ('5934', '3', '26', '51', '2019-03-15 21:58:08');
+INSERT INTO `useraction` VALUES ('5938', '3', '112', '11', '2019-03-15 22:14:16');
+INSERT INTO `useraction` VALUES ('5939', '3', '26', '51', '2019-03-15 22:14:17');
+INSERT INTO `useraction` VALUES ('5940', '3', '26', '51', '2019-03-15 22:15:03');
+INSERT INTO `useraction` VALUES ('5943', '3', '26', '51', '2019-03-15 22:15:39');
+INSERT INTO `useraction` VALUES ('5947', '3', '26', '51', '2019-03-15 22:16:35');
+INSERT INTO `useraction` VALUES ('5963', '3', '112', '11', '2019-03-15 22:25:04');
+INSERT INTO `useraction` VALUES ('5964', '3', '26', '51', '2019-03-15 22:25:06');
+INSERT INTO `useraction` VALUES ('5965', '3', '112', '11', '2019-03-15 22:25:08');
+INSERT INTO `useraction` VALUES ('5966', '3', '26', '51', '2019-03-15 22:25:09');
+INSERT INTO `useraction` VALUES ('5967', '3', '112', '11', '2019-03-15 22:25:11');
+INSERT INTO `useraction` VALUES ('5968', '3', '26', '51', '2019-03-15 22:25:12');
+INSERT INTO `useraction` VALUES ('5969', '3', '112', '11', '2019-03-15 22:25:15');
+INSERT INTO `useraction` VALUES ('5970', '3', '26', '51', '2019-03-15 22:25:17');
+INSERT INTO `useraction` VALUES ('5971', '3', '112', '11', '2019-03-15 22:25:17');
+INSERT INTO `useraction` VALUES ('5972', '3', '26', '51', '2019-03-15 22:25:18');
+INSERT INTO `useraction` VALUES ('5973', '3', '112', '11', '2019-03-15 22:25:19');
+INSERT INTO `useraction` VALUES ('5974', '3', '26', '51', '2019-03-15 22:25:21');
+INSERT INTO `useraction` VALUES ('5975', '3', '112', '11', '2019-03-15 22:25:21');
+INSERT INTO `useraction` VALUES ('5976', '3', '112', '11', '2019-03-15 22:26:20');
+INSERT INTO `useraction` VALUES ('5977', '3', '26', '51', '2019-03-15 22:26:21');
+INSERT INTO `useraction` VALUES ('5978', '3', '112', '11', '2019-03-15 22:26:23');
+INSERT INTO `useraction` VALUES ('5979', '3', '26', '51', '2019-03-15 22:26:25');
+INSERT INTO `useraction` VALUES ('5980', '3', '112', '11', '2019-03-15 22:26:26');
+INSERT INTO `useraction` VALUES ('5981', '3', '26', '51', '2019-03-15 22:26:27');
+INSERT INTO `useraction` VALUES ('5982', '3', '112', '11', '2019-03-15 22:26:28');
+INSERT INTO `useraction` VALUES ('5983', '3', '26', '51', '2019-03-15 22:26:41');
+INSERT INTO `useraction` VALUES ('5984', '3', '112', '11', '2019-03-15 22:26:44');
+INSERT INTO `useraction` VALUES ('5985', '1', '12', '11', '2019-03-15 22:33:03');
+INSERT INTO `useraction` VALUES ('5986', '1', '25', '51', '2019-03-15 22:33:06');
+INSERT INTO `useraction` VALUES ('5992', '1', '12', '11', '2019-03-15 22:33:24');
+INSERT INTO `useraction` VALUES ('5993', '1', '25', '51', '2019-03-15 22:33:26');
+INSERT INTO `useraction` VALUES ('5996', '3', '112', '11', '2019-03-15 22:40:22');
+INSERT INTO `useraction` VALUES ('5997', '3', '26', '51', '2019-03-15 22:40:23');
+INSERT INTO `useraction` VALUES ('5999', '3', '112', '11', '2019-03-15 22:40:30');
+INSERT INTO `useraction` VALUES ('6000', '3', '1', '52', '2019-03-15 22:46:40');
+INSERT INTO `useraction` VALUES ('6001', '1', '22', '11', '2019-03-15 22:51:17');
+INSERT INTO `useraction` VALUES ('6002', '1', '100', '11', '2019-03-15 22:52:10');
+INSERT INTO `useraction` VALUES ('6003', '1', '17', '21', '2019-03-15 22:52:45');
+INSERT INTO `useraction` VALUES ('6004', '1', '11', '52', '2019-03-15 23:10:24');
+INSERT INTO `useraction` VALUES ('6005', '1', '11', '52', '2019-03-15 23:12:29');
+INSERT INTO `useraction` VALUES ('6006', '3', '4', '52', '2019-03-15 23:33:22');
+INSERT INTO `useraction` VALUES ('6007', '3', '16', '21', '2019-03-15 23:33:41');
+INSERT INTO `useraction` VALUES ('6008', '3', '16', '25', '2019-03-15 23:34:06');
+INSERT INTO `useraction` VALUES ('6009', '3', '16', '21', '2019-03-15 23:34:18');
+INSERT INTO `useraction` VALUES ('6010', '3', '207', '11', '2019-03-15 23:34:30');
+INSERT INTO `useraction` VALUES ('6011', '3', '112', '11', '2019-03-16 15:01:16');
+INSERT INTO `useraction` VALUES ('6012', '3', '26', '51', '2019-03-16 15:01:18');
+INSERT INTO `useraction` VALUES ('6013', '3', '26', '51', '2019-03-16 15:01:44');
+INSERT INTO `useraction` VALUES ('6014', '3', '26', '51', '2019-03-16 15:12:43');
+INSERT INTO `useraction` VALUES ('6015', '3', '26', '51', '2019-03-16 15:14:41');
+INSERT INTO `useraction` VALUES ('6016', '3', '26', '51', '2019-03-16 15:14:50');
+INSERT INTO `useraction` VALUES ('6017', '3', '26', '51', '2019-03-16 15:14:54');
+INSERT INTO `useraction` VALUES ('6018', '3', '26', '51', '2019-03-16 15:16:04');
+INSERT INTO `useraction` VALUES ('6019', '3', '26', '51', '2019-03-16 15:16:09');
+INSERT INTO `useraction` VALUES ('6020', '3', '26', '51', '2019-03-16 15:16:24');
+INSERT INTO `useraction` VALUES ('6021', '3', '26', '51', '2019-03-16 15:18:58');
+INSERT INTO `useraction` VALUES ('6022', '3', '26', '51', '2019-03-16 15:19:25');
+INSERT INTO `useraction` VALUES ('6023', '3', '26', '51', '2019-03-16 15:20:16');
+INSERT INTO `useraction` VALUES ('6024', '3', '26', '51', '2019-03-16 15:20:28');
+INSERT INTO `useraction` VALUES ('6025', '3', '26', '51', '2019-03-16 15:20:32');
+INSERT INTO `useraction` VALUES ('6026', '3', '26', '51', '2019-03-16 15:22:14');
+INSERT INTO `useraction` VALUES ('6027', '3', '26', '51', '2019-03-16 15:22:24');
+INSERT INTO `useraction` VALUES ('6028', '3', '26', '51', '2019-03-16 15:23:52');
+INSERT INTO `useraction` VALUES ('6029', '3', '26', '51', '2019-03-16 15:24:47');
+INSERT INTO `useraction` VALUES ('6030', '3', '26', '51', '2019-03-16 15:25:36');
+INSERT INTO `useraction` VALUES ('6034', '3', '26', '51', '2019-03-16 15:30:28');
+INSERT INTO `useraction` VALUES ('6035', '3', '26', '51', '2019-03-16 15:31:50');
+INSERT INTO `useraction` VALUES ('6036', '3', '26', '51', '2019-03-16 15:32:03');
+INSERT INTO `useraction` VALUES ('6037', '3', '26', '51', '2019-03-16 15:33:48');
+INSERT INTO `useraction` VALUES ('6038', '3', '26', '51', '2019-03-16 15:34:39');
+INSERT INTO `useraction` VALUES ('6039', '3', '26', '51', '2019-03-16 15:35:43');
+INSERT INTO `useraction` VALUES ('6040', '3', '26', '51', '2019-03-16 15:36:15');
+INSERT INTO `useraction` VALUES ('6041', '3', '26', '51', '2019-03-16 15:37:09');
+INSERT INTO `useraction` VALUES ('6042', '3', '26', '51', '2019-03-16 15:37:15');
+INSERT INTO `useraction` VALUES ('6043', '3', '112', '11', '2019-03-16 15:37:31');
+INSERT INTO `useraction` VALUES ('6044', '3', '112', '11', '2019-03-16 15:37:44');
+INSERT INTO `useraction` VALUES ('6045', '3', '112', '11', '2019-03-16 15:37:55');
+INSERT INTO `useraction` VALUES ('6046', '3', '207', '11', '2019-03-16 16:06:37');
+INSERT INTO `useraction` VALUES ('6047', '3', '207', '11', '2019-03-16 16:07:38');
+INSERT INTO `useraction` VALUES ('6048', '4', '10', '21', '2019-03-16 16:49:53');
+INSERT INTO `useraction` VALUES ('6049', '4', '1', '52', '2019-03-16 16:50:00');
+INSERT INTO `useraction` VALUES ('6050', '4', '11', '52', '2019-03-16 16:50:50');
+INSERT INTO `useraction` VALUES ('6051', '3', '4', '52', '2019-03-16 16:53:20');
+INSERT INTO `useraction` VALUES ('6052', '3', '11', '52', '2019-03-16 16:56:36');
+INSERT INTO `useraction` VALUES ('6053', '3', '11', '52', '2019-03-16 16:56:40');
+INSERT INTO `useraction` VALUES ('6054', '1', '207', '11', '2019-03-16 18:06:54');
+INSERT INTO `useraction` VALUES ('6055', '1', '27', '51', '2019-03-16 18:06:57');
+INSERT INTO `useraction` VALUES ('6056', '1', '207', '11', '2019-03-16 18:06:58');
+INSERT INTO `useraction` VALUES ('6057', '1', '27', '51', '2019-03-16 18:07:08');
+INSERT INTO `useraction` VALUES ('6060', '1', '207', '11', '2019-03-16 18:07:49');
+INSERT INTO `useraction` VALUES ('6061', '1', '6', '21', '2019-03-16 18:09:50');
+INSERT INTO `useraction` VALUES ('6062', '1', '6', '21', '2019-03-16 18:10:03');
+INSERT INTO `useraction` VALUES ('6063', '1', '73', '11', '2019-03-16 18:10:14');
+INSERT INTO `useraction` VALUES ('6064', '1', '112', '11', '2019-03-16 18:10:54');
+INSERT INTO `useraction` VALUES ('6065', '1', '26', '51', '2019-03-16 18:10:57');
+INSERT INTO `useraction` VALUES ('6066', '1', '26', '1', '2019-03-16 18:11:00');
+INSERT INTO `useraction` VALUES ('6067', '1', '112', '11', '2019-03-16 18:11:03');
+INSERT INTO `useraction` VALUES ('6068', '1', '4', '52', '2019-03-16 18:11:50');
+INSERT INTO `useraction` VALUES ('6069', '1', '2', '52', '2019-03-16 18:12:27');
+INSERT INTO `useraction` VALUES ('6070', '1', '148', '11', '2019-03-16 18:12:48');
+INSERT INTO `useraction` VALUES ('6071', '1', '1', '51', '2019-03-16 18:13:03');
+INSERT INTO `useraction` VALUES ('6072', '1', '5', '51', '2019-03-16 18:13:11');
+INSERT INTO `useraction` VALUES ('6073', '3', '14', '21', '2019-03-16 19:15:52');
+INSERT INTO `useraction` VALUES ('6074', '3', '207', '11', '2019-03-16 19:17:12');
+INSERT INTO `useraction` VALUES ('6075', '3', '27', '51', '2019-03-16 19:17:15');
+INSERT INTO `useraction` VALUES ('6076', '3', '27', '1', '2019-03-16 19:17:22');
+INSERT INTO `useraction` VALUES ('6077', '3', '207', '11', '2019-03-16 19:17:30');
+INSERT INTO `useraction` VALUES ('6078', '3', '73', '11', '2019-03-16 19:17:37');
+INSERT INTO `useraction` VALUES ('6079', '1', '7', '52', '2019-03-16 19:37:10');
+INSERT INTO `useraction` VALUES ('6080', '1', '117', '11', '2019-03-16 19:41:47');
+INSERT INTO `useraction` VALUES ('6081', '1', '60', '11', '2019-03-16 19:51:28');
+INSERT INTO `useraction` VALUES ('6082', '1', '60', '11', '2019-03-16 19:51:36');
+INSERT INTO `useraction` VALUES ('6083', '3', '112', '11', '2019-03-16 20:16:56');
+INSERT INTO `useraction` VALUES ('6084', '3', '26', '51', '2019-03-16 20:29:18');
+INSERT INTO `useraction` VALUES ('6086', '3', '3', '21', '2019-03-16 20:29:43');
+INSERT INTO `useraction` VALUES ('6087', '1', '133', '11', '2019-03-16 20:29:52');
+INSERT INTO `useraction` VALUES ('6088', '3', '3', '21', '2019-03-16 20:29:56');
+INSERT INTO `useraction` VALUES ('6089', '3', '164', '11', '2019-03-16 21:02:42');
+INSERT INTO `useraction` VALUES ('6090', '3', '101', '11', '2019-03-16 22:20:12');
+INSERT INTO `useraction` VALUES ('6091', '3', '112', '11', '2019-03-17 13:03:14');
+INSERT INTO `useraction` VALUES ('6092', '3', '26', '51', '2019-03-17 13:03:42');
+INSERT INTO `useraction` VALUES ('6093', '3', '26', '1', '2019-03-17 13:03:47');
+INSERT INTO `useraction` VALUES ('6094', '3', '112', '11', '2019-03-17 13:04:07');
+INSERT INTO `useraction` VALUES ('6095', '1', '10', '21', '2019-03-17 13:28:11');
+INSERT INTO `useraction` VALUES ('6096', '1', '10', '21', '2019-03-17 13:28:17');
+INSERT INTO `useraction` VALUES ('6097', '1', '1', '21', '2019-03-17 13:28:20');
+INSERT INTO `useraction` VALUES ('6098', '1', '1', '52', '2019-03-17 13:28:26');
+INSERT INTO `useraction` VALUES ('6099', '1', '133', '11', '2019-03-17 13:32:11');
+INSERT INTO `useraction` VALUES ('6100', '1', '133', '11', '2019-03-17 13:32:18');
+INSERT INTO `useraction` VALUES ('6101', '3', '112', '11', '2019-03-17 14:17:47');
+INSERT INTO `useraction` VALUES ('6102', '3', '1', '52', '2019-03-17 14:21:19');
+INSERT INTO `useraction` VALUES ('6103', '3', '1', '52', '2019-03-17 14:21:28');
+INSERT INTO `useraction` VALUES ('6104', '3', '164', '11', '2019-03-17 14:21:57');
+INSERT INTO `useraction` VALUES ('6105', '75', '8', '52', '2019-03-17 14:28:30');
+INSERT INTO `useraction` VALUES ('6106', '1', '8', '52', '2019-03-17 14:29:11');
+INSERT INTO `useraction` VALUES ('6107', '1', '8', '52', '2019-03-17 14:30:08');
+INSERT INTO `useraction` VALUES ('6108', '3', '1', '52', '2019-03-17 14:33:57');
+INSERT INTO `useraction` VALUES ('6109', '1', '101', '11', '2019-03-17 14:35:08');
+INSERT INTO `useraction` VALUES ('6110', '3', '4', '21', '2019-03-17 14:39:21');
+INSERT INTO `useraction` VALUES ('6111', '3', '4', '21', '2019-03-17 14:39:35');
+INSERT INTO `useraction` VALUES ('6112', '3', '4', '21', '2019-03-17 14:39:44');
+INSERT INTO `useraction` VALUES ('6113', '3', '4', '21', '2019-03-17 14:41:03');
+INSERT INTO `useraction` VALUES ('6114', '3', '1', '52', '2019-03-17 14:50:00');
+INSERT INTO `useraction` VALUES ('6115', '3', '1', '52', '2019-03-17 14:50:04');
+INSERT INTO `useraction` VALUES ('6116', '3', '11', '52', '2019-03-17 14:50:13');
+INSERT INTO `useraction` VALUES ('6117', '3', '11', '52', '2019-03-17 14:55:52');
+INSERT INTO `useraction` VALUES ('6118', '3', '22', '11', '2019-03-17 15:01:45');
+INSERT INTO `useraction` VALUES ('6119', '3', '6', '21', '2019-03-17 15:04:22');
+INSERT INTO `useraction` VALUES ('6120', '3', '12', '11', '2019-03-17 15:05:34');
+INSERT INTO `useraction` VALUES ('6121', '3', '25', '51', '2019-03-17 15:05:37');
+INSERT INTO `useraction` VALUES ('6122', '3', '25', '51', '2019-03-17 15:05:54');
+INSERT INTO `useraction` VALUES ('6123', '3', '12', '11', '2019-03-17 15:05:54');
+INSERT INTO `useraction` VALUES ('6124', '3', '22', '11', '2019-03-17 15:06:33');
+INSERT INTO `useraction` VALUES ('6125', '3', '23', '51', '2019-03-17 15:06:35');
+INSERT INTO `useraction` VALUES ('6126', '3', '23', '51', '2019-03-17 15:06:51');
+INSERT INTO `useraction` VALUES ('6127', '3', '22', '11', '2019-03-17 15:06:52');
+INSERT INTO `useraction` VALUES ('6128', '3', '9', '52', '2019-03-17 15:07:03');
+INSERT INTO `useraction` VALUES ('6129', '3', '11', '52', '2019-03-17 15:07:09');
+INSERT INTO `useraction` VALUES ('6130', '3', '11', '52', '2019-03-17 15:07:17');
+INSERT INTO `useraction` VALUES ('6131', '1', '1', '52', '2019-03-17 15:23:40');
+INSERT INTO `useraction` VALUES ('6132', '3', '1', '52', '2019-03-17 15:25:14');
+INSERT INTO `useraction` VALUES ('6133', '74', '16', '21', '2019-03-17 15:34:33');
+INSERT INTO `useraction` VALUES ('6134', '74', '14', '21', '2019-03-17 15:35:32');
+INSERT INTO `useraction` VALUES ('6135', '74', '16', '21', '2019-03-17 15:35:38');
+INSERT INTO `useraction` VALUES ('6136', '74', '16', '21', '2019-03-17 15:37:00');
+INSERT INTO `useraction` VALUES ('6137', '74', '6', '21', '2019-03-17 15:37:03');
+INSERT INTO `useraction` VALUES ('6138', '74', '14', '21', '2019-03-17 15:37:07');
+INSERT INTO `useraction` VALUES ('6139', '74', '1', '21', '2019-03-17 15:37:51');
+INSERT INTO `useraction` VALUES ('6140', '74', '13', '21', '2019-03-17 15:37:59');
+INSERT INTO `useraction` VALUES ('6141', '1', '8', '21', '2019-03-17 15:37:59');
+INSERT INTO `useraction` VALUES ('6142', '74', '2', '21', '2019-03-17 15:38:03');
+INSERT INTO `useraction` VALUES ('6143', '1', '7', '21', '2019-03-17 15:38:05');
+INSERT INTO `useraction` VALUES ('6144', '74', '4', '21', '2019-03-17 15:38:09');
+INSERT INTO `useraction` VALUES ('6145', '1', '9', '21', '2019-03-17 15:38:09');
+INSERT INTO `useraction` VALUES ('6146', '1', '3', '21', '2019-03-17 15:38:14');
+INSERT INTO `useraction` VALUES ('6147', '74', '2', '21', '2019-03-17 15:38:14');
+INSERT INTO `useraction` VALUES ('6148', '1', '5', '21', '2019-03-17 15:38:18');
+INSERT INTO `useraction` VALUES ('6149', '74', '3', '21', '2019-03-17 15:38:20');
+INSERT INTO `useraction` VALUES ('6150', '1', '17', '21', '2019-03-17 15:38:22');
+INSERT INTO `useraction` VALUES ('6151', '1', '5', '21', '2019-03-17 15:38:33');
+INSERT INTO `useraction` VALUES ('6152', '1', '5', '21', '2019-03-17 15:38:43');
+INSERT INTO `useraction` VALUES ('6153', '74', '6', '21', '2019-03-17 15:39:02');
+INSERT INTO `useraction` VALUES ('6154', '74', '14', '21', '2019-03-17 15:39:06');
+INSERT INTO `useraction` VALUES ('6155', '1', '17', '21', '2019-03-17 15:39:27');
+INSERT INTO `useraction` VALUES ('6156', '1', '5', '21', '2019-03-17 15:39:32');
+INSERT INTO `useraction` VALUES ('6157', '1', '5', '21', '2019-03-17 15:39:41');
+INSERT INTO `useraction` VALUES ('6158', '1', '14', '21', '2019-03-17 15:40:34');
+INSERT INTO `useraction` VALUES ('6159', '1', '14', '21', '2019-03-17 15:41:07');
+INSERT INTO `useraction` VALUES ('6160', '1', '14', '21', '2019-03-17 15:41:49');
+INSERT INTO `useraction` VALUES ('6161', '1', '5', '21', '2019-03-17 15:42:02');
+INSERT INTO `useraction` VALUES ('6162', '1', '5', '21', '2019-03-17 15:42:08');
+INSERT INTO `useraction` VALUES ('6163', '1', '17', '21', '2019-03-17 15:45:22');
+INSERT INTO `useraction` VALUES ('6164', '1', '14', '21', '2019-03-17 15:46:21');
+INSERT INTO `useraction` VALUES ('6165', '3', '14', '21', '2019-03-17 15:57:48');
+INSERT INTO `useraction` VALUES ('6166', '3', '14', '21', '2019-03-17 15:59:12');
+INSERT INTO `useraction` VALUES ('6167', '3', '14', '21', '2019-03-17 15:59:38');
+INSERT INTO `useraction` VALUES ('6168', '3', '14', '21', '2019-03-17 15:59:43');
+INSERT INTO `useraction` VALUES ('6169', '3', '14', '21', '2019-03-17 15:59:49');
+INSERT INTO `useraction` VALUES ('6170', '3', '14', '21', '2019-03-17 15:59:55');
+INSERT INTO `useraction` VALUES ('6171', '3', '14', '21', '2019-03-17 16:06:31');
+INSERT INTO `useraction` VALUES ('6172', '3', '14', '21', '2019-03-17 16:06:37');
+INSERT INTO `useraction` VALUES ('6173', '3', '15', '21', '2019-03-17 16:06:46');
+INSERT INTO `useraction` VALUES ('6174', '1', '164', '11', '2019-03-17 18:33:22');
+INSERT INTO `useraction` VALUES ('6175', '1', '101', '11', '2019-03-17 18:57:01');
+INSERT INTO `useraction` VALUES ('6176', '1', '101', '11', '2019-03-17 18:57:19');
+INSERT INTO `useraction` VALUES ('6177', '74', '214', '11', '2019-03-17 19:04:31');
+INSERT INTO `useraction` VALUES ('6178', '75', '12', '11', '2019-03-17 19:13:24');
+INSERT INTO `useraction` VALUES ('6179', '1', '5', '21', '2019-03-17 19:19:07');
+INSERT INTO `useraction` VALUES ('6180', '1', '17', '21', '2019-03-17 19:19:11');
+INSERT INTO `useraction` VALUES ('6181', '3', '1', '52', '2019-03-17 19:24:47');
+INSERT INTO `useraction` VALUES ('6182', '1', '17', '21', '2019-03-17 19:26:34');
+INSERT INTO `useraction` VALUES ('6183', '1', '17', '21', '2019-03-17 19:28:58');
+INSERT INTO `useraction` VALUES ('6184', '1', '17', '21', '2019-03-17 19:29:19');
+INSERT INTO `useraction` VALUES ('6185', '1', '9', '21', '2019-03-17 19:29:46');
+INSERT INTO `useraction` VALUES ('6186', '1', '17', '21', '2019-03-17 19:29:50');
+INSERT INTO `useraction` VALUES ('6187', '87', '17', '21', '2019-03-17 19:33:27');
+INSERT INTO `useraction` VALUES ('6188', '3', '11', '52', '2019-03-17 19:33:29');
+INSERT INTO `useraction` VALUES ('6189', '1', '17', '21', '2019-03-17 19:34:06');
+INSERT INTO `useraction` VALUES ('6190', '3', '11', '52', '2019-03-17 19:34:26');
+INSERT INTO `useraction` VALUES ('6191', '87', '161', '11', '2019-03-17 19:34:37');
+INSERT INTO `useraction` VALUES ('6192', '87', '161', '11', '2019-03-17 19:34:55');
+INSERT INTO `useraction` VALUES ('6193', '87', '16', '21', '2019-03-17 19:35:48');
+INSERT INTO `useraction` VALUES ('6194', '87', '2', '21', '2019-03-17 19:36:02');
+INSERT INTO `useraction` VALUES ('6195', '87', '2', '21', '2019-03-17 19:37:09');
+INSERT INTO `useraction` VALUES ('6196', '87', '2', '21', '2019-03-17 19:37:23');
+INSERT INTO `useraction` VALUES ('6197', '87', '161', '11', '2019-03-17 19:41:16');
+INSERT INTO `useraction` VALUES ('6198', '87', '144', '11', '2019-03-17 19:42:09');
+INSERT INTO `useraction` VALUES ('6199', '87', '140', '11', '2019-03-17 19:44:10');
+INSERT INTO `useraction` VALUES ('6200', '87', '140', '11', '2019-03-17 19:44:19');
+INSERT INTO `useraction` VALUES ('6201', '87', '140', '11', '2019-03-17 19:46:47');
+INSERT INTO `useraction` VALUES ('6202', '87', '140', '11', '2019-03-17 19:47:23');
+INSERT INTO `useraction` VALUES ('6203', '87', '28', '51', '2019-03-17 19:48:27');
+INSERT INTO `useraction` VALUES ('6205', '87', '140', '11', '2019-03-17 19:50:26');
+INSERT INTO `useraction` VALUES ('6206', '87', '28', '51', '2019-03-17 19:50:28');
+INSERT INTO `useraction` VALUES ('6208', '87', '140', '11', '2019-03-17 19:50:32');
+INSERT INTO `useraction` VALUES ('6209', '87', '28', '51', '2019-03-17 19:50:34');
+INSERT INTO `useraction` VALUES ('6210', '87', '140', '11', '2019-03-17 19:54:05');
+INSERT INTO `useraction` VALUES ('6211', '87', '140', '12', '2019-03-17 19:54:48');
+INSERT INTO `useraction` VALUES ('6212', '87', '140', '11', '2019-03-17 19:55:56');
+INSERT INTO `useraction` VALUES ('6213', '87', '28', '51', '2019-03-17 19:56:08');
+INSERT INTO `useraction` VALUES ('6214', '87', '140', '11', '2019-03-17 19:56:19');
+INSERT INTO `useraction` VALUES ('6215', '87', '140', '11', '2019-03-17 19:56:23');
+INSERT INTO `useraction` VALUES ('6216', '87', '28', '51', '2019-03-17 19:57:27');
+INSERT INTO `useraction` VALUES ('6217', '87', '140', '11', '2019-03-17 19:57:41');
+INSERT INTO `useraction` VALUES ('6218', '1', '112', '11', '2019-03-17 19:59:43');
+INSERT INTO `useraction` VALUES ('6219', '87', '140', '11', '2019-03-17 20:04:36');
+INSERT INTO `useraction` VALUES ('6220', '1', '112', '11', '2019-03-17 20:10:33');
+INSERT INTO `useraction` VALUES ('6221', '87', '140', '11', '2019-03-17 20:10:41');
+INSERT INTO `useraction` VALUES ('6222', '87', '140', '11', '2019-03-17 20:11:23');
+INSERT INTO `useraction` VALUES ('6223', '87', '28', '51', '2019-03-17 20:11:24');
+INSERT INTO `useraction` VALUES ('6224', '87', '140', '11', '2019-03-17 20:11:27');
+INSERT INTO `useraction` VALUES ('6225', '87', '140', '11', '2019-03-17 20:14:54');
+INSERT INTO `useraction` VALUES ('6226', '87', '28', '51', '2019-03-17 20:15:02');
+INSERT INTO `useraction` VALUES ('6227', '87', '28', '50', '2019-03-17 20:16:43');
+INSERT INTO `useraction` VALUES ('6228', '87', '28', '51', '2019-03-17 20:17:15');
+INSERT INTO `useraction` VALUES ('6229', '87', '28', '51', '2019-03-17 20:18:12');
+INSERT INTO `useraction` VALUES ('6230', '87', '140', '11', '2019-03-17 20:21:39');
+INSERT INTO `useraction` VALUES ('6231', '87', '28', '51', '2019-03-17 20:21:48');
+INSERT INTO `useraction` VALUES ('6232', '87', '140', '11', '2019-03-17 20:22:39');
+INSERT INTO `useraction` VALUES ('6233', '87', '28', '51', '2019-03-17 20:22:56');
+INSERT INTO `useraction` VALUES ('6234', '87', '28', '51', '2019-03-17 20:23:03');
+INSERT INTO `useraction` VALUES ('6235', '87', '28', '51', '2019-03-17 20:23:07');
+INSERT INTO `useraction` VALUES ('6236', '87', '140', '11', '2019-03-17 20:25:07');
+INSERT INTO `useraction` VALUES ('6237', '87', '140', '11', '2019-03-17 20:32:08');
+INSERT INTO `useraction` VALUES ('6238', '87', '28', '51', '2019-03-17 20:32:10');
+INSERT INTO `useraction` VALUES ('6239', '87', '140', '11', '2019-03-17 20:32:11');
+INSERT INTO `useraction` VALUES ('6240', '87', '28', '51', '2019-03-17 20:32:15');
+INSERT INTO `useraction` VALUES ('6241', '87', '140', '11', '2019-03-17 20:32:25');
+INSERT INTO `useraction` VALUES ('6242', '87', '13', '21', '2019-03-17 20:33:47');
+INSERT INTO `useraction` VALUES ('6243', '87', '13', '21', '2019-03-17 20:37:22');
+INSERT INTO `useraction` VALUES ('6244', '87', '13', '21', '2019-03-17 20:39:19');
+INSERT INTO `useraction` VALUES ('6245', '87', '13', '25', '2019-03-17 20:39:35');
+INSERT INTO `useraction` VALUES ('6246', '87', '13', '21', '2019-03-17 20:39:39');
+INSERT INTO `useraction` VALUES ('6247', '87', '13', '21', '2019-03-17 20:43:21');
+INSERT INTO `useraction` VALUES ('6248', '87', '13', '21', '2019-03-17 20:45:27');
+INSERT INTO `useraction` VALUES ('6249', '87', '13', '21', '2019-03-17 20:47:59');
+INSERT INTO `useraction` VALUES ('6250', '87', '13', '21', '2019-03-17 20:51:58');
+INSERT INTO `useraction` VALUES ('6251', '86', '16', '21', '2019-03-17 20:53:25');
+INSERT INTO `useraction` VALUES ('6252', '87', '4', '21', '2019-03-17 20:53:30');
+INSERT INTO `useraction` VALUES ('6253', '87', '4', '25', '2019-03-17 20:54:07');
+INSERT INTO `useraction` VALUES ('6254', '87', '4', '21', '2019-03-17 20:54:13');
+INSERT INTO `useraction` VALUES ('6255', '86', '17', '21', '2019-03-17 20:54:28');
+INSERT INTO `useraction` VALUES ('6256', '87', '14', '21', '2019-03-17 20:54:49');
+INSERT INTO `useraction` VALUES ('6257', '87', '14', '21', '2019-03-17 21:00:55');
+INSERT INTO `useraction` VALUES ('6258', '87', '14', '21', '2019-03-17 21:03:04');
+INSERT INTO `useraction` VALUES ('6259', '87', '6', '21', '2019-03-17 21:04:09');
+INSERT INTO `useraction` VALUES ('6260', '87', '6', '21', '2019-03-17 21:04:36');
+INSERT INTO `useraction` VALUES ('6261', '87', '16', '21', '2019-03-17 21:50:11');
+INSERT INTO `useraction` VALUES ('6262', '87', '16', '21', '2019-03-17 21:52:33');
+INSERT INTO `useraction` VALUES ('6263', '87', '16', '21', '2019-03-17 21:56:11');
+INSERT INTO `useraction` VALUES ('6264', '87', '216', '11', '2019-03-17 22:04:50');
+INSERT INTO `useraction` VALUES ('6265', '87', '28', '51', '2019-03-17 22:07:54');
+INSERT INTO `useraction` VALUES ('6266', '87', '216', '11', '2019-03-17 22:07:59');
+INSERT INTO `useraction` VALUES ('6267', '76', '190', '11', '2019-03-17 23:10:40');
+INSERT INTO `useraction` VALUES ('6268', '76', '190', '11', '2019-03-17 23:11:06');
+INSERT INTO `useraction` VALUES ('6269', '76', '196', '11', '2019-03-17 23:12:38');
+INSERT INTO `useraction` VALUES ('6270', '76', '190', '11', '2019-03-17 23:12:47');
+INSERT INTO `useraction` VALUES ('6271', '93', '215', '11', '2019-03-18 00:13:15');
+INSERT INTO `useraction` VALUES ('6272', '93', '16', '21', '2019-03-18 00:13:55');
+INSERT INTO `useraction` VALUES ('6273', '93', '2', '52', '2019-03-18 00:14:29');
+INSERT INTO `useraction` VALUES ('6274', '93', '3', '52', '2019-03-18 00:15:42');
+INSERT INTO `useraction` VALUES ('6275', '93', '214', '11', '2019-03-18 09:53:36');
+INSERT INTO `useraction` VALUES ('6276', '93', '205', '11', '2019-03-18 09:57:37');
+INSERT INTO `useraction` VALUES ('6277', '93', '205', '11', '2019-03-18 09:57:43');
+INSERT INTO `useraction` VALUES ('6278', '93', '206', '11', '2019-03-18 09:57:48');
+INSERT INTO `useraction` VALUES ('6279', '93', '215', '11', '2019-03-18 09:57:55');
 
 -- ----------------------------
 -- Table structure for `users`
@@ -4677,70 +6070,107 @@ CREATE TABLE `users` (
   `number` varchar(45) NOT NULL DEFAULT '',
   `real_name` varchar(20) NOT NULL DEFAULT '',
   `nationality` varchar(20) NOT NULL DEFAULT '',
-  `account_balance` int(255) NOT NULL DEFAULT '0' COMMENT '账户余额',
+  `account_balance` float(255,2) NOT NULL DEFAULT '0.00' COMMENT '账户余额',
   `specialitst_license` varchar(255) NOT NULL DEFAULT '',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `last_login` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `front_pic` text,
   `back_pic` text,
+  `license_type` text,
+  `openid` varchar(30) NOT NULL DEFAULT '',
+  `check_code` varchar(10) NOT NULL DEFAULT '' COMMENT '验证码',
+  `validate` int(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`userID`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='用户表';
+) ENGINE=InnoDB AUTO_INCREMENT=106 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='用户表';
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES ('1', 'zhangyu199946@126.com', '拉拉人', 'ec847003d2eadc9baf60853e8391e167a292c21f01892fcb8bad0f4af6cd74a7', 'https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1549078352&di=0e4e5ee31b005f20859bdb1a0f4ebf58&src=http://s2.sinaimg.cn/mw690/005LKisygy722sIQw2B41&690', '0', '199998', 'rvHhq4epWBRbESPyUOdK8CL9o', null, null, null, '弗兰秀秀牛逼', '2', '', '', '德玛西亚', '', '999', '', '2019-03-06 16:51:25', '2019-03-06 16:51:25', null, null);
-INSERT INTO `users` VALUES ('2', 'yyz@126.com', '袁宜照', '317f16f4833885da6766e81b35c7258fe4451798600a1ad980babb9e9f412fc2', 'https://cdn.vuetifyjs.com/images/lists/1.jpg', '0', '0', 'TNp6hR7ElkJK4Z5Xfte0VyqG3', null, null, null, '任豚', '0', '', '', '啦啦啦', '', '0', '', '2019-02-26 18:48:59', '2019-02-26 18:48:59', null, null);
-INSERT INTO `users` VALUES ('3', 'zyxiaohao@126.com', '张煜', 'cb8f260c5b29ec2a17d662133ebcf99cd4594e29b0ffeb54599ffe5f3801c3ed', 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1551080425826&di=0e3f4387e6a7cfc397faa585b70ff696&imgtype=0&src=http%3A%2F%2Fhbimg.b0.upaiyun.com%2F428c9a3fd327d1bcea115ac8a2a701b2564d47bb19a16-vaw5K8_fw658', '0', '199999', '3yn41crpCxB8qe5Vm7btd2KHf', null, null, null, '软狗', '2', '', '', '光头', '', '0', '', '2019-03-05 12:44:30', '2019-03-05 12:44:30', null, null);
-INSERT INTO `users` VALUES ('4', 'user1@user1.com', 'API', '599e60bc4121595f91c6a775e0154e75244f755e51bebbfa8cf66a9f25746f24', 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1551783191&di=c1413003edea3720657bacf28678bf4a&imgtype=jpg&er=1&src=http%3A%2F%2Fi1.hdslb.com%2Fbfs%2Fface%2F81a4c5b742e8142175f8f71a4fcf95d08b307976.jpg', '2', '0', 'AjkxIyVeZcm3qzFboLWnYRtBH', null, null, '德莉莎', '索尼天下第一', '2', '二', '没有', '傻缺', '和', '0', '', '2019-03-04 19:40:30', '2019-03-04 19:40:30', '/static/identity_card/4_front.jpg', '/static/identity_card/4_back.jpg');
-INSERT INTO `users` VALUES ('5', 'user2@user1.com', '海王星', '1deb094bf4c7f0553293603f3a0efb369b087ec9983c1b459517011c90e52305', 'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1356556468,3620436078&fm=26&gp=0.jpg', '2', '0', '1', null, null, '', '太阳系行星', '2', '', '', '', '', '0', '', '2019-02-26 19:34:02', '2019-02-26 19:34:02', '/static/identity_card/5_front.jpg', '/static/identity_card/5_back.jpg');
-INSERT INTO `users` VALUES ('6', 'user3@user1.com', '天王星', 'b98ebb15f80a708f355c1112d670c2392b26c2a6be69b0c5197eceaea09b0b2d', 'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1083497808,3244706846&fm=26&gp=0.jpg', '1', '0', '', null, null, '日内二', '太阳系行星', '2', '女', '002022020', '呼啦啦啦', '和', '0', '', '2019-02-26 19:11:38', '2019-02-26 19:11:38', null, null);
-INSERT INTO `users` VALUES ('7', 'user4@user1.com', '冥王星', 'a6c5766422cff52dd8dd3998d36dea4ebd881c9778383a0cdd4ee3c3aeda9dba', 'http://p4.music.126.net/7rVK4tnPsCz2xtGot7bLhA==/7729566743982785.jpg?param=180y180', '3', '0', '', null, null, '', '太阳系小行星', '1', '', '', '', '', '0', '', '2019-02-26 19:34:07', '2019-02-26 19:34:07', null, null);
-INSERT INTO `users` VALUES ('8', 'user5@user1.com', 'wh', 'ba64da7a2dcf7fb416e94fbe6baa90a1c30b8d920750eba2f86b6545fe63df69', 'https://www.asgardusk.com/images/none.png', '1', '0', '', null, null, '', '', '1', '', '', '', '', '0', '', '2019-02-26 20:12:15', '2019-02-26 20:12:15', null, null);
-INSERT INTO `users` VALUES ('9', 'user6@user1.com', '用户6', '5aa5290b481b19e12888d7ac0e5a30dbd8146b87f5162c1455b2a7d8e6710d03', null, '1', '0', '', null, null, null, '', '0', '', '', '', '', '0', '', '2019-02-03 07:39:27', '2019-02-03 07:39:27', null, null);
-INSERT INTO `users` VALUES ('10', 'user7@user1.com', '用户7', 'aa44de99891cb179b3f46785aff02751d28d333f85b04b278858c6834819487d', null, '1', '0', '', null, null, null, '', '0', '', '', '', '', '0', '', '2019-02-03 07:39:28', '2019-02-03 07:39:28', null, null);
-INSERT INTO `users` VALUES ('11', 'user8@user1.com', '用户8', '0b5288355eebc89ca2bfc46c90339dda6a0f3ce4128b4c9e15090c25a9c2f5fe', null, '1', '0', '', null, null, null, '', '0', '', '', '', '', '0', '', '2019-02-03 07:39:29', '2019-02-03 07:39:29', null, null);
-INSERT INTO `users` VALUES ('12', 'user9@user1.com', '用户9', '41eea4cac48e52661ed0328a2e6f47f877146dc12597dd72133ce4c6afb1ba5e', null, '1', '0', '', null, null, null, '', '0', '', '', '', '', '0', '', '2019-02-03 07:39:30', '2019-02-03 07:39:30', null, null);
-INSERT INTO `users` VALUES ('13', 'user10@user1.com', '用户10', '382e1656c9c69a7adf041f52f16f1b43256a070ab24bece0e5455ef76935b216', null, '1', '0', '', null, null, null, '', '0', '', '', '', '', '0', '', '2019-02-03 07:39:31', '2019-02-03 07:39:31', null, null);
-INSERT INTO `users` VALUES ('14', 'ban1@ban1.com', '封禁账户1', 'dea695d9c9da21db93bf86d05774b3866807df5ac187142d71ba5e2da48e3b98', null, '4', '0', '', null, null, null, '', '0', '', '', '', '', '0', '', '2019-02-03 07:44:39', '2019-02-03 07:44:39', null, null);
-INSERT INTO `users` VALUES ('15', 'ban2@ban1.com', '封禁账户2', 'b2a4d7a43e26c71e62a6dc6d585cf19029896ca35b2de2f212bd1572f28b1603', null, '4', '0', '', null, null, null, '', '0', '', '', '', '', '0', '', '2019-02-03 07:44:45', '2019-02-03 07:44:45', null, null);
-INSERT INTO `users` VALUES ('16', 'ban3@ban1.com', '封禁账户3', '7c0aa756166b96ee6eafb773fc85a1f86b75ce3ee203386888a5bf747de1c07e', null, '4', '0', '', null, null, null, '', '0', '', '', '', '', '0', '', '2019-02-03 07:44:50', '2019-02-03 07:44:50', null, null);
-INSERT INTO `users` VALUES ('17', 'exp1@exp1.com', '专家1', '60c12cd0e12d466232d362730bc1cdc19962a796e6c2a699956707706082c380', null, '2', '0', '', null, null, null, '', '0', '', '', '', '', '0', '', '2019-02-03 08:11:39', '2019-02-03 08:11:39', null, null);
-INSERT INTO `users` VALUES ('18', 'exp2@exp1.com', '专家2', 'bccb210bbefdafdf3ee67959db70a7ae3f93e7dcc666289000917d432dffdaac', null, '2', '0', '', null, null, null, '', '0', '', '', '', '', '0', '', '2019-02-03 08:11:42', '2019-02-03 08:11:42', null, null);
-INSERT INTO `users` VALUES ('19', 'exp3@exp1.com', '专家3', '36bf74d7c2fa7ff3c6293f49130c6c8b9a1f9afc764f82d185fda271f478cfc1', null, '2', '0', '', null, null, null, '', '0', '', '', '', '', '0', '', '2019-02-03 08:11:47', '2019-02-03 08:11:47', null, null);
-INSERT INTO `users` VALUES ('20', 'exp4@exp1.com', '专家4', '4a25e59f2c9682d39089fcfc3ad94ff54a92b0c6e71a8e2ba9ec87f45fe68274', null, '2', '0', '', null, null, null, '', '0', '', '', '', '', '0', '', '2019-02-03 08:11:53', '2019-02-03 08:11:53', null, null);
-INSERT INTO `users` VALUES ('21', 'exp5@exp1.com', '专家5', '72fdde7c00b5a1125aa3530635a477a12e3cbf162a45d536755162672743e6de', null, '5', '0', '', null, null, null, '', '0', '', '', '', '', '0', '', '2019-02-03 08:11:58', '2019-02-03 08:11:58', null, null);
-INSERT INTO `users` VALUES ('22', 'exp6@exp1.com', '专家6', '22a222e334d73ecb10cf87920fe18fd2c6f084069f0b38828e3cdf097e335b84', null, '5', '0', '', null, null, null, '', '0', '', '', '', '', '0', '', '2019-02-03 08:12:05', '2019-02-03 08:12:05', null, null);
-INSERT INTO `users` VALUES ('23', 'exp7@exp1.com', '专家7', 'd2771ab82602cf02c2b6ce82375a55328a2535400bc280cf9e0fa3657b58781e', null, '5', '0', '', null, null, null, '', '0', '', '', '', '', '0', '', '2019-02-03 08:12:09', '2019-02-03 08:12:09', null, null);
-INSERT INTO `users` VALUES ('24', 'com1@com1.com', '用户 \'s\' \'e\' \'t\' \'o\' \'x\' \'f\' \'k\' \'b\' \'w\' \'j\'', '26aa9d860feebfa628cbd59b0e30d0d6562542b0c26414549ba555340c73ab7a', null, '3', '0', '', null, null, null, '', '0', '', '', '', '', '0', '', '2019-02-03 08:26:10', '2019-02-03 08:26:10', null, null);
-INSERT INTO `users` VALUES ('25', 'com2@com1.com', '用户 0qz947vpau', '1f8112d3e2f439f746176dea19db4ad616122829316183fc29d25722654400ae', null, '3', '0', '', null, null, null, '', '0', '', '', '', '', '0', '', '2019-02-03 08:26:12', '2019-02-03 08:26:12', null, null);
-INSERT INTO `users` VALUES ('26', 'com3@com1.com', '用户 gusjt78zfn', 'ff26e0b1616d84dc64eebd048b12a76e92498a41c19323695611dec2fa55a7cd', null, '3', '0', '', null, null, null, '', '0', '', '', '', '', '0', '', '2019-02-03 08:26:14', '2019-02-03 08:26:14', null, null);
-INSERT INTO `users` VALUES ('27', 'com4@com1.com', '用户 cjeu5tq427', '1a7c6535bcdbe5820194b39c0eeae738e3aa7c549dd62b6c15e33d592abee55d', null, '3', '0', '', null, null, null, '', '0', '', '', '', '', '0', '', '2019-02-03 08:26:16', '2019-02-03 08:26:16', null, null);
-INSERT INTO `users` VALUES ('28', 'com5@com1.com', '用户 yg7m8rhwz1', '3aad5c958caa869dcaa2402edf2fe71b7f286d79903bb77eb6d14b40e16d6a0d', null, '6', '0', '', null, null, null, '', '0', '', '', '', '', '0', '', '2019-02-03 08:26:17', '2019-02-03 08:26:17', null, null);
-INSERT INTO `users` VALUES ('29', 'com6@com1.com', '用户 8wei1lspy9', '9e0e546f766d888da7c46848989f56c62e60aa45dd81019c1bbaed114252754d', null, '6', '0', '', null, null, null, '', '0', '', '', '', '', '0', '', '2019-02-03 08:26:18', '2019-02-03 08:26:18', null, null);
-INSERT INTO `users` VALUES ('30', 'com7@com1.com', '用户 io69u3s5lc', 'e95aba424cce4a1fe53902c62ca0fa0ecf09b8c7112cde86a94f089790a68502', null, '6', '0', '', null, null, null, '', '0', '', '', '', '', '0', '', '2019-02-03 08:26:20', '2019-02-03 08:26:20', null, null);
-INSERT INTO `users` VALUES ('51', 'user0@fake.com', '用户 u35dxag4c9', '60c89bafbb2b191b9d6b390c45d8018d48556b70782be106b7e41a01cf80be22', null, '1', '0', '', null, null, null, null, '1', '', '', '', '', '0', '', '2019-02-24 21:13:23', '2019-02-24 21:13:23', null, null);
-INSERT INTO `users` VALUES ('52', 'user1@fake.com', '用户 qwabye1m9f', '599e60bc4121595f91c6a775e0154e75244f755e51bebbfa8cf66a9f25746f24', null, '1', '0', '', null, null, null, null, '1', '', '', '', '', '0', '', '2019-02-24 21:13:29', '2019-02-24 21:13:29', null, null);
-INSERT INTO `users` VALUES ('53', 'user2@fake.com', '用户 a1tkupc02i', '1deb094bf4c7f0553293603f3a0efb369b087ec9983c1b459517011c90e52305', null, '1', '0', '', null, null, null, null, '1', '', '', '', '', '0', '', '2019-02-24 21:13:33', '2019-02-24 21:13:33', null, null);
-INSERT INTO `users` VALUES ('54', 'user3@fake.com', '用户 jtq013nrai', 'b98ebb15f80a708f355c1112d670c2392b26c2a6be69b0c5197eceaea09b0b2d', null, '1', '0', '', null, null, null, null, '1', '', '', '', '', '0', '', '2019-02-24 21:13:34', '2019-02-24 21:13:34', null, null);
-INSERT INTO `users` VALUES ('55', 'user4@fake.com', '用户 tdn3q4orfl', 'a6c5766422cff52dd8dd3998d36dea4ebd881c9778383a0cdd4ee3c3aeda9dba', null, '1', '0', '', null, null, null, null, '1', '', '', '', '', '0', '', '2019-02-24 21:13:35', '2019-02-24 21:13:35', null, null);
-INSERT INTO `users` VALUES ('56', 'user5@fake.com', '用户 3hka96pi2c', 'ba64da7a2dcf7fb416e94fbe6baa90a1c30b8d920750eba2f86b6545fe63df69', null, '1', '0', '', null, null, null, null, '1', '', '', '', '', '0', '', '2019-02-24 21:13:36', '2019-02-24 21:13:36', null, null);
-INSERT INTO `users` VALUES ('57', 'user6@fake.com', '用户 foptv35dri', '5aa5290b481b19e12888d7ac0e5a30dbd8146b87f5162c1455b2a7d8e6710d03', null, '1', '0', '', null, null, null, null, '1', '', '', '', '', '0', '', '2019-02-24 21:13:37', '2019-02-24 21:13:37', null, null);
-INSERT INTO `users` VALUES ('58', 'user7@fake.com', '用户 kjpr5eaubi', 'aa44de99891cb179b3f46785aff02751d28d333f85b04b278858c6834819487d', null, '1', '0', '', null, null, null, null, '1', '', '', '', '', '0', '', '2019-02-24 21:13:38', '2019-02-24 21:13:38', null, null);
-INSERT INTO `users` VALUES ('59', 'user8@fake.com', '用户 f1aj97uglw', '0b5288355eebc89ca2bfc46c90339dda6a0f3ce4128b4c9e15090c25a9c2f5fe', null, '1', '0', '', null, null, null, null, '1', '', '', '', '', '0', '', '2019-02-24 21:13:40', '2019-02-24 21:13:40', null, null);
-INSERT INTO `users` VALUES ('60', 'user9@fake.com', '用户 h9nmba5plg', '41eea4cac48e52661ed0328a2e6f47f877146dc12597dd72133ce4c6afb1ba5e', null, '1', '0', '', null, null, null, null, '1', '', '', '', '', '0', '', '2019-02-24 21:13:45', '2019-02-24 21:13:45', null, null);
-INSERT INTO `users` VALUES ('61', 'user10@fake.com', '用户 2hc8qbx3fl', '382e1656c9c69a7adf041f52f16f1b43256a070ab24bece0e5455ef76935b216', null, '1', '0', '', null, null, null, null, '1', '', '', '', '', '0', '', '2019-02-24 21:13:47', '2019-02-24 21:13:47', null, null);
-INSERT INTO `users` VALUES ('62', 'user11@fake.com', '用户 mon62ai5wx', '0dad63ba055b199190e070161c557c6493e8e82bdbd948d60867427fe969a007', null, '1', '0', '', null, null, null, null, '1', '', '', '', '', '0', '', '2019-02-24 21:13:48', '2019-02-24 21:13:48', null, null);
-INSERT INTO `users` VALUES ('63', 'user12@fake.com', '用户 qdhrzt19c6', '42748d78dc6f8dffe2bb0d6084bf479e945efbf215d65910edb0a6811b5741ed', null, '1', '0', '', null, null, null, null, '1', '', '', '', '', '0', '', '2019-02-24 21:13:49', '2019-02-24 21:13:49', null, null);
-INSERT INTO `users` VALUES ('64', 'user13@fake.com', '用户 tgf8y10ohr', 'b4c6e127e4a03bf402f82c941174a559789b5a5dbbf98e077ada10182bd328c0', null, '1', '0', '', null, null, null, null, '1', '', '', '', '', '0', '', '2019-02-24 21:13:50', '2019-02-24 21:13:50', null, null);
-INSERT INTO `users` VALUES ('65', 'user14@fake.com', '用户 k4rx5lcevp', '6b2ff66b44d2c37db0e105606c37215a7d19f0460d400536d7ba7667be9b99f0', null, '1', '0', '', null, null, null, null, '1', '', '', '', '', '0', '', '2019-02-24 21:13:52', '2019-02-24 21:13:52', null, null);
-INSERT INTO `users` VALUES ('66', 'user15@fake.com', '用户 tjcd2npaws', 'b9b79888a89bcdaf0cad336cb008e240edfb30452bbbea945737b690e6d9c8d0', null, '1', '0', '', null, null, null, null, '1', '', '', '', '', '0', '', '2019-02-24 21:14:03', '2019-02-24 21:14:03', null, null);
-INSERT INTO `users` VALUES ('67', 'user16@fake.com', '用户 bpygwtldk9', 'a68ae4397b6dad3cc59a15f5508b601ad3377dc4c046b15e7e79088946abbe56', null, '1', '0', '', null, null, null, null, '1', '', '', '', '', '0', '', '2019-02-24 21:14:05', '2019-02-24 21:14:05', null, null);
-INSERT INTO `users` VALUES ('68', 'user17@fake.com', '用户 yd64v2wer5', '0365e6d9d5ebb0e2750ff191d23ac87e22d006038bc7fd90ff0abec2b38d2fd1', null, '1', '0', '', null, null, null, null, '1', '', '', '', '', '0', '', '2019-02-24 21:14:06', '2019-02-24 21:14:06', null, null);
-INSERT INTO `users` VALUES ('69', 'user18@fake.com', '用户 sfe71j8gna', '6bfba93deb3c9e9c09bae61e9742f3a3833bfb3bf3764923e0e6a18981a2a293', null, '1', '0', '', null, null, null, null, '1', '', '', '', '', '0', '', '2019-02-24 21:14:09', '2019-02-24 21:14:09', null, null);
-INSERT INTO `users` VALUES ('70', 'user19@fake.com', '用户 5n2c79rqgt', '64878d87733c073d117e641a685249d5d842c35cc03862064aac9eb44435e232', null, '1', '0', '', null, null, null, null, '1', '', '', '', '', '0', '', '2019-02-24 21:14:10', '2019-02-24 21:14:10', null, null);
-INSERT INTO `users` VALUES ('71', 'lpz@126.com', '用户 pb49rhfixn', 'd34d74e5f1ebbfa8f10284d25a53d739b0bc3eb8ef682bde2c618e62232da3fd', null, '1', '0', '', null, null, null, null, '1', '', '', '', '', '0', '', '2019-03-01 17:52:41', '2019-03-01 17:52:41', null, null);
-INSERT INTO `users` VALUES ('72', 'test@qq.com', '用户 8bwij1qul2', 'e63d5a15d31234b160911313fa3bbb63ddcf67653afd66fd83c229222e7dbc03', null, '1', '0', 'FLsw69iM30xKyj7ZSmgWHkqPe', null, null, null, null, '1', '', '', '', '', '0', '', '2019-03-01 18:01:19', '2019-03-01 18:01:19', null, null);
+INSERT INTO `users` VALUES ('1', 'zhangyu199946@126.com', '拉拉人', 'ec847003d2eadc9baf60853e8391e167a292c21f01892fcb8bad0f4af6cd74a7', 'https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1552152076149&di=fa36b3f5d8d78966a3a14fff9972bc21&imgtype=0&src=http%3A%2F%2Faliyunzixunbucket.oss-cn-beijing.aliyuncs.com%2Fpng%2F4249664cce0b523e1f70ac3527afa967.png%3Fx-oss-process%3Dimage%2Fresize%2Cp_100%2Fauto-orient%2C1%2Fquality%2Cq_90%2Fformat%2Cjpg%2Fwatermark%2Cimage_eXVuY2VzaGk%3D%2Ct_100', '0', '199998', 'TFQYWGy1bxa4Z6tRJCL7NHDlw', null, null, null, '弗兰秀秀牛逼', '2', '', '', '德玛西亚', '', '691.40', '', '2019-03-17 21:41:06', '2019-03-17 21:41:06', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('2', 'yyz@126.com', '袁宜照', '317f16f4833885da6766e81b35c7258fe4451798600a1ad980babb9e9f412fc2', 'https://cdn.vuetifyjs.com/images/lists/1.jpg', '0', '0', 'TNp6hR7ElkJK4Z5Xfte0VyqG3', null, null, null, '任豚', '0', '', '', '啦啦啦', '', '0.00', '', '2019-02-26 18:48:59', '2019-02-26 18:48:59', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('3', 'zyxiaohao@126.com', '张煜', 'cb8f260c5b29ec2a17d662133ebcf99cd4594e29b0ffeb54599ffe5f3801c3ed', 'https://hanerx.tk:5000/static/uploads/1552391235timg_1.jpg', '0', '199999', 'wajKuqh7p6DktRzUXGM8c54Cx', null, null, null, '知名软狗', '2', '', '', '光头', '', '200007.00', '', '2019-03-17 21:00:57', '2019-03-17 21:00:57', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('4', 'user1@user1.com', 'API', '599e60bc4121595f91c6a775e0154e75244f755e51bebbfa8cf66a9f25746f24', 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1551783191&di=c1413003edea3720657bacf28678bf4a&imgtype=jpg&er=1&src=http%3A%2F%2Fi1.hdslb.com%2Fbfs%2Fface%2F81a4c5b742e8142175f8f71a4fcf95d08b307976.jpg', '2', '0', 'ivt5YkomWFPbhC9r0lD6OA7KS', null, null, '德莉莎', '索尼天下第一', '2', '二', '没有', '傻缺', '和', '0.00', '', '2019-03-16 13:42:07', '2019-03-16 13:42:07', '/static/identity_card/4_front.jpg', '/static/identity_card/4_back.jpg', null, '', '', '0');
+INSERT INTO `users` VALUES ('5', 'user2@user1.com', '海王星', '1deb094bf4c7f0553293603f3a0efb369b087ec9983c1b459517011c90e52305', 'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1356556468,3620436078&fm=26&gp=0.jpg', '2', '0', 'L7UrBhdiet2o9c8R6Tzjq13WX', null, null, '', '太阳系行星', '2', '', '', '', '', '0.00', '', '2019-03-09 19:42:38', '2019-03-09 19:42:38', '/static/identity_card/5_front.jpg', '/static/identity_card/5_back.jpg', null, '', '', '0');
+INSERT INTO `users` VALUES ('6', 'user3@user1.com', '天王星', 'b98ebb15f80a708f355c1112d670c2392b26c2a6be69b0c5197eceaea09b0b2d', 'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1083497808,3244706846&fm=26&gp=0.jpg', '1', '0', 'VygcmaopD4fxMdZOIHiBkurFz', null, null, '日内二', '太阳系行星', '2', '女', '002022020', '呼啦啦啦', '和', '0.00', '', '2019-03-10 01:04:20', '2019-03-10 01:04:20', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('7', 'user4@user1.com', '冥王星', 'a6c5766422cff52dd8dd3998d36dea4ebd881c9778383a0cdd4ee3c3aeda9dba', 'http://p4.music.126.net/7rVK4tnPsCz2xtGot7bLhA==/7729566743982785.jpg?param=180y180', '3', '0', '', null, null, '', '太阳系小行星', '1', '', '', '', '', '0.00', '', '2019-02-26 19:34:07', '2019-02-26 19:34:07', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('8', 'user5@user1.com', 'wh', 'ba64da7a2dcf7fb416e94fbe6baa90a1c30b8d920750eba2f86b6545fe63df69', 'https://www.asgardusk.com/images/none.png', '1', '0', '', null, null, '', '', '1', '', '', '', '', '0.00', '', '2019-02-26 20:12:15', '2019-02-26 20:12:15', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('9', 'user6@user1.com', '哥布林', '5aa5290b481b19e12888d7ac0e5a30dbd8146b87f5162c1455b2a7d8e6710d03', 'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1237773216,1097724796&fm=26&gp=0.jpg', '1', '0', '', null, null, null, '', '0', '', '', '', '', '0.00', '', '2019-03-08 19:50:24', '2019-03-08 19:50:24', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('10', 'user7@user1.com', '吉良吉影', 'aa44de99891cb179b3f46785aff02751d28d333f85b04b278858c6834819487d', 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1552140613749&di=d8a059b852cccf7fb884d9d2cdb26427&imgtype=0&src=http%3A%2F%2Fpic4.zhimg.com%2F50%2Ffc4e2ea6bf0f9d0f5bdfb1f53448cf5e_hd.jpg', '1', '0', '', null, null, null, '', '0', '', '', '', '', '0.00', '', '2019-03-09 19:22:25', '2019-03-09 19:22:25', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('11', 'user8@user1.com', '空调承太郎', '0b5288355eebc89ca2bfc46c90339dda6a0f3ce4128b4c9e15090c25a9c2f5fe', 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1552735489&di=6eca7560406ae67809507c0b54081d77&imgtype=jpg&er=1&src=http%3A%2F%2Fimg3.a0bi.com%2Fupload%2Fttq%2F20160214%2F1455434226368.jpg', '1', '0', '', null, null, null, '', '0', '', '', '', '', '0.00', '', '2019-03-09 19:25:11', '2019-03-09 19:25:11', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('12', 'user9@user1.com', '桐生战兔', '41eea4cac48e52661ed0328a2e6f47f877146dc12597dd72133ce4c6afb1ba5e', 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1552735831&di=9e40cfd1c5049103ae7db7bb1c79a925&imgtype=jpg&er=1&src=http%3A%2F%2Fwx2.sinaimg.cn%2Forj360%2F7cd74be6gy1fkr9658zv1j204v04k0t9.jpg', '1', '0', '', null, null, null, '', '0', '', '', '', '', '0.00', '', '2019-03-09 19:30:39', '2019-03-09 19:30:39', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('13', 'user10@user1.com', '用户10', '382e1656c9c69a7adf041f52f16f1b43256a070ab24bece0e5455ef76935b216', null, '1', '0', '', null, null, null, '', '0', '', '', '', '', '0.00', '', '2019-02-03 07:39:31', '2019-02-03 07:39:31', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('14', 'ban1@ban1.com', '封禁账户1', 'dea695d9c9da21db93bf86d05774b3866807df5ac187142d71ba5e2da48e3b98', null, '4', '0', '', null, null, null, '', '0', '', '', '', '', '0.00', '', '2019-02-03 07:44:39', '2019-02-03 07:44:39', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('15', 'ban2@ban1.com', '封禁账户2', 'b2a4d7a43e26c71e62a6dc6d585cf19029896ca35b2de2f212bd1572f28b1603', null, '4', '0', '', null, null, null, '', '0', '', '', '', '', '0.00', '', '2019-02-03 07:44:45', '2019-02-03 07:44:45', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('16', 'ban3@ban1.com', '封禁账户3', '7c0aa756166b96ee6eafb773fc85a1f86b75ce3ee203386888a5bf747de1c07e', null, '4', '0', '', null, null, null, '', '0', '', '', '', '', '0.00', '', '2019-02-03 07:44:50', '2019-02-03 07:44:50', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('17', 'exp1@exp1.com', '专家1', '60c12cd0e12d466232d362730bc1cdc19962a796e6c2a699956707706082c380', null, '2', '0', '', null, null, null, '', '0', '', '', '', '', '0.00', '', '2019-02-03 08:11:39', '2019-02-03 08:11:39', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('18', 'exp2@exp1.com', '专家2', 'bccb210bbefdafdf3ee67959db70a7ae3f93e7dcc666289000917d432dffdaac', null, '2', '0', '', null, null, null, '', '0', '', '', '', '', '0.00', '', '2019-02-03 08:11:42', '2019-02-03 08:11:42', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('19', 'exp3@exp1.com', '专家3', '36bf74d7c2fa7ff3c6293f49130c6c8b9a1f9afc764f82d185fda271f478cfc1', null, '2', '0', '', null, null, null, '', '0', '', '', '', '', '0.00', '', '2019-02-03 08:11:47', '2019-02-03 08:11:47', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('20', 'exp4@exp1.com', '专家4', '4a25e59f2c9682d39089fcfc3ad94ff54a92b0c6e71a8e2ba9ec87f45fe68274', null, '2', '0', '', null, null, null, '', '0', '', '', '', '', '0.00', '', '2019-02-03 08:11:53', '2019-02-03 08:11:53', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('21', 'exp5@exp1.com', '专家5', '72fdde7c00b5a1125aa3530635a477a12e3cbf162a45d536755162672743e6de', null, '5', '0', '', null, null, null, '', '0', '', '', '', '', '0.00', '', '2019-02-03 08:11:58', '2019-02-03 08:11:58', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('22', 'exp6@exp1.com', '专家6', '22a222e334d73ecb10cf87920fe18fd2c6f084069f0b38828e3cdf097e335b84', null, '5', '0', '', null, null, null, '', '0', '', '', '', '', '0.00', '', '2019-02-03 08:12:05', '2019-02-03 08:12:05', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('23', 'exp7@exp1.com', '专家7', 'd2771ab82602cf02c2b6ce82375a55328a2535400bc280cf9e0fa3657b58781e', null, '5', '0', '', null, null, null, '', '0', '', '', '', '', '0.00', '', '2019-02-03 08:12:09', '2019-02-03 08:12:09', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('24', 'com1@com1.com', '用户 \'s\' \'e\' \'t\' \'o\' \'x\' \'f\' \'k\' \'b\' \'w\' \'j\'', '26aa9d860feebfa628cbd59b0e30d0d6562542b0c26414549ba555340c73ab7a', null, '3', '0', '', null, null, null, '', '0', '', '', '', '', '0.00', '', '2019-02-03 08:26:10', '2019-02-03 08:26:10', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('25', 'com2@com1.com', '用户 0qz947vpau', '1f8112d3e2f439f746176dea19db4ad616122829316183fc29d25722654400ae', null, '3', '0', '', null, null, null, '', '0', '', '', '', '', '0.00', '', '2019-02-03 08:26:12', '2019-02-03 08:26:12', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('26', 'com3@com1.com', '用户 gusjt78zfn', 'ff26e0b1616d84dc64eebd048b12a76e92498a41c19323695611dec2fa55a7cd', null, '3', '0', '', null, null, null, '', '0', '', '', '', '', '0.00', '', '2019-02-03 08:26:14', '2019-02-03 08:26:14', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('27', 'com4@com1.com', '用户 cjeu5tq427', '1a7c6535bcdbe5820194b39c0eeae738e3aa7c549dd62b6c15e33d592abee55d', null, '3', '0', '', null, null, null, '', '0', '', '', '', '', '0.00', '', '2019-02-03 08:26:16', '2019-02-03 08:26:16', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('28', 'com5@com1.com', '用户 yg7m8rhwz1', '3aad5c958caa869dcaa2402edf2fe71b7f286d79903bb77eb6d14b40e16d6a0d', null, '6', '0', '', null, null, null, '', '0', '', '', '', '', '0.00', '', '2019-02-03 08:26:17', '2019-02-03 08:26:17', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('29', 'com6@com1.com', '用户 8wei1lspy9', '9e0e546f766d888da7c46848989f56c62e60aa45dd81019c1bbaed114252754d', null, '6', '0', '', null, null, null, '', '0', '', '', '', '', '0.00', '', '2019-02-03 08:26:18', '2019-02-03 08:26:18', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('30', 'com7@com1.com', '用户 io69u3s5lc', 'e95aba424cce4a1fe53902c62ca0fa0ecf09b8c7112cde86a94f089790a68502', null, '6', '0', '', null, null, null, '', '0', '', '', '', '', '0.00', '', '2019-02-03 08:26:20', '2019-02-03 08:26:20', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('51', 'user0@fake.com', '用户 u35dxag4c9', '60c89bafbb2b191b9d6b390c45d8018d48556b70782be106b7e41a01cf80be22', null, '1', '0', '', null, null, null, null, '1', '', '', '', '', '0.00', '', '2019-02-24 21:13:23', '2019-02-24 21:13:23', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('52', 'user1@fake.com', '用户 qwabye1m9f', '599e60bc4121595f91c6a775e0154e75244f755e51bebbfa8cf66a9f25746f24', null, '1', '0', '', null, null, null, null, '1', '', '', '', '', '0.00', '', '2019-02-24 21:13:29', '2019-02-24 21:13:29', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('53', 'user2@fake.com', '用户 a1tkupc02i', '1deb094bf4c7f0553293603f3a0efb369b087ec9983c1b459517011c90e52305', null, '1', '0', '', null, null, null, null, '1', '', '', '', '', '0.00', '', '2019-02-24 21:13:33', '2019-02-24 21:13:33', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('54', 'user3@fake.com', '用户 jtq013nrai', 'b98ebb15f80a708f355c1112d670c2392b26c2a6be69b0c5197eceaea09b0b2d', null, '1', '0', '', null, null, null, null, '1', '', '', '', '', '0.00', '', '2019-02-24 21:13:34', '2019-02-24 21:13:34', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('55', 'user4@fake.com', '用户 tdn3q4orfl', 'a6c5766422cff52dd8dd3998d36dea4ebd881c9778383a0cdd4ee3c3aeda9dba', null, '1', '0', '', null, null, null, null, '1', '', '', '', '', '0.00', '', '2019-02-24 21:13:35', '2019-02-24 21:13:35', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('56', 'user5@fake.com', '用户 3hka96pi2c', 'ba64da7a2dcf7fb416e94fbe6baa90a1c30b8d920750eba2f86b6545fe63df69', null, '1', '0', '', null, null, null, null, '1', '', '', '', '', '0.00', '', '2019-02-24 21:13:36', '2019-02-24 21:13:36', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('57', 'user6@fake.com', '用户 foptv35dri', '5aa5290b481b19e12888d7ac0e5a30dbd8146b87f5162c1455b2a7d8e6710d03', null, '1', '0', '', null, null, null, null, '1', '', '', '', '', '0.00', '', '2019-02-24 21:13:37', '2019-02-24 21:13:37', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('58', 'user7@fake.com', '用户 kjpr5eaubi', 'aa44de99891cb179b3f46785aff02751d28d333f85b04b278858c6834819487d', null, '1', '0', '', null, null, null, null, '1', '', '', '', '', '0.00', '', '2019-02-24 21:13:38', '2019-02-24 21:13:38', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('59', 'user8@fake.com', '用户 f1aj97uglw', '0b5288355eebc89ca2bfc46c90339dda6a0f3ce4128b4c9e15090c25a9c2f5fe', null, '1', '0', '', null, null, null, null, '1', '', '', '', '', '0.00', '', '2019-02-24 21:13:40', '2019-02-24 21:13:40', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('60', 'user9@fake.com', '用户 h9nmba5plg', '41eea4cac48e52661ed0328a2e6f47f877146dc12597dd72133ce4c6afb1ba5e', null, '1', '0', '', null, null, null, null, '1', '', '', '', '', '0.00', '', '2019-02-24 21:13:45', '2019-02-24 21:13:45', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('61', 'user10@fake.com', '用户 2hc8qbx3fl', '382e1656c9c69a7adf041f52f16f1b43256a070ab24bece0e5455ef76935b216', null, '1', '0', '', null, null, null, null, '1', '', '', '', '', '0.00', '', '2019-02-24 21:13:47', '2019-02-24 21:13:47', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('62', 'user11@fake.com', '用户 mon62ai5wx', '0dad63ba055b199190e070161c557c6493e8e82bdbd948d60867427fe969a007', null, '1', '0', '', null, null, null, null, '1', '', '', '', '', '0.00', '', '2019-02-24 21:13:48', '2019-02-24 21:13:48', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('63', 'user12@fake.com', '用户 qdhrzt19c6', '42748d78dc6f8dffe2bb0d6084bf479e945efbf215d65910edb0a6811b5741ed', null, '1', '0', '', null, null, null, null, '1', '', '', '', '', '0.00', '', '2019-02-24 21:13:49', '2019-02-24 21:13:49', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('64', 'user13@fake.com', '用户 tgf8y10ohr', 'b4c6e127e4a03bf402f82c941174a559789b5a5dbbf98e077ada10182bd328c0', null, '1', '0', '', null, null, null, null, '1', '', '', '', '', '0.00', '', '2019-02-24 21:13:50', '2019-02-24 21:13:50', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('65', 'user14@fake.com', '用户 k4rx5lcevp', '6b2ff66b44d2c37db0e105606c37215a7d19f0460d400536d7ba7667be9b99f0', null, '1', '0', '', null, null, null, null, '1', '', '', '', '', '0.00', '', '2019-02-24 21:13:52', '2019-02-24 21:13:52', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('66', 'user15@fake.com', '用户 tjcd2npaws', 'b9b79888a89bcdaf0cad336cb008e240edfb30452bbbea945737b690e6d9c8d0', null, '1', '0', '', null, null, null, null, '1', '', '', '', '', '0.00', '', '2019-02-24 21:14:03', '2019-02-24 21:14:03', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('67', 'user16@fake.com', '用户 bpygwtldk9', 'a68ae4397b6dad3cc59a15f5508b601ad3377dc4c046b15e7e79088946abbe56', null, '1', '0', '', null, null, null, null, '1', '', '', '', '', '0.00', '', '2019-02-24 21:14:05', '2019-02-24 21:14:05', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('68', 'user17@fake.com', '用户 yd64v2wer5', '0365e6d9d5ebb0e2750ff191d23ac87e22d006038bc7fd90ff0abec2b38d2fd1', null, '1', '0', '', null, null, null, null, '1', '', '', '', '', '0.00', '', '2019-02-24 21:14:06', '2019-02-24 21:14:06', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('69', 'user18@fake.com', '用户 sfe71j8gna', '6bfba93deb3c9e9c09bae61e9742f3a3833bfb3bf3764923e0e6a18981a2a293', null, '1', '0', '', null, null, null, null, '1', '', '', '', '', '0.00', '', '2019-02-24 21:14:09', '2019-02-24 21:14:09', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('70', 'user19@fake.com', '用户 5n2c79rqgt', '64878d87733c073d117e641a685249d5d842c35cc03862064aac9eb44435e232', null, '1', '0', '', null, null, null, null, '1', '', '', '', '', '0.00', '', '2019-02-24 21:14:10', '2019-02-24 21:14:10', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('71', 'lpz@126.com', '用户 pb49rhfixn', 'd34d74e5f1ebbfa8f10284d25a53d739b0bc3eb8ef682bde2c618e62232da3fd', null, '1', '0', '', null, null, null, null, '1', '', '', '', '', '0.00', '', '2019-03-01 17:52:41', '2019-03-01 17:52:41', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('72', 'test@qq.com', '用户 8bwij1qul2', 'e63d5a15d31234b160911313fa3bbb63ddcf67653afd66fd83c229222e7dbc03', null, '1', '0', 'FLsw69iM30xKyj7ZSmgWHkqPe', null, null, null, null, '1', '', '', '', '', '0.00', '', '2019-03-01 18:01:19', '2019-03-01 18:01:19', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('73', 'lpz@lpz.com', '用户 j0fqpc8e7m', 'd34d74e5f1ebbfa8f10284d25a53d739b0bc3eb8ef682bde2c618e62232da3fd', null, '1', '0', 'g4ir9LzJSUb6sqovf5OwVZj7A', null, null, null, null, '1', '', '', '', '', '0.00', '', '2019-03-11 13:06:47', '2019-03-11 13:06:47', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('74', 'zyxiaohao2@126.com', '管理员的小号', '159b545bd123ed543bda648c9e4fbd6788855271a12825f12b80aafe3a8973a9', 'https://hanerx.tk:5000/static/uploads/1552274595timg_1.jpg', '1', '0', 'NwHx5MXU4R1Ehik09JrvtGyFY', null, null, null, '管理员的小号', '1', '', '', '', '', '0.00', '', '2019-03-17 16:08:22', '2019-03-17 16:08:22', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('75', '13979215061@163.com', '啦啦啦', '670f99b07b0277d488014e6f25f7fec0f1ff1a003a6a00d6864827b67590a6f5', 'https://hanerx.tk:5000/static/uploads/15525455054A64F4D6A0CB031AFFD29D9AE532F87D.jpg', '0', '0', '3OVQ2HsgKmEaXbYW1tlJ8jeAR', null, null, null, '没有只狼玩我要死了', '1', '', '', '', '', '0.00', '', '2019-03-17 23:48:26', '2019-03-17 23:48:26', null, null, null, 'oqJ_m5XF-ZPE26ch73koZjOG8BG4', '', '0');
+INSERT INTO `users` VALUES ('76', 'ZhuanPlus@163.com', 'smhhyyz', 'e63d5a15d31234b160911313fa3bbb63ddcf67653afd66fd83c229222e7dbc03', '', '1', '0', 'zg76QjdbulvxqNaS3tDn0EOiy', null, null, null, null, '1', '', '', '', '', '0.00', '', '2019-03-17 23:09:28', '2019-03-17 23:09:28', null, null, null, 'oqJ_m5R-hvsCvshVwJf4jJ4fgkWY', '', '0');
+INSERT INTO `users` VALUES ('77', '1198873796@qq.com', '老司机', 'e63d5a15d31234b160911313fa3bbb63ddcf67653afd66fd83c229222e7dbc03', 'https://wx.qlogo.cn/mmopen/vi_32/9506m8zmXSWIWXh199G0jjstgbqVaiatXTZnLUZ8Fyag9nvX4BOwE8DAxVM12r2gdD8z1JYE2pnPUpP7tRlqBbw/132', '1', '0', 'WJ5qPVCuH2mU9OL8DRfc4gXS6', null, null, null, '', '1', '', '', '', '', '0.00', '', '2019-03-14 14:30:35', '2019-03-14 14:30:35', null, null, null, 'oqJ_m5a8u1PiPjpbGFIWHq81w5xE', '', '0');
+INSERT INTO `users` VALUES ('78', '18072817960', '用户yhbv52wijk', 'e63d5a15d31234b160911313fa3bbb63ddcf67653afd66fd83c229222e7dbc03', '', '1', '0', '', null, null, null, null, '1', '', '', '', '', '0.00', '', '2019-03-16 18:33:50', '2019-03-16 18:33:50', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('79', 'Hi.imhpc@outlook.com', '用户tk82d41ef6', '6c99e076139a71e5ae7d23acb21bf4e8cc45ee4b03cd8685b7fc86faddacfcb6', '', '1', '0', '', null, null, null, null, '1', '', '', '', '', '0.00', '', '2019-03-16 19:52:33', '2019-03-16 19:52:33', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('80', '910189033@qq.com', '用户7x8ct3r5fv', '2560925b5a76df9c51279c04f854aeefa2e949f9f617cae8cabe449840304ba5', 'https://hanerx.tk:5000/static/uploads/1552737582Screenshot_20190316-015225.jpg', '1', '0', '0NTEfZ9y8Il6vKY2soinVe3qM', null, null, null, '', '1', '', '', '', '', '0.00', '', '2019-03-16 19:59:47', '2019-03-16 19:59:47', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('81', '11011011011', '用户byla6rwgqo', '9b6a0a864e8d314532af4d79c9b9cdf386ceddb04a6722a1ee8acf7ad84b04f6', '', '1', '0', '', null, null, null, null, '1', '', '', '', '', '0.00', '', '2019-03-16 20:32:18', '2019-03-16 20:32:18', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('82', '11011011011@QQ.com', 'kriscris', '9b6a0a864e8d314532af4d79c9b9cdf386ceddb04a6722a1ee8acf7ad84b04f6', 'https://hanerx.tk:5000/static/uploads/15527395875dbecd56703217bf.gif', '2', '0', 'SqFDi9xfapJsQ2BE7ZV0MAKRI', null, null, null, 'van', '1', '', '', '', '', '0.00', '', '2019-03-16 21:00:55', '2019-03-16 21:00:55', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('83', 'zhangyu199946@163.com', '兯兯兯兯', 'ec847003d2eadc9baf60853e8391e167a292c21f01892fcb8bad0f4af6cd74a7', 'https://hanerx.tk:5000/static/uploads/15527400176qpjzu0bqu59gswgnft59oteg.gif', '0', '0', 'Atya7fXGQHsBm6lZo8JTbiWhg', null, null, null, '我他妈', '1', '', '', '', '', '0.00', '', '2019-03-16 21:00:52', '2019-03-16 21:00:52', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('84', '', '用户dr9f53p0xm', '2560925b5a76df9c51279c04f854aeefa2e949f9f617cae8cabe449840304ba5', '', '1', '0', 'BtH6QTJALDcGRUCpbKxamPF0v', null, '15906675075', null, null, '1', '', '', '', '', '0.00', '', '2019-03-16 20:39:22', '2019-03-16 20:39:22', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('85', 'zhangyu199946@gmail.', 'NULL', 'ec847003d2eadc9baf60853e8391e167a292c21f01892fcb8bad0f4af6cd74a7', '', '1', '0', 'AeoRGa3b4H1ZTJPSVDc5jUsxY', null, null, null, null, '1', '', '', '', '', '0.00', '', '2019-03-17 15:30:55', '2019-03-17 15:30:55', null, null, null, 'oqJ_m5ZsCjbCmSguVGxD8JYCYKi0', '', '0');
+INSERT INTO `users` VALUES ('86', '', '救命', '14c5e886d416b193d29a9f7d17c4557079efcd2378e08cc6d0160214f781bd64', 'https://hanerx.tk:5000/static/uploads/1552808808Screenshot_2019-03-16-00-36-38-677_com.digitalsky.girlsfrontline.cn.png', '1', '0', '4dFkowlapDHjB9yOP0MsuJzKt', null, '13979215061', null, '没啥见解', '1', '', '', '', '', '0.00', '', '2019-03-17 21:06:50', '2019-03-17 21:06:50', null, null, null, '', '209387', '0');
+INSERT INTO `users` VALUES ('87', '', '袁宜照', 'e63d5a15d31234b160911313fa3bbb63ddcf67653afd66fd83c229222e7dbc03', 'https://hanerx.tk:5000/static/uploads/1552828870u16290587634090727309fm27gp0.jpg', '1', '0', 'kE6jcxaWUtlyNK7B5CPXuO48h', null, '13777579230', null, '填写测试用例中....修改一下签名', '1', '', '', '', '', '9757.00', '', '2019-03-17 22:55:02', '2019-03-17 22:55:02', null, null, null, '', '266826', '0');
+INSERT INTO `users` VALUES ('88', '', '用户o4ep30d1lu', 'e63d5a15d31234b160911313fa3bbb63ddcf67653afd66fd83c229222e7dbc03', '', '1', '0', '', null, '13777466079', null, null, '1', '', '', '', '', '0.00', '', '2019-03-17 22:58:17', '2019-03-17 22:58:17', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('89', '', '用户s1tvf5ygie', 'e63d5a15d31234b160911313fa3bbb63ddcf67653afd66fd83c229222e7dbc03', '', '1', '0', '', null, '18768166764', null, null, '1', '', '', '', '', '0.00', '', '2019-03-17 23:00:59', '2019-03-17 23:00:59', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('90', '', '用户tsk4zpfjn0', 'e63d5a15d31234b160911313fa3bbb63ddcf67653afd66fd83c229222e7dbc03', '', '1', '0', '', null, '13479237339', null, null, '1', '', '', '', '', '0.00', '', '2019-03-17 23:16:16', '2019-03-17 23:16:16', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('91', '', '黄平川', 'e63d5a15d31234b160911313fa3bbb63ddcf67653afd66fd83c229222e7dbc03', 'https://hanerx.tk:5000/static/uploads/1552836882u7513331423020252835fm27gp0.jpg', '1', '0', '5zYjTD6fILeGgqxM4Jd0KAQpS', null, '18668210821', null, '我是黄平川', '1', '', '', '', '', '0.00', '', '2019-03-17 23:34:46', '2019-03-17 23:34:46', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('92', '', '用户d1mcge3tu8', 'e63d5a15d31234b160911313fa3bbb63ddcf67653afd66fd83c229222e7dbc03', '', '1', '0', 'RmKNevWpELO0Mnu5hBywAYfdQ', null, '13807924439', null, null, '1', '', '', '', '', '0.00', '', '2019-03-17 23:37:59', '2019-03-17 23:37:59', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('93', 'q1531441927@qq.com', '荸荠', '5fb55d4a9304692ed872ae6f59b6f4b92521449191e5612d8b124ad6fde6493c', 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLvrkYKHlgmfeaTDnLtcr96yZKZq8hjbkziaO68LAaFlGCxibMdyYwQTpqvLt7ZrYVCnhufq6GjtU7w/132', '1', '0', 'Uef2JqjSg9YmdAH06pa83biDL', null, null, null, null, '1', '', '', '', '', '0.00', '', '2019-03-18 09:11:55', '2019-03-18 09:11:55', null, null, null, 'oqJ_m5V_ukaDgBy5HUn8JahV-H7Y', '', '0');
+INSERT INTO `users` VALUES ('94', '', '用户7nk86cy0u4', 'e63d5a15d31234b160911313fa3bbb63ddcf67653afd66fd83c229222e7dbc03', '', '1', '0', '6HRT7od80bwxN91Umj32KVlcg', null, '13333333333', null, null, '1', '', '', '', '', '0.00', '', '2019-03-18 10:37:52', '2019-03-18 10:37:52', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('95', '', '用户6mzv1xu57k', 'e63d5a15d31234b160911313fa3bbb63ddcf67653afd66fd83c229222e7dbc03', '', '1', '0', 'DYEyKxisObczrCnIZSjm80Qh2', null, '13999999999', null, null, '1', '', '', '', '', '0.00', '', '2019-03-18 10:39:10', '2019-03-18 10:39:10', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('96', '', '用户tf8r32dw15', '49fd2e8156ae4d66d3034c79f6f3183e9ebebe4fd9a227981b42338ff0474910', '', '1', '0', '05na8jSFYAJNBi1o4cvPTlur6', null, '13336133333', null, null, '1', '', '', '', '', '0.00', '', '2019-03-18 10:49:54', '2019-03-18 10:49:54', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('97', '', '用户7iphfeguxj', '49fd2e8156ae4d66d3034c79f6f3183e9ebebe4fd9a227981b42338ff0474910', '', '1', '0', '7za0YtoPHCRDTkrFgvMpcbxXZ', null, '13336464646', null, null, '1', '', '', '', '', '0.00', '', '2019-03-18 10:52:25', '2019-03-18 10:52:25', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('98', '', '用户xcfahngomw', '49fd2e8156ae4d66d3034c79f6f3183e9ebebe4fd9a227981b42338ff0474910', '', '1', '0', 'qo6nuZlwjSXIR8F0tgNMQ5zYa', null, '13878974439', null, null, '1', '', '', '', '', '0.00', '', '2019-03-18 11:02:33', '2019-03-18 11:02:33', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('99', '', '用户26fsvyig0b', '49fd2e8156ae4d66d3034c79f6f3183e9ebebe4fd9a227981b42338ff0474910', '', '1', '0', 'PjWKcAdv9XlGtnVh6uCy4JMUm', null, '13336333333', null, null, '1', '', '', '', '', '0.00', '', '2019-03-18 11:03:36', '2019-03-18 11:03:36', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('100', '', '用户g8p5y9taj6', 'e63d5a15d31234b160911313fa3bbb63ddcf67653afd66fd83c229222e7dbc03', '', '1', '0', 'pHPrlo4IhycZ5dLv8guM2saBe', null, '18279288573', null, null, '1', '', '', '', '', '0.00', '', '2019-03-18 11:12:29', '2019-03-18 11:12:29', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('101', '1597087396@qq.com', '用户k7yq5dsavl', 'e63d5a15d31234b160911313fa3bbb63ddcf67653afd66fd83c229222e7dbc03', '', '1', '0', 'ZKr4eoNfc1hmQYBIj7CnAuy0X', null, null, null, null, '1', '', '', '', '', '0.00', '', '2019-03-18 11:13:58', '2019-03-18 11:13:58', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('102', 'asgardusk@gmail.com', '用户3c2zgb1xof', 'e63d5a15d31234b160911313fa3bbb63ddcf67653afd66fd83c229222e7dbc03', '', '1', '0', 'jsw1Qq0Zv9kmTHYlhb42fN7xy', null, null, null, null, '1', '', '', '', '', '0.00', '', '2019-03-18 11:14:43', '2019-03-18 11:14:43', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('103', '', '用户vn1sucpry9', 'e63d5a15d31234b160911313fa3bbb63ddcf67653afd66fd83c229222e7dbc03', '', '1', '0', 'EburZeF9lc5mQLjHJ02TxO7q4', null, '13333360250', null, null, '1', '', '', '', '', '0.00', '', '2019-03-18 11:15:33', '2019-03-18 11:15:33', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('104', '', '用户jlwpxazsuk', '49fd2e8156ae4d66d3034c79f6f3183e9ebebe4fd9a227981b42338ff0474910', '', '1', '0', 'Aw4SxMGp2zBslfbWeUgFiPtdN', null, '13807924446', null, null, '1', '', '', '', '', '0.00', '', '2019-03-18 11:16:12', '2019-03-18 11:16:12', null, null, null, '', '', '0');
+INSERT INTO `users` VALUES ('105', '', '用户u4lcijdnwf', '49fd2e8156ae4d66d3034c79f6f3183e9ebebe4fd9a227981b42338ff0474910', '', '1', '0', 'Rukz0ocUxB9rQYDMwt8n7ivNA', null, '13812456612', null, null, '1', '', '', '', '', '0.00', '', '2019-03-18 11:17:57', '2019-03-18 11:17:57', null, null, null, '', '', '0');
 
 -- ----------------------------
 -- View structure for `a_at_info`
@@ -4779,10 +6209,16 @@ DROP VIEW IF EXISTS `agree_question_comment_info`;
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `agree_question_comment_info` AS select `useraction`.`actionID` AS `actionID`,`useraction`.`userID` AS `userID`,`useraction`.`targetID` AS `targetID`,`useraction`.`targettype` AS `targettype`,`useraction`.`actiontime` AS `actiontime`,`users`.`email` AS `email`,`users`.`nickname` AS `nickname`,`users`.`password` AS `password`,`users`.`headportrait` AS `headportrait`,`users`.`usergroup` AS `usergroup`,`users`.`exp` AS `exp`,`users`.`token` AS `token`,`users`.`birthday` AS `birthday`,`users`.`phonenumber` AS `phonenumber`,`users`.`address` AS `address`,`questioncomments`.`qcommentID` AS `qcommentID`,`questioncomments`.`content` AS `content`,`questioncomments`.`agree` AS `agree`,`questioncomments`.`createtime` AS `createtime`,`questioncomments`.`questionID` AS `questionID`,`questions`.`title` AS `title`,`questions`.`description` AS `description`,`questions`.`edittime` AS `edittime`,`questions`.`tags` AS `tags` from (((`questions` join `users`) join `useraction`) join `questioncomments`) where ((`useraction`.`targettype` = 5) and (`useraction`.`userID` = `users`.`userID`) and (`questioncomments`.`qcommentID` = `useraction`.`targetID`) and (`questions`.`questionID` = `questioncomments`.`questionID`)) ;
 
 -- ----------------------------
+-- View structure for `answer_comments_info`
+-- ----------------------------
+DROP VIEW IF EXISTS `answer_comments_info`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`hanerx`@`%` SQL SECURITY DEFINER VIEW `answer_comments_info` AS select `answercomments`.`acommentID` AS `acommentID`,`answercomments`.`userID` AS `userID`,`answercomments`.`content` AS `content`,`answercomments`.`agree` AS `agree`,`answercomments`.`createtime` AS `createtime`,`answercomments`.`answerID` AS `answerID`,`users`.`nickname` AS `nickname`,`users`.`headportrait` AS `headportrait`,`users`.`usergroup` AS `usergroup`,`users`.`exp` AS `exp` from (`answercomments` join `users`) where (`answercomments`.`userID` = `users`.`userID`) ;
+
+-- ----------------------------
 -- View structure for `answersinfo`
 -- ----------------------------
 DROP VIEW IF EXISTS `answersinfo`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `answersinfo` AS select `answers`.`answerID` AS `answerID`,`answers`.`userID` AS `userID`,`answers`.`edittime` AS `edittime`,`answers`.`content` AS `content`,`answers`.`agree` AS `agree`,`answers`.`disagree` AS `disagree`,`answers`.`answertype` AS `answertype`,`answers`.`questionID` AS `questionID`,`users`.`nickname` AS `nickname`,`users`.`headportrait` AS `headportrait`,`answers`.`tags` AS `tags`,`answers`.`state` AS `state` from (`answers` join `users`) where (`answers`.`userID` = `users`.`userID`) order by `answers`.`agree` desc ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `answersinfo` AS select `answers`.`answerID` AS `answerID`,`answers`.`userID` AS `userID`,`answers`.`edittime` AS `edittime`,`answers`.`content` AS `content`,`answers`.`agree` AS `agree`,`answers`.`disagree` AS `disagree`,`answers`.`answertype` AS `answertype`,`answers`.`questionID` AS `questionID`,`users`.`nickname` AS `nickname`,`users`.`headportrait` AS `headportrait`,`answers`.`tags` AS `tags`,`answers`.`state` AS `state`,`questions`.`title` AS `title` from ((`answers` join `users`) join `questions`) where ((`answers`.`userID` = `users`.`userID`) and (`answers`.`questionID` = `questions`.`questionID`)) order by `answers`.`agree` desc ;
 
 -- ----------------------------
 -- View structure for `article_comments_info`
@@ -4818,7 +6254,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 -- View structure for `demands_info`
 -- ----------------------------
 DROP VIEW IF EXISTS `demands_info`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `demands_info` AS select `demands`.`demandID` AS `demandID`,`demands`.`userID` AS `userID`,`demands`.`content` AS `content`,`demands`.`allowedUserGroup` AS `allowedUserGroup`,`demands`.`price` AS `price`,`demands`.`tags` AS `tags`,`users`.`nickname` AS `nickname`,`users`.`headportrait` AS `headportrait`,`users`.`usergroup` AS `usergroup`,`users`.`exp` AS `exp`,`users`.`description` AS `description`,`demands`.`createtime` AS `createtime`,`demands`.`state` AS `state` from (`demands` join `users`) where (`demands`.`userID` = `users`.`userID`) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `demands_info` AS select `demands`.`demandID` AS `demandID`,`demands`.`userID` AS `userID`,`demands`.`content` AS `content`,`demands`.`allowedUserGroup` AS `allowedUserGroup`,`demands`.`price` AS `price`,`demands`.`tags` AS `tags`,`users`.`nickname` AS `nickname`,`users`.`headportrait` AS `headportrait`,`users`.`usergroup` AS `usergroup`,`users`.`exp` AS `exp`,`users`.`description` AS `description`,`demands`.`createtime` AS `createtime`,`demands`.`state` AS `state`,`demands`.`title` AS `title`,`demands`.`cover` AS `cover`,`demands`.`group` AS `group` from (`demands` join `users`) where (`demands`.`userID` = `users`.`userID`) ;
 
 -- ----------------------------
 -- View structure for `followinfo`
@@ -4867,6 +6303,12 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`hanerx`@`%` SQL SECURITY DEFINER VIEW `histo
 -- ----------------------------
 DROP VIEW IF EXISTS `orderinfo`;
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `orderinfo` AS select `orders`.`orderID` AS `orderID`,`orders`.`userID` AS `userID`,`orders`.`target` AS `target`,`orders`.`start_time` AS `start_time`,`orders`.`content` AS `content`,`orders`.`end_time` AS `end_time`,`users`.`nickname` AS `nickname`,`users`.`headportrait` AS `headportrait`,`users`.`usergroup` AS `usergroup`,`users`.`exp` AS `exp`,`users`.`description` AS `description`,`orders`.`state` AS `state` from (`users` join `orders`) where (`users`.`userID` = `orders`.`userID`) ;
+
+-- ----------------------------
+-- View structure for `orders_info`
+-- ----------------------------
+DROP VIEW IF EXISTS `orders_info`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`hanerx`@`%` SQL SECURITY DEFINER VIEW `orders_info` AS select `orders`.`orderID` AS `orderID`,`orders`.`userID` AS `userID`,`orders`.`target` AS `target`,`orders`.`content` AS `content`,`orders`.`state` AS `state`,`orders`.`time` AS `time`,`orders`.`answer` AS `answer`,`orders`.`price` AS `price`,`user`.`nickname` AS `user_nickname`,`user`.`headportrait` AS `user_head_portrait`,`user`.`usergroup` AS `user_user_group`,`user`.`exp` AS `user_exp`,`user`.`description` AS `user_description`,`specialist`.`nickname` AS `specialist_nickname`,`specialist`.`headportrait` AS `specialist_head_portrait`,`specialist`.`usergroup` AS `specialist_user_group`,`specialist`.`exp` AS `specialist_exp`,`specialist`.`description` AS `specialist_description` from ((`orders` join `users` `user`) join `users` `specialist`) where ((`orders`.`userID` = `user`.`userID`) and (`orders`.`target` = `specialist`.`userID`)) ;
 
 -- ----------------------------
 -- View structure for `q_at_info`
