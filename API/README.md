@@ -11,9 +11,6 @@
      - 问题与设想
        - 从item-cf算法获取感兴趣的内容还是使用热搜
        - 设想：采用热搜，提供完善用户模型的地方
-   - 预览
-
-   ![api_task_1](..\img\api_task_1.png)
 
 2. 首页分类获取
 
@@ -25,12 +22,6 @@
        - 需不需要小分类来细化分类
        - 设想：采用大分类后台制定，小分类用户添加的操作
 
-   - 预览
-
-     ![api_task_2](..\img\api_task_2.png)
-
-     ![](..\img\api_task_4.png)
-
 3. 首页推荐算法与接口
 
    - 需求
@@ -39,10 +30,6 @@
      - 问题与设想
        - 采用item-cf 算法解决
        - 需要对专业领域进行分析
-
-   - 预览
-
-     ![](..\img\api_task_3.png)
 
 4. 
 
@@ -54,15 +41,70 @@ Virtual Environment:
 	$ source venv/bin/activate  # 进入虚拟环境
 	$ deactivate                # 退出虚拟环境
 Packages:
+    absl-py==0.6.1
+    asn1crypto==0.24.0
+    astor==0.7.1
+    beautifulsoup4==4.7.1
+    boto==2.49.0
+    boto3==1.9.66
+    botocore==1.12.66
+    bz2file==0.98
+    certifi==2018.11.29
+    cffi==1.11.5
+    chardet==3.0.4
+    Click==7.0
+    cryptography==2.4.2
+    cssselect==1.0.3
+    cycler==0.10.0
+    docutils==0.14
     Flask==1.0.2
+    Flask-Cors==3.0.7
+    gast==0.2.0
+    gensim==3.6.0
+    grpcio==1.17.1
+    h5py==2.8.0
+    idna==2.7
+    imutils==0.5.2
+    itsdangerous==1.1.0
+    jieba==0.39
+    Jinja2==2.10
+    jmespath==0.9.3
+    Keras-Applications==1.0.6
+    Keras-Preprocessing==1.0.5
+    kiwisolver==1.0.1
+    lxml==4.2.5
+    Markdown==3.0.1
+    MarkupSafe==1.1.0
+    matplotlib==3.0.2
+    numpy==1.15.4
+    opencc-python-reimplemented==0.1.4
+    opencv-python==4.0.0.21
+    pandas==0.24.2
+    Pillow==5.4.1
+    protobuf==3.6.1
+    pycparser==2.19
     PyMySQL==0.9.2
-    Flask-Cors==3.0.6
-    numpy == 1.15.4
-    jieba == 0.39
-    tensorflow == 1.12.0
-    tensorboard == 1.12.1
-    sklearn == 0.0
-    
+    pyparsing==2.3.1
+    pyquery==1.4.0
+    pytesseract==0.2.6
+    python-dateutil==2.7.5
+    pytz==2018.9
+    requests==2.21.0
+    s3transfer==0.1.13
+    scikit-learn==0.20.2
+    scipy==1.1.0
+    six==1.11.0
+    sklearn==0.0
+    smart-open==1.7.1
+    soupsieve==1.8
+    tensorboard==1.12.1
+    tensorflow==1.12.0
+    termcolor==1.1.0
+    tqdm==4.28.1
+    urllib3==1.24.1
+    utils==0.9.0
+    uWSGI==2.0.18
+    Werkzeug==0.14.1
 ```
 
 ## 设计思路
